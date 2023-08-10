@@ -1,2 +1,1 @@
-# hell-insektenschutz
-# hell-insektenschutz
+# Repo for website of Hell-Insektenschutz
