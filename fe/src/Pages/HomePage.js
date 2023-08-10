@@ -7,7 +7,7 @@ import Services from '../LandingPageComponents/Services'
 import Reviews from '../LandingPageComponents/Reviews'
 import Products from '../LandingPageComponents/Products'
 import Map from '../LandingPageComponents/Map'
-
+import Footer from '../LandingPageComponents/Footer'
 
 const Wrapper = styled.div`
     scroll-snap-type: y mandatory;
@@ -24,6 +24,7 @@ function HomePage() {
       <Reviews/>
       <Products/>
       <Map/>
+      <Footer/>
     </Wrapper>
   )
 }
