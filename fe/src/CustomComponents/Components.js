@@ -10,7 +10,4 @@ export const SingleSection = styled.div`
     align-items: center;
     border: 1px solid red;
     scroll-snap-align: start;
-`
-/*
-
-*/
+`;
