@@ -1,8 +1,9 @@
 import React from 'react'
+import {SingleSection} from '../CustomComponents/Components'
 
 function Map() {
   return (
-    <div>Map</div>
+    <SingleSection>Map</SingleSection>
   )
 }
 

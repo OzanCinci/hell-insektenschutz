@@ -1,8 +1,10 @@
 import React from 'react'
+import {SingleSection} from '../CustomComponents/Components'
+
 
 function LandingPagePhoto() {
   return (
-    <div>LandingPagePhoto</div>
+    <SingleSection>LandingPagePhoto</SingleSection>
   )
 }
 
