@@ -1,8 +1,9 @@
 import React from 'react'
+import {SingleSection} from '../CustomComponents/Components'
 
 function Services() {
   return (
-    <div>Services</div>
+    <SingleSection>Services</SingleSection>
   )
 }
 

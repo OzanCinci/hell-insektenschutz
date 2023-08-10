@@ -1,8 +1,9 @@
 import React from 'react'
+import {SingleSection} from '../CustomComponents/Components'
 
 function Reviews() {
   return (
-    <div>Reviews</div>
+    <SingleSection>Reviews</SingleSection>
   )
 }
 
