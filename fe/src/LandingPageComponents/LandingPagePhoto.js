@@ -122,7 +122,7 @@ const SubImg = styled.img`
 
 function LandingPagePhoto() {
   return (
-    <Wrapper>
+    <Wrapper className='element-to-track'>
       {/*<ImageWrapper data-aos="zoom-out"> */}
       <ImageWrapper data-aos="zoom-out">
         <Text>

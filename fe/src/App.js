@@ -20,6 +20,7 @@ function App() {
     <div className="App">
       {/*<Navbar/>*/}
       <BrowserRouter>
+      <Navbar/>
         <Routes>
           <Route exact path='/' element={<HomePage/>}/>
           <Route default path='/*' element={<PageNotFound/>}/>
