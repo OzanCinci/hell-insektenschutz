@@ -14,8 +14,7 @@ const Wrapper = styled.div`
     overflow-y: scroll;
     scroll-behavior: smooth;
     height: 100vh;
-    border: 10px solid purple;
-`
+`;
 
 function HomePage() {
   return (
