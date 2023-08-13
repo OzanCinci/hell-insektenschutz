@@ -1,17 +1,16 @@
 import React from 'react'
 import {SingleSection} from '../CustomComponents/Components'
 import styled from 'styled-components'
-import coverPhoto from '../images/landingPage/cover_photo.jpg'; // Import the image
+import coverPhoto from '../images/landingPage/cover_photo.jpg' // Import the image
+import liPhoto from '../images/landingPage/li.png';
 
 const Wrapper = styled(SingleSection)`
   flex-direction: column;
   justify-content: space-between;
-
+  overflow: hidden;
 `;
 
-
 const ImageWrapper = styled.div`  
-  border: 5px solid purple;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -40,6 +39,9 @@ const Img = styled.img`
   }
 `;
 
+const colorDark = "#db5424";
+const colorVivid = "#debe40";
+
 const Text = styled.div`
   position: absolute;
   width: fit-content;
@@ -55,7 +57,7 @@ const Text = styled.div`
   align-items: center;
   font-size: 50px;
   text-shadow: 1px 3px 0 #969696, 1px 13px 5px #aba8a8;
-  
+
   @media only screen and (max-width: 650px) {
     font-size: 40px;
   }
@@ -70,18 +72,42 @@ const Text = styled.div`
 `;
 
 const Subtext = styled.div`
-  width: 100%;
-  height: 15vh;
-  color: white;
-  background-image: linear-gradient(to right, rgb(255, 173, 94), rgb(255, 125, 14));
-  border: 2px solid red;
-  z-index: 99;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 50px;
+  
+  height: 30vh;
+  color: black;
+  border: 5px solid purple;
 `;
 
+
+const LiElement = styled(({title, text})=>{ 
+  return (
+    <div className='col mx-5'>
+      <div className='row my-2'>
+        <div className='col-2'>
+          <img src={liPhoto} height='50px' width='auto'/>
+        </div>
+        <div className='col-10 my-2' style={{color:"#debe40", fontSize: "20px", textAlign:"left"}}>{title}</div>
+      </div>
+      <div style={{color:"rgb(82, 82, 102)", fontSize: "18px", textAlign:"left"}}>
+        {text}
+      </div>
+    </div>
+  )})``;
+  
+const liMap = [
+  {
+    title: "Das System",
+    text: "Unsere Lösungen - die Grundlage für Ihre positive Geschäftsentwicklung."
+  },
+  {
+    title: "Hochwertig & Passgenau",
+    text: "Wir legen großen Wert auf Optik und Funktion unserer Produkte, deshalb haben wir entscheidende Details"
+  },
+  {
+    title: "Schutz, der Freiheit schafft",
+    text: "Zählt zu den führenden Anbietern im Insektenschutz. Die Basis des Erfolges: solide Werte."
+  }
+]
 
 const yazi = "Für Sie individuell gefertigtesat"
 
@@ -96,6 +122,17 @@ function LandingPagePhoto() {
         <Img src={coverPhoto}/>
       </ImageWrapper>
     
+      <Subtext className='container-lg d-flex justify-content-center align-items-center'>
+        <div className='row'>
+          {
+          liMap.map(item => {
+            return (
+              <LiElement title={item.title} text={item.text}/>
+              )
+            })
+          }
+        </div>
+      </Subtext>
     </Wrapper>
   )
 }
