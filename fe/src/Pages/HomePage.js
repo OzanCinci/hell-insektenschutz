@@ -12,9 +12,9 @@ import Footer from '../LandingPageComponents/Footer'
 const Wrapper = styled.div`
     scroll-snap-type: y mandatory;
     overflow-y: scroll;
+    scroll-behavior: smooth;
     height: 100vh;
-    border: 10px solid purple;
-`
+`;
 
 function HomePage() {
   return (
