@@ -2,7 +2,7 @@ import React from 'react'
 import {SingleSection} from '../CustomComponents/Components'
 import styled from 'styled-components'
 import coverPhoto from '../images/landingPage/cover_photo.jpg' // Import the image
-import mosqPhoto from '../images/landingPage/no_mosq.jpg';
+import liPhoto from '../images/landingPage/li.png';
 
 const Wrapper = styled(SingleSection)`
   flex-direction: column;
@@ -39,6 +39,9 @@ const Img = styled.img`
   }
 `;
 
+const colorDark = "#db5424";
+const colorVivid = "#debe40";
+
 const Text = styled.div`
   position: absolute;
   width: fit-content;
@@ -68,62 +71,50 @@ const Text = styled.div`
   }
 `;
 
-const SubtextWrapper = styled.div`
+const Subtext = styled.div`
+  
   height: 30vh;
-  min-width: 400px;
-  max-width: 890px;
-  padding: 0px 50px;
-  display: flex;
-  justfiy-content: center;
-  align-items: center;
-`;
-
-const Subtitle = styled.div`
-  text-align: left;
-  font-size: 28px;
-  color: rgb(82, 82, 102);
-
-  @media only screen and (max-width: 650px) {
-    font-size: 24px;
-  }
-
-  @media only screen and (max-width: 585px) {
-    font-size: 18px;
-  }
-
-`;
-
-const SubText = styled.div`
-  text-align: left;
-  font-size: 22px; 
   color: black;
-
-  @media only screen and (max-width: 650px) {
-    font-size: 18px;
-  }
-
-  @media only screen and (max-width: 585px) {
-    font-size: 12px;
-  }
+  border: 5px solid purple;
 `;
 
-const SubImg = styled.img`
-  height: 190px;
 
-  @media only screen and (max-width: 650px) {
-    height: 130px;
+const LiElement = styled(({title, text})=>{ 
+  return (
+    <div key={title} className='col mx-5'>
+      <div className='row my-2'>
+        <div className='col-2'>
+          <img src={liPhoto} height='50px' width='auto'/>
+        </div>
+        <div className='col-10 my-2' style={{color:"#debe40", fontSize: "20px", textAlign:"left"}}>{title}</div>
+      </div>
+      <div style={{color:"rgb(82, 82, 102)", fontSize: "18px", textAlign:"left"}}>
+        {text}
+      </div>
+    </div>
+  )})``;
+  
+const liMap = [
+  {
+    title: "Das System",
+    text: "Unsere Lösungen - die Grundlage für Ihre positive Geschäftsentwicklung."
+  },
+  {
+    title: "Hochwertig & Passgenau",
+    text: "Wir legen großen Wert auf Optik und Funktion unserer Produkte, deshalb haben wir entscheidende Details"
+  },
+  {
+    title: "Schutz, der Freiheit schafft",
+    text: "Zählt zu den führenden Anbietern im Insektenschutz. Die Basis des Erfolges: solide Werte."
   }
+]
 
-  @media only screen and (max-width: 585px) {
-    height: 100px;
-  }
-`;
-
+const yazi = "Für Sie individuell gefertigtesat"
 
 function LandingPagePhoto() {
   return (
     <Wrapper>
-      {/*<ImageWrapper data-aos="zoom-out"> */}
+      
       <ImageWrapper data-aos="zoom-out">
         <Text>
           Insektenschutzsysteme
@@ -131,19 +122,17 @@ function LandingPagePhoto() {
         <Img src={coverPhoto}/>
       </ImageWrapper>
     
-      <SubtextWrapper data-aos="zoom-out">
-        <div>
-          <Subtitle>
-            Sie sind auf der Suche nach maßgefertigter Insektenschutz für Ihr Zuhause?
-          </Subtitle>
-          <SubText>
-            Jedes unsere Elemente ist ein, für Sie individuell gefertigtes, Unikat
-          </SubText>
+      <Subtext className='container-lg d-flex justify-content-center align-items-center'>
+        <div className='row'>
+          {
+          liMap.map(item => {
+            return (
+              <LiElement title={item.title} text={item.text}/>
+              )
+            })
+          }
         </div>
-        <div>
-          <SubImg src={mosqPhoto}></SubImg>
-        </div>
-      </SubtextWrapper>
+      </Subtext>
     </Wrapper>
   )
 }
