@@ -139,40 +139,35 @@ const NavbarButtonWrapper = styled.div`
   }
 `
 
-function toggleFunction(nav, setToggle){
-    nav();
-    setToggle();
-}; 
-
 function Navbar() {
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
 
-  function toggleFunction(nav, bool){
+  function toggleFunction(nav){
     navigate(nav);
-    setToggle(bool);
+    setToggle(false);
   }
 
 
   return (
     <NavbarContainer toggle={toggle}>
       <div>
-        <LogoImg onClick={ () => toggleFunction("/", false)} src={Logo}/>
+        <LogoImg onClick={ () => toggleFunction("/")} src={Logo}/>
         <NavbarButtonWrapper>
           <BurgerIcon toggle={toggle} setToggle={setToggle}/>
         </NavbarButtonWrapper>
       </div>
         <LinkContainer toggle={toggle} >
-          <Link onClick={ () => toggleFunction("/", false)}>
+          <Link onClick={ () => toggleFunction("/")}>
             HomePage
           </Link>
-          <Link onClick={() => toggleFunction("/test1", false)}>
+          <Link onClick={() => toggleFunction("/test1")}>
               Link1
           </Link>
-          <Link onClick={() => toggleFunction("/test2", false)}>
+          <Link onClick={() => toggleFunction("/test2")}>
               Link2
           </Link>
-          <Link onClick={() => toggleFunction("/test3", false)}>
+          <Link onClick={() => toggleFunction("/test3")}>
               Link3
           </Link>
         </LinkContainer>
