@@ -136,7 +136,7 @@ function LandingPagePhoto() {
           <Subtitle>
             Sie sind auf der Suche nach maßgefertigter Insektenschutz für Ihr Zuhause?
           </Subtitle>
-          <SubText>
+          <SubText >
             Jedes unsere Elemente ist ein, für Sie individuell gefertigtes, Unikat
           </SubText>
         </div>
