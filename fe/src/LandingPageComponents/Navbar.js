@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import styled from 'styled-components'
 import Logo from '../images/landingPage/logo.png';
 import { useNavigate } from 'react-router-dom'
+import BurgerIcon from './BurgerIcon';
 
 
 const NavbarContainer = styled.div`
@@ -9,21 +10,24 @@ const NavbarContainer = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 100px;
-  //border: 3px solid black;
+  height: 88px;
   z-index: 99;
   background-color: white;
 
-  -webkit-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
--moz-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
-
+  -webkit-box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
+  box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
 
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 10px 40px;
   align-items: center;
+
+  @media only screen and (max-width: 860px) {
+    flex-direction: column;
+  }
+
 `;
 
 const LinkContainer = styled.div`
@@ -31,10 +35,43 @@ const LinkContainer = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
+
+  @media only screen and (max-width: 860px) {
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+    align-items: flex-end;
+    padding: 40px 10px 80px 60px;
+    gap: 45px;
+    height: fit-content;
+    background-color: white;
+    z-index: 95;
+    transform: ${props => props.toggle ? "scaleY(1)": "scaleY(0.1)"};
+    opacity: ${props => props.toggle ? "1": "0"};
+    transition: transform 350ms ease-in, opacity 150ms ease-in 200ms;
+    transform-origin: top;
+    margin-top: 18px;
+    border-top: ${props => props.toggle ? "2px solid #f59f4c" : "none"};
+    -webkit-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
+    box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
+  }
+
 `;
+
+
 
 const LogoImg = styled.img`
   height: 60px;
+
+  @media only screen and (max-width: 860px) {
+    height: 45px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
+  
 `;
 
 const Link = styled.div`
@@ -60,6 +97,7 @@ const Link = styled.div`
 
     &::after {
       transform: scaleX(1);
+      transform-origin: left;
     }
   }
 
@@ -73,7 +111,7 @@ const Link = styled.div`
     height: 100%;
     background-color: #f59f4c;
     transform: scaleX(0);
-    transform-origin: left;
+    transform-origin: right;
     border: 1px solid #f59f4c;
 
     transition: transform 250ms ease-in;
@@ -87,30 +125,52 @@ const Link = styled.div`
 
 `;
 
+const NavbarButtonWrapper = styled.div`
+  display: none;
+  @media only screen and (max-width: 860px) {
+    display: block;
+    position: absolute;
+    top: 10px;
+    right: -30px;
+    height: 50px;
+    width: 150px;
+    display: flex;
+    justify-content: center;
+  }
+`
 
 function Navbar() {
+  const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
+
+  function toggleFunction(nav){
+    navigate(nav);
+    setToggle(false);
+  }
 
 
   return (
-    <NavbarContainer >
+    <NavbarContainer toggle={toggle}>
       <div>
-        <LogoImg src={Logo}/>
+        <LogoImg onClick={ () => toggleFunction("/")} src={Logo}/>
+        <NavbarButtonWrapper>
+          <BurgerIcon toggle={toggle} setToggle={setToggle}/>
+        </NavbarButtonWrapper>
       </div>
-      <LinkContainer>
-        <Link onClick={() => navigate("/")}>
-          HomePage
-        </Link>
-        <Link onClick={() => navigate("/test1")}>
-            Link1
-        </Link>
-        <Link onClick={() => navigate("/test2")}>
-            Link2
-        </Link>
-        <Link onClick={() => navigate("/test3")}>
-            Link3
-        </Link>
-      </LinkContainer>
+        <LinkContainer toggle={toggle} >
+          <Link onClick={ () => toggleFunction("/")}>
+            HomePage
+          </Link>
+          <Link onClick={() => toggleFunction("/test1")}>
+              Link1
+          </Link>
+          <Link onClick={() => toggleFunction("/test2")}>
+              Link2
+          </Link>
+          <Link onClick={() => toggleFunction("/test3")}>
+              Link3
+          </Link>
+        </LinkContainer>
     </NavbarContainer>
   )
 }
