@@ -25,7 +25,7 @@ const Icon = styled.img`
   margin-top: 20px;
 `
 const Title = styled.div`
-  font-size: 24px;
+  font-size: 21px;
   text-align: left;
   font-weight: bold;
 
@@ -64,9 +64,9 @@ const TextWrapper = styled.div`
 const LiWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  justfiy-content: space-around;
-  align-items: flex-start;
-  gap: 40px;
+  justify-content: space-around;
+  align-items: space-around;
+  gap: 0px;
 `;
 
 
@@ -94,7 +94,6 @@ const LiContainer = styled.div`
     justify-content: center;
     align-items: space-between;
     max-width: 1400px;
-
     @media only screen and (max-width: 755px) {
       display: none;
     }
