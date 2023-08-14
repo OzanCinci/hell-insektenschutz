@@ -14,9 +14,9 @@ const NavbarContainer = styled.div`
   z-index: 99;
   background-color: white;
 
-  -webkit-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
-  -moz-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
-  box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
+  box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
 
   display: flex;
   flex-direction: row;
