@@ -18,14 +18,14 @@ const Wrapper = styled.div`
 
 function HomePage() {
   return (
-    <Wrapper>
+    <div>
       <LandingPagePhoto/>
       <Services/>
       <Reviews/>
       <Products/>
       <Map/>
       <Footer/>
-    </Wrapper>
+    </div>
   )
 }
 

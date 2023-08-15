@@ -8,15 +8,18 @@ import service2 from '../images/Services/service2.jpg';
 const liMap = [
   {
     title: "Das System",
-    text: "Unsere Lösungen - die Grundlage für Ihre positive Geschäftsentwicklung."
+    text: "Unsere Lösungen - die Grundlage für Ihre positive Geschäftsentwicklung.",
+    anim: "fade-right"
   },
   {
     title: "Hochwertig & Passgenau",
-    text: "Wir legen großen Wert auf Optik und Funktion unserer Produkte, deshalb haben wir entscheidende Details"
+    text: "Wir legen großen Wert auf Optik und Funktion unserer Produkte, deshalb haben wir entscheidende Details",
+    anim: "zoom-out"
   },
   {
     title: "Schutz, der Freiheit schafft",
-    text: "Zählt zu den führenden Anbietern im Insektenschutz. Die Basis des Erfolges: solide Werte."
+    text: "Zählt zu den führenden Anbietern im Insektenschutz. Die Basis des Erfolges: solide Werte.",
+    anim: "fade-left"
   }
 ]
 
@@ -70,9 +73,9 @@ const LiWrapper = styled.div`
 `;
 
 
-const LiElement = styled(({title, text})=>{ 
+const LiElement = styled(({title, text, anim})=>{ 
   return (
-    <LiWrapper>
+    <LiWrapper data-aos={anim}>
       <div>
         <Icon src={liPhoto}/>
       </div>
@@ -151,7 +154,7 @@ const ServiceText = styled.div`
 
 const ServiceElement = styled(({img, title, text, def})=>{ 
   return (
-    <Wrapper def={def}>
+    <Wrapper data-aos={def?"fade-right":"fade-left"} def={def}>
         <ServiceImg src={img}/>
         <div  style={{textAlign:"left"}}>
           {title && <div>{title}</div>}
@@ -265,7 +268,7 @@ function Services() {
     <ServiceContainer>
       <LiContainer>
         {
-          liMap.map(item => <LiElement key={item.title} text={item.text} title={item.title}/>)
+          liMap.map((item,index) => <LiElement key={index} anim={item.anim} text={item.text} title={item.title}/>)
         }
       </LiContainer>
       <SubTitle>Mehr über uns </SubTitle>
