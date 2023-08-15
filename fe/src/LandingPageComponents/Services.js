@@ -245,8 +245,7 @@ const AccordionWrapper = styled.div`
 
 
 const AccordionImg = styled.img`
-  height: 20vh;
-  min-height: 150px;
+  width: 90vw;
   @media only screen and (min-width: 756px) {
     display: none;
   }
@@ -271,15 +270,16 @@ function Services() {
           liMap.map((item,index) => <LiElement key={index} anim={item.anim} text={item.text} title={item.title}/>)
         }
       </LiContainer>
-      <SubTitle>Mehr über uns </SubTitle>
+      <SubTitle data-aos="zoom-in-down">Mehr über uns </SubTitle>
       <ServiceWrapper>
         <ServiceElement img={service1} text={serviceMap[0].text} def={true}/>
         <ServiceElement img={service2} text={serviceMap[1].text} def={false}/>
       </ServiceWrapper>
 
-
-      <AccordionImg  src={service1}/>
-      <AccordionWrapper>
+      <div style={{overflow:"hidden"}}>
+        <AccordionImg data-aos="zoom-in-up"  src={service1}/>
+      </div>
+      <AccordionWrapper data-aos="zoom-out">
         <div class="accordion" id="accordionExample">
           
           <div class="accordion-item">
