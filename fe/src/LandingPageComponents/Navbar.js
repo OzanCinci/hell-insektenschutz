@@ -24,7 +24,7 @@ const NavbarContainer = styled.div`
   padding: 10px 40px;
   align-items: center;
 
-  @media only screen and (max-width: 860px) {
+  @media only screen and (max-width: 1200px) {
     flex-direction: column;
   }
 
@@ -36,11 +36,11 @@ const LinkContainer = styled.div`
   justify-content: center;
   align-items: center;
 
-  @media only screen and (max-width: 860px) {
+  @media only screen and (max-width: 1200px) {
     flex-direction: column;
     width: 100vw;
     justify-content: center;
-    align-items: flex-end;
+    align-items: flex-start;
     padding: 40px 10px 80px 60px;
     gap: 45px;
     height: fit-content;
@@ -64,7 +64,7 @@ const LinkContainer = styled.div`
 const LogoImg = styled.img`
   height: 60px;
 
-  @media only screen and (max-width: 860px) {
+  @media only screen and (max-width: 1200px) {
     height: 45px;
   }
 
@@ -85,11 +85,11 @@ const Link = styled.div`
   border-bottom-right-radius: 20px;
 
 
-  margin: 0px 10px;
-  padding: 3px 6px;
+  margin: 0px 5px;
+  padding: 3px 8px;
   color: #f59f4c;
   color: rgb(82, 82, 102);;
-  font-size: 25px;
+  font-size: 16px;
   position: relative;
 
   &:hover {
@@ -127,7 +127,7 @@ const Link = styled.div`
 
 const NavbarButtonWrapper = styled.div`
   display: none;
-  @media only screen and (max-width: 860px) {
+  @media only screen and (max-width: 1200px) {
     display: block;
     position: absolute;
     top: 10px;
@@ -158,17 +158,26 @@ function Navbar() {
         </NavbarButtonWrapper>
       </div>
         <LinkContainer toggle={toggle} >
-          <Link onClick={ () => toggleFunction("/")}>
-            HomePage
+          <Link onClick={ () => toggleFunction("/turen")}>
+            Für Türen
           </Link>
-          <Link onClick={() => toggleFunction("/test1")}>
-              Link1
+          <Link onClick={() => toggleFunction("/fenster")}>
+            Für Fenster
           </Link>
-          <Link onClick={() => toggleFunction("/test2")}>
-              Link2
+          <Link onClick={() => toggleFunction("/dachfenster")}>
+            Für Dachfenster
           </Link>
-          <Link onClick={() => toggleFunction("/test3")}>
-              Link3
+          <Link onClick={() => toggleFunction("/lich")}>
+            Für Lichtschächte
+          </Link>
+          <Link onClick={() => toggleFunction("/sonderformen")}>
+            Sonderformen
+          </Link>
+          <Link onClick={() => toggleFunction("/zusatzprodukte")}>
+            Zusatzprodukte
+          </Link>
+          <Link onClick={() => toggleFunction("/gewebearten")}>
+            Gewebearten
           </Link>
         </LinkContainer>
     </NavbarContainer>

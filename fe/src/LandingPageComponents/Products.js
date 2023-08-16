@@ -8,7 +8,7 @@ import P5 from '../images/product/p5.jpg'
 import P6 from '../images/product/p6.jpg'
 import P7 from '../images/product/p7.jpg'
 
-const Row = styled(({img, title, text, def})=>{ 
+export const Row = styled(({img, title, text, def})=>{ 
   return (
     <Wrapper data-aos={def?"fade-right":"fade-left"} def={def}>
         <ServiceImg src={img}/>
@@ -21,14 +21,14 @@ const Row = styled(({img, title, text, def})=>{
     </Wrapper>
   )})``;
 
-const RowTitle = styled.div`
+export const RowTitle = styled.div`
   font-size: 18px;
   margin: 15px auto;
   font-weight: bold;
   margin-left: 15px;
 `
 
-const ServiceImg = styled.img`
+export const ServiceImg = styled.img`
   height: 300px;
 
   @media only screen and (max-width: 1370px) {
@@ -44,7 +44,7 @@ const ServiceImg = styled.img`
   }
 `;
 
-const ServiceText = styled.div`
+export const ServiceText = styled.div`
   color: rgb(82, 82, 102);
   font-size: 20px;
   padding: 10px;
@@ -57,7 +57,7 @@ const ServiceText = styled.div`
   }
 `;
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: ${props => props.def ? "row" : "row-reverse"};
   max-width: 1000px;
@@ -79,7 +79,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const ServiceWrapper = styled.div`
+export const ServiceWrapper = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -93,13 +93,12 @@ const ServiceWrapper = styled.div`
 //const txt = "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
 //const image = Service2;
 
-const Container = styled.div`
+export const Container = styled.div`
   height: fit-content;  
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   margin: 40px 0px;
   padding: 20px;
 `
