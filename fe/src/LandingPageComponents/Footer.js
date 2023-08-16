@@ -109,17 +109,17 @@ function Footer() {
 
       <FooterWrapper>
         <div>
-          <LogoImg src={Logo}/>
+          <LogoImg alt='logo' src={Logo}/>
           <div style={{fontSize:"17px"}}>Zeppelinstraße 10, 76448 Durmersheim, Almanya</div>
-          <div className='d-flex flex-row justify-content-center align-items-center my-2'> <img height='30px' src={TelephoneIcon}/> <span className='mx-2'> +49 176 62960342 </span></div>
+          <div className='d-flex flex-row justify-content-center align-items-center my-2'> <img height='30px' alt='telephone-icon' src={TelephoneIcon}/> <span className='mx-2'> +49 176 62960342 </span></div>
           <div className='my-2'></div>
           <div className='d-flex flex-row justify-content-center align-items-center my-2'>
             Folge uns auf:
             <a className='mx-3' href="https://instagram.com/hell_insektenschutz?igshid=OGQ5ZDc2ODk2ZA==" target="_blank" rel="noopener noreferrer">
-              <img height='30px' src={InstagramIcon}/>
+              <img alt='instagram-logo' height='30px' src={InstagramIcon}/>
             </a>
             <a href="https://www.facebook.com/HellInsektenschutz"  target="_blank" rel="noopener noreferrer">
-              <img height='30px' src={FacebookIcon}/>
+              <img alt='facebook-logo' height='30px' src={FacebookIcon}/>
             </a>
           </div>
         </div>
@@ -138,7 +138,7 @@ function Footer() {
           </div>
         </div>
         <div style={{textAlign: "left"}}>
-            <InteractiveLink onClick={()=>nav('/türen')}>Für Türen</InteractiveLink>
+            <InteractiveLink onClick={()=>nav('/turen')}>Für Türen</InteractiveLink>
             <InteractiveLink onClick={()=>nav('/fenster')}>Für Fenster</InteractiveLink>
             <InteractiveLink onClick={()=>nav('/dachfenster')}>Für Dachfenster</InteractiveLink>
             <InteractiveLink onClick={()=>nav('/lich')}>Für Lichtschächte</InteractiveLink>

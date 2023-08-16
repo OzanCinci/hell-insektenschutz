@@ -1,8 +1,20 @@
 import React from 'react'
+import { Row, ServiceWrapper, Container } from '../LandingPageComponents/Products'
+import data from '../Data/data'
+
+const dataList = data.fenster;
 
 function Fenster() {
   return (
-    <div>Fenster</div>
+    <div>
+        <Container>
+            <ServiceWrapper>
+                {
+                dataList.map((item,index)=> <Row key={index} img={item.img}  text={item.text} def={item.def} title={item.title}/>)
+                }
+            </ServiceWrapper>
+        </Container>
+    </div>
   )
 }
 
