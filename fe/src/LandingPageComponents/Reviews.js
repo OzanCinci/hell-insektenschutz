@@ -247,9 +247,9 @@ function Reviews() {
     (<ReviewContainer>
       <GoogleReviewContainer >
         <div  className='d-flex flex-column justify-content-center'>
-          <Font data-aos="fade-left">Google Reviews</Font>
+          <Font data-aos="fade-left">Google Bewertungen</Font>
           <CommentCount data-aos="fade-right" className='d-flex flex-row justify-content-around'>
-            50+ comment   
+            50+ Rezension   
           </CommentCount>
           <div data-aos="fade-left">
             <img alt='star-img'  height='20px' src={StarImg}/>
@@ -264,7 +264,7 @@ function Reviews() {
 
       </GoogleReviewContainer>
       <ReviewsWrapper data-aos="zoom-in"  data-aos-offset="200" data-aos-delay="100">
-        <Title  >Happy Customers</Title>
+        <Title> Zufriedene Kunden </Title>
         <Slider   {...settings}>
             {
               data.map((item,index) => <SingleReview key={index} name={item.name} date={item.date} rating={item.rating} description={item.description} />)
