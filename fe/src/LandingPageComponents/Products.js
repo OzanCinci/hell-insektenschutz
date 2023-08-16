@@ -10,7 +10,7 @@ import P7 from '../images/product/p7.jpg'
 
 export const Row = styled(({img, title, text, def})=>{ 
   return (
-    <Wrapper data-aos={def?"fade-right":"fade-left"} def={def}>
+    <Wrapper data-aos-delay="500" data-aos={def?"fade-right":"fade-left"} def={def}>
         <ServiceImg src={img}/>
         <div  style={{textAlign:"left"}}>
           {title && <RowTitle>{title}</RowTitle>}

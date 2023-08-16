@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -6,57 +6,8 @@ import Slider from "react-slick";
 import StarImg from "../images/reviews/star.svg"
 import EmptyStarImg from "../images/reviews/empty.png"
 import Logo from "../images/reviews/alt_logo.png"
+import { getReviews } from '../Requests/reviews';
 
-const mockData = [
-  {
-    name: "Ozan Cinci",
-    date: "20/08/23",
-    rating: "4/5",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamcotat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-  },
-  {
-    name: "Ozan Cinci",
-    date: "20/08/23",
-    rating: "4/5",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  },
-  {
-    name: "Ozan Cinci",
-    date: "20/08/23",
-    rating: "4/5",
-    description: "Sed ut perspiciatis unde omnis iste natus erudanab illo inventorae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur uam est,quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?"
-  },
-  {
-    name: "Ozan Cinci",
-    date: "20/08/23",
-    rating: "4/5",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  },
-  {
-    name: "Ozan Cinci",
-    date: "20/08/23",
-    rating: "4/5",
-    description: "Lorem ipsum itation u in reprehenderit in voluptate veliiatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-  },
-  {
-    name: "Ozan Cinci",
-    date: "20/08/23",
-    rating: "4/5",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  },
-  {
-    name: "Ozan Cinci",
-    date: "20/08/23",
-    rating: "4/5",
-    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-  },
-  {
-    name: "Ozan Cinci",
-    date: "20/08/23",
-    rating: "4/5",
-    description: "Lorem ipsum dolor sit amet, consectetuExcepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-  },
-]
 
 const ReviewContainer = styled.div`
   display:flex;
@@ -73,8 +24,6 @@ const ReviewContainer = styled.div`
     padding-bottom: 40px;
   }
 `
-
-
 
 const ReviewsWrapper = styled.div`
   min-height: 400px;
@@ -159,16 +108,16 @@ const SingleReview = styled(({name,date,rating,description})=>{
     <Container>
       <TopPart>
         <div>
-          <div>{name}</div>
-          <div>{date}</div>
+          <div style={{fontSize: "18px", borderBottom: "1px solid #f59f4c", textDecorationColor: "#f59f4c"}}>{name}</div>
+          <div>( {date} )</div>
         </div>
         <div>
           <div className='d-flex flex-row'>
-            <img height='20px' src={StarImg}/>
-            <img height='20px' src={StarImg}/>
-            <img height='20px' src={StarImg}/>
-            <img height='20px' src={StarImg}/>
-            <img height='20px' src={EmptyStarImg}/>
+            <img alt='star-img' height='20px' src={StarImg}/>
+            <img alt='star-img' height='20px' src={StarImg}/>
+            <img alt='star-img' height='20px' src={StarImg}/>
+            <img alt='star-img' height='20px' src={StarImg}/>
+            {rating >= 5 ? <img alt='star-img' height='20px' src={StarImg}/> : <img alt='star-img' height='20px' src={EmptyStarImg}/>}
           </div>
         </div>
       </TopPart>
@@ -179,7 +128,7 @@ const SingleReview = styled(({name,date,rating,description})=>{
   )})``;
 
 
-  const settings = {
+const settings = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -236,7 +185,7 @@ const GoogleReviewContainer = styled.div`
 `
 
 const LogoImg = styled.img`
-  height: 250px;
+  height: 200px;
   border-radius: 50%;
   -webkit-box-shadow: 11px 19px 24px -24px rgba(0,0,0,1);
   -moz-box-shadow: 11px 19px 24px -24px rgba(0,0,0,1);
@@ -248,9 +197,6 @@ const LogoImg = styled.img`
     -moz-box-shadow: 11px 19px 24px -18px rgba(0,0,0,1);
     box-shadow: 11px 19px 24px -18px rgba(0,0,0,1);
   }
-
-
-
 `
 
 const Font = styled(Title)`
@@ -268,24 +214,47 @@ const CommentCount = styled.div`
   @media only screen and (max-width: 880px) {
     font-size: 22px;
   }
-
 `
 
 function Reviews() {
+  const [data,setData] = useState(null);
+
+  useEffect(()=>{
+    async function getData() {
+      const response = await getReviews();
+      const temp = response.data.place_reviews_results.map(item => {
+        return {
+          name: item.source,
+          date: item.date || "kürzlich",
+          rating: item.rating,
+          description: item.body
+        }
+      })
+      .filter(item => item.rating >= 4)
+      setData(temp)
+    }
+
+    if (data===null)
+      getData();
+  },[data]);
+
+
+
   return (
-    <ReviewContainer>
+    data!==null ? 
+    (<ReviewContainer>
       <GoogleReviewContainer >
         <div  className='d-flex flex-column justify-content-center'>
           <Font data-aos="fade-left">Google Reviews</Font>
           <CommentCount data-aos="fade-right" className='d-flex flex-row justify-content-around'>
-            51 comment   
+            50+ comment   
           </CommentCount>
           <div data-aos="fade-left">
-            <img  height='20px' src={StarImg}/>
-            <img height='20px' src={StarImg}/>
-            <img height='20px' src={StarImg}/>
-            <img height='20px' src={StarImg}/>
-            <img height='20px' src={StarImg}/>
+            <img alt='star-img'  height='20px' src={StarImg}/>
+            <img alt='star-img' height='20px' src={StarImg}/>
+            <img alt='star-img' height='20px' src={StarImg}/>
+            <img alt='star-img' height='20px' src={StarImg}/>
+            <img alt='star-img' height='20px' src={StarImg}/>
             (4.9)
           </div>
         </div>
@@ -296,11 +265,11 @@ function Reviews() {
         <Title  >Happy Customers</Title>
         <Slider   {...settings}>
             {
-              mockData.map((item,index) => <SingleReview key={index} name={item.name} date={item.date} rating={item.rating} description={item.description} />)
+              data.map((item,index) => <SingleReview key={index} name={item.name} date={item.date} rating={item.rating} description={item.description} />)
             }
         </Slider>
       </ReviewsWrapper>
-    </ReviewContainer>
+    </ReviewContainer>) : <div>LOADING...</div>
   )
 }
 
