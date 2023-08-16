@@ -6,9 +6,17 @@ import {Route,Routes,BrowserRouter} from 'react-router-dom'
 import HomePage from './Pages/HomePage';
 import PageNotFound from './Pages/PageNotFound';
 import Navbar from './LandingPageComponents/Navbar'
+import Footer from './LandingPageComponents/Footer'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { useEffect } from 'react';
+import Türen from './Pages/Türen';
+import Fenster from './Pages/Fenster';
+import Dachfenster from './Pages/Dachfenster';
+import Lichtschachte from './Pages/Lichtschachte';
+import Sonderformen from './Pages/Sonderformen';
+import Zusatsprodukte from './Pages/Zusatsprodukte';
+import Gewebearten from './Pages/Gewebearten';
 
 function App() {
 
@@ -32,14 +40,22 @@ function App() {
   },[])
 
   return (
-    <div className="App" style={{width:"100vw", overflowX:"hidden"}}>
+    <div className="App" style={{overflowX:"hidden", border: "2px solid purple", minHeight:"1400px"}}>
       {/*<Navbar/>*/}
       <BrowserRouter>
-      <Navbar/>
+        <Navbar/>
         <Routes>
           <Route exact path='/' element={<HomePage/>}/>
+          <Route exact path='/turen' element={<Türen/>}/>
+          <Route exact path='/fenster' element={<Fenster/>}/>
+          <Route exact path='/dachfenster' element={<Dachfenster/>}/>
+          <Route exact path='/lich' element={<Lichtschachte/>}/>
+          <Route exact path='/sonderformen' element={<Sonderformen/>}/>
+          <Route exact path='/zusatzprodukte' element={<Zusatsprodukte/>}/>
+          <Route exact path='/gewebearten' element={<Gewebearten/>}/>
           <Route default path='/*' element={<PageNotFound/>}/>
         </Routes>
+        <Footer/>
       </BrowserRouter>
     </div>
   );
