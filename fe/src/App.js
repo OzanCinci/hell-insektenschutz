@@ -40,21 +40,23 @@ function App() {
   },[])
 
   return (
-    <div className="App" style={{overflowX:"hidden", border: "2px solid purple", minHeight:"1400px"}}>
+    <div className="App" style={{overflowX:"hidden", minHeight:"1400px"}}>
       {/*<Navbar/>*/}
       <BrowserRouter>
         <Navbar/>
-        <Routes>
-          <Route exact path='/' element={<HomePage/>}/>
-          <Route exact path='/turen' element={<Türen/>}/>
-          <Route exact path='/fenster' element={<Fenster/>}/>
-          <Route exact path='/dachfenster' element={<Dachfenster/>}/>
-          <Route exact path='/lich' element={<Lichtschachte/>}/>
-          <Route exact path='/sonderformen' element={<Sonderformen/>}/>
-          <Route exact path='/zusatzprodukte' element={<Zusatsprodukte/>}/>
-          <Route exact path='/gewebearten' element={<Gewebearten/>}/>
-          <Route default path='/*' element={<PageNotFound/>}/>
-        </Routes>
+        <div style={{minHeight:"100vh"}}>
+          <Routes>
+            <Route exact path='/' element={<HomePage/>}/>
+            <Route exact path='/turen' element={<Türen/>}/>
+            <Route exact path='/fenster' element={<Fenster/>}/>
+            <Route exact path='/dachfenster' element={<Dachfenster/>}/>
+            <Route exact path='/lich' element={<Lichtschachte/>}/>
+            <Route exact path='/sonderformen' element={<Sonderformen/>}/>
+            <Route exact path='/zusatzprodukte' element={<Zusatsprodukte/>}/>
+            <Route exact path='/gewebearten' element={<Gewebearten/>}/>
+            <Route default path='/*' element={<PageNotFound/>}/>
+          </Routes>
+        </div>
         <Footer/>
       </BrowserRouter>
     </div>

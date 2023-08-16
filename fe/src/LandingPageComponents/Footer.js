@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useCallback } from 'react'
 import styled from 'styled-components';
 import Logo from '../images/landingPage/logo.png'
 import TelephoneIcon from '../images/footer/telephone-call.png'
@@ -95,7 +95,11 @@ const InteractiveLink = styled.div`
 
 
 function Footer() {
-  const nav = useNavigate()
+  const navigate = useNavigate()
+  const nav = (arg) => {
+    navigate(arg);
+    window.scrollTo(0,0);
+  }
 
   return (
     <FooterContainer>

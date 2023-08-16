@@ -146,6 +146,7 @@ function Navbar() {
   function toggleFunction(nav){
     navigate(nav);
     setToggle(false);
+    window.scrollTo(0,0);
   }
 
 
