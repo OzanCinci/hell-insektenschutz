@@ -122,7 +122,7 @@ const SingleReview = styled(({name,date,rating,description})=>{
         </div>
       </TopPart>
       <Description>
-        {description}
+        {description.length <= 260 ? description : description.substring(0, 260) + "..."}
       </Description>
     </Container>
   )})``;
@@ -131,7 +131,9 @@ const SingleReview = styled(({name,date,rating,description})=>{
 const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    autoplay: true,
+    autoplaySpeed: 7000,
+    speed: 800,
     slidesToShow: 2,
     slidesToScroll: 2,
     initialSlide: 0,
