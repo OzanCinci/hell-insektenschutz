@@ -1,6 +1,4 @@
 import React from 'react'
-// STYLED COMPONENTS
-import styled from 'styled-components';
 // COMPONENTS
 import LandingPagePhoto from '../LandingPageComponents/LandingPagePhoto'
 import Services from '../LandingPageComponents/Services'
@@ -14,9 +12,6 @@ function HomePage() {
       <Services/>
       <Reviews/>
       <Products/>
-      {/* 
-        <Map/>
-      */}
     </div>
   )
 }

@@ -182,23 +182,17 @@ const GoogleReviewContainer = styled.div`
 
   @media only screen and (max-width: 1000px) {
     flex-direction: column-reverse;
-    gap: 0px;
+    gap: 6px;
   }
 `
 
 const LogoImg = styled.img`
-  height: 200px;
+  height: 220px;
+  width: auto;
   border-radius: 50%;
   -webkit-box-shadow: 11px 19px 24px -24px rgba(0,0,0,1);
   -moz-box-shadow: 11px 19px 24px -24px rgba(0,0,0,1);
   box-shadow: 11px 19px 24px -24px rgba(0,0,0,1);
-  transition: all 350ms ease-in;
-
-  &:hover {
-    -webkit-box-shadow: 11px 19px 24px -18px rgba(0,0,0,1);
-    -moz-box-shadow: 11px 19px 24px -18px rgba(0,0,0,1);
-    box-shadow: 11px 19px 24px -18px rgba(0,0,0,1);
-  }
 `
 
 const Font = styled(Title)`
