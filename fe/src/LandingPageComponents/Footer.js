@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import Logo from '../images/landingPage/logo.png'
 import TelephoneIcon from '../images/footer/telephone-call.png'
@@ -12,7 +12,7 @@ const FooterContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 40px 0px;
+    margin: 80px 0px;
     background-image: linear-gradient(to left, #db5424, #debe40);
     margin-bottom: 0;
     width: 100%;
@@ -98,7 +98,7 @@ function Footer() {
   const navigate = useNavigate()
   const nav = (arg) => {
     navigate(arg);
-    window.scrollTo(0,0);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   return (
