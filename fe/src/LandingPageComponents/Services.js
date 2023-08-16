@@ -118,7 +118,6 @@ const serviceMap = [
   }
 ]
 
-//height: 250px;
 const ServiceImg = styled.img`
   height: 300px;
 
@@ -206,6 +205,8 @@ const SubTitle = styled.div`
   font-size: 24px;
   text-align: left;
   font-weight: bold;
+  margin-top: 50px;
+  margin-bottom: 20px;
 
   @media only screen and (max-width: 900px) {
     font-size: 28px;

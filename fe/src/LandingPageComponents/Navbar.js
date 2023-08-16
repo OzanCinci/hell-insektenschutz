@@ -41,8 +41,8 @@ const LinkContainer = styled.div`
     width: 100vw;
     justify-content: center;
     align-items: flex-start;
-    padding: 40px 10px 80px 60px;
-    gap: 45px;
+    padding: 40px 10px 60px 20px;
+    gap: 20px;
     height: fit-content;
     background-color: white;
     z-index: 95;
@@ -146,6 +146,7 @@ function Navbar() {
   function toggleFunction(nav){
     navigate(nav);
     setToggle(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
 
