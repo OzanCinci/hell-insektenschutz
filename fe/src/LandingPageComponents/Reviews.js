@@ -5,7 +5,6 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import StarImg from "../images/reviews/star.svg"
 import EmptyStarImg from "../images/reviews/empty.png"
-import Logo from "../images/reviews/alt_logo.png"
 import { getReviews } from '../Requests/reviews';
 
 
@@ -16,8 +15,8 @@ const ReviewContainer = styled.div`
   align-items: center;
   width: 100%;
   background: #e8fbff;
-  min-height: 1000px;
-  gap: 5vh;
+  min-height: 900px;
+  gap: 7vh;
 
   @media only screen and (max-width: 880px) {
     gap: 2vh;
@@ -186,15 +185,6 @@ const GoogleReviewContainer = styled.div`
   }
 `
 
-const LogoImg = styled.img`
-  height: 220px;
-  width: auto;
-  border-radius: 50%;
-  -webkit-box-shadow: 11px 19px 24px -24px rgba(0,0,0,1);
-  -moz-box-shadow: 11px 19px 24px -24px rgba(0,0,0,1);
-  box-shadow: 11px 19px 24px -24px rgba(0,0,0,1);
-`
-
 const Font = styled(Title)`
   fontSize: 50px;
   margin: 0px;
@@ -254,7 +244,6 @@ function Reviews() {
             (4.9)
           </div>
         </div>
-        <LogoImg data-aos="fade-right" src={Logo}/>
 
       </GoogleReviewContainer>
       <ReviewsWrapper data-aos="zoom-in"  data-aos-offset="200" data-aos-delay="100">
