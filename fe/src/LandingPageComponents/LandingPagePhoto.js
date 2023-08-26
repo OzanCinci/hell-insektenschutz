@@ -48,7 +48,7 @@ const Text = styled.div`
   transform: translate(-50%, 0%); /* Correct the centering */
   color: white;
   font-weight: bold;
-  z-index: 99;
+  z-index: 90;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -76,19 +76,29 @@ const SubtextWrapper = styled.div`
   display: flex;
   justfiy-content: center;
   align-items: center;
+
+  @media only screen and (max-width: 490px) {
+    align-items: flex-start;
+    padding-top: 3vh;
+    margin-bottom: -30px;
+  }
 `;
 
 const Subtitle = styled.div`
   text-align: left;
-  font-size: 28px;
+  font-size: 30px;
   color: rgb(82, 82, 102);
 
   @media only screen and (max-width: 650px) {
-    font-size: 24px;
+    font-size: 28px;
   }
 
   @media only screen and (max-width: 585px) {
-    font-size: 18px;
+    font-size: 24px;
+  }
+
+  @media only screen and (max-width: 490px) {
+    font-size: 2vh;
   }
 
 `;
@@ -103,7 +113,11 @@ const SubText = styled.div`
   }
 
   @media only screen and (max-width: 585px) {
-    font-size: 12px;
+    font-size: 18px;
+  }
+
+  @media only screen and (max-width: 490px) {
+    font-size: 2vh;
   }
 `;
 
@@ -122,7 +136,7 @@ const SubImg = styled.img`
 
 function LandingPagePhoto() {
   return (
-    <Wrapper className='element-to-track'>
+    <Wrapper>
       {/*<ImageWrapper data-aos="zoom-out"> */}
       <ImageWrapper data-aos="zoom-out">
         <Text>

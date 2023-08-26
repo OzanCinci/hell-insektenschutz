@@ -51,7 +51,6 @@ const Text = styled.div`
   transform: translate(-50%, 0%); /* Correct the centering */
   color: white;
   font-weight: bold;
-  z-index: 99;
   display: flex;
   justify-content: center;
   align-items: center;

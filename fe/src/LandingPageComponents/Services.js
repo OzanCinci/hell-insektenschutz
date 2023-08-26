@@ -7,18 +7,18 @@ import service2 from '../images/Services/service2.jpg';
 
 const liMap = [
   {
-    title: "Das System",
-    text: "Unsere Lösungen - die Grundlage für Ihre positive Geschäftsentwicklung.",
+    title: "Technik",
+    text: "Unser Erfolgsgeheimnis: Einzigartige Perfektion im Detail.",
     anim: "fade-right"
   },
   {
-    title: "Hochwertig & Passgenau",
-    text: "Wir legen großen Wert auf Optik und Funktion unserer Produkte, deshalb haben wir entscheidende Details",
+    title: "Qualität",
+    text: "Engagement, das sich auszahlt: Führendes Qualitätsniveau.",
     anim: "zoom-out"
   },
   {
-    title: "Schutz, der Freiheit schafft",
-    text: "Zählt zu den führenden Anbietern im Insektenschutz. Die Basis des Erfolges: solide Werte.",
+    title: "Kundenorientierung",
+    text: "Ihr Mehrwert: Kurze Wege & kompetente Beratung.",
     anim: "fade-left"
   }
 ]
@@ -28,7 +28,7 @@ const Icon = styled.img`
   margin-top: 20px;
 `
 const Title = styled.div`
-  font-size: 21px;
+  font-size: 23px;
   text-align: left;
   font-weight: bold;
 
@@ -48,7 +48,7 @@ const Text = styled.div`
   text-align: left;
 
   @media only screen and (max-width: 1370px) {
-    font-size: 14px;
+    font-size: 17px;
   }
 
   @media only screen and (max-width: 90px) {
@@ -181,6 +181,7 @@ const ServiceContainer = styled(SingleSection)`
     justify-content: space-around;
     padding-top: 95px;
     padding-bottom: 20px;
+    border: 1px solid purple;
 
     @media only screen and (max-width: 1370px) {
       gap: 3vh;
@@ -190,12 +191,12 @@ const ServiceContainer = styled(SingleSection)`
     @media only screen and (max-width: 900px) {
       padding-bottom: 20px;
       justify-content: space-around;
-      padding-top: 80px;
+      padding-top: 0px;
     }
 
     @media only screen and (max-width: 780px) {
       justify-content: flex-start;
-      padding-top: 100px;
+      padding-top: 0px;
     }
     
 `;
@@ -218,6 +219,7 @@ const SubTitle = styled.div`
 
 const AccordionWrapper = styled.div`
   width: 90vw;
+  z-index: 95;
 
 
   @media only screen and (min-width: 756px) {
@@ -261,6 +263,10 @@ const AccordionText = styled.div`
     font-size: 15px;
   }
 `;
+
+const UlMobile = styled.ul`
+
+`
 
 
 function Services() {
@@ -315,7 +321,11 @@ function Services() {
             </h2>
             <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
               <AccordionText class="accordion-body">
-                Unsere Lösungen - die Grundlage für Ihre positive Geschäftsentwicklung. Wir legen großen Wert auf Optik und Funktion unserer Produkte, deshalb haben wir entscheidende Details. Zählt zu den führenden Anbietern im Insektenschutz. Die Basis des Erfolges: solide Werte.
+                <UlMobile>
+                  <li>Unser Erfolgsgeheimnis: Einzigartige Perfektion im Detail.</li>
+                  <li>Engagement, das sich auszahlt: Führendes Qualitätsniveau.</li>
+                  <li>Ihr Mehrwert: Kurze Wege & kompetente Beratung.</li>
+                </UlMobile>
               </AccordionText>
             </div>
           </div>
