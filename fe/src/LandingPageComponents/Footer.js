@@ -61,9 +61,9 @@ const FooterWrapper = styled.div`
   width: 80%;
   max-width: 1250px;
 
-  @media only screen and (max-width: 1050px) {
-    flex-wrap: wrap;
-    gap: 40px;
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+    gap: 20px;
   }
   
 `;
@@ -114,7 +114,7 @@ function Footer() {
       <FooterWrapper>
         <div>
           <LogoImg alt='logo' src={Logo}/>
-          <div style={{fontSize:"17px"}}>Zeppelinstraße 10, 76448 Durmersheim, Almanya</div>
+          <div style={{fontSize:"17px"}}>Zeppelinstraße 10, 76448 Durmersheim</div>
           <div className='d-flex flex-row justify-content-center align-items-center my-2'> <img height='30px' alt='telephone-icon' src={TelephoneIcon}/> <span className='mx-2'> +49 176 62960342 </span></div>
           <div className='my-2'></div>
           <div className='d-flex flex-row justify-content-center align-items-center my-2'>
@@ -127,28 +127,15 @@ function Footer() {
             </a>
           </div>
         </div>
-        <div style={{textAlign: "left"}}>
-          <div>
-            <div style={{fontSize: "22px"}}>Arbeitszeit:</div>
-            <div>
-              <div>Dienstag 09:00–18:00 Uhr</div>
-              <div>Mittwoch 09:00–18:00 Uhr</div>
-              <div>Donnerstag 09:00–18:00 Uhr</div>
-              <div>Freitag 09:00–18:00 Uhr</div>              
-              <div> Samstag 09:00–14:00 Uhr</div>
-              <div>Sonntag geschlossen</div>
-              <div>Montag 09:00–18.00 Uhr</div>
-            </div>
-          </div>
-        </div>
-        <div style={{textAlign: "left"}}>
-            <InteractiveLink onClick={()=>nav('/turen')}>Für Türen</InteractiveLink>
-            <InteractiveLink onClick={()=>nav('/fenster')}>Für Fenster</InteractiveLink>
-            <InteractiveLink onClick={()=>nav('/dachfenster')}>Für Dachfenster</InteractiveLink>
-            <InteractiveLink onClick={()=>nav('/lich')}>Für Lichtschächte</InteractiveLink>
-            <InteractiveLink onClick={()=>nav('/sonderformen')}>Sonderformen</InteractiveLink>
-            <InteractiveLink onClick={()=>nav('/zusatzprodukte')}>Zusatzprodukte</InteractiveLink>
-            <InteractiveLink onClick={()=>nav('/gewebearten')}>Gewebearten</InteractiveLink>
+        <div style={{textAlign: "center", fontSize: "18px", maxWidth: "400px"}}>
+            <div>Geschäftsinhaber: Hakan Aydin</div>
+            <div>Adresse: Zeppelinstraße 10</div>
+            <div>PLZ und Stadt: 76448 Durmersheim</div>
+            <div>Telefonnummer: +49176/62960342</div>
+            <div>Öffnungszeiten: Mo-Sa 09.00-18.00 Uhr</div>
+            <div>E-Mail: info@hell-insektenschutz.de</div>
+            <div>Umsatz Identifikationsnummer gemäß §27 a Umsatzsteuergesetz: DE354909066</div>
+            <div>Steumummer: 92415358078</div>
         </div>
       </FooterWrapper>
     </FooterContainer>

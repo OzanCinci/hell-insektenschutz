@@ -17,6 +17,8 @@ import Lichtschachte from './Pages/Lichtschachte';
 import Sonderformen from './Pages/Sonderformen';
 import Zusatsprodukte from './Pages/Zusatsprodukte';
 import Gewebearten from './Pages/Gewebearten';
+import Impressum from './LegalPages/Impressum';
+import Widerrufsbelehrung from './LegalPages/Widerrufsbelehrung';
 
 function App() {
 
@@ -28,7 +30,7 @@ function App() {
       throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
       
       // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
-      offset: 170, // offset (in px) from the original trigger point
+      offset: 150, // offset (in px) from the original trigger point
       delay: 0, // values from 0 to 3000, with step 50ms
       duration: 600, // values from 0 to 3000, with step 50ms
       easing: 'ease', // default easing for AOS animations
@@ -54,6 +56,8 @@ function App() {
             <Route exact path='/sonderformen' element={<Sonderformen/>}/>
             <Route exact path='/zusatzprodukte' element={<Zusatsprodukte/>}/>
             <Route exact path='/gewebearten' element={<Gewebearten/>}/>
+            <Route exact path='/impressum' element={<Impressum/>}/>
+            <Route exact path='/widerrufsbelehrung' element={<Widerrufsbelehrung/>}/>
             <Route default path='/*' element={<PageNotFound/>}/>
           </Routes>
         </div>

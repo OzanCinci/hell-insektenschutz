@@ -5,30 +5,49 @@ import { useNavigate } from 'react-router-dom'
 import BurgerIcon from './BurgerIcon';
 
 
+const NavbarWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 40px;
+  width: 100%;
+  align-items: center;
+
+  overflow: ${props => props.toggle ? "visible" : "hidden"};
+
+  @media only screen and (max-width: 1200px) {
+    flex-direction: column;
+  }
+`;
+
 const NavbarContainer = styled.div`
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 88px;
+  height: 108px;
   z-index: 99;
+  /*
+  overflow-y: ${props => props.toggle ? "visible" : "hidden"};
+  */
   background-color: white;
+  padding: 0px;
+  padding-bottom: 4px;
 
   -webkit-box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
   box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
 
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
-  padding: 10px 40px;
   align-items: center;
 
   @media only screen and (max-width: 1200px) {
     flex-direction: column;
+    height: 76px;
   }
-
-`;
+`
 
 const LinkContainer = styled.div`
   display: flex;
@@ -41,11 +60,11 @@ const LinkContainer = styled.div`
     width: 100vw;
     justify-content: center;
     align-items: flex-start;
-    padding: 40px 10px 60px 20px;
+    padding: 0px 0px 60px 0px;
     gap: 20px;
     height: fit-content;
     background-color: white;
-    z-index: 95;
+    z-index: 99;
     transform: ${props => props.toggle ? "scaleY(1)": "scaleY(0.1)"};
     opacity: ${props => props.toggle ? "1": "0"};
     transition: transform 350ms ease-in, opacity 150ms ease-in 200ms;
@@ -123,6 +142,14 @@ const Link = styled.div`
     border-bottom-right-radius: 16px;
   }
 
+  @media only screen and (max-width: 1200px) {
+    margin-left: 20px;
+  }
+
+  @media only screen and (max-width: 490px) {
+    font-size: 13px;
+  }
+
 `;
 
 const NavbarButtonWrapper = styled.div`
@@ -139,6 +166,55 @@ const NavbarButtonWrapper = styled.div`
   }
 `
 
+const Legal = styled.div`
+  display: flex;
+  flex-direction: row;
+  background: #f3f2f2;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 35px;
+  padding-right: 40px;
+  font-size: 14px;
+  color: #333;
+  padding-top: 1px;
+  padding-bottom: 1px;
+
+  @media only screen and (max-width: 1200px) {
+    display: none;
+  }
+`
+
+
+const LegalText = styled.div`
+  &: hover {
+    cursor: pointer;
+    color: #f59f4c;
+  }
+`
+
+const MobileLegal = styled(Legal)`
+  display: flex;
+  flex-direction: row;
+  background: #f3f2f2;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: flex-end;
+  gap: 35px;
+  padding-right: 40px;
+  font-size: 14px;
+  color: #333;
+  padding-top: 1px;
+  padding-bottom: 1px;
+  padding-right: 15px;
+
+  @media only screen and (min-width: 1200px) {
+    display: none;
+  }
+`
+
 function Navbar() {
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
@@ -152,13 +228,23 @@ function Navbar() {
 
   return (
     <NavbarContainer toggle={toggle}>
-      <div>
-        <LogoImg onClick={ () => toggleFunction("/")} src={Logo}/>
-        <NavbarButtonWrapper>
-          <BurgerIcon toggle={toggle} setToggle={setToggle}/>
-        </NavbarButtonWrapper>
-      </div>
+      <Legal>
+          <LegalText onClick={ () => toggleFunction("/impressum")} >Impressum</LegalText>
+          <LegalText onClick={ () => toggleFunction("/widerrufsbelehrung")}>Widerrufsbelehrung</LegalText>
+      </Legal>
+      <NavbarWrapper toggle={toggle}>
+        <div>
+          <LogoImg onClick={ () => toggleFunction("/")} src={Logo}/>
+          <NavbarButtonWrapper>
+            <BurgerIcon toggle={toggle} setToggle={setToggle}/>
+          </NavbarButtonWrapper>
+        </div>
+          
         <LinkContainer toggle={toggle} >
+          <MobileLegal>
+            <LegalText onClick={ () => toggleFunction("/impressum")} >Impressum</LegalText>
+            <LegalText onClick={ () => toggleFunction("/widerrufsbelehrung")}>Widerrufsbelehrung</LegalText>
+          </MobileLegal>
           <Link onClick={ () => toggleFunction("/turen")}>
             Für Türen
           </Link>
@@ -181,6 +267,7 @@ function Navbar() {
             Gewebearten
           </Link>
         </LinkContainer>
+      </NavbarWrapper>
     </NavbarContainer>
   )
 }

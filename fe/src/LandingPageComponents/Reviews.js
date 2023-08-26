@@ -121,7 +121,7 @@ const SingleReview = styled(({name,date,rating,description})=>{
         </div>
       </TopPart>
       <Description>
-        {description.length <= 260 ? description : description.substring(0, 260) + "..."}
+        {description && (description.length <= 250 ? description : description.substring(0, 250) + "...")}
       </Description>
     </Container>
   )})``;

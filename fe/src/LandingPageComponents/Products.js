@@ -7,8 +7,9 @@ import P4 from '../images/product/p4.jpg'
 import P5 from '../images/product/p5.jpg'
 import P6 from '../images/product/p6.jpg'
 import P7 from '../images/product/p7.jpg'
+import { useNavigate } from 'react-router-dom';
 
-export const Row = styled(({img, title, text, def})=>{ 
+export const Row = styled(({img, title, text, def, showNav , func})=>{ 
   return (
     <Wrapper data-aos={def?"fade-right":"fade-left"} def={def}>
         <ServiceImg src={img}/>
@@ -17,9 +18,42 @@ export const Row = styled(({img, title, text, def})=>{
           <ServiceText>
             {text}
           </ServiceText>
+          {showNav && <MoreInfo onClick={func}>Mehr Info</MoreInfo>}
         </div>
     </Wrapper>
   )})``;
+
+
+const MoreInfo = styled.div`
+  font-size: 18px;
+  margin: 15px auto;
+  margin-left: 15px;
+  cursor: pointer;
+  color: #f59f4c;
+  position: relative;
+  width: fit-content;
+
+  &:hover {
+    &::after {
+      transform: scaleX(1);
+    }
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 2px;
+    width: 100%;
+    height: 2px;;
+    background-color: #f59f4c;
+    transform: scaleX(0.4);
+    border: 1px solid #f59f4c;
+
+    transition: transform 150ms ease-in;
+  }
+
+`
 
 export const RowTitle = styled.div`
   font-size: 18px;
@@ -89,10 +123,6 @@ export const ServiceWrapper = styled.div`
     
 `;
 
-
-//const txt = "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged."
-//const image = Service2;
-
 export const Container = styled.div`
   height: fit-content;  
   display: flex;
@@ -108,43 +138,50 @@ const data = [
     img: P1,
     text: "Drehtüren sind die 1. Wahl, wenn Sie ein Fliegengitter zum Öffnen für Balkon oder Terrasse suchen. Durch die Vielzahl an Varianten bieten wir Ihnen die optimale Lösung für Ihren Anwendungsfall. Die Öffnung erfolgt im Regelfall nach außen.",
     def: true,
-    title: "Insektenschutz für Türen"
+    title: "Insektenschutz für Türen",
+    url: "/turen"
   },
   {
     img: P2,
     text: "Unsere Spannrahmen sind die beliebte Lösung für Fenster, die nur zum Lüften geöffnet oder gekippt werden. Unser Einhängesystem ermöglicht eine Montage ohne zu Bohren. Auch bei besonders eng anliegenden Rolloführungsschienen haben wir die richtige Lösung parat.",
     def: false,
-    title: "Insektenschutz für Fenster"
+    title: "Insektenschutz für Fenster",
+    url: "/fenster"
   },
   {
     img: P3,
     text: "Unsere Rollo-Systeme bieten Insektenschutz für nahezu jedes Dachflächenfenster. Egal ob Sie unsere Rollos ausgezogen haben, oder ob es in der Kassette auf Benutzung wartet – sie werden in Sachen Durchblick fast keinen Unterschied merken. Versprochen.",
     def: true,
-    title: "Insektenschutz für Dachfenster"
+    title: "Insektenschutz für Dachfenster",
+    url: "/dachfenster"
   },
   {
     img: P4,
     text: "Viele Möglichkeiten ein Ziel: Sauberkeit in Ihren Lichtschächten. Ob als clevere Nachrüstlösung oder als tragfähiges Gesamtelement – wir bieten für Ihre Anforderung die richtige Lösung.",
     def: false,
-    title: "Für Lichtschächte"
+    title: "Für Lichtschächte",
+    url: "/lich"
   },
   {
     img: P5,
     text: "Mit Ecken und Kanten oder sanften Radien? Unsere Abteilung für Sonderformen realisiert mit Präzision außergewöhnliche Rahmenformen für Ihre Fenster.",
     def: true,
-    title: "Sonderformen"
+    title: "Sonderformen",
+    url: "/sonderformen"
   },
   {
     img: P6,
     text: "Die perfekte Ergänzung für den Eingangsbereich ist ein Lämmermann-Fußabstreifer nach Maß. Edle Optik und leichte Reinigung sprechen für sich.",
     def: false,
-    title: "Zusatzprodukte"
+    title: "Zusatzprodukte",
+    url: "/zusatzprodukte"
   },
   {
     img: P7,
     text: "proAIR bietet Ihnen das Optimum an Durchsicht, Luftdurchlass und Haltbarkeit. Mit seiner offenen Siebfläche von 80% und extrem dünnen Fäden entsteht ein nahezu unsichtbarer Insektenschutz. Fiberglas – ein langzeiterprobter Werkstoff - ist zudem extrem reißfest und beständig gegen Witterungseinflüsse.",
     def: true,
-    title: "Gewebearten"
+    title: "Gewebearten",
+    url: "/gewebearten"
   },
 ]
 
@@ -155,12 +192,19 @@ const GeneralTitle = styled.div`
 `
 
 function Products() {
+  const navigate = useNavigate()
+  const nav = (arg) => {
+    navigate(arg);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+
   return (
     <Container>
       <GeneralTitle> Unsere Produkte</GeneralTitle>
       <ServiceWrapper>
         {
-          data.map((item,index)=> <Row key={index} img={item.img}  text={item.text} def={item.def} title={item.title}/>)
+          data.map((item,index)=> <Row key={index} func={()=>nav(item.url)} showNav={true} img={item.img}  text={item.text} def={item.def} title={item.title}/>)
         }
       </ServiceWrapper>
     </Container>
