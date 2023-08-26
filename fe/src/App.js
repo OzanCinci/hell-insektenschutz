@@ -18,6 +18,7 @@ import Sonderformen from './Pages/Sonderformen';
 import Zusatsprodukte from './Pages/Zusatsprodukte';
 import Gewebearten from './Pages/Gewebearten';
 import Impressum from './LegalPages/Impressum';
+import Widerrufsbelehrung from './LegalPages/Widerrufsbelehrung';
 
 function App() {
 
@@ -56,7 +57,7 @@ function App() {
             <Route exact path='/zusatzprodukte' element={<Zusatsprodukte/>}/>
             <Route exact path='/gewebearten' element={<Gewebearten/>}/>
             <Route exact path='/impressum' element={<Impressum/>}/>
-          
+            <Route exact path='/widerrufsbelehrung' element={<Widerrufsbelehrung/>}/>
             <Route default path='/*' element={<PageNotFound/>}/>
           </Routes>
         </div>

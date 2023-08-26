@@ -181,7 +181,6 @@ const ServiceContainer = styled(SingleSection)`
     justify-content: space-around;
     padding-top: 95px;
     padding-bottom: 20px;
-    border: 1px solid purple;
 
     @media only screen and (max-width: 1370px) {
       gap: 3vh;
