@@ -61,9 +61,9 @@ const FooterWrapper = styled.div`
   width: 80%;
   max-width: 1250px;
 
-  @media only screen and (max-width: 1050px) {
-    flex-wrap: wrap;
-    gap: 40px;
+  @media only screen and (max-width: 1000px) {
+    flex-direction: column;
+    gap: 20px;
   }
   
 `;
@@ -127,17 +127,15 @@ function Footer() {
             </a>
           </div>
         </div>
-        <div style={{textAlign: "left"}}>
-          <div style={{fontSize: "18px"}}>
-              <div>Geschäftsinhaber: Hakan Aydin</div>
-              <div>Adresse: Zeppelinstraße 10</div>
-              <div>PLZ und Stadt: 76448 Durmersheim</div>
-              <div>Telefonnummer: +49176/62960342</div>
-              <div>Öffnungszeiten: Mo-Sa 09.00-18.00 Uhr</div>
-              <div>E-Mail: info@hell-insektenschutz.de</div>
-              <div>Umsatz Identifikationsnummer gemäß §27 a Umsatzsteuergesetz: DE354909066</div>
-              <div>Steumummer: 92415358078</div>
-          </div>
+        <div style={{textAlign: "center", fontSize: "18px", maxWidth: "400px"}}>
+            <div>Geschäftsinhaber: Hakan Aydin</div>
+            <div>Adresse: Zeppelinstraße 10</div>
+            <div>PLZ und Stadt: 76448 Durmersheim</div>
+            <div>Telefonnummer: +49176/62960342</div>
+            <div>Öffnungszeiten: Mo-Sa 09.00-18.00 Uhr</div>
+            <div>E-Mail: info@hell-insektenschutz.de</div>
+            <div>Umsatz Identifikationsnummer gemäß §27 a Umsatzsteuergesetz: DE354909066</div>
+            <div>Steumummer: 92415358078</div>
         </div>
       </FooterWrapper>
     </FooterContainer>
