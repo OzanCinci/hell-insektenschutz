@@ -231,6 +231,7 @@ function Navbar() {
       <Legal>
           <LegalText onClick={ () => toggleFunction("/impressum")} >Impressum</LegalText>
           <LegalText onClick={ () => toggleFunction("/widerrufsbelehrung")}>Widerrufsbelehrung</LegalText>
+          <LegalText onClick={ () => toggleFunction("/datenschutz")}>Datenschutz</LegalText>
       </Legal>
       <NavbarWrapper toggle={toggle}>
         <div>
@@ -244,6 +245,7 @@ function Navbar() {
           <MobileLegal>
             <LegalText onClick={ () => toggleFunction("/impressum")} >Impressum</LegalText>
             <LegalText onClick={ () => toggleFunction("/widerrufsbelehrung")}>Widerrufsbelehrung</LegalText>
+            <LegalText onClick={ () => toggleFunction("/datenschutz")}>Datenschutz</LegalText>
           </MobileLegal>
           <Link onClick={ () => toggleFunction("/turen")}>
             Für Türen

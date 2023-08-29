@@ -19,6 +19,7 @@ import Zusatsprodukte from './Pages/Zusatsprodukte';
 import Gewebearten from './Pages/Gewebearten';
 import Impressum from './LegalPages/Impressum';
 import Widerrufsbelehrung from './LegalPages/Widerrufsbelehrung';
+import Datenschutz from './LegalPages/Datenschutz';
 
 function App() {
 
@@ -30,7 +31,7 @@ function App() {
       throttleDelay: 99, // the delay on throttle used while scrolling the page (advanced)
       
       // Settings that can be overridden on per-element basis, by `data-aos-*` attributes:
-      offset: 150, // offset (in px) from the original trigger point
+      offset: 135, // offset (in px) from the original trigger point
       delay: 0, // values from 0 to 3000, with step 50ms
       duration: 600, // values from 0 to 3000, with step 50ms
       easing: 'ease', // default easing for AOS animations
@@ -41,8 +42,11 @@ function App() {
     });
   },[])
 
+
+
+  // 
   return (
-    <div className="App" style={{overflowX:"hidden", minHeight:"1400px"}}>
+    <div className="App" style={{ overflowX:"hidden", minHeight:"1400px"}}>
       {/*<Navbar/>*/}
       <BrowserRouter>
         <Navbar/>
@@ -58,6 +62,7 @@ function App() {
             <Route exact path='/gewebearten' element={<Gewebearten/>}/>
             <Route exact path='/impressum' element={<Impressum/>}/>
             <Route exact path='/widerrufsbelehrung' element={<Widerrufsbelehrung/>}/>
+            <Route exact path='/datenschutz' element={<Datenschutz/>}/>
             <Route default path='/*' element={<PageNotFound/>}/>
           </Routes>
         </div>
