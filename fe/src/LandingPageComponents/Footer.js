@@ -4,7 +4,7 @@ import Logo from '../images/landingPage/logo.png'
 import TelephoneIcon from '../images/footer/telephone-call.png'
 import InstagramIcon from '../images/footer/instagram.png'
 import FacebookIcon from '../images/footer/facebook.png'
-import { useNavigate } from 'react-router-dom';
+import TiktokIcon from '../images/footer/tiktok.png'
 
 const FooterContainer = styled.div`
     height: fit-content;
@@ -86,20 +86,8 @@ const LogoImg = styled.img`
   }
 `;
 
-const InteractiveLink = styled.div`
-  cursor: pointer;
-  &:hover {
-    color: black;
-  }
-`
-
 
 function Footer() {
-  const navigate = useNavigate()
-  const nav = (arg) => {
-    navigate(arg);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
 
   return (
     <FooterContainer>
@@ -124,6 +112,9 @@ function Footer() {
             </a>
             <a href="https://www.facebook.com/HellInsektenschutz"  target="_blank" rel="noopener noreferrer">
               <img alt='facebook-logo' height='30px' src={FacebookIcon}/>
+            </a>
+            <a className='mx-3' href="https://www.tiktok.com/@hellinsektenschutz?_t=8fC4cPKW0tk&_r=1"  target="_blank" rel="noopener noreferrer">
+              <img alt='facebook-logo' height='30px' src={TiktokIcon}/>
             </a>
           </div>
         </div>

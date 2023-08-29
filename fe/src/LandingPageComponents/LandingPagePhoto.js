@@ -85,7 +85,7 @@ const SubtextWrapper = styled.div`
 `;
 
 const Subtitle = styled.div`
-  text-align: left;
+  text-align: center;
   font-size: 30px;
   color: rgb(82, 82, 102);
 
@@ -98,13 +98,13 @@ const Subtitle = styled.div`
   }
 
   @media only screen and (max-width: 490px) {
-    font-size: 2vh;
+    font-size: 22px;
   }
 
 `;
 
 const SubText = styled.div`
-  text-align: left;
+  text-align: center;
   font-size: 22px; 
   color: black;
 
@@ -118,11 +118,13 @@ const SubText = styled.div`
 
   @media only screen and (max-width: 490px) {
     font-size: 2vh;
+    display: none;
   }
 `;
 
 const SubImg = styled.img`
-  height: 190px;
+  height: 140px;
+  margin-left: 15px;
 
   @media only screen and (max-width: 650px) {
     height: 130px;
@@ -130,6 +132,8 @@ const SubImg = styled.img`
 
   @media only screen and (max-width: 585px) {
     height: 100px;
+    margin-top: 15px;
+    margin-left: 20px;
   }
 `;
 
@@ -147,12 +151,12 @@ function LandingPagePhoto() {
     
       <SubtextWrapper data-aos="zoom-out">
         <div>
-          <Subtitle>
+          <SubText>
             Sie sind auf der Suche nach maßgefertigter Insektenschutz für Ihr Zuhause?
-          </Subtitle>
-          <SubText >
-            Jedes unsere Elemente ist ein, für Sie individuell gefertigtes, Unikat
           </SubText>
+          <Subtitle>
+            Jedes unsere Elemente ist ein, für Sie individuell gefertigtes, Unikat
+          </Subtitle>
         </div>
         <div>
           <SubImg src={mosqPhoto}></SubImg>
