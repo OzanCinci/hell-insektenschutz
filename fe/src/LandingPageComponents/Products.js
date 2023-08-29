@@ -195,7 +195,7 @@ function Products() {
   const navigate = useNavigate()
   const nav = (arg) => {
     navigate(arg);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: 'smooth' }); 
   }
 
 

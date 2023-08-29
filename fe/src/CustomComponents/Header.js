@@ -15,6 +15,7 @@ const Container = styled.div`
         bottom: 0;
         left: 0;
         width: 100%;
+        /* SİLMEYİ UNUTMA*/
         overflow: hidden;
         line-height: 0;
         transform: rotate(180deg);
