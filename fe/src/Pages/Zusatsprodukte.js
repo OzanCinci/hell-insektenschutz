@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useLayoutEffect } from 'react'
 import { Row, ServiceWrapper, Container } from '../LandingPageComponents/Products'
 import data from '../Data/data'
 import Header from '../CustomComponents/Header';
@@ -6,6 +6,12 @@ import Header from '../CustomComponents/Header';
 const dataList = data.zusatzprodukte;
 
 function Zusatsprodukte() {
+
+  useLayoutEffect(()=>{
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  },[])
+
+
   return (
     <div>
       <Header/>
