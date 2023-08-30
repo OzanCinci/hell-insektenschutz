@@ -51,7 +51,7 @@ function Map() {
     <Container>
       <Title>Wo wir ansässig sind</Title>
       <MapIframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2620.5902754950353!2d8.260934176914759!3d48.94224529480113!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47971d3e08e72315%3A0x7f1d1b9e57fc9c47!2sHELL%20Insektenschutz!5e0!3m2!1str!2str!4v1692442339299!5m2!1str!2str"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2620.5902754950353!2d8.260934176914759!3d48.94224529480113!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47971d3e08e72315%3A0x7f1d1b9e57fc9c47!2sHELL%20Insektenschutz!5e0!3m2!1sde!2str!4v1693400808378!5m2!1sde!2str"
         allowFullScreen={true}
         loading="lazy" 
         referrerPolicy="no-referrer-when-downgrade"

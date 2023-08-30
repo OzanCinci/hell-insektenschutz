@@ -149,7 +149,7 @@ function LandingPagePhoto() {
         <Img src={coverPhoto}/>
       </ImageWrapper>
     
-      <SubtextWrapper data-aos="zoom-out">
+      <SubtextWrapper data-aos-offset="50" data-aos="zoom-out">
         <div>
           <SubText>
             Sie sind auf der Suche nach maßgefertigter Insektenschutz für Ihr Zuhause?
