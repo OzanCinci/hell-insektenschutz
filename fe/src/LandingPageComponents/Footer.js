@@ -5,6 +5,7 @@ import TelephoneIcon from '../images/footer/telephone-call.png'
 import InstagramIcon from '../images/footer/instagram.png'
 import FacebookIcon from '../images/footer/facebook.png'
 import TiktokIcon from '../images/footer/tiktok.png'
+import { useNavigate } from 'react-router-dom';
 
 const FooterContainer = styled.div`
     height: fit-content;
@@ -86,8 +87,18 @@ const LogoImg = styled.img`
   }
 `;
 
+const Txt = styled.div`
+  &: hover {
+    cursor: pointer;
+    color: black;
+  }
+  
+`;
+
 
 function Footer() {
+  const nav = useNavigate();
+
 
   return (
     <FooterContainer>
@@ -103,10 +114,10 @@ function Footer() {
         <div>
           <LogoImg alt='logo' src={Logo}/>
           <div style={{fontSize:"17px"}}>Zeppelinstraße 10, 76448 Durmersheim</div>
+          <div>Öffnungszeiten: Mo-Sa 09.00-18.00 Uhr</div>
           <div className='d-flex flex-row justify-content-center align-items-center my-2'> <img height='30px' alt='telephone-icon' src={TelephoneIcon}/> <span className='mx-2'> +49 176 62960342 </span></div>
           <div className='my-2'></div>
           <div className='d-flex flex-row justify-content-center align-items-center my-2'>
-            Folge uns auf:
             <a className='mx-3' href="https://instagram.com/hell_insektenschutz?igshid=OGQ5ZDc2ODk2ZA==" target="_blank" rel="noopener noreferrer">
               <img alt='instagram-logo' height='30px' src={InstagramIcon}/>
             </a>
@@ -118,15 +129,21 @@ function Footer() {
             </a>
           </div>
         </div>
-        <div style={{textAlign: "center", fontSize: "18px", maxWidth: "400px"}}>
-            <div>Geschäftsinhaber: Hakan Aydin</div>
-            <div>Adresse: Zeppelinstraße 10</div>
-            <div>PLZ und Stadt: 76448 Durmersheim</div>
-            <div>Telefonnummer: +49176/62960342</div>
-            <div>Öffnungszeiten: Mo-Sa 09.00-18.00 Uhr</div>
-            <div>E-Mail: info@hell-insektenschutz.de</div>
-            <div>Umsatz Identifikationsnummer gemäß §27 a Umsatzsteuergesetz: DE354909066</div>
-            <div>Steumummer: 92415358078</div>
+        <div style={{textAlign: "center", fontSize: "18px", maxWidth: "400px", cursor:"pointer"}}>
+            <br></br>
+            <div>
+              <Txt onClick={()=>nav("/kontakt")}>Kontakt</Txt>
+              <Txt onClick={()=>nav("/impressum")} className='my-1'>Impressum</Txt>
+              <Txt onClick={()=>nav("/datenschutz")}>Datenschutz</Txt>
+              <Txt onClick={()=>nav("/widerrufsbelehrung")} className='my-1'>Widerrufsbelehrung</Txt>
+            </div>
+
+            <br></br>
+            <div style={{textAlign: "left"}}>
+              <Txt>Insektenschutz im Raum Pforzheim</Txt>
+              <Txt className='my-2'>Insektenschutz im Raum Karlsruhe</Txt>
+              <Txt>Insektenschutz im Raum Baden</Txt>
+            </div>
         </div>
       </FooterWrapper>
     </FooterContainer>
