@@ -20,6 +20,7 @@ import Gewebearten from './Pages/Gewebearten';
 import Impressum from './LegalPages/Impressum';
 import Widerrufsbelehrung from './LegalPages/Widerrufsbelehrung';
 import Datenschutz from './LegalPages/Datenschutz';
+import Kontakt from './LegalPages/Kontakt';
 
 function App() {
 
@@ -63,6 +64,7 @@ function App() {
             <Route exact path='/impressum' element={<Impressum/>}/>
             <Route exact path='/widerrufsbelehrung' element={<Widerrufsbelehrung/>}/>
             <Route exact path='/datenschutz' element={<Datenschutz/>}/>
+            <Route exact path='/kontakt' element={<Kontakt/>}/>
             <Route default path='/*' element={<PageNotFound/>}/>
           </Routes>
         </div>
