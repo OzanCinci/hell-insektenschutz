@@ -21,6 +21,9 @@ import Impressum from './LegalPages/Impressum';
 import Widerrufsbelehrung from './LegalPages/Widerrufsbelehrung';
 import Datenschutz from './LegalPages/Datenschutz';
 import Kontakt from './LegalPages/Kontakt';
+import RaumPforzheim from './SeoPages/RaumPforzheim';
+import RaumKarlsruhe from './SeoPages/RaumKarlsruhe';
+import RaumBaden from './SeoPages/RaumBaden';
 
 function App() {
 
@@ -65,7 +68,15 @@ function App() {
             <Route exact path='/widerrufsbelehrung' element={<Widerrufsbelehrung/>}/>
             <Route exact path='/datenschutz' element={<Datenschutz/>}/>
             <Route exact path='/kontakt' element={<Kontakt/>}/>
+
+
+            <Route exact path='/pforzheim' element={<RaumPforzheim/>}/>
+            <Route exact path='/karlsruhe' element={<RaumKarlsruhe/>}/>
+            <Route exact path='/baden' element={<RaumBaden/>}/>
+            
             <Route default path='/*' element={<PageNotFound/>}/>
+
+            
           </Routes>
         </div>
         <Footer/>

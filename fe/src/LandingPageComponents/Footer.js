@@ -137,12 +137,12 @@ function Footer() {
               <Txt onClick={()=>nav("/datenschutz")}>Datenschutz</Txt>
               <Txt onClick={()=>nav("/widerrufsbelehrung")} className='my-1'>Widerrufsbelehrung</Txt>
             </div>
-
+            
             <br></br>
             <div style={{textAlign: "left"}}>
-              <Txt>Insektenschutz im Raum Pforzheim</Txt>
-              <Txt className='my-2'>Insektenschutz im Raum Karlsruhe</Txt>
-              <Txt>Insektenschutz im Raum Baden</Txt>
+              <Txt onClick={()=>nav("/pforzheim")}> Insektenschutz im Raum Pforzheim</Txt>
+              <Txt onClick={()=>nav("/karlsruhe")} className='my-2'>Insektenschutz im Raum Karlsruhe</Txt>
+              <Txt onClick={()=>nav("/baden")}>Insektenschutz im Raum Baden</Txt>
             </div>
         </div>
       </FooterWrapper>
