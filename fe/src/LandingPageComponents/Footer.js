@@ -142,7 +142,7 @@ function Footer() {
             <div style={{textAlign: "left"}}>
               <Txt onClick={()=>nav("/pforzheim")}> Insektenschutz im Raum Pforzheim</Txt>
               <Txt onClick={()=>nav("/karlsruhe")} className='my-2'>Insektenschutz im Raum Karlsruhe</Txt>
-              <Txt onClick={()=>nav("/baden")}>Insektenschutz im Raum Baden</Txt>
+              <Txt onClick={()=>nav("/baden-baden")}>Insektenschutz im Raum Baden-Baden</Txt>
             </div>
         </div>
       </FooterWrapper>

@@ -72,7 +72,7 @@ function App() {
 
             <Route exact path='/pforzheim' element={<RaumPforzheim/>}/>
             <Route exact path='/karlsruhe' element={<RaumKarlsruhe/>}/>
-            <Route exact path='/baden' element={<RaumBaden/>}/>
+            <Route exact path='/baden-baden' element={<RaumBaden/>}/>
             
             <Route default path='/*' element={<PageNotFound/>}/>
 
