@@ -45,7 +45,7 @@ const data = {
             img: P2,
             text: "Unsere Spannrahmen sind die beliebte Lösung für Fenster, die nur zum Lüften geöffnet oder gekippt werden. Unser Einhängesystem ermöglicht eine Montage ohne zu Bohren. Auch bei besonders eng anliegenden Rolloführungsschienen haben wir die richtige Lösung parat.",
             def: false,
-            title: "Insektenschutz für Fenster"
+            title: "Spannrahmen"
         },
         {
             url: "drehfenster",
@@ -156,7 +156,7 @@ const data = {
             img: P1,
             text: "Drehtüren sind die 1. Wahl, wenn Sie ein Fliegengitter zum Öffnen für Balkon oder Terrasse suchen. Durch die Vielzahl an Varianten bieten wir Ihnen die optimale Lösung für Ihren Anwendungsfall. Die Öffnung erfolgt im Regelfall nach außen.",
             def: true,
-            title: "Insektenschutz für Türen"
+            title: "Drehtür"
         },
         {
             url: "pendeltür",

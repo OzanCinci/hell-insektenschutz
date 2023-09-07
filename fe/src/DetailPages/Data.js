@@ -4,6 +4,66 @@ import DachImage from '../images/details/dach.jpg'
 import FensterImage from '../images/details/fenster.jpg'
 import TempImg from '../images/dumps/fenster4.jpg'
 
+////////////
+// TUREN ///
+////////////
+import Drehtür from '../images/details/drehtür.jpg'
+import Drehtür1 from '../images/details/drehtür1.jpg'
+import Drehtür2 from '../images/details/drehtür2.jpg'
+import Drehtür3 from '../images/details/drehtür3.jpg'
+import Slide_Drehtür1 from '../images/details/slide_drehtür1.jpg'
+import Slide_Drehtür2 from '../images/details/slide_drehtür2.jpg'
+import Slide_Drehtür3 from '../images/details/slide_drehtür3.jpg'
+import Slide_Drehtür4 from '../images/details/slide_drehtür4.jpg'
+import Slide_Drehtür5 from '../images/details/slide_drehtür5.jpg'
+import Slide_Drehtür6 from '../images/details/slide_drehtür6.jpg'
+
+
+import AlternativePendaltür from '../images/details/alt_pendaltür.jpg'
+import Pendaltür from '../images/details/pendaltür.jpg'
+import Pendaltür1 from '../images/details/pendaltür1.jpg'
+import Pendaltür2 from '../images/details/pendaltür2.jpg'
+import Pendaltür3 from '../images/details/pendaltür3.jpg'
+import Slide_Pendaltür3 from '../images/details/slide_pendaltür3.jpg'
+import Slide_Pendaltür5 from '../images/details/slide_pendaltür5.jpg'
+import Slide_Pendaltür6 from '../images/details/slide_pendaltür6.jpg'
+
+
+import AlternativeSchiebetür from '../images/details/alt_schiebetür.jpg' 
+import Schiebetür from '../images/details/schiebetür.jpg'
+import Schiebetür1 from '../images/details/schiebetür1.jpg'
+import Schiebetür2 from '../images/details/schiebetür2.jpg'
+import Slide_Schiebetür2 from '../images/details/slide_schiebetür2.jpg'
+import Slide_Schiebetür3 from '../images/details/slide_schiebetür3.jpg'
+import Slide_Schiebetür4 from '../images/details/slide_schiebetür4.jpg'
+import Slide_Schiebetür5 from '../images/details/slide_schiebetür5.jpg'
+
+import Plissee from '../images/details/plissee.jpg'
+import AlternativePlissee from '../images/details/alternative_plissee.jpg'
+import Plissee1 from '../images/details/plissee1.jpg'
+import Plissee2 from '../images/details/plissee2.jpg'
+import Plissee3 from '../images/details/plissee3.jpg'
+import SliderPlissee1 from '../images/details/slider_plissee1.jpg'
+import SliderPlissee2 from '../images/details/slider_plissee2.jpg'
+
+
+/////////////
+// FENSTER //
+/////////////
+import Spannrahmen from '../images/details/spannrahmen.jpg'
+import AlternativeSpannrahmen from '../images/details/alt_spannrahmen.jpg'
+import Spannrahmen1 from '../images/details/spannrahmen1.jpg'
+import Spannrahmen2 from '../images/details/spannrahmen2.jpg'
+import Slider_spannrahmen2 from '../images/details/slider_spannrahmen2.jpg'
+import Slider_spannrahmen3 from '../images/details/slider_spannrahmen3.jpg'
+import Slider_spannrahmen4 from '../images/details/slider_spannrahmen4.jpg'
+import Slider_spannrahmen5 from '../images/details/slider_spannrahmen5.jpg'
+
+import Drehfenster from '../images/details/drehfenster.jpg'
+import Drehfenster1 from '../images/details/drehfenster1.jpg'
+import Drehfenster2 from '../images/details/drehfenster2.jpg'
+import SliderDrehfenster2 from '../images/details/slider_drehfenster2.jpg'
+import SliderDrehfenster3 from '../images/details/slider_drehfenster3.jpg'
 
 export const data = {
     
@@ -18,17 +78,57 @@ export const data = {
                 {
                     title: "Ästhetik im Blick",
                     text: "Wir legen großen Wert auf Optik und Funktion unserer Produkte, deshalb haben wir entscheidende Details, wie Griffe und Profilkonturen stets weiterentwickelt und optimiert. Die ergonomischen Konturen unserer Griffe sorgen für ein angenehmes Handling. Unsere Gewebe zeichnen sich durch hohe Durchsicht bei geprüfter Langlebigkeit aus – überzeugen Sie sich.",
-                    img: TempImg,
+                    img: Spannrahmen1,
                     def: true,
                 },
                 {
                     title: "Qualität – Made in Germany",
                     text: "Die durchgängige Wertigkeit unserer Spannrahmen spricht für sich. Wir setzen auf beste Materialien, wie Aluminium, Edelstahl und High-Tech Kunststoffe. Unsere Produkte werden von geschulten Herstellern regional in Deutschland produziert. Die Beratung vor Ort und die Montage unserer Elemente erfolgt durch professionelle Fachhandwerker.",
-                    img: TempImg,
+                    img: Spannrahmen2,
                     def: false,
                 },
             ],
-            slide_data: null
+            slide_data: {
+                img: Spannrahmen,
+                alt_img: AlternativeSpannrahmen,
+                array: [
+                    {
+                        title: "Eckwinkel",
+                        text: "Innenliegender Aluminiumwinkel doppelt verpresst, für besonders hohe Steifigkeit der Eckverbindung.",
+                        image: Slide_Drehtür1,
+                        top: "8%",
+                        left: "10%",
+                    },
+                    {
+                        title: "Einhängewinkel",
+                        text: "Einhängewinkel gefedert - für kinderleichten Ein- und Ausbau Aushängesicherung zum Eindrehen",
+                        image: Slider_spannrahmen2,
+                        top: "9%",
+                        left: "84%",
+                    },
+                    {
+                        title: "Mittenarretierung",
+                        text: "Für größere Elemente steht optional eine eindrehbare Mittenarretierung zur Verfügung.",
+                        image: Slider_spannrahmen3,
+                        top: "33%",
+                        left: "8%",
+                    },
+                    {
+                        title: "Griff",
+                        text: "Klappgriff - optimales Handling",
+                        image: Slider_spannrahmen4,
+                        top: "45%",
+                        left: "80%",
+                    },
+                    {
+                        title: "Qualitätsprofil",
+                        text: "Qualitätsprofil aus Aluminium mit hochwertiger Beschichtung",
+                        image: Slider_spannrahmen5,
+                        top: "85%",
+                        left: "65%",
+                    },
+                ]
+            }
         },
         drehfenster : {
             welcoming : {
@@ -39,17 +139,57 @@ export const data = {
                 {
                     title: "Unauffällig",
                     text: "Der fast unsichtbare Schutz vor Insekten: Die schlanken Profile und unsere hochtransparenten Gewebe betten Ihr Fliegengitter harmonisch in das Gesamtbild der Fassade ein. Seit über 25 Jahren treibt uns eine vollendete Ästhetik und Qualität bei der Neuentwicklung unserer Produkte an. Perfekte Profilabschlüsse, verdeckt liegende Scharniere und ein leises Schließgeräusch machen unsere Drehrahmen zu einem besonders beliebten Produkt. Unsere Gewebe zeichnen sich durch hohe Durchsicht bei geprüfter Langlebigkeit aus – überzeugen Sie sich.",
-                    img: TempImg,
+                    img: Drehfenster1,
                     def: false,
                 },
                 {
                     title: "Langlebig",
                     text: "Freude am Insektenschutz – ein Produktleben lang. Alle Beschlagteile sind hinsichtlich Dauerfestigkeit und Langlebigkeit optimiert. Gerade im Bereich der Scharniere meistern wir eine hervorragende Kraft- und Momentaufnahme bei geringsten Beschlagabmessungen. Wir setzen auf beste Materialien, wie Aluminium, Edelstahl und High-Tech Kunststoffe. Unsere Produkte werden von geschulten Herstellern regional in Deutschland produziert. Die Beratung vor Ort und die Montage unserer Elemente erfolgt durch professionelle Fachhandwerker.",
-                    img: TempImg,
+                    img: Drehfenster2,
                     def: true,
                 },
             ],
-            slide_data: null
+            slide_data: {
+                img: Drehfenster,
+                alt_img: null,
+                array: [
+                    {
+                        title: "Eckwinkel",
+                        text: "Innenliegender Aluminiumwinkel doppelt verpresst, für besonders hohe Steifigkeit der Eckverbindung.",
+                        image: Slide_Drehtür1,
+                        top: "8%",
+                        left: "10%",
+                    },
+                    {
+                        title: "Qualitätsprofil",
+                        text: "Qualitätsprofil aus Aluminium mit hochwertiger Beschichtung",
+                        image: SliderDrehfenster2,
+                        top: "2%",
+                        left: "74%",
+                    },
+                    {
+                        title: "Griff",
+                        text: "Schalgengriff für optimales Handling in Elementfarbe",
+                        image: SliderDrehfenster3,
+                        top: "47%",
+                        left: "17%",
+                    },
+                    {
+                        title: "Magnetverschluss",
+                        text: "Hochwertiger Verschluss: Die im Innenleben des Profils integrierten Magnete halten den Insektenschutzrahmen sicher geschlossen.",
+                        image: Slide_Drehtür2,
+                        top: "72%",
+                        left: "6%",
+                    },
+                    {
+                        title: "Scharniere",
+                        text: "Scharniere aus Vollaluminium mit Edelstahlstift",
+                        image: Slide_Drehtür5,
+                        top: "75%",
+                        left: "90%",
+                    },
+                ]
+            }
         },
         rollo : {
             welcoming : {
@@ -106,23 +246,70 @@ export const data = {
                 {
                     title: "Ästhetik im Blick",
                     text: "Gerade Türen stehen durch häufigen Durchgang im Fokus des Betrachters. Perfekte Profilabschlüsse, verdeckt liegende Scharniere und ein leises Schließgeräusch machen unsere Drehrahmen zu einem besonders beliebten Produkt. Gutes Handling ist gerade für Drehtüren entscheidend, deshalb bieten wir hierfür eine breite Palette an unterschiedlichen Griffen. Unsere Gewebe zeichnen sich durch hohe Durchsicht bei geprüfter Langlebigkeit aus – überzeugen Sie sich.",
-                    img: TempImg,
+                    img: Drehtür1,
                     def: true,
                 },
                 {
                     title: "Qualität – Made in Germany",
                     text: "Freude am Insektenschutz – ein Produktleben lang. Alle Beschlagteile sind hinsichtlich Dauerfestigkeit und Langlebigkeit optimiert. Gerade im Bereich der Scharniere meistern wir eine hervorragende Kraft- und Momentaufnahme bei geringsten Beschlagabmessungen. Wir setzen auf beste Materialien, wie Aluminium, Edelstahl und High-Tech Kunststoffe. Unsere Produkte werden von geschulten Herstellern regional in Deutschland produziert. Die Beratung vor Ort und die Montage unserer Elemente erfolgt durch professionelle Fachhandwerker.",
-                    img: TempImg,
+                    img: Drehtür2,
                     def: false,
                 },
                 {
                     title: "Trittschutzblech – für die richtige Stabilität",
                     text: "Bereits im Standard stattet Lämmermann alle Insektenschutz-Drehtüren mit einem Trittschutzblech an der Elementunterseite aus. Die Aussteifung verleiht dem Insektenschutzelement zusätzliche Stabilität und ist zudem praktisch, da in diesem Bereich der Rahmen mit sanfter Fußbedienung geöffnet werden kann.",
-                    img: TempImg,
+                    img: Drehtür3,
                     def: true,
                 },
             ],
-            slide_data: null
+            slide_data: {
+                img: Drehtür,
+                alt_img: null,
+                array: [
+                    {
+                        title: "Eckwinkel",
+                        text: "Innenliegender Aluminiumwinkel doppelt verpresst, für besonders hohe Steifigkeit der Eckverbindung.",
+                        image: Slide_Drehtür1,
+                        top: "8%",
+                        left: "3%",
+                    },
+                    {
+                        title: "Magnetverschluss",
+                        text: "Hochwertiger Verschluss: Die im Innenleben des Profils integrierten Magnete halten den Insektenschutzrahmen sicher geschlossen.",
+                        image: Slide_Drehtür2,
+                        top: "33%",
+                        left: "80%",
+                    },
+                    {
+                        title: "Griffsprosse",
+                        text: "Die optionale integrierte Griffsprosse rundet das Gesamtbild ab.",
+                        image: Slide_Drehtür3,
+                        top: "46%",
+                        left: "42%",
+                    },
+                    {
+                        title: "Klappgriff",
+                        text: "Klappgriff - für optimales Handling in Elementfarbe",
+                        image: Slide_Drehtür4,
+                        top: "50%",
+                        left: "70%",
+                    },
+                    {
+                        title: "Scharniere",
+                        text: "Scharniere aus Vollaluminium mit Edelstahlstift",
+                        image: Slide_Drehtür5,
+                        top: "75%",
+                        left: "3%",
+                    },
+                    {
+                        title: "Sockelblech",
+                        text: "Unser Sockelblech erhöht die Stabilität der Drehtüre und vermeidet eine Beschädigung des Gewebes im Fußbereich.",
+                        image: Slide_Drehtür6,
+                        top: "90%",
+                        left: "88%",
+                    },
+                ]
+            }
         },
         pendeltür : {
             welcoming : {
@@ -133,23 +320,70 @@ export const data = {
                 {
                     title: "Aus einem Guss",
                     text: "An unsere neue Pendeltür-Generation haben wir höchste Ansprüche an Design und Funktion gestellt. Die geringen Spaltmaße und verdeckt liegende Scharniere lassen die Pendeltür als harmonische Einheit wirken. Die optimale Funktion rundet das Gesamtbild ab: die integrierte Griffsprosse und das Sockelblech fügen sich nahtlos mit ein und sind für die Bedienung ergonomisch angeordnet. Unsere Gewebe zeichnen sich durch hohe Durchsicht bei geprüfter Langlebigkeit aus – überzeugen Sie sich.",
-                    img: TempImg,
+                    img: Pendaltür1,
                     def: false,
                 },
                 {
                     title: "Ein Dauerläufer",
                     text: "Freude am Insektenschutz – ein Produktleben lang. Alle Beschlagteile sind hinsichtlich Dauerfestigkeit und Langlebigkeit optimiert. Gerade im Bereich der Scharniere meistern wir eine hervorragende Kraft- und Momentaufnahme bei geringsten Beschlagabmessungen. Wir setzen auf beste Materialien, wie Aluminium, Edelstahl und High-Tech Kunststoffe. Dauertests stellen die Langlebigkeit unter Beweis: 120.000 Schließvorgängen am Stück stellen für unsere Pendeltüren kein Problem dar.",
-                    img: TempImg,
+                    img: Pendaltür2,
                     def: true,
                 },
                 {
                     title: "Sockelblech – für die richtige Stabilität",
                     text: "Bereits im Standard stattet Lämmermann alle Insektenschutz-Pendelrahmen mit einem Sockelblech an der Elementunterseite aus. Die Aussteifung verleiht dem Insektenschutzelement zusätzliche Stabilität und ist zudem praktisch, da in diesem Bereich der Rahmen mit sanfter Fußbedienung geöffnet werden kann.",
-                    img: TempImg,
+                    img: Pendaltür3,
                     def: false,
                 },
             ],
-            slide_data: null
+            slide_data: {
+                img: Pendaltür,
+                alt_img: AlternativePendaltür,
+                array: [
+                    {
+                        title: "Federbeschlag",
+                        text: "Federbeschlag - patentierte Technik. Durch die integrierten Torsionsstäbe schließt die Pendeltür automatisch.",
+                        image: Pendaltür2,
+                        top: "5%",
+                        left: "15%",
+                    },
+                    {
+                        title: "Magnettechnik",
+                        text: "Integrierte Magnettechnik – durch die im Profilrahmen eingelassenen Neodym-Magnete bleibt die Tür auch bei Wind und Wetter sicher geschlossen.",
+                        image: Slide_Drehtür2,
+                        top: "25%",
+                        left: "50%",
+                    },
+                    {
+                        title: "Aus einem Guss",
+                        text: "Aus einem Guss – geringste Spaltmaße und hochwertige Beschlagkomponenten sprechen für sich.",
+                        image: Slide_Pendaltür3,
+                        top: "42%",
+                        left: "0%",
+                    },
+                    {
+                        title: "Griff",
+                        text: "Die Griffsprosse ermöglicht eine komfortable Bedienung des Elements und bietet zusätzliche Stabilität.",
+                        image: Slide_Drehtür3,
+                        top: "50%",
+                        left: "26%",
+                    },
+                    {
+                        title: "Sockelblech",
+                        text: "Unser Sockelblech erhöht die Stabilität der Drehtüre und vermeidet eine Beschädigung des Gewebes im Fußbereich.",
+                        image: Slide_Pendaltür5,
+                        top: "86%",
+                        left: "30%",
+                    },
+                    {
+                        title: "Eckwinkel",
+                        text: "Innenliegender Aluminiumwinkel doppelt verpresst, für besonders hohe Steifigkeit der Eckverbindung.",
+                        image: Slide_Pendaltür6,
+                        top: "84%",
+                        left: "75%",
+                    },
+                ]
+            }
         },
         schiebetür : {
             welcoming : {
@@ -160,17 +394,57 @@ export const data = {
                 {
                     title: "Leichtgängigkeit",
                     text: "Lämmermann Schiebetüren mit angenehm gestalteten Profilkonturen und hochtransparentem Gewebe sind ein echter Hingucker – sofern Ihre Gäste den Insektenschutz überhaupt bemerken. Laufruhe, Leichtgängigkeit und eine intuitive Bedienung zeichnen unsere Schiebesysteme aus. Mit der integrierten Griffnut kann der Flügel in jeder Angriffshöhe geöffnet werden, dies ist auch ideal für Kinder. Mit dem im Standard verbauten Schließbeschlag arretiert Ihr Flügel sanft in Endposition. Unsere Gewebe zeichnen sich durch hohe Durchsicht bei geprüfter Langlebigkeit aus – überzeugen Sie sich.",
-                    img: TempImg,
+                    img: Schiebetür1,
                     def: true,
                 },
                 {
                     title: "Freude am Insektenschutz...",
                     text: "... ein Produktleben lang. Alle Beschlagteile sind hinsichtlich Dauerfestigkeit und Langlebigkeit optimiert. Gerade im Bereich der Laufrollen sind Präzision und saubere Montage ein Garant für ein hochwertiges Produkterlebnis. Wir setzen auf beste Materialien, wie Aluminium, Edelstahl und High-Tech Kunststoffe. Unsere Produkte werden von geschulten Herstellern regional in Deutschland produziert. Die Beratung vor Ort und die Montage unserer Elemente erfolgt durch professionelle Fachhandwerker.",
-                    img: TempImg,
+                    img: Schiebetür2,
                     def: false,
                 },
             ],
-            slide_data: null
+            slide_data: {
+                img: AlternativeSchiebetür,
+                alt_img: Schiebetür,
+                array: [
+                    {
+                        title: "Eckwinkel",
+                        text: "Innenliegender Aluminiumwinkel doppelt verpresst, für besonders hohe Steifigkeit der Eckverbindung.",
+                        image: Slide_Drehtür1,
+                        top: "5%",
+                        left: "5%",
+                    },
+                    {
+                        title: "Rollenverschluss",
+                        text: "Rollenverschluss für sichere Positionierung in Endlage.",
+                        image: Slide_Schiebetür2,
+                        top: "8%",
+                        left: "26%",
+                    },
+                    {
+                        title: "Griff",
+                        text: "Die integrierte Griffmulde ermöglicht eine komfortable Bedienung des Elements in jeder Höhenlage – besonders auch für Kinder.",
+                        image: Slide_Schiebetür3,
+                        top: "45%",
+                        left: "22%",
+                    },
+                    {
+                        title: "Optional: Fußbedienplatte:",
+                        text: "Öffnen und Schließen Sie Ihre Schiebeanlage bequem mit dem Fuß, wenn einmal keine Hand frei ist.",
+                        image: Slide_Schiebetür4,
+                        top: "85%",
+                        left: "24%",
+                    },
+                    {
+                        title: "Rollenbeschlag",
+                        text: "Rollenbeschlag – kugelgelagert und stufenlos höhenverstellbar. Einzigartig am Markt.",
+                        image: Slide_Schiebetür5,
+                        top: "85%",
+                        left: "66%",
+                    },
+                ]
+            }
         },
         plissee : {
             welcoming : {
@@ -181,23 +455,49 @@ export const data = {
                 {
                     title: "Zeitgeist",
                     text: "Klare Linien und breite Öffnungen spiegeln den Zeitgeist der modernen Architektur wider. Lämmermann-Plissees wurden für besonders anspruchsvolle Bedürfnisse an Design und Funktion entwickelt. Mit einer Einbautiefe von lediglich 22 mm und einer extra flachen Bodenschiene entsteht eine nahezu nahtlose Integration zwischen Insektenschutz und Ihrem bestehenden Fensterelement. In Funktion entfaltet das Plissee seine volle Wirkung und sorgt für insektenfreien Wohnraum – zusammengeschoben benötigt es jedoch nur minimalen Platz.",
-                    img: TempImg,
+                    img: Plissee1,
                     def: true,
                 },
                 {
                     title: "Dauerfest - Eben Made in Germany",
                     text: "Freude am Insektenschutz – ein Produktleben lang. Alle Beschlagteile sind hinsichtlich Dauerfestigkeit und Langlebigkeit optimiert. Unsere Schnüre und Kunststoffgleiter unterziehen wir strengsten Tests für ein optimales Nutzererlebnis. Mit unserer grazilen Bodenschiene erzielen wir eine homogen laufende Führung der Zugschiene.",
-                    img: TempImg,
+                    img: Plissee2,
                     def: false,
                 },
                 {
                     title: "Vertikale Zugschiene – für die richtige Ergonomie",
                     text: "Die mit einer tiefen Eingriffnut entwickelte Zugschiene ermöglicht auch für große Hände eine gute Bedienung. Besonders praktisch ist, dass die Zugschiene des Lämmermann-Plissees vertikal durchgehend verläuft und somit auf jeder Angriffshöhe bedient werden kann.",
-                    img: TempImg,
+                    img: Plissee3,
                     def: true,
                 },
             ],
-            slide_data: null
+            slide_data: {
+                img: Plissee,
+                alt_img: AlternativePlissee,
+                array: [
+                    {
+                        title: "Qualitätsprofil",
+                        text: "Qualitätsprofil aus Aluminium mit hochwertiger Beschichtung",
+                        image: SliderPlissee1,
+                        top: "8%",
+                        left: "6%",
+                    },
+                    {
+                        title: "Griff",
+                        text: "Ausgerundete Griffmulde für angenehmes Handling. Stufenlos einstellbar.",
+                        image: Plissee3,
+                        top: "40%",
+                        left: "68%",
+                    },
+                    {
+                        title: "Zugschiene",
+                        text: "Die Zugschiene wird mittels Endgleitern in einem flachen U-Profil geführt.",
+                        image: SliderPlissee2,
+                        top: "73%",
+                        left: "21%",
+                    },
+                ]
+            }
         },
 
     },

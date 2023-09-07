@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import {data} from './Data'
 import { Row, ServiceWrapper, Container } from '../LandingPageComponents/Products';
+import Animated from './Animated';
 
 
 const DetailContainer = styled.div`
@@ -111,7 +112,7 @@ function Detail() {
         setSubdata(data[category]); 
         //console.log("SUBDATA: ",data[category]);
 
-        //console.log("TEST123", data[category][detailName])
+        console.log("TEST123", data[category][detailName])
         setDetailData(data[category][detailName]);
     
     },[window.location.pathname])
@@ -142,6 +143,12 @@ function Detail() {
                         }
                     </ServiceWrapper>
             </Container>
+            }
+
+            {
+                detailData && detailData?.slide_data !==null &&
+                <Animated data={detailData.slide_data}/>
+
             }
          
     </DetailContainer>
