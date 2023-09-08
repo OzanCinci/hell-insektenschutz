@@ -170,7 +170,7 @@ function Animated({data}) {
     const [selectedImage, setSelectedImage] = useState("original");
 
     const changeSelection = (selection) => {
-        if (selectedIndex===selection) 
+        if (selectedIndex===selection && window.innerWidth > 780) 
             return;
 
         setSelected(array[selection]);
@@ -198,7 +198,9 @@ function Animated({data}) {
                 data.array.map((item,index)=>{
                     return (
                         <Clickable className={selectedIndex===index ? "selected" : "not-selected"} top={item.top} left={item.left} onClick={()=>changeSelection(index)} key={index}>
-                            +
+                            <div>
+                                X
+                            </div>    
                         </Clickable>
                     )
                 })
