@@ -2,7 +2,6 @@ import TurenImage from '../images/details/turen.jpg'
 import LichImage from '../images/details/lich.jpg'
 import DachImage from '../images/details/dach.jpg'
 import FensterImage from '../images/details/fenster.jpg'
-import TempImg from '../images/dumps/fenster4.jpg'
 
 ////////////
 // TUREN ///
@@ -64,6 +63,50 @@ import Drehfenster1 from '../images/details/drehfenster1.jpg'
 import Drehfenster2 from '../images/details/drehfenster2.jpg'
 import SliderDrehfenster2 from '../images/details/slider_drehfenster2.jpg'
 import SliderDrehfenster3 from '../images/details/slider_drehfenster3.jpg'
+
+
+import Rollos1 from '../images/details/rollos1.jpg'
+import Rollos2 from '../images/details/rollos2.jpg'
+import Rollos from '../images/details/rollos.jpg'
+import AlternativeRollos from '../images/details/alternative_rollos.jpg'
+import SliderRollos1 from '../images/details/slider_rollos1.jpg'
+import SliderRollos2 from '../images/details/slider_rollos2.jpg'
+import SliderRollos3 from '../images/details/slider_rollos3.jpg'
+import SliderRollos4 from '../images/details/slider_rollos4.jpg'
+
+
+import Pl1 from '../images/details/pl1.jpg'
+import Pl2 from '../images/details/pl2.jpg'
+import Pl from '../images/details/pl.jpg'
+import AlternativePl from '../images/details/alternative_pl.jpg'
+import Slider_Pl1 from '../images/details/slider_pl1.jpg'
+import Slider_Pl2 from '../images/details/slider_pl2.jpg'
+
+
+/////////////
+// LICH /////
+/////////////
+
+import Lich1 from '../images/dumps/lich3.jpg'
+import Lich2 from '../images/dumps/lich2.jpg'
+
+import GitterSafe1 from '../images/details/gittersafe1.jpg'
+import GitterSafe2 from '../images/details/gittersafe2.jpg'
+
+
+/////////////
+// Dach /////
+/////////////
+
+import DachRollo1 from '../images/details/dach_rollo.jpg'
+import DachRollo2 from '../images/details/rollos2.jpg'
+
+
+import DachPlisse from '../images/details/dach_plisse.jpg'
+import AlternativeDachPlisse from '../images/details/alt_dach_plisse.jpg'
+import DachPlisse1 from '../images/details/dach_plisse1.jpg'
+import DachPlisse2 from '../images/details/dach_plisse2.jpg'
+
 
 export const data = {
     
@@ -200,17 +243,57 @@ export const data = {
                 {
                     title: "Ästhetik im Blick",
                     text: "Wer das neue Lämmermann Insektenschutz-Rollo einmal bedient hat, verfällt schnell seiner Wertigkeit. Die Zugschiene mit integrierter Griffmulde verleiht dem Element eine edle Haptik. Mit einem leichten Druck auf die Zugschiene löst sich das Rollo aus dem Verschluss und wickelt sich flüsterleise ganz sanft zurück in die Kassette. Die farblich auf einander abgestimmten Profile lassen das Rollo dezent im Fassadenbild wirken.",
-                    img: TempImg,
+                    img: Rollos1,
                     def: true,
                 },
                 {
                     title: "Qualität – Made in Germany",
                     text: "Freude am Insektenschutz – ein Produktleben lang. Alle Beschlagteile sind hinsichtlich Dauerfestigkeit und Langlebigkeit optimiert. Besonders der im Marktvergleich deutlich solider gestaltete Verschluss, schafft die Grundlage für eine lange Nutzungsdauer ohne Reparaturen. Unsere Rollos sind zudem wartungs- und servicefreundlich konzipiert, daher wird ein gewünschter Gewebetausch auch noch nach Jahren zum Kinderspiel mit geringem Zeitaufwand.",
-                    img: TempImg,
+                    img: Rollos2,
                     def: false,
                 },
             ],
-            slide_data: null
+            slide_data: {
+                img: AlternativeRollos,
+                alt_img: Rollos,
+                array: [
+                    {
+                        title: "Gewebewelle",
+                        text: "Die Gewebewelle kann leicht ausgewechselt werden.",
+                        image: SliderRollos1,
+                        top: "5%",
+                        left: "8%",
+                    },
+                    {
+                        title: "Gewebewelle",
+                        text: "Gewebewelle mit integrierter Feder und Flüssigkeitsbremse",
+                        image: SliderRollos2,
+                        top: "2%",
+                        left: "74%",
+                    },
+                    {
+                        title: "Federstift",
+                        text: "Leichte Befestigung durch Federstift bei Dachflächenfenster",
+                        image: SliderRollos3,
+                        top: "25%",
+                        left: "87%",
+                    },
+                    {
+                        title: "Zugschiene",
+                        text: "Die Zugschiene lässt sich an verschiedenen Zwischenpositionen fixieren.",
+                        image: SliderRollos4,
+                        top: "45%",
+                        left: "46%",
+                    },
+                    {
+                        title: "Intuitiv bedienbar:",
+                        text: "Die Zugschiene lässt sich durch leichten Druck in der Endstellung fixieren und wieder lösen.",
+                        image: Rollos1,
+                        top: "80%",
+                        left: "8%",
+                    },
+                ]
+            }
         },
         plissee : {
             welcoming : {
@@ -221,17 +304,43 @@ export const data = {
                 {
                     title: "Ästhetik im Blick",
                     text: "Plissees sind momentan der Trendsetter im Sonnen- und Insektenschutz. Durch die spezielle Faltung des Gewebes (Plissierung) entsteht eine moderne Optik, die zudem im eingeschobenen Zustand extrem platzsparend zwischen den Profilfalzen eingebettet ist. Mit einer Einbautiefe von lediglich 22 mm und der integrierten Zugschiene kann das Insektenschutzplissee kinderleicht bei minimalem Platzbedarf bedient werden.",
-                    img: TempImg,
+                    img: Pl1,
                     def: false,
                 },
                 {
                     title: "Qualität – Made in Germany",
                     text: "Freude am Insektenschutz – ein Produktleben lang. Alle Beschlagteile sind hinsichtlich Dauerfestigkeit und Langlebigkeit optimiert. Unsere Schnüre und Kunststoffgleiter unterziehen wir strengsten Tests für ein optimales Nutzererlebnis. Die in der Zugschiene integrierte Bürste sorgt für einen insektendichten Abschluss zu Ihrer Fensterbank.",
-                    img: TempImg,
+                    img: Pl2,
                     def: true,
                 },
             ],
-            slide_data: null
+            slide_data: {
+                img: Pl,
+                alt_img: AlternativePl,
+                array: [
+                    {
+                        title: "Qualtitätsprofil",
+                        text: "Qualitätsprofil aus Aluminium mit hochwertiger Beschichtung",
+                        image: Slider_Pl1,
+                        top: "2%",
+                        left: "28%",
+                    },
+                    {
+                        title: "Griff",
+                        text: "Ausgerundete Griffmulde für angenehmes Handling. Stufenlos einstellbar.",
+                        image: Slider_Pl2,
+                        top: "48%",
+                        left: "64%",
+                    },
+                    {
+                        title: "Zugschiene",
+                        text: "Die Zugschiene schließt mit der integrierten Bürstendichtung sauber zum Anschluss ab.",
+                        image: Pl2,
+                        top: "80%",
+                        left: "7%",
+                    },
+                ]
+            }
         },
     },
 
@@ -513,13 +622,13 @@ export const data = {
                 {
                     title: "Flächenoptik",
                     text: "Der äußerst flach gestaltete Rahmen, sowie das verfügbare Spektrum an Gewebemöglichkeiten und Farben lassen jede kundenindividuell nach Maß angefertigte Lichtschachtabdeckung zu einem Unikat werden. Die eingesetzten Eloxal- und Pulveroberflächen sind besonders widerstandsfähig und unempfindlich. Eine besonders interessante Flächenoptik bietet zudem das Design-Edelstahlgewebe.",
-                    img: TempImg,
+                    img: Lich1,
                     def: false,
                 },
                 {
                     title: "Qualitäts-Edelstahlgewebe",
                     text: "Freude am Insektenschutz – ein Produktleben lang. Alle Beschlagteile sind hinsichtlich Langlebigkeit und Solidität optimiert. Das in Deutschland hergestellte Qualitäts-Edelstahlgewebe zeichnet sich durch einen gleichmäßigen Maschenverlauf aus. Durch die besonders dick gewählte Drahtstärke von 0,60 mm entsteht ein besonders solides Gewebe mit herausragenden Eigenschaften in Bezug auf Belastbarkeit und Korrosion.",
-                    img: TempImg,
+                    img: Lich2,
                     def: true,
                 },
             ],
@@ -534,13 +643,13 @@ export const data = {
                 {
                     title: "Ästhetik im Blick",
                     text: "Der Lämmermann-Gittersafe ist ein Sandwichelement, das Ihren bestehenden Gitterrost komplett ersetzt. Die dann neu eingesetzte Abdeckung ist belastbar und bietet zudem Schutz vor Spinnen und Laub. Besonders schön ist, dass das gesamte Element wie aus einem Guss ist und flächenbündig zur Umgebung integriert werden kann.",
-                    img: TempImg,
+                    img: GitterSafe1,
                     def: true,
                 },
                 {
                     title: "GFK und Edelstahl",
                     text: "Freude am Insektenschutz – ein Produktleben lang. Der Lämmermann-Gittersafe ist ein Sandwichelement, das Ihren bestehenden Gitterrost komplett ersetzt. Das Rahmenelement besteht aus hochbelastbaren Konstruktionsprofilen, die zu einem Rahmen verpresst werden. Herzstück des Ganzen ist ein passgenau eingelassener GFK-Gitterrost und ein 0,6 mm dickes Edelstahlgewebe, das vor Kleintieren und Laub schützt.",
-                    img: TempImg,
+                    img: GitterSafe2,
                     def: false,
                 },
             ],
@@ -559,13 +668,13 @@ export const data = {
                 {
                     title: "Ästhetik im Blick",
                     text: "Wer das neue Lämmermann Insektenschutz-Rollo einmal bedient hat, verfällt schnell seiner Wertigkeit. Die Zugschiene mit integrierter Griffmulde verleiht dem Element eine edle Haptik. Mit einem leichten Druck auf die Zugschiene löst sich das Rollo aus dem Verschluss und wickelt sich flüsterleise ganz sanft zurück in die Kassette. Die farblich auf einander abgestimmten Profile lassen das Rollo dezent im Fassadenbild wirken.",
-                    img: TempImg,
+                    img: DachRollo1,
                     def: false,
                 },
                 {
                     title: "Qualität – Made in Germany",
                     text: "Freude am Insektenschutz – ein Produktleben lang. Alle Beschlagteile sind hinsichtlich Dauerfestigkeit und Langlebigkeit optimiert. Besonders der im Marktvergleich deutlich solider gestaltete Verschluss, schafft die Grundlage für eine lange Nutzungsdauer ohne Reparaturen. Unsere Rollos sind zudem wartungs- und servicefreundlich konzipiert, daher wird ein gewünschter Gewebetausch auch noch nach Jahren zum Kinderspiel mit geringem Zeitaufwand.",
-                    img: TempImg,
+                    img: DachRollo2,
                     def: true,
                 },
             ],
@@ -580,17 +689,43 @@ export const data = {
                 {
                     title: "Ästhetik im Blick",
                     text: "Plissees sind momentan der Trendsetter im Sonnen- und Insektenschutz. Durch die spezielle Faltung des Gewebes (Plissierung) entsteht eine moderne Optik, die zudem im eingeschobenen Zustand extrem platzsparend zwischen den Profilfalzen eingebettet ist. Mit einer Einbautiefe von lediglich 22 mm und der integrierten Zugschiene kann das Insektenschutzplissee kinderleicht bei minimalem Platzbedarf bedient werden.",
-                    img: TempImg,
+                    img: DachPlisse1,
                     def: true,
                 },
                 {
                     title: "Qualität – Made in Germany",
                     text: "Freude am Insektenschutz – ein Produktleben lang. Alle Beschlagteile sind hinsichtlich Dauerfestigkeit und Langlebigkeit optimiert. Unsere Schnüre und Kunststoffgleiter unterziehen wir strengsten Tests für ein optimales Nutzererlebnis. Die in der Zugschiene integrierte Bürste sorgt für einen insektendichten Abschluss zur Unterseite.",
-                    img: TempImg,
+                    img: DachPlisse2,
                     def: false,
                 },
             ],
-            slide_data: null
+            slide_data: {
+                img: DachPlisse,
+                alt_img: AlternativeDachPlisse,
+                array: [
+                    {
+                        title: "Qualitätsprofil",
+                        text: "Qualitätsprofil aus Aluminium mit hochwertiger Beschichtung",
+                        image: Slider_Pl1,
+                        top: "1%",
+                        left: "18%",
+                    },
+                    {
+                        title: "Griff",
+                        text: "Ausgerundete Griffmulde für angenehmes Handling. Stufenlos einstellbar.",
+                        image: Slider_Pl2,
+                        top: "50%",
+                        left: "58%",
+                    },
+                    {
+                        title: "Zugschiene",
+                        text: "Die Zugschiene schließt mit der integrierten Bürstendichtung sauber zum Anschluss ab.",
+                        image: Pl2,
+                        top: "78%",
+                        left: "15%",
+                    },
+                ]
+            }
         },
     }
     

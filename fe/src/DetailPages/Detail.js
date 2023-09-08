@@ -8,7 +8,6 @@ import Animated from './Animated';
 
 const DetailContainer = styled.div`
     min-height: 900px;
-    border: 1px solid red;
     display: flex;
     justify-content: flex-start;
     padding-top: 60px;
@@ -24,10 +23,6 @@ const ImageWrapper = styled.div`
   position: relative;
 
   @media only screen and (min-width: 1300px) {
-    width: 100vw;
-    /*
-    background-image: linear-gradient(to left, #db5424, #debe40);
-    */
    background-color: #f3f2f2;
 }
 `;
@@ -106,16 +101,9 @@ function Detail() {
 
     useLayoutEffect(()=>{
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        //console.log("detailName: ", detailName, "category: ", category);
-        
-        
         setSubdata(data[category]); 
-        //console.log("SUBDATA: ",data[category]);
-
-        console.log("TEST123", data[category][detailName])
         setDetailData(data[category][detailName]);
-    
-    },[window.location.pathname])
+    },[detailName , category])
 
   return (
     <DetailContainer>
