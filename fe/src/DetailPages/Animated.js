@@ -198,7 +198,7 @@ function Animated({data}) {
                 data.array.map((item,index)=>{
                     return (
                         <Clickable className={selectedIndex===index ? "selected" : "not-selected"} top={item.top} left={item.left} onClick={()=>changeSelection(index)} key={index}>
-                            <div>
+                            <div style={{fontSize:"14px", fontWeight:"bold"}}>
                                 X
                             </div>    
                         </Clickable>
