@@ -1,6 +1,7 @@
 import React, { useLayoutEffect } from 'react'
 import styled from 'styled-components';
 import TelephoneIcon from '../images/footer/phone.png'
+import WPIcon from '../images/footer/wp.png'
 import MailIcon from '../images/footer/mail.png'
 import LocationIcon from '../images/footer/location.png'
 
@@ -109,7 +110,7 @@ const Box = styled.div`
 const BoxWrapper = styled.div`
   background-color: white;
   padding: 20px 50px 20px 50px;
-  height: 750px;
+  height: 800px;
   margin-top: 150px;
   border-radius: 10px;
   -webkit-box-shadow: 24px 16px 31px -24px black;
@@ -167,7 +168,13 @@ function Kontakt() {
               window.location.href="tel:+49176/62960342";
           }}> 
             <img height='30px' alt='telephone-icon' src={TelephoneIcon}/>
-            <div>+49176/62960342</div>
+            <div>Rufen Sie uns an: +49176/62960342</div>
+        </Box>
+        <Box onClick={() => {
+              window.location.href="https://wa.me/message/6LCTHQGZB6NOL1";
+          }}> 
+            <img height='30px' alt='telephone-icon' src={WPIcon}/>
+            <div>WhatsApp: +49176/62960342</div>
         </Box>
         <Box onClick={()=>{
             window.location.href = "mailto:info@hell-insektenschutz.de";
