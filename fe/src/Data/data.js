@@ -25,12 +25,14 @@ import G5 from '../images/dumps/g5.jpg'
 const data = {
     dachfenster: [
         {
+            url: "rollo",
             img: P3,
             text: "Unsere Rollo-Systeme bieten Insektenschutz für nahezu jedes Dachflächenfenster. Egal ob Sie unsere Rollos ausgezogen haben, oder ob es in der Kassette auf Benutzung wartet – sie werden in Sachen Durchblick fast keinen Unterschied merken. Versprochen.",
             def: true,
-            title: "Insektenschutz für Dachfenster"
+            title: "Rollo"
         },
         {
+            url: "plissee",
             img: D2,
             text: "Insektenschutzplissees für Dachfenster sind die Alternative zum Rollo für trendbewusste Kunden. Mit einem Handgriff an der Zugschiene entfaltet sich das Gewebe und bietet wirksamen Insektenschutz. Die Faltenkanten wirken dabei besonders stylisch und modern.",
             def: false,
@@ -39,24 +41,28 @@ const data = {
     ],
     fenster: [
         {
+            url: "spannrahmen",
             img: P2,
             text: "Unsere Spannrahmen sind die beliebte Lösung für Fenster, die nur zum Lüften geöffnet oder gekippt werden. Unser Einhängesystem ermöglicht eine Montage ohne zu Bohren. Auch bei besonders eng anliegenden Rolloführungsschienen haben wir die richtige Lösung parat.",
             def: false,
-            title: "Insektenschutz für Fenster"
+            title: "Spannrahmen"
         },
         {
+            url: "drehfenster",
             img: F2,
             text: "Sie möchten Ihr Fliegengitter öffnen können? Je nach Anwendungsfall und Wunsch bieten wir Lösungen, die nach außen oder innen zum Öffnen sind. Die Drehfenster werden gerne in Bereichen eingesetzt, in den Blumen von innen heraus gegossen werden sollen.",
             def: true,
             title: "Drehfenster"
         },
         {
+            url: "rollo",
             img: F3,
             text: "Egal ob Sie unser Insektenschutzrollo ausgezogen haben, oder ob es in der Kassette auf Benutzung wartet – sie werden in Sachen Durchblick fast keinen Unterschied merken. Versprochen.",
             def: false,
             title: "Rollo"
         },
         {
+            url: "plissee",
             img: F4,
             text: "Insektenschutzplissees sind der Trendsetter im Markt. Mit einem Handgriff an der Zugschiene entfaltet sich das Gewebe und bietet wirksamen Insektenschutz. Die Faltenkanten wirken dabei besonders stylisch und modern.",
             def: true,
@@ -103,18 +109,21 @@ const data = {
     ],
     lich: [
         {
+            url: null,
             img: P4,
             text: "Viele Möglichkeiten ein Ziel: Sauberkeit in Ihren Lichtschächten. Ob als clevere Nachrüstlösung oder als tragfähiges Gesamtelement – wir bieten für Ihre Anforderung die richtige Lösung.",
             def: false,
             title: "Für Lichtschächte"
         },
         {
+            url: "lichtsschachtabdeckung",
             img: L2,
             text: "Die optimale Lösung zum Nachrüsten auf nahezu jede Kellerschachtabdeckung. Die Lichtschachtabdeckung besteht aus einem Rahmenelement mit einem hochstrapazierfähigem Edelstahlgewebe. Garantiert passend für Ihre Situation durch viele Zusatzvarianten.",
             def: true,
             title: "Lichtsschachtabdeckung"
         },
         {
+            url: "gitterSafe",
             img: L3,
             text: "Ein solides Gesamtelement mit integrierten GFK-Rost ersetzt Ihren bestehenden Stahlrost. Der Vorteil: Flächenbündiger Abschluss zur Umgebung mit einem gleichzeitig eingearbeiteten Edelstahlgewebe.",
             def: false,
@@ -143,24 +152,28 @@ const data = {
     ],
     türen: [
         {
+            url: "drehtür",
             img: P1,
             text: "Drehtüren sind die 1. Wahl, wenn Sie ein Fliegengitter zum Öffnen für Balkon oder Terrasse suchen. Durch die Vielzahl an Varianten bieten wir Ihnen die optimale Lösung für Ihren Anwendungsfall. Die Öffnung erfolgt im Regelfall nach außen.",
             def: true,
-            title: "Insektenschutz für Türen"
+            title: "Drehtür"
         },
         {
+            url: "pendeltür",
             img: T2,
             text: "Höchsten Komfort und beste Technik bieten unsere Pendeltüren, die sich in zwei Richtungen öffnen lassen und von selbst schließen. So wird der Gang nach Draußen mit dem Tablett kinderleicht – drücken Sie einfach sanft gegen den Flügel und passieren Sie das Türelement.",
             def: false,
             title: "Pendeltür"
         },
         {
+            url: "schiebetür",
             img: T3,
             text: "Sie haben eine große Fensteröffnung oder zu wenig Platz für ein Drehelement? Die können ein- oder zweiflügelig ausgeführt werden. Sprossenfrei ausgeführt wird Ihr Fliegengitter nahezu unsichtbar.",
             def: true,
             title: "Schiebetür"
         },
         {
+            url: "plissee",
             img: T4,
             text: "Insektenschutzplissees sind der Trendsetter im Markt. Mit einem Handgriff an der Zugschiene entfaltet sich das Gewebe und bietet wirksamen Schutz gegen Fliegen. Die Faltenkanten wirken dabei besonders stylisch und modern.",
             def: false,

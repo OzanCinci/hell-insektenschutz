@@ -24,6 +24,7 @@ import Kontakt from './LegalPages/Kontakt';
 import RaumPforzheim from './SeoPages/RaumPforzheim';
 import RaumKarlsruhe from './SeoPages/RaumKarlsruhe';
 import RaumBaden from './SeoPages/RaumBaden';
+import Detail from './DetailPages/Detail';
 
 function App() {
 
@@ -72,8 +73,12 @@ function App() {
 
             <Route exact path='/pforzheim' element={<RaumPforzheim/>}/>
             <Route exact path='/karlsruhe' element={<RaumKarlsruhe/>}/>
-            <Route exact path='/baden' element={<RaumBaden/>}/>
+            <Route exact path='/baden-baden' element={<RaumBaden/>}/>
+
+
             
+            <Route exact path='/einzelheiten/:category/:detailName' element={<Detail/>}/>
+
             <Route default path='/*' element={<PageNotFound/>}/>
 
             

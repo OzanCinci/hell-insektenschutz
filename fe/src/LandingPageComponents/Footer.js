@@ -115,7 +115,9 @@ function Footer() {
           <LogoImg alt='logo' src={Logo}/>
           <div style={{fontSize:"17px"}}>Zeppelinstraße 10, 76448 Durmersheim</div>
           <div>Öffnungszeiten: Mo-Sa 09.00-18.00 Uhr</div>
-          <div className='d-flex flex-row justify-content-center align-items-center my-2'> <img height='30px' alt='telephone-icon' src={TelephoneIcon}/> <span className='mx-2'> +49 176 62960342 </span></div>
+          <div onClick={() => {
+              window.location.href="tel:+49176/62960342";
+          }} className='d-flex flex-row justify-content-center align-items-center my-2'> <img height='30px' alt='telephone-icon' src={TelephoneIcon}/> <span className='mx-2'> +49 176 62960342 </span></div>
           <div className='my-2'></div>
           <div className='d-flex flex-row justify-content-center align-items-center my-2'>
             <a className='mx-3' href="https://instagram.com/hell_insektenschutz?igshid=OGQ5ZDc2ODk2ZA==" target="_blank" rel="noopener noreferrer">
@@ -142,7 +144,7 @@ function Footer() {
             <div style={{textAlign: "left"}}>
               <Txt onClick={()=>nav("/pforzheim")}> Insektenschutz im Raum Pforzheim</Txt>
               <Txt onClick={()=>nav("/karlsruhe")} className='my-2'>Insektenschutz im Raum Karlsruhe</Txt>
-              <Txt onClick={()=>nav("/baden")}>Insektenschutz im Raum Baden</Txt>
+              <Txt onClick={()=>nav("/baden-baden")}>Insektenschutz im Raum Baden-Baden</Txt>
             </div>
         </div>
       </FooterWrapper>

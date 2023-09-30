@@ -56,7 +56,7 @@ function RaumBaden() {
      <Wrapper>
         <PhotoComponent/>
         <Container>
-            <h1 style={{textAlign:'center'}} className='header'>Insektenschutz im Raum Baden</h1>
+            <h1 style={{textAlign:'center'}} className='header'>Insektenschutz im Raum Baden-Baden</h1>
 
             <br></br>
             <div>
