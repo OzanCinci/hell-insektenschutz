@@ -233,7 +233,7 @@ function Reviews() {
         <div  className='d-flex flex-column justify-content-center'>
           <Font data-aos="fade-left">Google Bewertungen</Font>
           <CommentCount data-aos="fade-right" className='d-flex flex-row justify-content-around'>
-            50+ Rezension   
+            60+ Rezension   
           </CommentCount>
           <div data-aos="fade-left">
             <img alt='star-img'  height='20px' src={StarImg}/>

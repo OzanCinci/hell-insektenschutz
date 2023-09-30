@@ -163,13 +163,17 @@ function Kontakt() {
             <div>Geschäftsinhaber:</div>
             <div>Hakan Aydin</div> 
         </BoxColumn>
-        <Box> 
+        <Box onClick={() => {
+              window.location.href="tel:+49176/62960342";
+          }}> 
             <img height='30px' alt='telephone-icon' src={TelephoneIcon}/>
             <div>+49176/62960342</div>
         </Box>
-        <Box> 
+        <Box onClick={()=>{
+            window.location.href = "mailto:info@hell-insektenschutz.de";
+        }}> 
             <img height='30px' alt='mail-icon' src={MailIcon}/> 
-            <div>info@hell-insektenschutz.de</div>
+          <div>info@hell-insektenschutz.de</div>
         </Box>
         <Box>
             <img height='30px' alt='location-icon' src={LocationIcon}/>
