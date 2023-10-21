@@ -264,36 +264,6 @@ const LoginImage = styled.img`
   width: auto;
 `;
 
-
-
-
-
-
-
-
-
-
-
-
-const ModalBody = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 50vh;
-    padding: 20px;
-`;
-
-
-
-
-
-
-
-
-
-
-
 function Navbar() {
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
