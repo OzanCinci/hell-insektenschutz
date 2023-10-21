@@ -25,6 +25,7 @@ import RaumPforzheim from './SeoPages/RaumPforzheim';
 import RaumKarlsruhe from './SeoPages/RaumKarlsruhe';
 import RaumBaden from './SeoPages/RaumBaden';
 import Detail from './DetailPages/Detail';
+import LoginPopUp from './CustomComponents/LoginPopUp';
 
 function App() {
 
@@ -53,6 +54,7 @@ function App() {
   return (
     <div className="App" style={{ overflowX:"hidden", minHeight:"1400px"}}>
       {/*<Navbar/>*/}
+      <LoginPopUp/>
       <BrowserRouter>
         <Navbar/>
         <div style={{minHeight:"100vh"}}>

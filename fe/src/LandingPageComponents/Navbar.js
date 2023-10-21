@@ -3,6 +3,8 @@ import styled from 'styled-components'
 import Logo from '../images/landingPage/logo.png';
 import { useNavigate } from 'react-router-dom'
 import BurgerIcon from './BurgerIcon';
+import LoginIcon from '../images/account/login.png'
+import ShoppingCartIcon from '../images/account/shopping-cart.png'
 
 
 const NavbarWrapper = styled.div`
@@ -69,7 +71,7 @@ const LinkContainer = styled.div`
     opacity: ${props => props.toggle ? "1": "0"};
     transition: transform 350ms ease-in, opacity 150ms ease-in 200ms;
     transform-origin: top;
-    margin-top: 18px;
+    margin-top: 0px;
     border-top: ${props => props.toggle ? "2px solid #f59f4c" : "none"};
     -webkit-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
@@ -84,7 +86,7 @@ const LogoImg = styled.img`
   height: 60px;
 
   @media only screen and (max-width: 1200px) {
-    height: 45px;
+    height: 50px;
   }
 
   &:hover {
@@ -215,6 +217,83 @@ const MobileLegal = styled(Legal)`
   }
 `
 
+const LoginContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  cursor: pointer;
+  gap: 10px;
+
+`;
+
+const LogoContainer = styled.div`
+  width: 98vw;  
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2px;
+  font-size: 22px;
+
+  @media only screen and (min-width: 800px) {
+    width: fit-content; 
+    gap: 40px;
+  }
+`;
+
+
+const LogoText = styled.div`
+  font-size: 14px;
+
+  @media only screen and (min-width: 800px) {
+    font-size: 20px;
+  }
+`
+
+const SingleLoginComponent = styled.div`
+  @media only screen and (max-width: 800px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  transform: translateY(10%);
+`;
+
+const LoginImage = styled.img`
+  height: 26px;
+  width: auto;
+`;
+
+
+
+
+
+
+
+
+
+
+
+
+const ModalBody = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    padding: 20px;
+`;
+
+
+
+
+
+
+
+
+
+
+
 function Navbar() {
   const [toggle, setToggle] = useState(false);
   const navigate = useNavigate();
@@ -224,6 +303,11 @@ function Navbar() {
     setToggle(false);
   }
 
+  function openPopup(){
+    const button = document.getElementById("loginPopup");
+    if (button)
+      button.click();
+  }
 
   return (
     <NavbarContainer toggle={toggle}>
@@ -232,13 +316,24 @@ function Navbar() {
           <LegalText onClick={ () => toggleFunction("/widerrufsbelehrung")}>Widerrufsbelehrung</LegalText>
           <LegalText onClick={ () => toggleFunction("/datenschutz")}>Datenschutz</LegalText>
       </Legal>
+
       <NavbarWrapper toggle={toggle}>
-        <div>
+        <LogoContainer>
           <LogoImg onClick={ () => toggleFunction("/")} src={Logo}/>
+          <LoginContainer>
+              <SingleLoginComponent onClick={()=>openPopup()}>
+                <LoginImage src={LoginIcon}/>
+                <LogoText >Mein Konto</LogoText>
+              </SingleLoginComponent>
+              <SingleLoginComponent>
+                <LoginImage src={ShoppingCartIcon}/>
+                <LogoText>Warenkorb</LogoText>
+              </SingleLoginComponent>
+          </LoginContainer>
           <NavbarButtonWrapper>
             <BurgerIcon toggle={toggle} setToggle={setToggle}/>
           </NavbarButtonWrapper>
-        </div>
+        </LogoContainer>
           
         <LinkContainer toggle={toggle} >
           <MobileLegal>
