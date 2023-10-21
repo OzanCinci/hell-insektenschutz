@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const ozanApiKey = "8CAD9B04EE494507A431DA430663461D";
+const ozanApiKey = process.env.REACT_APP_SERP_API_KEY;
 
 const keyToCheck = 'reviewsData';
 const readFromLocalStorage = () => {
