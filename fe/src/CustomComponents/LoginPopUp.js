@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button'
@@ -10,6 +11,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import FormControl from "@mui/material/FormControl";
 import CircularProgress from '@mui/material/CircularProgress';
+import { loginAction, registerAction } from '../actions/authActions';
 
 const ModalBody = styled.div`
     display: flex;
@@ -29,9 +31,11 @@ const NoAccountComponent = styled.div`
 `
 
 function LoginPopUp() {
-    const [login,setLogin] = useState(true)
+    const [loginType,setLoginType] = useState(true)
     const [submitted,setSubmitted] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+    const dispatch = useDispatch();
+    const login = useSelector(state=>state.login);
     const [loginInfo,setLoginInfo] = useState({
         email:"",
         password:""
@@ -43,6 +47,15 @@ function LoginPopUp() {
         telephone: "",
         password: ""
     });
+
+    /* 
+    private String firstname;
+    private String lastname;
+    private String email;
+    private String password;
+    private String phone;
+    private Role role;
+    */
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
   
@@ -56,8 +69,9 @@ function LoginPopUp() {
         // TODO: do some checks
 
         // set state as pending
-
+        
         // request the jwt token
+        dispatch(loginAction(loginInfo));
 
         // click button to close the modal
         setSubmitted(true);
@@ -72,6 +86,7 @@ function LoginPopUp() {
         // set state as pending
 
         // request for register
+        dispatch(registerAction(signUpInfo));
 
         // save the jwt token
 
@@ -94,9 +109,10 @@ function LoginPopUp() {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <ModalBody class="modal-body">
+                <button onClick={()=>console.log("userInfo in redux: ", login)}>printf</button>
                 {/* LOG IN SCREEN */}
                 {
-                login===true && (                
+                loginType===true && (                
                 <>
                     <TextField value={loginInfo.email} onChange={e=>setLoginInfo({...loginInfo, email: e.target.value})} id="outlined-basic" label="Email" variant="outlined" color="warning"/>
                     <FormControl sx={{ width: "28.8ch" }} variant="outlined">
@@ -128,7 +144,7 @@ function LoginPopUp() {
                         <Checkbox onClick={()=>setType(prevType=> prevType===''?'password':'')} color="warning" />
                         <span>Show password</span>
                     </CheckBoxWrapper>*/}
-                    <NoAccountComponent onClick={()=>setLogin(false)}>Doesnt have an account?</NoAccountComponent>
+                    <NoAccountComponent onClick={()=>setLoginType(false)}>Doesnt have an account?</NoAccountComponent>
                     { submitted===true ?<CircularProgress color="warning" /> 
                                     :<Button onClick={(e)=>handleSubmitLogin(e)} variant="outlined" color="warning">Login</Button>}
                 </>)
@@ -136,7 +152,7 @@ function LoginPopUp() {
                 {/* LOG IN SCREEN */}
                 {/* SIGN UP SCREEN */}
                 {
-                    login === false &&
+                    loginType === false &&
                     <>
                     <TextField 
                         value={signUpInfo.email} onChange={e=>setSignUpInfo({...signUpInfo, email: e.target.value})}
@@ -198,7 +214,7 @@ function LoginPopUp() {
                             }
                             />
                     </FormControl>
-                    <NoAccountComponent onClick={()=>setLogin(true)}>Already have an account?</NoAccountComponent>
+                    <NoAccountComponent onClick={()=>setLoginType(true)}>Already have an account?</NoAccountComponent>
                     { submitted===true ?<CircularProgress color="warning" /> 
                                     :<Button onClick={(e)=>handleSubmitSignUp(e)} variant="outlined" color="warning">Sign Up</Button>}
                     </>

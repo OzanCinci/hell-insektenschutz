@@ -26,6 +26,7 @@ import RaumKarlsruhe from './SeoPages/RaumKarlsruhe';
 import RaumBaden from './SeoPages/RaumBaden';
 import Detail from './DetailPages/Detail';
 import LoginPopUp from './CustomComponents/LoginPopUp';
+import AdminPanel from './Pages/admin/AdminPanel';
 
 function App() {
 
@@ -80,6 +81,10 @@ function App() {
 
             
             <Route exact path='/einzelheiten/:category/:detailName' element={<Detail/>}/>
+
+
+            <Route exact path='/admin-panel' element={<AdminPanel/>}/>
+
 
             <Route default path='/*' element={<PageNotFound/>}/>
 
