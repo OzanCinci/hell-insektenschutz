@@ -27,6 +27,7 @@ import RaumBaden from './SeoPages/RaumBaden';
 import Detail from './DetailPages/Detail';
 import LoginPopUp from './CustomComponents/LoginPopUp';
 import AdminPanel from './Pages/admin/AdminPanel';
+import Profile from './Pages/Profile';
 
 function App() {
 
@@ -84,7 +85,7 @@ function App() {
 
 
             <Route exact path='/admin-panel' element={<AdminPanel/>}/>
-
+            <Route exact path='/profile' element={<Profile/>}/>
 
             <Route default path='/*' element={<PageNotFound/>}/>
 

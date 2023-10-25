@@ -1,11 +1,11 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import styled from 'styled-components'
 import Logo from '../images/landingPage/logo.png';
-import { useNavigate } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import BurgerIcon from './BurgerIcon';
-import LoginIcon from '../images/account/login.png'
-import ShoppingCartIcon from '../images/account/shopping-cart.png'
-
+import LoginIcon from '../images/account/login.png';
+import ShoppingCartIcon from '../images/account/shopping-cart.png';
+import { useSelector } from 'react-redux';
 
 const NavbarWrapper = styled.div`
   display: flex;
@@ -80,13 +80,16 @@ const LinkContainer = styled.div`
 
 `;
 
-
-
 const LogoImg = styled.img`
   height: 60px;
 
   @media only screen and (max-width: 1200px) {
     height: 50px;
+  }
+
+  @media only screen and (max-width: 500px) {
+    height: 45px;
+    margin-right: 20px;
   }
 
   &:hover {
@@ -95,7 +98,7 @@ const LogoImg = styled.img`
   
 `;
 
-const Link = styled.div`
+const LinkButton = styled.div`
   border: 2px solid #f59f4c;
   
   -webkit-border-top-left-radius: 10px;
@@ -161,12 +164,13 @@ const NavbarButtonWrapper = styled.div`
     position: absolute;
     top: 10px;
     right: -30px;
+    right: -30px;
     height: 50px;
     width: 150px;
     display: flex;
     justify-content: center;
   }
-`
+`;
 
 const Legal = styled.div`
   display: flex;
@@ -186,15 +190,14 @@ const Legal = styled.div`
   @media only screen and (max-width: 1200px) {
     display: none;
   }
-`
-
+`;
 
 const LegalText = styled.div`
   &: hover {
     cursor: pointer;
     color: #f59f4c;
   }
-`
+`;
 
 const MobileLegal = styled(Legal)`
   display: flex;
@@ -215,7 +218,7 @@ const MobileLegal = styled(Legal)`
   @media only screen and (min-width: 1200px) {
     display: none;
   }
-`
+`;
 
 const LoginContainer = styled.div`
   display: flex;
@@ -242,12 +245,12 @@ const LogoContainer = styled.div`
 
 
 const LogoText = styled.div`
-  font-size: 14px;
+  font-size: 16px;
 
   @media only screen and (min-width: 800px) {
     font-size: 20px;
   }
-`
+`;
 
 const SingleLoginComponent = styled.div`
   @media only screen and (max-width: 800px) {
@@ -259,25 +262,48 @@ const SingleLoginComponent = styled.div`
   transform: translateY(10%);
 `;
 
+
 const LoginImage = styled.img`
   height: 26px;
   width: auto;
+
+  @media only screen and (max-width: 500px) {
+    height: 28px;
+  }
 `;
 
 function Navbar() {
   const [toggle, setToggle] = useState(false);
+  const [navbarName,setNavbarName] = useState(null);
   const navigate = useNavigate();
+  const {userInfo} = useSelector(state=>state.login);
 
   function toggleFunction(nav){
     navigate(nav);
     setToggle(false);
   }
 
-  function openPopup(){
-    const button = document.getElementById("loginPopup");
-    if (button)
+  function handleAccountClick(){
+    if (!userInfo) {
+      const button = document.getElementById("loginPopup");
+        if (button)
       button.click();
+    } else {
+      // redirect to account page!!!
+      toggleFunction("/profile");
+    }
   }
+
+  useEffect(()=>{
+    if (!userInfo){
+      setNavbarName(null);
+    } else { 
+      let name = userInfo?.firstName?.split(" ");
+      if (name[0].length>=10)
+        name = name[0].substring(0,9) + "..." 
+      setNavbarName(name);
+    }
+  },[userInfo])
 
   return (
     <NavbarContainer toggle={toggle}>
@@ -291,10 +317,11 @@ function Navbar() {
         <LogoContainer>
           <LogoImg onClick={ () => toggleFunction("/")} src={Logo}/>
           <LoginContainer>
-              <SingleLoginComponent onClick={()=>openPopup()}>
-                <LoginImage src={LoginIcon}/>
-                <LogoText >Mein Konto</LogoText>
-              </SingleLoginComponent>
+                <SingleLoginComponent onClick={()=>handleAccountClick()}>
+                    <LoginImage src={LoginIcon}/>
+                    <LogoText>{navbarName || "Mein Konto"}</LogoText>
+                </SingleLoginComponent>
+                
               <SingleLoginComponent>
                 <LoginImage src={ShoppingCartIcon}/>
                 <LogoText>Warenkorb</LogoText>
@@ -311,27 +338,27 @@ function Navbar() {
             <LegalText onClick={ () => toggleFunction("/widerrufsbelehrung")}>Widerrufsbelehrung</LegalText>
             <LegalText onClick={ () => toggleFunction("/datenschutz")}>Datenschutz</LegalText>
           </MobileLegal>
-          <Link onClick={ () => toggleFunction("/turen")}>
+          <LinkButton onClick={ () => toggleFunction("/turen")}>
             Für Türen
-          </Link>
-          <Link onClick={() => toggleFunction("/fenster")}>
+          </LinkButton>
+          <LinkButton onClick={() => toggleFunction("/fenster")}>
             Für Fenster
-          </Link>
-          <Link onClick={() => toggleFunction("/dachfenster")}>
+          </LinkButton>
+          <LinkButton onClick={() => toggleFunction("/dachfenster")}>
             Für Dachfenster
-          </Link>
-          <Link onClick={() => toggleFunction("/lich")}>
+          </LinkButton>
+          <LinkButton onClick={() => toggleFunction("/lich")}>
             Für Lichtschächte
-          </Link>
-          <Link onClick={() => toggleFunction("/sonderformen")}>
+          </LinkButton>
+          <LinkButton onClick={() => toggleFunction("/sonderformen")}>
             Sonderformen
-          </Link>
-          <Link onClick={() => toggleFunction("/zusatzprodukte")}>
+          </LinkButton>
+          <LinkButton onClick={() => toggleFunction("/zusatzprodukte")}>
             Zusatzprodukte
-          </Link>
-          <Link onClick={() => toggleFunction("/gewebearten")}>
+          </LinkButton>
+          <LinkButton onClick={() => toggleFunction("/gewebearten")}>
             Gewebearten
-          </Link>
+          </LinkButton>
         </LinkContainer>
       </NavbarWrapper>
     </NavbarContainer>

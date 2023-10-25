@@ -1,8 +1,10 @@
 import axios from 'axios';
-import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCES, REFRESH_FAIL, REFRESH_REQUEST, REFRESH_SUCCES, REGISTER_FAIL, REGISTER_REQUEST, REGISTER_SUCCES } from '../constants/auth';
+import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCES, LOGOUT, REFRESH_FAIL, REFRESH_REQUEST, REFRESH_SUCCES, REGISTER_FAIL, REGISTER_REQUEST, REGISTER_SUCCES } from '../constants/auth';
 
 
 const URL = process.env.REACT_APP_BE_API;
+
+//
 
 export const loginAction = (loginInfo) => async(dispatch)=> {
 
@@ -27,6 +29,7 @@ export const loginAction = (loginInfo) => async(dispatch)=> {
             dispatch({type:LOGIN_SUCCES, payload:res.data});
             console.log("SUCCESS, LOGIN DATA: ", res.data);
             // TODO: save data to localstorage!
+            localStorage.setItem("userInfo", JSON.stringify(res.data));
         })
         .catch(e => {
             console.log("error reaised: ", e);
@@ -34,9 +37,39 @@ export const loginAction = (loginInfo) => async(dispatch)=> {
         });
 } 
 
+export const logoutAction = (token) => async(dispatch)=> {
+    if (!token){
+        console.log("NULL TOKEN ERROR");
+        return;
+    }
+
+    const url = `${URL}/api/auth/logout`;
+    const configObject = {
+        "url": url,
+        "method": "get",
+        "headers": {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+            }
+    };
+
+    axios.request(configObject)
+        .then(res => {
+            dispatch({type:LOGOUT, payload:res.data});
+            console.log("SUCCESS, LOG OUT: ", res.data);
+            // TODO: delete data from localstorage!
+            localStorage.removeItem("userInfo");
+        })
+        .catch(e => {
+            console.log("error reaised: ", e);
+            //dispatch({type: LOGIN_FAIL, payload: "error raised!"});
+        });
+} 
+
 export const registerAction = (obj) => async(dispatch)=> {
 
     dispatch({type: REGISTER_REQUEST});
+    dispatch({type: LOGIN_REQUEST});
 
     const url = `${URL}/api/auth/register`;
     console.log("url: ", url);
@@ -54,19 +87,20 @@ export const registerAction = (obj) => async(dispatch)=> {
                  "phone": String(obj.telephone),
                  "role": "USER"
                 }
-       
     };
 
     axios.request(configObject)
         .then(res => {
             dispatch({type:REGISTER_SUCCES, payload:res.data});
             console.log("SUCCESS, register DATA: ", res.data);
-            // TODO: save data to localstorage!
             dispatch({type:LOGIN_SUCCES, payload:res.data});
+            // TODO: save data to localstorage!
+            localStorage.setItem("userInfo", JSON.stringify(res.data));
         })
         .catch(e => {
             console.log("error reaised: ", e);
-            dispatch({type: REGISTER_FAIL, payload: "error raised! (register)"});
+            dispatch({type: REGISTER_FAIL, payload: e?.response?.data?.message});
+            dispatch({type: LOGIN_FAIL, payload: e?.response?.data?.message});
         });
 } 
 

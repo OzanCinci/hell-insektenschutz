@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components';
 import TextField from '@mui/material/TextField';
@@ -11,13 +11,14 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import FormControl from "@mui/material/FormControl";
 import CircularProgress from '@mui/material/CircularProgress';
+import Alert from '@mui/material/Alert';
 import { loginAction, registerAction } from '../actions/authActions';
 
 const ModalBody = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
+    align-items: center;
     min-height: 40vh;
     padding: 20px;
     gap: 20px;
@@ -28,14 +29,20 @@ const ModalBody = styled.div`
 const NoAccountComponent = styled.div`
     text-decoration: underline;
     cursor: pointer;
-`
+`;
+
+const ModifiedAlert = styled(Alert)`
+    width: 90%;
+    font-size: 18px !important;
+    text-align: left;
+    border: 1px solid black;
+`;
 
 function LoginPopUp() {
+    const [formError,setFormError] = useState(null);
     const [loginType,setLoginType] = useState(true)
-    const [submitted,setSubmitted] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
     const dispatch = useDispatch();
-    const login = useSelector(state=>state.login);
     const [loginInfo,setLoginInfo] = useState({
         email:"",
         password:""
@@ -45,36 +52,35 @@ function LoginPopUp() {
         firstName: "",
         lastName: "",
         telephone: "",
-        password: ""
+        password: "",
+        passwordChecker: ""
     });
+    
+    const {userInfo, loading, error} = useSelector(state=>state.login);
 
-    /* 
-    private String firstname;
-    private String lastname;
-    private String email;
-    private String password;
-    private String phone;
-    private Role role;
-    */
+    const changeFormType = (arg) => {
+        setLoginType(arg);
+        setFormError(null);
+    }
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
-  
-    const handleMouseDownPassword = (event) => {
-      event.preventDefault();
-    };
+    const handleMouseDownPassword = (event) => {event.preventDefault();};
 
     const handleSubmitLogin = (e) => {
         e.preventDefault();
         
         // TODO: do some checks
-
+        if (!loginInfo.email || !loginInfo.password){
+            setFormError("Bitte füllen Sie alle Felder aus");
+            return;
+        }
         // set state as pending
         
         // request the jwt token
         dispatch(loginAction(loginInfo));
 
         // click button to close the modal
-        setSubmitted(true);
+        //setSubmitted(true);
     }
 
     const handleSubmitSignUp = (e) => {
@@ -82,7 +88,11 @@ function LoginPopUp() {
 
         // TODO: do some checks
         // password match check!
-
+        if (signUpInfo.passwordChecker!==signUpInfo.password) {
+            setFormError("Passwords are not matching!");
+            return;
+        }
+        setFormError(null);
         // set state as pending
 
         // request for register
@@ -91,9 +101,22 @@ function LoginPopUp() {
         // save the jwt token
 
         // click button to close the modal
-        setSubmitted(true);
+
+        // delete this piece of code 
+        //setSubmitted(true);
     }
 
+
+    useEffect(()=>{
+        if (userInfo!==null){
+            const btn = document.getElementById("close-pop-up-btn");
+            if (btn)
+                btn.click();
+        }
+
+        if(error)
+            setFormError(error);
+    },[userInfo, error]);
 
 
   return (
@@ -109,11 +132,12 @@ function LoginPopUp() {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <ModalBody class="modal-body">
-                <button onClick={()=>console.log("userInfo in redux: ", login)}>printf</button>
+                {/* <button onClick={()=>console.log("formError: ", formError)}>print</button>*/}
                 {/* LOG IN SCREEN */}
                 {
                 loginType===true && (                
                 <>
+                    {formError!==null && <ModifiedAlert severity="error">{formError}</ModifiedAlert>}
                     <TextField value={loginInfo.email} onChange={e=>setLoginInfo({...loginInfo, email: e.target.value})} id="outlined-basic" label="Email" variant="outlined" color="warning"/>
                     <FormControl sx={{ width: "28.8ch" }} variant="outlined">
                         <InputLabel color="warning" htmlFor="outlined-adornment-password">
@@ -144,8 +168,8 @@ function LoginPopUp() {
                         <Checkbox onClick={()=>setType(prevType=> prevType===''?'password':'')} color="warning" />
                         <span>Show password</span>
                     </CheckBoxWrapper>*/}
-                    <NoAccountComponent onClick={()=>setLoginType(false)}>Doesnt have an account?</NoAccountComponent>
-                    { submitted===true ?<CircularProgress color="warning" /> 
+                    <NoAccountComponent onClick={()=>changeFormType(false)}>Doesnt have an account?</NoAccountComponent>
+                    { loading === true ?<CircularProgress color="warning" /> 
                                     :<Button onClick={(e)=>handleSubmitLogin(e)} variant="outlined" color="warning">Login</Button>}
                 </>)
                 }
@@ -154,6 +178,7 @@ function LoginPopUp() {
                 {
                     loginType === false &&
                     <>
+                    {formError!==null && <ModifiedAlert severity="error">{formError}</ModifiedAlert>}
                     <TextField 
                         value={signUpInfo.email} onChange={e=>setSignUpInfo({...signUpInfo, email: e.target.value})}
                         id="outlined-basic" label="Email" variant="outlined" color="warning"/>
@@ -196,6 +221,7 @@ function LoginPopUp() {
                             Password (Again)
                         </InputLabel>
                         <OutlinedInput
+                            value={signUpInfo.passwordChecker} onChange={e=>setSignUpInfo({...signUpInfo, passwordChecker: e.target.value})}
                             id="outlined-adornment-password"
                             type={showPassword ? "text" : "password"}
                             label="Password (Again)"
@@ -214,15 +240,15 @@ function LoginPopUp() {
                             }
                             />
                     </FormControl>
-                    <NoAccountComponent onClick={()=>setLoginType(true)}>Already have an account?</NoAccountComponent>
-                    { submitted===true ?<CircularProgress color="warning" /> 
+                    <NoAccountComponent onClick={()=>changeFormType(true)}>Already have an account?</NoAccountComponent>
+                    { loading === true ?<CircularProgress color="warning" /> 
                                     :<Button onClick={(e)=>handleSubmitSignUp(e)} variant="outlined" color="warning">Sign Up</Button>}
                     </>
                 }
                 {/* SIGN UP SCREEN */}
             </ModalBody>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">schließen</button>
+                <button id="close-pop-up-btn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">schließen</button>
             </div>
             </div>
         </div>

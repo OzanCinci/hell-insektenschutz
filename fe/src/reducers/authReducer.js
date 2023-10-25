@@ -27,6 +27,7 @@ export const registerReducer = (state={registerInfo:null,loading:false,error:nul
         case REGISTER_SUCCES:
             return {...state,loading:false,error:null,registerInfo:action.payload}
         case REGISTER_FAIL:
+            console.log("REGISTER FAILED: ", action.payload);
             return {...state,loading:false,error:action.payload,registerInfo:null}
         default:
             return state
