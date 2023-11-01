@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from 'react'
 import { convertDate } from '../../../utils/datetime';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import Alert from '@mui/material/Alert';
+import { completedOrdersAction } from '../../../actions/adminActions';
+import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import Collapse from '@mui/material/Collapse';
 import IconButton from '@mui/material/IconButton';
@@ -13,12 +16,15 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
-import CircularProgress from '@mui/material/CircularProgress';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useDispatch, useSelector } from 'react-redux';
-import { activeOrdersAction } from '../../../actions/adminActions';
 
+const ModifiedAlert = styled(Alert)`
+  width: 90%;
+  font-size: 18px !important;
+  text-align: left;
+  border: 1px solid black;
+`;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -32,15 +38,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }));
   
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
-    backgroundColor: "#f3f2f2",
-  },
-  // hide last border
-  '&:last-child td, &:last-child th': {
-    border: 0,
-  },
-}));
-
+    '&:nth-of-type(odd)': {
+      backgroundColor: "#f3f2f2",
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
 
 function Row({ row }) {
     const [open, setOpen] = React.useState(false);
@@ -113,39 +118,33 @@ function Row({ row }) {
     );
 }
 
-const ModifiedAlert = styled(Alert)`
-  width: 90%;
-  font-size: 18px !important;
-  text-align: left;
-  border: 1px solid black;
-`;
 
-function ActiveOrderTable() {
-  const dispatch = useDispatch();
-  const {orderData,loading,error} = useSelector(state=>state.activeOrders);
-  const {userInfo} = useSelector(state=>state.login);
+function CompletedOrders() {
+    const dispatch = useDispatch();
+    const {orderData,loading,error} = useSelector(state=>state.completedOrders);
+    const {userInfo} = useSelector(state=>state.login);
 
-  const getActiveOrders = ()=>{
-      if (!orderData && userInfo?.access_token)
-          dispatch(activeOrdersAction(userInfo?.access_token))
-      //console.log("orderData: ",orderData);
-  }
+    const getCompletedOrders = () => {
+        if (!orderData && userInfo?.access_token){
+            console.log("request is made getCompletedOrders");
+            dispatch(completedOrdersAction(userInfo?.access_token));
+        }
+        //console.log("getCompletedOrders: ",orderData);
+    }
 
-
-  useEffect(()=>{
-      return ()=>getActiveOrders();
-  },[orderData]);
-
-
-return (
+    useEffect(()=>{
+        return () => getCompletedOrders();
+    },[]);
+    
+  return (
     <div>
-      {
+        {
         error!==null && orderData===null && <ModifiedAlert severity="error">{error}</ModifiedAlert>
-      }
-      {
-        loading!==false &&  orderData===null && <CircularProgress color="warning" /> 
-      }
-      {   orderData &&
+        }
+        {
+            loading!==null &&  orderData===null && <CircularProgress color="warning" /> 
+        }
+              {   orderData &&
           <TableContainer component={Paper}>
               <Table aria-label="collapsible table">
               <TableHead>
@@ -176,7 +175,7 @@ return (
           </TableContainer>
         }
     </div>
-    );
+  )
 }
 
-export default ActiveOrderTable
+export default CompletedOrders

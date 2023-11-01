@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import UserIcon from '../images/account/user.png';
 import LogoutIcon from '../images/account/logout.png';
+import DashBoardIcon from '../images/account/dashboard.png';
 import { useDispatch, useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import { logoutAction } from '../actions/authActions';
@@ -130,6 +131,10 @@ function Profile() {
                 <LogOutButton onClick={()=> handleLogout()}>
                     Logout
                     <LogoutImage src={LogoutIcon} alt='logout-icon-for-users'/>
+                </LogOutButton>
+                <LogOutButton className='my-2' onClick={()=> nav('/admin-panel')}>
+                    Admin Dashboard
+                    <LogoutImage src={DashBoardIcon} alt='admin-icon-for-users'/>
                 </LogOutButton>
                 <IconWrapper>
                     <UserImage src={UserIcon}/>

@@ -5,7 +5,7 @@ import {
     ADMIN_FIND_USER_FAIL, ADMIN_FIND_USER_REQUEST, ADMIN_FIND_USER_SUCCES, 
     ADMIN_PENDING_REVIEW_FAIL, ADMIN_PENDING_REVIEW_REQUEST, ADMIN_PENDING_REVIEW_SUCCES, 
     ADMIN_REVIEW_FAIL, ADMIN_REVIEW_REQUEST, ADMIN_REVIEW_SUCCES, ADMIN_SELECT_DATA, 
-    ADMIN_LANDING_PAGE_FAIL, ADMIN_LANDING_PAGE_REQUEST, ADMIN_LANDING_PAGE_SUCCES, 
+    ADMIN_LANDING_PAGE_FAIL, ADMIN_LANDING_PAGE_REQUEST, ADMIN_LANDING_PAGE_SUCCES, ADMIN_APPROVED_PENDING_REVIEW, ADMIN_DELETE_PENDING_REVIEW, 
 } from "../constants/admin";
 
 
@@ -35,27 +35,33 @@ export const completedOrdersReducer = (state={orderData:null,loading:false,error
     }
 }
 
-export const pendingReviewsReducer = (state={reviewData:null,loading:false,error:null},action)=>{
+export const pendingReviewsReducer = (state={reviews:null,loading:false,error:null},action)=>{
     switch(action.type){
         case ADMIN_PENDING_REVIEW_REQUEST:
             return {...state,loading:true,error:null}
         case ADMIN_PENDING_REVIEW_SUCCES:
-            return {...state,loading:false,error:null,reviewData:action.payload}
+            return {...state,loading:false,error:null,reviews:action.payload}
         case ADMIN_PENDING_REVIEW_FAIL:
-            return {...state,loading:false,error:action.payload,reviewData:null}
+            return {...state,loading:false,error:action.payload,reviews:null}
+        case ADMIN_APPROVED_PENDING_REVIEW:
+            const notApprovedReviews = state.reviews.filter(item => item.id!==action.payload);
+            return {...state,loading:false,error:null,reviews:notApprovedReviews}
+        case ADMIN_DELETE_PENDING_REVIEW:
+            const newReviews = state.reviews.filter(item => item.id!==action.payload);
+            return {...state,loading:false,error:null,reviews:newReviews}
         default:
             return state;
     }
 }
 
-export const reviewsReducer = (state={reviewData:null,loading:false,error:null},action)=>{
+export const reviewsReducer = (state={reviews:null,loading:false,error:null},action)=>{
     switch(action.type){
         case ADMIN_REVIEW_REQUEST:
             return {...state,loading:true,error:null}
         case ADMIN_REVIEW_SUCCES:
-            return {...state,loading:false,error:null,reviewData:action.payload}
+            return {...state,loading:false,error:null,reviews:action.payload}
         case ADMIN_REVIEW_FAIL:
-            return {...state,loading:false,error:action.payload,reviewData:null}
+            return {...state,loading:false,error:action.payload,reviews:null}
         default:
             return state;
     }

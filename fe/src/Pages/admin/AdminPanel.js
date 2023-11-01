@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components';
 import Collapsable from './Collapsable';
-import { useDispatch, useSelector } from 'react-redux';
-import { activeOrdersAction } from '../../actions/adminActions';
-import ActiveOrderTable from './adminPanelComponents/ActiveOrderTable';
+import { useSelector } from 'react-redux';
+import {  Outlet } from "react-router-dom";
 
 const Container = styled.div`
-    border: 3px solid black;
     min-height: 600px;
     display: flex;
     flex-direction: row;
@@ -20,7 +18,7 @@ const CollapsableContainer = styled.div`
 `;
 
 const BodyModal = styled.div`
-    height: 100vh;
+    min-height: 100vh;
     width: 88vw;
 `;
 
@@ -39,20 +37,8 @@ sales:
 
 
 function AdminPanel() {
-    const dispatch = useDispatch();
-    const activeOrders = useSelector(state=>state.activeOrders);
     const {userInfo} = useSelector(state=>state.login);
-
-    const getActiveOrders = ()=>{
-        if (!activeOrders && userInfo?.access_token)
-            dispatch(activeOrdersAction(userInfo?.access_token))
-        console.log("activeOrders: ",activeOrders);
-    }
-
-
-    useEffect(()=>{
-        return ()=>getActiveOrders();
-    },[activeOrders]);
+    
 
   return (
     <Container>
@@ -61,12 +47,9 @@ function AdminPanel() {
         </CollapsableContainer>
         <BodyModal>
             <div>
-                Admin Data
+                Admin DashBoard
             </div>
-            {
-                activeOrders && activeOrders.orderData && 
-                <ActiveOrderTable rows={activeOrders.orderData}/>
-            }
+            <Outlet/>    
         </BodyModal>
     </Container>
   )

@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components';
 import ManagerIcon from '../../images/account/manager.png'
+import { useNavigate } from 'react-router-dom';
 
 
 const SingleItem = styled.div`
@@ -80,6 +81,9 @@ const Container = styled.div`
 `;
 
 function Collapsable() {
+    const nav = useNavigate();
+
+
   return (
     <Container>
         <ImageContainer>
@@ -104,8 +108,8 @@ function Collapsable() {
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                 <div class="accordion-body">
                     <div>
-                        <SingleItem>Active Orders</SingleItem>
-                        <SingleItem>Completed Orders</SingleItem>
+                        <SingleItem onClick={()=>nav('active-orders')}>Active Orders</SingleItem>
+                        <SingleItem onClick={()=>nav('completed-orders')}>Completed Orders</SingleItem>
                     </div>
                 </div>
                 </div>
@@ -119,8 +123,8 @@ function Collapsable() {
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                 <div class="accordion-body">
                         <div>
-                            <SingleItem>Pending Reviews</SingleItem>
-                            <SingleItem>Approved Reviews</SingleItem>
+                            <SingleItem onClick={()=>nav('pending-reviews')}>Pending Reviews</SingleItem>
+                            <SingleItem onClick={()=>nav('approved-reviews')}>Approved Reviews</SingleItem>
                         </div>
                 </div>
                 </div>
@@ -134,8 +138,8 @@ function Collapsable() {
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                 <div class="accordion-body">
                     <div>
-                        <SingleItem>All Users</SingleItem>
-                        <SingleItem>Change Role</SingleItem>
+                        <SingleItem onClick={()=>nav('all-users')}>All Users</SingleItem>
+                        <SingleItem onClick={()=>nav('change-role')}>Change Role</SingleItem>
                     </div>
                 </div>
                 </div>

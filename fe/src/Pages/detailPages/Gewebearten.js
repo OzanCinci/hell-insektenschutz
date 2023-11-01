@@ -1,7 +1,7 @@
 import React, { useLayoutEffect } from 'react'
-import { Row, ServiceWrapper, Container } from '../LandingPageComponents/Products'
-import data from '../Data/data'
-import Header from '../CustomComponents/Header';
+import { Row, ServiceWrapper, Container } from '../../LandingPageComponents/Products'
+import data from '../../Data/data'
+import Header from '../../CustomComponents/Header';
 
 const dataList = data.gewebearten;
 

@@ -2,7 +2,9 @@ import axios from 'axios';
 import { 
     ADMIN_ACTIVE_ORDER_FAIL, ADMIN_ACTIVE_ORDER_REQUEST, ADMIN_ACTIVE_ORDER_SUCCES, 
     ADMIN_ALL_USERS_FAIL, ADMIN_ALL_USERS_REQUEST, ADMIN_ALL_USERS_SUCCES, 
+    ADMIN_APPROVED_PENDING_REVIEW, 
     ADMIN_COMPLETED_ORDER_FAIL, ADMIN_COMPLETED_ORDER_REQUEST, ADMIN_COMPLETED_ORDER_SUCCES, 
+    ADMIN_DELETE_PENDING_REVIEW, 
     ADMIN_FIND_USER_FAIL, ADMIN_FIND_USER_REQUEST, ADMIN_FIND_USER_SUCCES, 
     ADMIN_LANDING_PAGE_FAIL, 
     ADMIN_LANDING_PAGE_REQUEST, 
@@ -157,18 +159,18 @@ export const allUsersAction = (token) => async(dispatch)=> {
         });
 } 
 
-export const findUserAction = ({token,email}) => async(dispatch)=> {
+export const findUserAction = (token,searchWord) => async(dispatch)=> {
 
     dispatch({type: ADMIN_FIND_USER_REQUEST});
 
-    const url = `${URL}/api/management/allUsers/${email}`;
+    const url = `${URL}/api/management/userSearch?q=${searchWord}`;
     const configObject = {
         "url": url,
         "method": "get",
         "headers": {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
-            }
+        }
     };
 
     axios.request(configObject)
@@ -180,6 +182,32 @@ export const findUserAction = ({token,email}) => async(dispatch)=> {
         .catch(e => {
             console.log("error reaised: ", e);
             dispatch({type: ADMIN_FIND_USER_FAIL, payload: "error raised! (findUserAction)"});
+        });
+} 
+
+export const findManagerUserAction = (token) => async(dispatch)=> {
+
+    dispatch({type: ADMIN_FIND_USER_REQUEST});
+
+    const url = `${URL}/api/management/managerSearch`;
+    const configObject = {
+        "url": url,
+        "method": "get",
+        "headers": {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    };
+
+    axios.request(configObject)
+        .then(res => {
+            dispatch({type:ADMIN_FIND_USER_SUCCES, payload:res.data});
+            console.log("SUCCESS, findManagerUserAction: ", res.data);
+            // TODO: save data to localstorage!
+        })
+        .catch(e => {
+            console.log("error reaised: ", e);
+            dispatch({type: ADMIN_FIND_USER_FAIL, payload: "error raised! (findManagerUserAction)"});
         });
 } 
 
@@ -210,5 +238,55 @@ export const adminLandingPageAction = (token) => async(dispatch)=> {
         .catch(e => {
             console.log("error reaised: ", e);
             dispatch({type: ADMIN_LANDING_PAGE_FAIL, payload: "error raised! (adminLandingPageAction)"});
+        });
+} 
+
+export const approveReview = (token,reviewID,productID) => async(dispatch)=> {
+
+    //dispatch({type: ADMIN_REVIEW_REQUEST});
+    // approveReview/{reviewID}/{productID}
+    const url = `${URL}/api/management/approveReview/${reviewID}/${productID}`;
+    const configObject = {
+        "url": url,
+        "method": "put",
+        "headers": {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+            },
+    };
+
+    axios.request(configObject)
+        .then(res => {
+            dispatch({type:ADMIN_APPROVED_PENDING_REVIEW, payload:reviewID});
+            console.log("SUCCESS, approveReview: ",reviewID," + ", res.data);
+        })
+        .catch(e => {
+            console.log("error reaised: approveReview -> ", e);
+            //dispatch({type: ADMIN_REVIEW_FAIL, payload: "error raised! (reviewsAction)"});
+        });
+} 
+
+export const deleteReview = (token,reviewID) => async(dispatch)=> {
+
+    //dispatch({type: ADMIN_REVIEW_REQUEST});
+    // approveReview/{reviewID}/{productID}
+    const url = `${URL}/api/management/deleteReview/${reviewID}`;
+    const configObject = {
+        "url": url,
+        "method": "delete",
+        "headers": {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+            },
+    };
+
+    axios.request(configObject)
+        .then(res => {
+            dispatch({type:ADMIN_DELETE_PENDING_REVIEW, payload:reviewID});
+            console.log("SUCCESS, deleteReview: ",reviewID," + ", res.data);
+        })
+        .catch(e => {
+            console.log("error reaised: deleteReview -> ", e);
+            //dispatch({type: ADMIN_REVIEW_FAIL, payload: "error raised! (reviewsAction)"});
         });
 } 

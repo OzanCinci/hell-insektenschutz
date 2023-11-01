@@ -10,13 +10,13 @@ import Footer from './LandingPageComponents/Footer'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { useEffect } from 'react';
-import Türen from './Pages/Türen';
-import Fenster from './Pages/Fenster';
-import Dachfenster from './Pages/Dachfenster';
-import Lichtschachte from './Pages/Lichtschachte';
-import Sonderformen from './Pages/Sonderformen';
-import Zusatsprodukte from './Pages/Zusatsprodukte';
-import Gewebearten from './Pages/Gewebearten';
+import Türen from './Pages/detailPages/Türen';
+import Fenster from './Pages/detailPages/Fenster';
+import Dachfenster from './Pages/detailPages/Dachfenster';
+import Lichtschachte from './Pages/detailPages/Lichtschachte';
+import Sonderformen from './Pages/detailPages/Sonderformen';
+import Zusatsprodukte from './Pages/detailPages/Zusatsprodukte';
+import Gewebearten from './Pages/detailPages/Gewebearten';
 import Impressum from './LegalPages/Impressum';
 import Widerrufsbelehrung from './LegalPages/Widerrufsbelehrung';
 import Datenschutz from './LegalPages/Datenschutz';
@@ -28,6 +28,12 @@ import Detail from './DetailPages/Detail';
 import LoginPopUp from './CustomComponents/LoginPopUp';
 import AdminPanel from './Pages/admin/AdminPanel';
 import Profile from './Pages/Profile';
+import ActiveOrderTable from './Pages/admin/adminPanelComponents/ActiveOrderTable';
+import CompletedOrders from './Pages/admin/adminPanelComponents/CompletedOrders';
+import PendingReviews from './Pages/admin/adminPanelComponents/PendingReviews';
+import ApprovedReviews from './Pages/admin/adminPanelComponents/ApprovedReviews';
+import AllUsers from './Pages/admin/adminPanelComponents/AllUsers';
+import ChangeRole from './Pages/admin/adminPanelComponents/ChangeRole';
 
 function App() {
 
@@ -84,8 +90,15 @@ function App() {
             <Route exact path='/einzelheiten/:category/:detailName' element={<Detail/>}/>
 
 
-            <Route exact path='/admin-panel' element={<AdminPanel/>}/>
             <Route exact path='/profile' element={<Profile/>}/>
+            <Route  path='admin-panel' element={<AdminPanel/>}>
+              <Route path='active-orders' element={<ActiveOrderTable/>}/>
+              <Route path='completed-orders' element={<CompletedOrders/>}/>
+              <Route path='pending-reviews' element={<PendingReviews/>}/>
+              <Route path='approved-reviews' element={<ApprovedReviews/>}/>
+              <Route path='all-users' element={<AllUsers/>}/>
+              <Route path='change-role' element={<ChangeRole/>}/>
+            </Route>
 
             <Route default path='/*' element={<PageNotFound/>}/>
 
