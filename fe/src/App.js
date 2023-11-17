@@ -9,7 +9,7 @@ import Navbar from './LandingPageComponents/Navbar'
 import Footer from './LandingPageComponents/Footer'
 import AOS from 'aos'
 import 'aos/dist/aos.css'
-import { useEffect } from 'react';
+import { useEffect, } from 'react';
 import Türen from './Pages/detailPages/Türen';
 import Fenster from './Pages/detailPages/Fenster';
 import Dachfenster from './Pages/detailPages/Dachfenster';
@@ -27,13 +27,18 @@ import RaumBaden from './SeoPages/RaumBaden';
 import Detail from './DetailPages/Detail';
 import LoginPopUp from './CustomComponents/LoginPopUp';
 import AdminPanel from './Pages/admin/AdminPanel';
-import Profile from './Pages/Profile';
+import Profile from './Pages/profilePage/Profile';
 import ActiveOrderTable from './Pages/admin/adminPanelComponents/ActiveOrderTable';
 import CompletedOrders from './Pages/admin/adminPanelComponents/CompletedOrders';
 import PendingReviews from './Pages/admin/adminPanelComponents/PendingReviews';
 import ApprovedReviews from './Pages/admin/adminPanelComponents/ApprovedReviews';
 import AllUsers from './Pages/admin/adminPanelComponents/AllUsers';
 import ChangeRole from './Pages/admin/adminPanelComponents/ChangeRole';
+import ProductPurchase from './Pages/Product/ProductPurchase';
+import CreateOrder from './Pages/order/CreateOrder';
+import OrderSuccess from './Pages/order/OrderSuccess';
+import Warenkorb from './Pages/order/Warenkorb';
+import ScrollToTop from './LandingPageComponents/ScrollToTop';
 
 function App() {
 
@@ -56,8 +61,6 @@ function App() {
     });
   },[])
 
-
-
   // 
   return (
     <div className="App" style={{ overflowX:"hidden", minHeight:"1400px"}}>
@@ -65,6 +68,7 @@ function App() {
       <LoginPopUp/>
       <BrowserRouter>
         <Navbar/>
+        <ScrollToTop/>
         <div style={{minHeight:"100vh"}}>
           <Routes>
             <Route exact path='/' element={<HomePage/>}/>
@@ -91,6 +95,7 @@ function App() {
 
 
             <Route exact path='/profile' element={<Profile/>}/>
+            
             <Route  path='admin-panel' element={<AdminPanel/>}>
               <Route path='active-orders' element={<ActiveOrderTable/>}/>
               <Route path='completed-orders' element={<CompletedOrders/>}/>
@@ -99,6 +104,16 @@ function App() {
               <Route path='all-users' element={<AllUsers/>}/>
               <Route path='change-role' element={<ChangeRole/>}/>
             </Route>
+
+
+            <Route path='/produkt/:productID' element={<ProductPurchase/>}>
+            </Route>
+
+
+            <Route path='order-create' element={<CreateOrder/>}/>
+            <Route path='order-success' element={<OrderSuccess/>} />
+            <Route path='warenkorb' element={<Warenkorb/>} />
+
 
             <Route default path='/*' element={<PageNotFound/>}/>
 

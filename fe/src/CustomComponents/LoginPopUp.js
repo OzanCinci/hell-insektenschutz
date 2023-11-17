@@ -128,11 +128,10 @@ function LoginPopUp() {
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="test123Label">Sign Up</h5>
+                <h5 class="modal-title" id="test123Label">{loginType? "Sign In" : "Sign Up"}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <ModalBody class="modal-body">
-                {/* <button onClick={()=>console.log("formError: ", formError)}>print</button>*/}
                 {/* LOG IN SCREEN */}
                 {
                 loginType===true && (                
@@ -144,7 +143,6 @@ function LoginPopUp() {
                             Password
                         </InputLabel>
                         <OutlinedInput
-                            id="outlined-adornment-password"
                             type={showPassword ? "text" : "password"}
                             label="Password"
                             color="warning"
@@ -163,11 +161,6 @@ function LoginPopUp() {
                             }
                             />
                     </FormControl>
-                    {/*<TextField id="outlined-basic" type={type} label="Password" variant="outlined" color="warning"/>
-                    <CheckBoxWrapper>
-                        <Checkbox onClick={()=>setType(prevType=> prevType===''?'password':'')} color="warning" />
-                        <span>Show password</span>
-                    </CheckBoxWrapper>*/}
                     <NoAccountComponent onClick={()=>changeFormType(false)}>Doesnt have an account?</NoAccountComponent>
                     { loading === true ?<CircularProgress color="warning" /> 
                                     :<Button onClick={(e)=>handleSubmitLogin(e)} variant="outlined" color="warning">Login</Button>}
@@ -181,24 +174,24 @@ function LoginPopUp() {
                     {formError!==null && <ModifiedAlert severity="error">{formError}</ModifiedAlert>}
                     <TextField 
                         value={signUpInfo.email} onChange={e=>setSignUpInfo({...signUpInfo, email: e.target.value})}
-                        id="outlined-basic" label="Email" variant="outlined" color="warning"/>
+                        label="Email" variant="outlined" color="warning"/>
                     <TextField 
                         value={signUpInfo.firstName} onChange={e=>setSignUpInfo({...signUpInfo, firstName: e.target.value})}
-                        id="outlined-basic" label="First Name" variant="outlined" color="warning"/>
+                        label="First Name" variant="outlined" color="warning"/>
                     <TextField 
                         value={signUpInfo.lastName} onChange={e=>setSignUpInfo({...signUpInfo, lastName: e.target.value})}
-                        id="outlined-basic" label="Last Name" variant="outlined" color="warning"/>
+                        label="Last Name" variant="outlined" color="warning"/>
                     <TextField 
                         value={signUpInfo.telephone} onChange={e=>setSignUpInfo({...signUpInfo, telephone: e.target.value})}
                         type='tel'
-                        id="outlined-basic" label="Telefon" variant="outlined" color="warning"/>
+                        label="Telefon" variant="outlined" color="warning"/>
                     <FormControl sx={{ width: "28.8ch" }} variant="outlined">
                         <InputLabel color="warning" htmlFor="outlined-adornment-password">
                             Password
                         </InputLabel>
                         <OutlinedInput
                             value={signUpInfo.password} onChange={e=>setSignUpInfo({...signUpInfo, password: e.target.value})}
-                            id="outlined-adornment-password"
+                            
                             type={showPassword ? "text" : "password"}
                             label="Password"
                             color="warning"
@@ -222,7 +215,7 @@ function LoginPopUp() {
                         </InputLabel>
                         <OutlinedInput
                             value={signUpInfo.passwordChecker} onChange={e=>setSignUpInfo({...signUpInfo, passwordChecker: e.target.value})}
-                            id="outlined-adornment-password"
+                            
                             type={showPassword ? "text" : "password"}
                             label="Password (Again)"
                             color="warning"

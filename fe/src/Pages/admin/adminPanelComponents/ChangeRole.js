@@ -332,7 +332,7 @@ function ChangeRole() {
               </TableHead>
               <TableBody>
                   {usersData.map((row,index) => (
-                      <Row key={index} row={row} initialRole={row.role} />
+                      <Row key={row.email} row={row} initialRole={row.role} />
                   ))}
               </TableBody>
               </Table>

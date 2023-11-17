@@ -160,7 +160,10 @@ function AllUsers() {
     const {userInfo} = useSelector(state=>state.login);
 
 
-    const getAllUsers = () => {
+ 
+
+    useEffect(()=>{
+      const getAllUsers = () => {
         if (!usersData && userInfo?.access_token){
             console.log("request is made usersData");
             dispatch(allUsersAction(userInfo?.access_token));
@@ -168,13 +171,12 @@ function AllUsers() {
         console.log("getAllUsers: ",usersData);
     }
 
-    useEffect(()=>{
-        return () => getAllUsers();
-    },[]);
+     return () => getAllUsers();
+    },[userInfo?.access_token,dispatch,usersData]);
 
   return (
     <div>
-         {
+      {
         error!==null && usersData===null && <ModifiedAlert severity="error">{error}</ModifiedAlert>
       }
       {

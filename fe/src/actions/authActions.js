@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCES, LOGOUT, REFRESH_FAIL, REFRESH_REQUEST, REFRESH_SUCCES, REGISTER_FAIL, REGISTER_REQUEST, REGISTER_SUCCES } from '../constants/auth';
+import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCES, LOGOUT, REFRESH_FAIL, REFRESH_REQUEST, REFRESH_SUCCES, REGISTER_FAIL, REGISTER_REQUEST, REGISTER_SUCCES, USER_PROFILE_DETAIL_FAIL, USER_PROFILE_DETAIL_REQUEST, USER_PROFILE_DETAIL_SUCCESS } from '../constants/auth';
 
 
 const URL = process.env.REACT_APP_BE_API;
@@ -129,5 +129,31 @@ export const refreshAction = (token) => async(dispatch)=> {
         .catch(e => {
             console.log("error reaised: ", e);
             dispatch({type: REFRESH_FAIL, payload: "error raised! (register)"});
+        });
+} 
+
+export const userProfileDetailAction = (token,userID) => async(dispatch)=> {
+
+    dispatch({type: USER_PROFILE_DETAIL_REQUEST});
+
+    const url = `${URL}/api/users/getUserDetails/${userID}`;
+   
+    const configObject = {
+        "url": url,
+        "method": "get",
+        "headers": {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        }
+    };
+
+    axios.request(configObject)
+        .then(res => {
+            dispatch({type:USER_PROFILE_DETAIL_SUCCESS, payload:res.data});
+            console.log("SUCCESS, userProfileDetailAction: ", res.data);
+        })
+        .catch(e => {
+            console.log("error reaised: (userProfileDetailAction) ", e);
+            dispatch({type: USER_PROFILE_DETAIL_FAIL, payload: e});
         });
 } 

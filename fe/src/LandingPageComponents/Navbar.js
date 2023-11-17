@@ -4,8 +4,10 @@ import Logo from '../images/landingPage/logo.png';
 import { useNavigate} from 'react-router-dom'
 import BurgerIcon from './BurgerIcon';
 import LoginIcon from '../images/account/login.png';
-import ShoppingCartIcon from '../images/account/shopping-cart.png';
+//import ShoppingCartIcon from '../images/account/shopping-cart.png';
 import { useSelector } from 'react-redux';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import Badge from '@mui/material/Badge';
 
 const NavbarWrapper = styled.div`
   display: flex;
@@ -322,8 +324,10 @@ function Navbar() {
                     <LogoText>{navbarName || "Mein Konto"}</LogoText>
                 </SingleLoginComponent>
                 
-              <SingleLoginComponent>
-                <LoginImage src={ShoppingCartIcon}/>
+              <SingleLoginComponent onClick={ () => toggleFunction("/warenkorb")}>
+                <Badge badgeContent={2} color="warning">
+                  <ShoppingCartIcon fontSize='large' />
+                </Badge>
                 <LogoText>Warenkorb</LogoText>
               </SingleLoginComponent>
           </LoginContainer>
