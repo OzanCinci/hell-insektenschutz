@@ -55,7 +55,6 @@ const Container = styled.div`
 `;
 
 const Wrapper = styled.div`
-    border: 1px solid red;
     margin: 0px auto;
     margin-top: 20px;
     padding-bottom: 40px;

@@ -8,6 +8,7 @@ import {data} from './shopData';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import Services from '../../LandingPageComponents/Services';
 import Reviews from '../../LandingPageComponents/Reviews';
+import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
     max-width: 1700px;
@@ -231,6 +232,16 @@ const LineText = styled.div`
 `;
 
 function Shop() {
+    const nav = useNavigate();
+
+    const handleClick = (url) => {
+        if (!url)
+            return;
+
+        console.log(url);
+        nav(url);
+    }
+
   return (
     <Container>
         <InfoContainer>
@@ -283,7 +294,7 @@ function Shop() {
                                         {
                                             item.links.map((link)=>{
                                                 return (
-                                                    <div style={{marginBottom: "1px"}} key={link.text}>
+                                                    <div onClick={()=>handleClick(link.url)} style={{marginBottom: "1px"}} key={link.text}>
                                                         <ArrowRightIcon style={{ color: "#696984" }}/>
                                                         <ProductLink>
                                                             {link.text}

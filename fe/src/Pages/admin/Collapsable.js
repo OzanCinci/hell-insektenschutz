@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import ManagerIcon from '../../images/account/manager.png'
+import ManagerIcon from '../../images/account/manager.png';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 
 
 const SingleItem = styled.div`
@@ -17,22 +19,9 @@ const SingleItem = styled.div`
     position: relative;
 
     &:hover {
-        &::after {
-            transform: translateX(50%);
-        }
+        text-decoration: underline;
+        color: #f59f4c;
     }
-
-    &::after {
-        content: ">";
-        position: absolute;
-        left: 100%;
-        bottom: 42%;
-        width: 30px;
-        height: 20px;
-        font-size: 22px;
-        transform: translateX(0%);
-        transition: transform 150ms ease-in;
-  }
 `;
 
 const TitleText = styled.div`
@@ -54,9 +43,28 @@ const ImageWrapper = styled.div`
 const ImageContainer = styled.div`
     background-image: linear-gradient(to right, #db5424, #debe40);
     padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+`;
+
+const Filler = styled.div`
+    width: 100%;
+    height: 40px;
+    background-image: linear-gradient(to right, #db5424, #debe40);
 `;
 
 const Container = styled.div`
+    position: fixed;
+    z-index: 90;
+    left: ${props => props.collapse + "px"};
+    top: 90px;
+    transition: all 0.4s ease-in-out;
+
+    -webkit-box-shadow: 0px 9px 23px -14px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 9px 23px -14px rgba(0,0,0,0.75);
+    box-shadow: 0px 9px 23px -14px rgba(0,0,0,0.75);
+
+
     .accordion-button:not(.collapsed) {
         color: white;
         background: #f59f4c;
@@ -80,21 +88,65 @@ const Container = styled.div`
     }
 `;
 
+const CollapsePart = styled.div`
+    width: 140%;
+    text-align: right;
+    min-height: 40px;
+    padding: 50px auto;
+`;
+
+const Selection = styled.div`
+    cursor: pointer;
+    width: fit-content;
+    margin-left: auto;
+    min-width: 20px;
+
+    transform: ${props => props.collapse!==0?"rotate(180deg)":""};
+    transition: all 0.4s ease-in-out;
+`;
+
 function Collapsable() {
+    const [collapse,setCollapse] = useState(0);
     const nav = useNavigate();
+    const {userInfo} = useSelector(state=>state.login);
+    const  {selfID, firstName, lastName, role} = userInfo ? userInfo : {};
+
+    const handleClick = () => {
+        if (collapse!==0)
+            setCollapse(0);
+        else {
+            const element = document.getElementById('collapse-admin-panel');
+            if (element) {
+                const attributes = element.getBoundingClientRect();
+                const w = attributes.left - attributes.right;
+                setCollapse(w);
+            }
+        }
+    }
+
+    const handlePanelChange = (url) => {
+        handleClick();
+        nav(url);
+    }
 
 
   return (
-    <Container>
+    <Container id='collapse-admin-panel' collapse={collapse}>
+        <Filler></Filler>
         <ImageContainer>
+            <CollapsePart>
+                <Selection collapse={collapse} onClick={handleClick}>
+                    <ArrowBackIosNewIcon fontSize='large' color='warning'/>
+                </Selection>
+            </CollapsePart>
             <ImageWrapper>
                 <img src={ManagerIcon} alt='manager-icon' height='120px'/>
                 <div>
-                    <TitleText>Hakan</TitleText>
-                    <TitleText>Aydin</TitleText>
+                    <TitleText>{firstName}</TitleText>
+                    <TitleText>{lastName}</TitleText>
                 </div>
             </ImageWrapper>
-            <TitleText>Role: Manager</TitleText>
+            <TitleText>Role: {role}</TitleText>
         </ImageContainer>
 
 
@@ -108,8 +160,8 @@ function Collapsable() {
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                 <div class="accordion-body">
                     <div>
-                        <SingleItem onClick={()=>nav('active-orders')}>Active Orders</SingleItem>
-                        <SingleItem onClick={()=>nav('completed-orders')}>Completed Orders</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('active-orders')}>Active Orders</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('completed-orders')}>Completed Orders</SingleItem>
                     </div>
                 </div>
                 </div>
@@ -123,8 +175,8 @@ function Collapsable() {
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                 <div class="accordion-body">
                         <div>
-                            <SingleItem onClick={()=>nav('pending-reviews')}>Pending Reviews</SingleItem>
-                            <SingleItem onClick={()=>nav('approved-reviews')}>Approved Reviews</SingleItem>
+                            <SingleItem onClick={()=>handlePanelChange('pending-reviews')}>Pending Reviews</SingleItem>
+                            <SingleItem onClick={()=>handlePanelChange('approved-reviews')}>Approved Reviews</SingleItem>
                         </div>
                 </div>
                 </div>
@@ -138,8 +190,8 @@ function Collapsable() {
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                 <div class="accordion-body">
                     <div>
-                        <SingleItem onClick={()=>nav('all-users')}>All Users</SingleItem>
-                        <SingleItem onClick={()=>nav('change-role')}>Change Role</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('all-users')}>All Users</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('change-role')}>Change Role</SingleItem>
                     </div>
                 </div>
                 </div>

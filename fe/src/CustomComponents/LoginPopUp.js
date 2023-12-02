@@ -128,7 +128,7 @@ function LoginPopUp() {
         <div class="modal-dialog">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="test123Label">{loginType? "Sign In" : "Sign Up"}</h5>
+                <h5 class="modal-title" id="test123Label">{loginType? "Einloggen" : "Register"}</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <ModalBody class="modal-body">
@@ -137,14 +137,14 @@ function LoginPopUp() {
                 loginType===true && (                
                 <>
                     {formError!==null && <ModifiedAlert severity="error">{formError}</ModifiedAlert>}
-                    <TextField value={loginInfo.email} onChange={e=>setLoginInfo({...loginInfo, email: e.target.value})} id="outlined-basic" label="Email" variant="outlined" color="warning"/>
-                    <FormControl sx={{ width: "28.8ch" }} variant="outlined">
+                    <TextField sx={{ width: "25ch" }} value={loginInfo.email} onChange={e=>setLoginInfo({...loginInfo, email: e.target.value})} id="outlined-basic" label="Email" variant="outlined" color="warning"/>
+                    <FormControl sx={{ width: "25ch" }} variant="outlined">
                         <InputLabel color="warning" htmlFor="outlined-adornment-password">
-                            Password
+                            Passwort
                         </InputLabel>
                         <OutlinedInput
                             type={showPassword ? "text" : "password"}
-                            label="Password"
+                            label="Passwort"
                             color="warning"
                             value={loginInfo.password} onChange={e=>setLoginInfo({...loginInfo, password: e.target.value})}
                             endAdornment={
@@ -161,9 +161,9 @@ function LoginPopUp() {
                             }
                             />
                     </FormControl>
-                    <NoAccountComponent onClick={()=>changeFormType(false)}>Doesnt have an account?</NoAccountComponent>
+                    <NoAccountComponent onClick={()=>changeFormType(false)}>Hat noch kein Konto?</NoAccountComponent>
                     { loading === true ?<CircularProgress color="warning" /> 
-                                    :<Button onClick={(e)=>handleSubmitLogin(e)} variant="outlined" color="warning">Login</Button>}
+                                    :<Button onClick={(e)=>handleSubmitLogin(e)} variant="outlined" color="warning">Einloggen</Button>}
                 </>)
                 }
                 {/* LOG IN SCREEN */}
@@ -173,27 +173,31 @@ function LoginPopUp() {
                     <>
                     {formError!==null && <ModifiedAlert severity="error">{formError}</ModifiedAlert>}
                     <TextField 
+                        sx={{ width: "25ch" }}
                         value={signUpInfo.email} onChange={e=>setSignUpInfo({...signUpInfo, email: e.target.value})}
                         label="Email" variant="outlined" color="warning"/>
                     <TextField 
+                        sx={{ width: "25ch" }}
                         value={signUpInfo.firstName} onChange={e=>setSignUpInfo({...signUpInfo, firstName: e.target.value})}
-                        label="First Name" variant="outlined" color="warning"/>
+                        label="Name" variant="outlined" color="warning"/>
                     <TextField 
+                        sx={{ width: "25ch" }}
                         value={signUpInfo.lastName} onChange={e=>setSignUpInfo({...signUpInfo, lastName: e.target.value})}
-                        label="Last Name" variant="outlined" color="warning"/>
+                        label="Nachname" variant="outlined" color="warning"/>
                     <TextField 
+                        sx={{ width: "25ch" }}
                         value={signUpInfo.telephone} onChange={e=>setSignUpInfo({...signUpInfo, telephone: e.target.value})}
                         type='tel'
-                        label="Telefon" variant="outlined" color="warning"/>
-                    <FormControl sx={{ width: "28.8ch" }} variant="outlined">
+                        label="Telefonnummer" variant="outlined" color="warning"/>
+                    <FormControl sx={{ width: "25ch" }} variant="outlined">
                         <InputLabel color="warning" htmlFor="outlined-adornment-password">
-                            Password
+                            Passwort
                         </InputLabel>
                         <OutlinedInput
                             value={signUpInfo.password} onChange={e=>setSignUpInfo({...signUpInfo, password: e.target.value})}
                             
                             type={showPassword ? "text" : "password"}
-                            label="Password"
+                            label="Passwort"
                             color="warning"
                             endAdornment={
                                 <InputAdornment position="end">
@@ -209,15 +213,15 @@ function LoginPopUp() {
                             }
                             />
                     </FormControl>
-                    <FormControl sx={{ width: "28.8ch" }} variant="outlined">
+                    <FormControl sx={{ width: "25ch" }} variant="outlined">
                         <InputLabel color="warning" htmlFor="outlined-adornment-password">
-                            Password (Again)
+                            Passwort (überprüfen)
                         </InputLabel>
                         <OutlinedInput
                             value={signUpInfo.passwordChecker} onChange={e=>setSignUpInfo({...signUpInfo, passwordChecker: e.target.value})}
                             
                             type={showPassword ? "text" : "password"}
-                            label="Password (Again)"
+                            label="Passwort (überprüfen)"
                             color="warning"
                             endAdornment={
                                 <InputAdornment position="end">
@@ -233,9 +237,9 @@ function LoginPopUp() {
                             }
                             />
                     </FormControl>
-                    <NoAccountComponent onClick={()=>changeFormType(true)}>Already have an account?</NoAccountComponent>
+                    <NoAccountComponent onClick={()=>changeFormType(true)}>Schon ein Konto haben?</NoAccountComponent>
                     { loading === true ?<CircularProgress color="warning" /> 
-                                    :<Button onClick={(e)=>handleSubmitSignUp(e)} variant="outlined" color="warning">Sign Up</Button>}
+                                    :<Button onClick={(e)=>handleSubmitSignUp(e)} variant="outlined" color="warning">Register</Button>}
                     </>
                 }
                 {/* SIGN UP SCREEN */}

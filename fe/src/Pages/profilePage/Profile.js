@@ -139,10 +139,18 @@ const CustomToggleButton = styled(ToggleButton)`
     color: ${props=>props.didSelect ? "white !important" : "#f59f4c !important"};
     background-color: ${props=>props.didSelect ? "#f59f4c !important" : "white !important"};
     font-size: 18px !important;
-    width: 50%;
+    width: 33%;
+
+    @media only screen and (max-width: 1500px) {
+        font-size: 12px !important;
+    }
 
     @media only screen and (max-width: 900px) {
         width: 33vw;
+    }
+
+    @media only screen and (max-width: 600px) {
+        font-size: 12px !important;
     }
 `;
 
@@ -165,11 +173,17 @@ const DisplayMobileOnly = styled.div`
     }
 `;
 
+const titleData = {
+    "My Orders": "Meine Bestellungen",
+    "User Info": "Nutzerinformationen",
+    "My Reviews": "Meine Rezensionen"
+}
+
 
 function Profile() {
     const [alignment, setAlignment] = useState(null);
     const {userInfo} = useSelector(state=>state.login);
-    const  {selfID, firstName, lastName, email, phone, access_token, createdAt} = userInfo ? userInfo : {};
+    const  {selfID, firstName, lastName, email, phone, access_token, createdAt, role} = userInfo ? userInfo : {};
     const {userDetail,loading,error} = useSelector(state=>state.userProfileDetail);
 
     const dispatch = useDispatch();
@@ -193,6 +207,9 @@ function Profile() {
     }
 
     const handleChange = (event, newAlignment) => {
+        if ( "User Info"===newAlignment && window.innerWidth > 900)
+            return
+
         if (!newAlignment || alignment===newAlignment)
             return;
         
@@ -239,32 +256,35 @@ function Profile() {
                         onChange={handleChange}
                         aria-label="Platform"
                         >
-                        <CustomToggleButton didSelect={"User Info"===alignment} value="User Info">User</CustomToggleButton>
-                        <CustomToggleButton didSelect={"My Orders"===alignment} value="My Orders">Orders</CustomToggleButton>
-                        <CustomToggleButton didSelect={"My Reviews"===alignment} value="My Reviews">Reviews</CustomToggleButton>
+                        <CustomToggleButton didSelect={"User Info"===alignment} value="User Info">Nutzer</CustomToggleButton>
+                        <CustomToggleButton didSelect={"My Orders"===alignment} value="My Orders">Bestellungen</CustomToggleButton>
+                        <CustomToggleButton didSelect={"My Reviews"===alignment} value="My Reviews">Rezension</CustomToggleButton>
                     </CustomToggleButtonGroup>
                 </ToggleButtonWrapper>
                 <DisplayDesktopOnly>
                     <LogOutButton onClick={()=> handleLogout()}>
-                        Logout
+                        Ausloggen
                         <LogoutImage src={LogoutIcon} alt='logout-icon-for-users'/>
                     </LogOutButton>
+                    {
+                        role!=="USER" &&
                     <LogOutButton className='my-2' onClick={()=> nav('/admin-panel')}>
                         Admin Dashboard
                         <LogoutImage src={DashBoardIcon} alt='admin-icon-for-users'/>
                     </LogOutButton>
+                    }
                     <UserInfoWrapper>
                         <IconWrapper>
                             <UserImage src={UserIcon}/>
                             <div>{`${firstName} ${lastName}`}</div>
                         </IconWrapper>
             
-                        <TextField className='my-2' disabled label="First Name" defaultValue={firstName}/>
-                        <TextField className='my-2' disabled label="Last Name" defaultValue={lastName}/>
+                        <TextField className='my-2' disabled label="Name" defaultValue={firstName}/>
+                        <TextField className='my-2' disabled label="Nachname" defaultValue={lastName}/>
                     
                         <TextField className='my-2' disabled label="Email" defaultValue={email}/>
                         <TextField className='my-2' disabled label="Telefonnummer" defaultValue={phone}/>
-                        <TextField className='my-2' disabled label="Joined At" defaultValue={convertDate(createdAt)}/>
+                        <TextField className='my-2' disabled label="Beigetreten bei" defaultValue={convertDate(createdAt)}/>
                     </UserInfoWrapper>
                 </DisplayDesktopOnly>
                 
@@ -272,7 +292,7 @@ function Profile() {
         </LeftColumn>
         <MiddleColumn>
             <ListTitle>
-                {alignment}
+                {titleData[alignment]}
             </ListTitle>
             {
                 error!==null && userDetail===null && <ModifiedAlert severity="error">error</ModifiedAlert>

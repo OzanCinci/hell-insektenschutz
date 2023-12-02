@@ -4,6 +4,7 @@ import { convertDate } from '../../utils/datetime';
 import TempImg from '../../images/details/plissee.jpg';
 import TempImg2 from '../../images/details/alt_schiebetür.jpg';
 import Button from '@mui/material/Button';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 ////////////////////////////////////////////////
 /////// DESKTOP COMPONENTS BELOW ////////////////
@@ -120,6 +121,8 @@ const MobileOrderContainer = styled.div`
     gap: 0px;
     transform: ${props => props.showDetail? "translateX(-50%)" : "translateX(0%)"};
     transition: all 0.8s ease-in-out;
+
+    border: 2px solid red;
 `;
 
 const MobileOrderWrapper = styled.div`
@@ -165,6 +168,18 @@ const MobileDetailButton = styled.div`
 const MobileDetailsOrder = styled.div`
     min-height: 400px;
     width: 94vw;
+    height: 80vh;
+    overflow-y: scroll;
+`;
+
+const BackButtonWrapper = styled.div`
+    border: 1px solid red;
+    text-align: left;
+    padding-left: 50px;
+`;
+
+const CustomMobileDetailsOrder = styled(MobileDetailsOrder)`
+    border: 2px solid yellow;
 `;
 ////////////////////////////////////////////////
 /////// MOBILE COMPONENTS ABOVE ////////////////
@@ -179,6 +194,12 @@ function ProfileOrders({orders}) {
         setShowDetail(true);
         setOrderShowed(order);
         console.log("order: ",order);
+    }
+
+    const handleHideDetail = () => {
+        // TODO: navigation to detail page;
+        setShowDetail(false);
+        setOrderShowed(null);
     }
 
     const handleAddReview = (e) => {
@@ -207,7 +228,7 @@ function ProfileOrders({orders}) {
                         <SingleOrder key={index}>
                             <Header>
                                 <HeaderColumn>
-                                    <OrderTitle>Order Date:</OrderTitle>
+                                    <OrderTitle>Erstellt am:</OrderTitle>
                                     <div>{convertDate(order.createdAt)}</div>   
                                 </HeaderColumn>
                                 <HeaderColumn>
@@ -215,15 +236,15 @@ function ProfileOrders({orders}) {
                                     <div>{order.orderStatus}</div>
                                 </HeaderColumn>
                                 <HeaderColumn>
-                                    <OrderTitle>Total:</OrderTitle>
+                                    <OrderTitle>Gesamt:</OrderTitle>
                                     <div>{order.totalPrice} €</div>
                                 </HeaderColumn>
                                 <HeaderColumn>
-                                    <OrderTitle>Delivery Address:</OrderTitle>
+                                    <OrderTitle>Lieferadresse:</OrderTitle>
                                     <div>{order.address}</div>
                                 </HeaderColumn>
                                 <HeaderColumn>
-                                    <OrderTitle>Payment Method:</OrderTitle>
+                                    <OrderTitle>Bezahlverfahren:</OrderTitle>
                                     <div>{order.paymentMethod}</div>
                                 </HeaderColumn>
                             </Header>
@@ -240,8 +261,18 @@ function ProfileOrders({orders}) {
                                                     </ItemDetailWrapper>
                                                     <ButtonWrapper>
                                                         <Button onClick={(e)=>{}} size='small' variant="outlined" color="warning">Buy Again</Button>
-                                                        <Button onClick={(e)=>{}} size='small' variant="outlined" color="warning">Contact Us</Button>
-                                                        <Button onClick={(e)=>handleAddReview(e)} size='small' variant="outlined" color="warning">Add a Review</Button>
+                                                        <Button 
+                                                            onClick={(e)=>{
+                                                                e.preventDefault();
+                                                                window.location.href = "mailto:info@hell-insektenschutz.de";
+                                                            }} 
+                                                            size='small' 
+                                                            variant="outlined" 
+                                                            color="warning"
+                                                        >
+                                                            Kontaktiere uns
+                                                        </Button>
+                                                        <Button onClick={(e)=>handleAddReview(e)} size='small' variant="outlined" color="warning">Kommentar</Button>
                                                     </ButtonWrapper>
                                             </OrderItemContainer>
                                         );
@@ -275,9 +306,9 @@ function ProfileOrders({orders}) {
                                         <Header>
                                             <div>
                                                 <div>{convertDate(order.createdAt)}</div>
-                                                <div>Total: {order.totalPrice} €</div>
+                                                <div>Gesamt: {order.totalPrice} €</div>
                                             </div>
-                                            <MobileDetailButton onClick={()=>handleShowDetail(order)}>Details</MobileDetailButton>
+                                            <MobileDetailButton onClick={()=>handleShowDetail(order)}>Einzelheiten</MobileDetailButton>
                                         </Header>
                                         <MobileBody>
                                             <div>{order.orderStatus}</div>
@@ -293,7 +324,7 @@ function ProfileOrders({orders}) {
                                             </MobileImageWrapper>
                                         </MobileBody>
                                         <hr></hr>
-                                        <MobileBottomText>{itemCount} Product(s)</MobileBottomText>
+                                        <MobileBottomText>{itemCount} Artikel</MobileBottomText>
                                     </MobileOrderWrapper>
                                 );
                             })
@@ -302,9 +333,12 @@ function ProfileOrders({orders}) {
             }
             {
                 orders.length > 0 &&
-                <MobileDetailsOrder>
-                    test123
-                </MobileDetailsOrder>
+                <CustomMobileDetailsOrder>
+                    <BackButtonWrapper onClick={()=>handleHideDetail()}>
+                        <ArrowBackIcon fontSize='large' color='warning'/>
+                    </BackButtonWrapper>
+                    <div>details</div>
+                </CustomMobileDetailsOrder>
             }
             </MobileOrderContainer>
         </div>

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import Collapsable from './Collapsable';
 import { useSelector } from 'react-redux';
@@ -9,17 +9,20 @@ const Container = styled.div`
     display: flex;
     flex-direction: row;
     padding-top: 110px;
+    padding-left: 60px;
 `;
 
 const CollapsableContainer = styled.div`
     height: 100vh;
-    width: 12vw; 
-    border-right: 1px solid black;
+    width: fit-content; 
 `;
 
 const BodyModal = styled.div`
     min-height: 100vh;
-    width: 88vw;
+    margin: auto;
+    margin-left: auto;
+    padding-top: 40px;
+    width: 94vw;
 `;
 
 /*
@@ -37,9 +40,6 @@ sales:
 
 
 function AdminPanel() {
-    const {userInfo} = useSelector(state=>state.login);
-    
-
   return (
     <Container>
         <CollapsableContainer>
