@@ -181,6 +181,13 @@ function ProfileOrders({orders}) {
         console.log("order: ",order);
     }
 
+    const handleAddReview = (e) => {
+        e.preventDefault();
+        const button = document.getElementById("leave-a-review-modal");
+        if (!button)
+            return;
+        button.click();
+    }
 
   return (
     <Container>
@@ -234,7 +241,7 @@ function ProfileOrders({orders}) {
                                                     <ButtonWrapper>
                                                         <Button onClick={(e)=>{}} size='small' variant="outlined" color="warning">Buy Again</Button>
                                                         <Button onClick={(e)=>{}} size='small' variant="outlined" color="warning">Contact Us</Button>
-                                                        <Button onClick={(e)=>{}} size='small' variant="outlined" color="warning">Add a Review</Button>
+                                                        <Button onClick={(e)=>handleAddReview(e)} size='small' variant="outlined" color="warning">Add a Review</Button>
                                                     </ButtonWrapper>
                                             </OrderItemContainer>
                                         );

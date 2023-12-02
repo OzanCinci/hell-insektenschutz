@@ -73,9 +73,9 @@ const LiWrapper = styled.div`
 `;
 
 
-const LiElement = styled(({title, text, anim})=>{ 
+const LiElement = styled(({title, text, anim,noAnimation})=>{ 
   return (
-    <LiWrapper data-aos={anim}>
+    <LiWrapper data-aos={noAnimation?"":anim}>
       <div>
         <Icon src={liPhoto}/>
       </div>
@@ -151,9 +151,9 @@ const ServiceText = styled.div`
   }
 `
 
-const ServiceElement = styled(({img, title, text, def})=>{ 
+const ServiceElement = styled(({img, title, text, def, noAnimation})=>{ 
   return (
-    <Wrapper data-aos={def?"fade-right":"fade-left"} def={def}>
+    <Wrapper data-aos={noAnimation?"":(def?"fade-right":"fade-left")} def={def}>
         <ServiceImg src={img}/>
         <div  style={{textAlign:"left"}}>
           {title && <div>{title}</div>}
@@ -268,24 +268,24 @@ const UlMobile = styled.ul`
 `
 
 
-function Services() {
+function Services({noAnimation}) {
   return (
     <ServiceContainer>
       <LiContainer>
         {
-          liMap.map((item,index) => <LiElement key={index} anim={item.anim} text={item.text} title={item.title}/>)
+          liMap.map((item,index) => <LiElement key={index} noAnimation={noAnimation} anim={item.anim} text={item.text} title={item.title}/>)
         }
       </LiContainer>
-      <SubTitle data-aos="zoom-in-down">Mehr über uns </SubTitle>
+      <SubTitle data-aos={noAnimation?"":"zoom-in-down"}>Mehr über uns </SubTitle>
       <ServiceWrapper>
-        <ServiceElement img={service1} text={serviceMap[0].text} def={true}/>
-        <ServiceElement img={service2} text={serviceMap[1].text} def={false}/>
+        <ServiceElement img={service1} noAnimation={noAnimation} text={serviceMap[0].text} def={true}/>
+        <ServiceElement img={service2} noAnimation={noAnimation} text={serviceMap[1].text} def={false}/>
       </ServiceWrapper>
 
       <div style={{overflow:"hidden"}}>
-        <AccordionImg data-aos="zoom-in-up"  src={service1}/>
+        <AccordionImg data-aos={noAnimation?"":"zoom-in-up"}  src={service1}/>
       </div>
-      <AccordionWrapper data-aos="zoom-out">
+      <AccordionWrapper data-aos={noAnimation?"":"zoom-out"}>
         <div class="accordion" id="accordionExample">
           
           <div class="accordion-item">

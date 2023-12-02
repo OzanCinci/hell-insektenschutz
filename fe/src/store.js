@@ -8,7 +8,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import { loginReducer, refreshReducer, registerReducer, userProfileDetailReducer } from './reducers/authReducer';
 import { activeOrdersReducer, adminLandingPageReducer, allUsersReducer, completedOrdersReducer, findUserReducer, pendingReviewsReducer, reviewsReducer, selectAdminDataReducer } from './reducers/adminReducer';
-
+import { createReviewDataReducer } from './reducers/userReducer';
 
 // REDUCER IMPORTS
 // TODO: import reducers
@@ -27,7 +27,8 @@ const reducer = combineReducers({
     findUser: findUserReducer,
     selectAdminData: selectAdminDataReducer,
     adminLandingPage: adminLandingPageReducer,
-    userProfileDetail: userProfileDetailReducer
+    userProfileDetail: userProfileDetailReducer,
+    createReviewData: createReviewDataReducer,
 })
 
 
@@ -52,7 +53,8 @@ const initialState = {
     findUser: {usersData:null,loading:false,error:null},
     selectAdminData: null, 
     adminLandingPage: null,
-    userProfileDetail: {userDetail:null,loading:false,error:null}
+    userProfileDetail: {userDetail:null,loading:false,error:null},
+    createReviewData: null,
 }
 
 /*

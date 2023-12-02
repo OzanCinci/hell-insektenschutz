@@ -15,7 +15,7 @@ const ReviewContainer = styled.div`
   align-items: center;
   width: 100%;
   background: #e8fbff;
-  min-height: 900px;
+  min-height: 720px;
   gap: 7vh;
 
   @media only screen and (max-width: 880px) {
@@ -77,7 +77,7 @@ const Description = styled.div`
   font-size: 22px;
 
   @media only screen and (max-width: 860px) {
-    font-size: 18px
+    font-size: 18px;
   }
   @media only screen and (max-width: 600px) {
     font-size: 18px
@@ -100,7 +100,17 @@ const Title = styled.div`
   font-weight: bold;
   color: rgb(82, 82, 102);
   margin: 20px 0px;
+
+  @media only screen and (max-width: 470px) {
+    font-size: 25px;
+  }
 `
+
+const ReviewDate = styled.div`
+  @media only screen and (max-width: 470px) {
+    font-size: 14px;
+  }
+`;
 
 const SingleReview = styled(({name,date,rating,description})=>{ 
   return (
@@ -108,7 +118,7 @@ const SingleReview = styled(({name,date,rating,description})=>{
       <TopPart>
         <div>
           <div style={{fontSize: "18px", borderBottom: "1px solid #f59f4c", textDecorationColor: "#f59f4c"}}>{name}</div>
-          <div>( {date} )</div>
+          <ReviewDate>( {date} )</ReviewDate>
         </div>
         <div>
           <div className='d-flex flex-row'>
@@ -202,7 +212,7 @@ const CommentCount = styled.div`
   }
 `
 
-function Reviews() {
+function Reviews({noAnimation}) {
   const [data,setData] = useState(null);
 
   useEffect(()=>{
@@ -231,11 +241,11 @@ function Reviews() {
     (<ReviewContainer>
       <GoogleReviewContainer >
         <div  className='d-flex flex-column justify-content-center'>
-          <Font data-aos="fade-left">Google Bewertungen</Font>
-          <CommentCount data-aos="fade-right" className='d-flex flex-row justify-content-around'>
+          <Font data-aos={noAnimation?"":"fade-left"}>Google Bewertungen</Font>
+          <CommentCount data-aos={noAnimation?"":"fade-right"} className='d-flex flex-row justify-content-around'>
             60+ Rezension   
           </CommentCount>
-          <div data-aos="fade-left">
+          <div data-aos={noAnimation?"":"fade-left"}>
             <img alt='star-img'  height='20px' src={StarImg}/>
             <img alt='star-img' height='20px' src={StarImg}/>
             <img alt='star-img' height='20px' src={StarImg}/>
@@ -246,7 +256,7 @@ function Reviews() {
         </div>
 
       </GoogleReviewContainer>
-      <ReviewsWrapper data-aos="zoom-in"  data-aos-offset="200" data-aos-delay="100">
+      <ReviewsWrapper data-aos={noAnimation?"":"zoom-in"}  data-aos-offset={noAnimation?"":"200"} data-aos-delay={noAnimation?"":"100"}>
         <Title> Zufriedene Kunden </Title>
         <Slider   {...settings}>
             {

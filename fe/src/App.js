@@ -39,6 +39,8 @@ import CreateOrder from './Pages/order/CreateOrder';
 import OrderSuccess from './Pages/order/OrderSuccess';
 import Warenkorb from './Pages/order/Warenkorb';
 import ScrollToTop from './LandingPageComponents/ScrollToTop';
+import ReviewModal from './CustomComponents/ReviewModal';
+import Shop from './Pages/shop/Shop';
 
 function App() {
 
@@ -65,7 +67,10 @@ function App() {
   return (
     <div className="App" style={{ overflowX:"hidden", minHeight:"1400px"}}>
       {/*<Navbar/>*/}
+      
       <LoginPopUp/>
+      <ReviewModal/>
+
       <BrowserRouter>
         <Navbar/>
         <ScrollToTop/>
@@ -113,6 +118,9 @@ function App() {
             <Route path='order-create' element={<CreateOrder/>}/>
             <Route path='order-success' element={<OrderSuccess/>} />
             <Route path='warenkorb' element={<Warenkorb/>} />
+
+
+            <Route path='geschaft' element={<Shop/>}/>
 
 
             <Route default path='/*' element={<PageNotFound/>}/>

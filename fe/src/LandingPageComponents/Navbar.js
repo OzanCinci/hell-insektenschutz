@@ -1,19 +1,22 @@
-import React, {useEffect, useState} from 'react'
-import styled from 'styled-components'
+import React, {useEffect, useState} from 'react';
+import styled from 'styled-components';
 import Logo from '../images/landingPage/logo.png';
-import { useNavigate} from 'react-router-dom'
+import MobileLogo from '../images/landingPage/mobile_logo.png';
+import { useNavigate} from 'react-router-dom';
 import BurgerIcon from './BurgerIcon';
 import LoginIcon from '../images/account/login.png';
-//import ShoppingCartIcon from '../images/account/shopping-cart.png';
 import { useSelector } from 'react-redux';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
+import StorefrontIcon from '@mui/icons-material/Storefront';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const NavbarWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 10px 40px;
+  padding-left: 10px;
   width: 100%;
   align-items: center;
 
@@ -21,6 +24,7 @@ const NavbarWrapper = styled.div`
 
   @media only screen and (max-width: 1200px) {
     flex-direction: column;
+    padding: 10px 0px;
   }
 `;
 
@@ -29,14 +33,14 @@ const NavbarContainer = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 108px;
+  height: 110px;
   z-index: 99;
   /*
   overflow-y: ${props => props.toggle ? "visible" : "hidden"};
   */
   background-color: white;
   padding: 0px;
-  padding-bottom: 4px;
+  padding-bottom: 8px;
 
   -webkit-box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
@@ -49,7 +53,7 @@ const NavbarContainer = styled.div`
 
   @media only screen and (max-width: 1200px) {
     flex-direction: column;
-    height: 76px;
+    height: 82px;
   }
 `
 
@@ -73,7 +77,7 @@ const LinkContainer = styled.div`
     opacity: ${props => props.toggle ? "1": "0"};
     transition: transform 350ms ease-in, opacity 150ms ease-in 200ms;
     transform-origin: top;
-    margin-top: 0px;
+    margin-top: 6px;
     border-top: ${props => props.toggle ? "2px solid #f59f4c" : "none"};
     -webkit-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
@@ -90,14 +94,26 @@ const LogoImg = styled.img`
   }
 
   @media only screen and (max-width: 500px) {
-    height: 45px;
-    margin-right: 20px;
+    display: none;
   }
 
   &:hover {
     cursor: pointer;
   }
-  
+`;
+
+const LogoImgMobile = styled.img`
+  height: 45px;
+  margin-right: 20px;
+  margin-left: 20px;
+
+  @media only screen and (min-width: 500px) {
+    display: none;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const LinkButton = styled.div`
@@ -165,8 +181,7 @@ const NavbarButtonWrapper = styled.div`
     display: block;
     position: absolute;
     top: 10px;
-    right: -30px;
-    right: -30px;
+    right: -40px;
     height: 50px;
     width: 150px;
     display: flex;
@@ -226,7 +241,7 @@ const LoginContainer = styled.div`
   display: flex;
   flex-direction: row;
   cursor: pointer;
-  gap: 10px;
+  gap: 12px;
 
 `;
 
@@ -274,6 +289,7 @@ const LoginImage = styled.img`
   }
 `;
 
+
 function Navbar() {
   const [toggle, setToggle] = useState(false);
   const [navbarName,setNavbarName] = useState(null);
@@ -318,10 +334,11 @@ function Navbar() {
       <NavbarWrapper toggle={toggle}>
         <LogoContainer>
           <LogoImg onClick={ () => toggleFunction("/")} src={Logo}/>
+          <LogoImgMobile onClick={ () => toggleFunction("/")} src={MobileLogo}/>
           <LoginContainer>
                 <SingleLoginComponent onClick={()=>handleAccountClick()}>
-                    <LoginImage src={LoginIcon}/>
-                    <LogoText>{navbarName || "Mein Konto"}</LogoText>
+                    <AccountCircleIcon fontSize='large'/>
+                    <LogoText>{navbarName || "Konto"}</LogoText>
                 </SingleLoginComponent>
                 
               <SingleLoginComponent onClick={ () => toggleFunction("/warenkorb")}>
@@ -329,6 +346,11 @@ function Navbar() {
                   <ShoppingCartIcon fontSize='large' />
                 </Badge>
                 <LogoText>Warenkorb</LogoText>
+              </SingleLoginComponent>
+
+              <SingleLoginComponent onClick={ () => toggleFunction("/geschaft")}>
+                <StorefrontIcon fontSize='large' />
+                <LogoText>Geschäft</LogoText>
               </SingleLoginComponent>
           </LoginContainer>
           <NavbarButtonWrapper>
