@@ -96,11 +96,11 @@ function Row({ row }) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <StyledTableRow>
-                    <StyledTableCell align="center">Product Name</StyledTableCell>
-                    <StyledTableCell align="center">Number Of Ratings</StyledTableCell>
-                    <StyledTableCell align="center">Total Rating</StyledTableCell>
-                    <StyledTableCell align="center">Category</StyledTableCell>
-                    <StyledTableCell align="center">Description</StyledTableCell>
+                    <StyledTableCell align="center">Produktname</StyledTableCell>
+                    <StyledTableCell align="center">Anzahl der Bewertungen</StyledTableCell>
+                    <StyledTableCell align="center">Gesamtbewertung</StyledTableCell>
+                    <StyledTableCell align="center">Kategorie</StyledTableCell>
+                    <StyledTableCell align="center">Beschreibung</StyledTableCell>
                   </StyledTableRow>
                 </TableHead>
                 <TableBody>
@@ -180,14 +180,14 @@ function ApprovedReviews() {
                   <StyledTableRow>
                       <StyledTableCell />
                       <StyledTableCell />
-                      <StyledTableCell >Approved At</StyledTableCell>
-                      <StyledTableCell >Created At</StyledTableCell>
-                      <StyledTableCell >Rating</StyledTableCell>
-                      <StyledTableCell >Comment</StyledTableCell>
-                      <StyledTableCell >User</StyledTableCell>
-                      <StyledTableCell >Email</StyledTableCell>
-                      <StyledTableCell >Product Name</StyledTableCell>
-                      <StyledTableCell >Product's Rating</StyledTableCell>
+                        <StyledTableCell>Genehmigt am</StyledTableCell>
+                        <StyledTableCell>Erstellt am</StyledTableCell>
+                        <StyledTableCell>Bewertung</StyledTableCell>
+                        <StyledTableCell>Kommentar</StyledTableCell>
+                        <StyledTableCell>Benutzer</StyledTableCell>
+                        <StyledTableCell>E-Mail</StyledTableCell>
+                        <StyledTableCell>Produktname</StyledTableCell>
+                        <StyledTableCell>Produktbewertung</StyledTableCell>
                   </StyledTableRow>
               </TableHead>
               <TableBody>

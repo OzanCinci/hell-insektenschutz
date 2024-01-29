@@ -133,16 +133,16 @@ function Row({ row, initialRole }) {
 
             <SelectionWrapper>
                 <FormControl fullWidth>
-                    <InputLabel color="warning">Role</InputLabel>
+                    <InputLabel color="warning">Rolle</InputLabel>
                     <Select
                         color="warning"
                         value={isChanged?role:initialRole}
-                        label="Role"
+                        label="Rolle"
                         onChange={e=>handleChange(e)}
                         >
                         <MenuItem value={"MANAGER"}>MANAGER</MenuItem>
                         <MenuItem value={"ADMIN"}>ADMIN</MenuItem>
-                        <MenuItem value={"USER"}>USER</MenuItem>
+                        <MenuItem value={"USER"}>NUTZER</MenuItem>
                     </Select>
                 </FormControl>
                 <SaveIconWrapper onClick={()=>handleClickSave()} isChanged={isChanged}>
@@ -165,17 +165,17 @@ function Row({ row, initialRole }) {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h5" gutterBottom component="div">
-                  Reviews
+                  Rezension
                 </Typography>
                 <Table size="medium" aria-label="purchases">
                   <TableHead>
                     <StyledTableRow>
-                      <StyledTableCell align="left">Approved</StyledTableCell>
-                      <StyledTableCell align="left">Comment</StyledTableCell>
-                      <StyledTableCell align="left">Review Rating</StyledTableCell>
-                      <StyledTableCell align="left">Product Name</StyledTableCell>
-                      <StyledTableCell align="left">Product's Rating Count</StyledTableCell>
-                      <StyledTableCell align="left">Product's Rating</StyledTableCell>
+                    <StyledTableCell align="left">Genehmigt</StyledTableCell>
+                      <StyledTableCell align="left">Kommentar</StyledTableCell>
+                      <StyledTableCell align="left">Bewertung der Rezension</StyledTableCell>
+                      <StyledTableCell align="left">Produktname</StyledTableCell>
+                      <StyledTableCell align="left">Anzahl der Produktbewertungen</StyledTableCell>
+                      <StyledTableCell align="left">Produktbewertung</StyledTableCell>
                     </StyledTableRow>
                   </TableHead>
                   <TableBody>
@@ -200,18 +200,18 @@ function Row({ row, initialRole }) {
                 <Collapse in={open} timeout="auto" unmountOnExit>
                 <Box sx={{ margin:1 }}>
                     <Typography variant="h5" gutterBottom component="div">
-                    Orders
+                      Bestellungen
                     </Typography>
                     <Table size="medium" aria-label="purchases">
                     <TableHead>
                         <StyledTableRow>
-                        <StyledTableCell  align="left">Order Status</StyledTableCell>
-                        <StyledTableCell  align="left">Total Price</StyledTableCell>
-                        <StyledTableCell  align="left">Payment Method</StyledTableCell>
-                        <StyledTableCell  align="left">Created At</StyledTableCell>
-                        <StyledTableCell  align="left">City</StyledTableCell>
-                        <StyledTableCell  align="left">Address</StyledTableCell>
-                        <StyledTableCell  align="left">Postal Code</StyledTableCell>
+                        <StyledTableCell align="left">Bestellstatus</StyledTableCell>
+                          <StyledTableCell align="left">Gesamtpreis</StyledTableCell>
+                          <StyledTableCell align="left">Zahlungsmethode</StyledTableCell>
+                          <StyledTableCell align="left">Erstellt am</StyledTableCell>
+                          <StyledTableCell align="left">Stadt</StyledTableCell>
+                          <StyledTableCell align="left">Adresse</StyledTableCell>
+                          <StyledTableCell align="left">Postleitzahl</StyledTableCell>
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
@@ -276,7 +276,7 @@ function ChangeRole() {
             <SearchBarWrapper>
                 <FormControl sx={{ width: "28.8ch" }} variant="outlined">
                 <InputLabel color="warning" htmlFor="search-box">
-                    Search Key Word
+                  Suchbegriff
                 </InputLabel>
                 <OutlinedInput 
                     disabled={loading===true}
@@ -297,11 +297,12 @@ function ChangeRole() {
                     }/>
                 </FormControl>
                 <ModifiedButton 
-                    onClick={(e)=>handleSearchManagers(e)} 
-                    variant="outlined" color="warning"
-                    disabled={loading===true}
-                    >
-                        Search For Managers <ModifiedSearchIcon/>
+                  onClick={(e)=>handleSearchManagers(e)} 
+                  variant="outlined" color="warning"
+                  disabled={loading===true}
+                  >
+                        Zeige nur Manager 
+                    <ModifiedSearchIcon/>
                 </ModifiedButton>
             </SearchBarWrapper>
         </Wrapper>
@@ -319,14 +320,14 @@ function ChangeRole() {
                   <StyledTableRow>
                       <StyledTableCell />
                       <StyledTableCell />
-                      <StyledTableCell  >Role</StyledTableCell>
-                      <StyledTableCell  >First Name</StyledTableCell>
-                      <StyledTableCell  >Last Name</StyledTableCell>
-                      <StyledTableCell  >E-mail</StyledTableCell>
-                      <StyledTableCell  >Created At</StyledTableCell>
-                      <StyledTableCell  >Phone</StyledTableCell>
-                      <StyledTableCell  >Review Count</StyledTableCell>
-                      <StyledTableCell  >Order Count</StyledTableCell>
+                        <StyledTableCell>Vorname</StyledTableCell>
+                        <StyledTableCell>Nachname</StyledTableCell>
+                        <StyledTableCell>E-Mail</StyledTableCell>
+                        <StyledTableCell>Erstellt am</StyledTableCell>
+                        <StyledTableCell>Telefon</StyledTableCell>
+                        <StyledTableCell>Rolle</StyledTableCell>
+                        <StyledTableCell>Anzahl der Bewertungen</StyledTableCell>
+                        <StyledTableCell>Anzahl der Bestellungen</StyledTableCell>
                   </StyledTableRow>
               </TableHead>
               <TableBody>

@@ -13,6 +13,11 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
+import { useDispatch, useSelector } from 'react-redux';
+import { ADD_TO_CART } from '../../constants/user';
+import Stack from '@mui/material/Stack';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 const Container = styled.div`
   min-height: 75vh;
@@ -129,6 +134,17 @@ const AddToCard = styled.div`
   gap: 18%;
 `;
 
+const CustomAmountText = styled.div`
+    border-bottom: 1px solid black;
+    width: 40px;
+    text-align: center;
+    border-bottom: 1px solid rgba(237, 108, 2, 0.5);
+    border-top: 1px solid rgba(237, 108, 2, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
 const QuantityWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -235,8 +251,29 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 function ProductPurchase() {
+  /// below code for notification popup
+  const [open, setOpen] = React.useState(false);
+  const vertical = 'top';
+  const horizontal = 'right';
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setOpen(false);
+  };
+  /// above code for notification popup
+
   const [breite, setBreite] = useState(400);
   const [tiefe, setTiefe] = useState(300);
   const [quantity,setQuantity] = useState(1);
@@ -246,6 +283,10 @@ function ProductPurchase() {
   const [value, setValue] = React.useState(2);
   const [hover, setHover] = React.useState(-1);
   const [comment, setComment] = useState("");
+
+  const numberOfItemsInCart = useSelector(state => state.cart)?.numberOfItems;
+  const dispatch = useDispatch();
+  const cart = useSelector(state=>state.cart);
 
   const handleChange = (event) => {
     setBrush(event.target.value);
@@ -259,14 +300,59 @@ function ProductPurchase() {
     else
       review = document.getElementById("review-title-mobile").getBoundingClientRect().top;
     
-    
       if (review)
       window.scrollTo({ top: review , behavior: 'smooth' });
     return;
   }
 
+  // to help finding the customized item easily later on...
+  const generateUniqueCode = () => Date.now().toString(36) + Math.random().toString(36).substring(2);
+
+  const handleAddToCard = (e) => {
+    e.preventDefault();
+    console.log("add to card!!");
+    const uniqueCode = generateUniqueCode();
+
+    const item = {
+      measurements: `${breite}x${tiefe}`,
+      price: 140, // tekil fiyat
+      quantity: 1, // 2 x 140€
+      uniqueCode: uniqueCode,
+      product: {
+          category: "ürün kategorisi",
+          description: "ürün hakkında açıklama: ",
+          id: 1,
+          imageUrl: "url",
+          name: "Ürün adı 2",
+          rating: 4.8,
+          numberOfRating: 12
+      }
+  }
+
+    dispatch({type:ADD_TO_CART,payload:item});
+
+    const button = document.getElementById('open-notification-button');
+    if (button)
+      setTimeout(()=>button.click(),300);
+  }
+
   return (
     <Container>
+      <div>
+        <Stack spacing={2} sx={{ width: '100%' }}>
+          <button id='open-notification-button' style={{display: "none"}} variant="outlined" onClick={handleClick}>
+          </button>
+          <Snackbar 
+            anchorOrigin={{ vertical, horizontal }}
+            open={open} 
+            autoHideDuration={6000} 
+            onClose={handleClose}>
+              <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                Das Produkt wurde Ihrem Einkaufswagen hinzugefügt!
+              </Alert>
+          </Snackbar>
+        </Stack>
+      </div>
       <div>
         <CarouselWrapper>
           <Carousel/>
@@ -328,7 +414,7 @@ function ProductPurchase() {
                       height='40px' width='40px' 
                       alt='silber color icon'/>
                   </div>
-                  <div style={{fontWeight:  color === 0 ? "bold": "normal"}}>Grau</div>
+                  <div style={{fontWeight:  color === 0 ? "bold": "normal", maxWidth:"130px"}}>Grau (mit Glimmer Effekt)</div>
               </Selection>
               <Selection>
                   <div onClick={()=>setColor(1)}>
@@ -337,7 +423,7 @@ function ProductPurchase() {
                       height='40px' width='40px' 
                       alt='silber color icon'/>
                   </div>
-                  <div style={{fontWeight:  color === 1 ? "bold": "normal"}}>Silber</div>
+                  <div style={{fontWeight:  color === 1 ? "bold": "normal", maxWidth:"130px"}}>Silber E6/EV1 Eloxal</div>
               </Selection>
             </ColorWrapper>
             <div style={{paddingLeft: "30px", paddingRight: "30px", paddingBottom: "10px", color: "#696984"}}>
@@ -350,15 +436,15 @@ function ProductPurchase() {
 
 
           <SingleOption>
-            <Title>Fırçalı Seçimi</Title>
+            <Title>die optional Wandanschluss Bürsten </Title>
             <hr></hr>
             <FormControl sx={{ m: 1, minWidth: 120,  }} size="small">
-              <InputLabel id="demo-select-small-label">Fırça</InputLabel>
+              <InputLabel id="demo-select-small-label">Ihre Wahl</InputLabel>
               <Select
                 labelId="demo-select-small-label"
                 id="demo-select-small"
                 value={brush}
-                label="Fırçalı"
+                label="Ihre Wahl"
                 onChange={handleChange}
               >
                 <MenuItem  value={"Ja"}>Ja</MenuItem>
@@ -366,7 +452,7 @@ function ProductPurchase() {
               </Select>
             </FormControl>
             <div style={{paddingLeft: "30px", paddingRight: "30px", paddingBottom: "10px", color: "#696984", marginTop: "10px"}}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              Für den Fall, dass Ihre Lichtschachtabdeckung an einer oder mehreren Seiten an eine Wand anschließt, empfiehlt es sich, die optional wählbaren Wandabschlussbürsten anzubringen. Diese sorgen für einen zuverlässigen Schutz und eine sichere Abdichtung.
             </div>
           </SingleOption>
 
@@ -401,12 +487,12 @@ function ProductPurchase() {
                       variant="contained"
                       aria-label="Disabled elevation buttons"
                       >
-                      <Button style={{borderColor: "rgba(237, 108, 2, 0.5)"}} onClick={e=>setQuantity(prev=>prev-1)} variant="outlined" color='warning'>-</Button>
-                      <CustomInput 
-                          value={quantity} 
-                          type='number'
-                          onChange={setQuantity}  
-                          />
+                      <Button style={{borderColor: "rgba(237, 108, 2, 0.5)"}} onClick={e=>setQuantity(prev=>prev>1?prev-1:prev)} variant="outlined" color='warning'>-</Button>
+                      <CustomAmountText>
+                          <div>
+                              {quantity}
+                          </div>
+                      </CustomAmountText>
                       <Button onClick={e=>setQuantity(prev=>prev+1)} variant="outlined" color='warning'>+</Button>
                   </ButtonGroup>
               </ButtonGroupWrapper>
@@ -416,7 +502,7 @@ function ProductPurchase() {
               <div>{140*quantity} €</div>
             </TotalPrice>
           </AddToCard>
-          <Button style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>
+          <Button onClick={e=>handleAddToCard(e)} style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>
         </AddToCardContainer>
 
       </SelectionWrapper>

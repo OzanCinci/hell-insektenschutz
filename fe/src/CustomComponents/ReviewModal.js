@@ -109,10 +109,16 @@ function ReviewModal() {
         setSuccess(true);
     }
 
+    const resetState = () => {
+        setValue(null);
+        setConsent(true);
+        setSuccess(false);
+    }
+
   return (
     <div>
 
-        <button style={{display:"none"}} id='leave-a-review-modal' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
+        <button style={{display:"none"}} onClick={()=>resetState()} id='leave-a-review-modal' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
             launch review modal
         </button>
 
@@ -121,7 +127,7 @@ function ReviewModal() {
                 <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="reviewModalLabel">{success===false?"Wie haben Sie das Produkt gefunden?": "Danke"}</h5>
-                    <button onClick={()=>setTimeout(()=>setSuccess(prev=>!prev),1000)} id='close-button-review-model' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button  id='close-button-review-model' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <ModalBody class="modal-body">
                     {

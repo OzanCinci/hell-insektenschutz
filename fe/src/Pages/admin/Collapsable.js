@@ -146,7 +146,7 @@ function Collapsable() {
                     <TitleText>{lastName}</TitleText>
                 </div>
             </ImageWrapper>
-            <TitleText>Role: {role}</TitleText>
+            <TitleText>Rolle: {role}</TitleText>
         </ImageContainer>
 
 
@@ -154,14 +154,14 @@ function Collapsable() {
             <div class="accordion-item">
                 <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                    <div>Orders</div>
+                    <div>Bestellungen</div>
                 </button>
                 </h2>
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                 <div class="accordion-body">
                     <div>
-                        <SingleItem onClick={()=>handlePanelChange('active-orders')}>Active Orders</SingleItem>
-                        <SingleItem onClick={()=>handlePanelChange('completed-orders')}>Completed Orders</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('active-orders')}>aktive Bestellungen</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('completed-orders')}>vollendet Bestellungen</SingleItem>
                     </div>
                 </div>
                 </div>
@@ -169,14 +169,14 @@ function Collapsable() {
             <div class="accordion-item">
                 <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                    <div>Reviews</div>
+                    <div>Rezension</div>
                 </button>
                 </h2>
                 <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
                 <div class="accordion-body">
                         <div>
-                            <SingleItem onClick={()=>handlePanelChange('pending-reviews')}>Pending Reviews</SingleItem>
-                            <SingleItem onClick={()=>handlePanelChange('approved-reviews')}>Approved Reviews</SingleItem>
+                            <SingleItem onClick={()=>handlePanelChange('pending-reviews')}>ausstehend Rezension</SingleItem>
+                            <SingleItem onClick={()=>handlePanelChange('approved-reviews')}>genehmigt Rezension</SingleItem>
                         </div>
                 </div>
                 </div>
@@ -184,14 +184,14 @@ function Collapsable() {
             <div class="accordion-item">
                 <h2 class="accordion-header" id="panelsStayOpen-headingThree">
                 <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                    <div>Users</div>
+                    <div>Nutzer</div>
                 </button>
                 </h2>
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                 <div class="accordion-body">
                     <div>
-                        <SingleItem onClick={()=>handlePanelChange('all-users')}>All Users</SingleItem>
-                        <SingleItem onClick={()=>handlePanelChange('change-role')}>Change Role</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('all-users')}>alle Nutzer</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('change-role')}>Rolle ändern</SingleItem>
                     </div>
                 </div>
                 </div>

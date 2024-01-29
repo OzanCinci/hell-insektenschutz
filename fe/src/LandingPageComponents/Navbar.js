@@ -295,6 +295,8 @@ function Navbar() {
   const [navbarName,setNavbarName] = useState(null);
   const navigate = useNavigate();
   const {userInfo} = useSelector(state=>state.login);
+  const cart = useSelector(state=>state.cart);
+  const numberOfItems = cart.numberOfItems;
 
   function toggleFunction(nav){
     navigate(nav);
@@ -342,7 +344,7 @@ function Navbar() {
                 </SingleLoginComponent>
                 
               <SingleLoginComponent onClick={ () => toggleFunction("/warenkorb")}>
-                <Badge badgeContent={2} color="warning">
+                <Badge badgeContent={numberOfItems} color="warning">
                   <ShoppingCartIcon fontSize='large' />
                 </Badge>
                 <LogoText>Warenkorb</LogoText>

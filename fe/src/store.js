@@ -8,10 +8,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import { loginReducer, refreshReducer, registerReducer, userProfileDetailReducer } from './reducers/authReducer';
 import { activeOrdersReducer, adminLandingPageReducer, allUsersReducer, completedOrdersReducer, findUserReducer, pendingReviewsReducer, reviewsReducer, selectAdminDataReducer } from './reducers/adminReducer';
-import { createReviewDataReducer } from './reducers/userReducer';
-
-// REDUCER IMPORTS
-// TODO: import reducers
+import { cartReducer, createReviewDataReducer } from './reducers/userReducer';
 
 
 // COMBINE REDUCERS
@@ -29,8 +26,18 @@ const reducer = combineReducers({
     adminLandingPage: adminLandingPageReducer,
     userProfileDetail: userProfileDetailReducer,
     createReviewData: createReviewDataReducer,
+    cart: cartReducer,
 })
 
+
+
+// SAMPLE CART DATA EXAMPLE
+const emptyCart = {
+    numberOfItems: 0,
+    price : 0.0,
+    shippingPrice: 6.0,
+    items : []
+};
 
 // GET LOCALY STORED DATA
 /* EXAMPLE CODE TO RETRIEVE DATA FROM LOCAL STORAGE
@@ -39,6 +46,7 @@ const getUserInfo = localStorage.getItem("userInfo")?JSON.parse(localStorage.get
 const getTotalCost = localStorage.getItem("TotalCost")?JSON.parse(localStorage.getItem("TotalCost")):0
 */
 const userInfo = localStorage.getItem("userInfo")?JSON.parse(localStorage.getItem("userInfo")):null;
+const localCartInfo = localStorage.getItem("localCartInfo")?JSON.parse(localStorage.getItem("localCartInfo")):emptyCart;
 
 // INITIATE STATE
 const initialState = {
@@ -55,6 +63,7 @@ const initialState = {
     adminLandingPage: null,
     userProfileDetail: {userDetail:null,loading:false,error:null},
     createReviewData: null,
+    cart: localCartInfo,
 }
 
 /*

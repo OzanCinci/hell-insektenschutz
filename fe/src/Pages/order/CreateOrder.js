@@ -250,41 +250,38 @@ const CreditCardCustomInput = styled(CustomInput)`
     }
 `;
 
+const Splitter = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 90%;
+    margin: auto;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 0px;
+`;
 
-const mockData = {
-    shippingPrice: 6.0,
-    price : 460.0,
-    items : [
-        {
-            measurements: "kullanıcıdan alınan ölçüm sonuçları",
-            price: 140,
-            quantity: 2,
-            product: {
-                category: "ürün kategorisi",
-                description: "ürün hakkında açıklama: ",
-                id: 1,
-                imageUrl: "url",
-                name: "Ürün adı 1",
-                rating: 4.8,
-                numberOfRating: 12
-            }
-        },
-        {
-            measurements: "kullanıcıdan alınan ölçüm sonuçları",
-            price: 180,
-            quantity: 1,
-            product: {
-                category: "ürün kategorisi",
-                description: "ürün hakkında açıklama: ",
-                id: 1,
-                imageUrl: "url",
-                name: "Ürün adı 1",
-                rating: 4.4,
-                numberOfRating: 78
-            }
-        }
-    ]
-};
+const Line = styled.div`
+    border-bottom: 1px solid #696984;
+    flex-grow: 1;
+`;
+
+const LineText = styled.div`
+    color: #696984;
+    font-size: 19px;
+    width: fit-content;
+    
+    @media only screen and (max-width: 450px) {
+        font-size: 21px;
+        margin-bottom: -10px;
+    }   
+`;
+
+const CustomButton = styled(Button)`
+    margin-top: 25px !important;
+    margin-bottom: -10px !important;
+`;
+
 
 function CreateOrder() {
     // backdrop code
@@ -311,6 +308,14 @@ function CreateOrder() {
     Land: [ ]
     
     */
+
+    const [accountlessInfo,setAccountlessInfo] = useState({
+        email: "",
+        firstName: "",
+        lastName: "",
+        telephone: null
+    });
+
     const [address,setAddress] = useState({
         street: "",
         doorNumber: null,
@@ -326,6 +331,7 @@ function CreateOrder() {
         cvv: null
     });
     const {userInfo} = useSelector(state=>state.login);
+    const cart = useSelector(state=>state.cart);
 
     const handleClickArrowButton = (e,direction) => {
         e.preventDefault();
@@ -434,12 +440,39 @@ function CreateOrder() {
                 {
                     progress === 0 && 
                     <SingleSlide>
-                        <AccountCircleIcon style={{ fontSize: '5em' }}/>
+                        {/* <AccountCircleIcon style={{ fontSize: '5em' }}/> */}
                         {
                             userInfo===null ? 
                             (<>
-                                <Desc>Bitte loggen Sie sich ein, um fortzufahren.</Desc>
-                                <Button  color='warning' onClick={(e)=>handleAuth(e)} variant="contained">Einloggen / Anmelden</Button>
+                                <CustomButton color='warning' onClick={(e)=>handleAuth(e)} variant="contained">Einloggen / Anmelden</CustomButton>
+                                
+                                <Splitter>
+                                    <Line></Line>
+                                    <LineText>oder Kauf ohne Konto</LineText>
+                                    <Line></Line>
+                                </Splitter>
+                                
+                                <Desc>
+                                    Produktkauf ist auch ohne Konto möglich, allerdings ohne Zugriff auf frühere Bestellungen und ohne Schnellkauf-Funktion.
+                                </Desc>
+
+                                <TextField 
+                                    sx={{ width: "35ch" }}
+                                    value={accountlessInfo.email} onChange={e=>setAccountlessInfo({...accountlessInfo, email: e.target.value})}
+                                    label="Email" variant="outlined" color="warning"/>
+                                <TextField 
+                                    sx={{ width: "35ch" }}
+                                    value={accountlessInfo.firstName} onChange={e=>setAccountlessInfo({...accountlessInfo, firstName: e.target.value})}
+                                    label="Name" variant="outlined" color="warning"/>
+                                <TextField 
+                                    sx={{ width: "35ch" }}
+                                    value={accountlessInfo.lastName} onChange={e=>setAccountlessInfo({...accountlessInfo, lastName: e.target.value})}
+                                    label="Nachname" variant="outlined" color="warning"/>
+                                <TextField 
+                                    sx={{ width: "35ch" }}
+                                    value={accountlessInfo.telephone} onChange={e=>setAccountlessInfo({...accountlessInfo, telephone: e.target.value})}
+                                    type='tel'
+                                    label="Telefonnummer" variant="outlined" color="warning"/>
                             </>) :
                             (<>
                                 <Desc>
@@ -450,7 +483,6 @@ function CreateOrder() {
                                 </Desc>
                             </>)
                         }
-                        
                     </SingleSlide>
                 }
                 {
@@ -587,7 +619,7 @@ function CreateOrder() {
                                     <LastPageTitle>Artikel:</LastPageTitle>
                                     <div>
                                         {
-                                            mockData.items.map((item,index)=>{
+                                            cart.items.map((item,index)=>{
                                                 return (
                                                     <>
                                                         <img/>
@@ -616,7 +648,7 @@ function CreateOrder() {
                                                 Artikel: 
                                             </span>
                                             <span>
-                                                {mockData.price} €
+                                                {cart.price} €
                                             </span>
                                         </li>
                                         <li className="list-group-item d-flex justify-content-space-around">
@@ -624,7 +656,7 @@ function CreateOrder() {
                                                 Versand:
                                             </span>
                                             <span>
-                                                {mockData.shippingPrice} €
+                                                {cart.shippingPrice} €
                                             </span>
                                         </li>
                                         <div className="list-group-item d-flex justify-content-space-around">
@@ -632,7 +664,7 @@ function CreateOrder() {
                                                 Gesamt:
                                             </div>
                                             <div>
-                                                {mockData.shippingPrice + mockData.price} €
+                                                {cart.shippingPrice + cart.price} €
                                             </div>
                                         </div>
                                     </ul>

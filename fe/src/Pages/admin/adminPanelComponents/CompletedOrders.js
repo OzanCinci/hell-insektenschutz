@@ -89,12 +89,12 @@ function Row({ row }) {
                 <Table size="small" aria-label="purchases">
                   <TableHead>
                     <StyledTableRow>
-                      <StyledTableCell align="center">Item Name</StyledTableCell>
-                      <StyledTableCell align="center">Category</StyledTableCell>
-                      <StyledTableCell align="center">Total Price</StyledTableCell>
-                      <StyledTableCell align="center">Quantity</StyledTableCell>
-                      <StyledTableCell align="center">Measurements</StyledTableCell>
-                      <StyledTableCell align="center">Rating</StyledTableCell>
+                      <StyledTableCell align="center">Artikelname</StyledTableCell>
+                      <StyledTableCell align="center">Kategorie</StyledTableCell>
+                      <StyledTableCell align="center">Gesamtpreis</StyledTableCell>
+                      <StyledTableCell align="center">Menge</StyledTableCell>
+                      <StyledTableCell align="center">Maße</StyledTableCell>
+                      <StyledTableCell align="center">Bewertung</StyledTableCell>
                     </StyledTableRow>
                   </TableHead>
                   <TableBody>
@@ -151,19 +151,19 @@ function CompletedOrders() {
                   <StyledTableRow>
                       <StyledTableCell />
                       <StyledTableCell />
-                      <StyledTableCell >Order Number</StyledTableCell>
-                      <StyledTableCell >User Name</StyledTableCell>
+                      <StyledTableCell >Bestellnummer</StyledTableCell>
+                      <StyledTableCell >Benutzername</StyledTableCell>
                       <StyledTableCell >E-mail</StyledTableCell>
-                      <StyledTableCell >Order Status</StyledTableCell>
-                      <StyledTableCell >Total Price</StyledTableCell>
-                      <StyledTableCell >Shipping Price</StyledTableCell>
-                      <StyledTableCell >Payment Method</StyledTableCell>
-                      <StyledTableCell >Created At</StyledTableCell>
-                      <StyledTableCell >Last Update</StyledTableCell>
-                      <StyledTableCell >Country</StyledTableCell>
-                      <StyledTableCell >City</StyledTableCell>
-                      <StyledTableCell >Address</StyledTableCell>
-                      <StyledTableCell >Postal Code</StyledTableCell>
+                      <StyledTableCell >Bestellstatus</StyledTableCell>
+                      <StyledTableCell >Gesamtpreis</StyledTableCell>
+                      <StyledTableCell >Versandkosten</StyledTableCell>
+                      <StyledTableCell >Zahlungsmethode</StyledTableCell>
+                      <StyledTableCell >Erstellt am</StyledTableCell>
+                      <StyledTableCell >Letzte Aktualisierung</StyledTableCell>
+                      <StyledTableCell >Land</StyledTableCell>
+                      <StyledTableCell >Stadt</StyledTableCell>
+                      <StyledTableCell >Adresse</StyledTableCell>
+                      <StyledTableCell >Postleitzahl</StyledTableCell>
                   </StyledTableRow>
               </TableHead>
               <TableBody>

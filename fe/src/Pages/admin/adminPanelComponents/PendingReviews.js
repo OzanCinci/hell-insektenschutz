@@ -61,25 +61,21 @@ function Row({ row }) {
   const handleApproveSubmit = (reviewID,productID,e)=>{
     e.preventDefault();
 
-    const result = window.confirm("Approve to change review status");
+    const result = window.confirm("Genehmigung, um den Bewertungsstatus zu ändern");
     if (!result) return;
 
     if (userInfo?.access_token && reviewID!==null && productID!==null)
       dispatch(approveReview(userInfo?.access_token,reviewID,productID));
-
-    console.log("handled approve submit!");
   }
 
   const handleDeleteSubmit = (reviewID,e)=>{
     e.preventDefault();
 
-    const result = window.confirm("Approve to delete the review");
+    const result = window.confirm("Genehmigen Sie, um die Bewertung zu löschen");
     if (!result) return;
 
     if (userInfo?.access_token && reviewID!==null)
       dispatch(deleteReview(userInfo?.access_token,reviewID));
-
-    console.log("handled delete review!");
   }
 
   return (
@@ -101,7 +97,7 @@ function Row({ row }) {
 
             <Stack direction="row" spacing={2}>
               <Button onClick={(e)=> handleApproveSubmit(row.id,row.product.id,e)} color="warning" variant="contained" endIcon={<SendIcon />}>
-                Approve
+                Genehmigen
               </Button>
               <IconButton onClick={(e)=> handleDeleteSubmit(row.id,e)} aria-label="delete" size="large">
                 <DeleteIcon />
@@ -127,11 +123,11 @@ function Row({ row }) {
               <Table size="small" aria-label="purchases">
                 <TableHead>
                   <StyledTableRow>
-                    <StyledTableCell align="center">Product Name</StyledTableCell>
-                    <StyledTableCell align="center">Number Of Ratings</StyledTableCell>
-                    <StyledTableCell align="center">Total Rating</StyledTableCell>
-                    <StyledTableCell align="center">Category</StyledTableCell>
-                    <StyledTableCell align="center">Description</StyledTableCell>
+                    <StyledTableCell align="center">Produktname</StyledTableCell>
+                    <StyledTableCell align="center">Anzahl der Bewertungen</StyledTableCell>
+                    <StyledTableCell align="center">Gesamtbewertung</StyledTableCell>
+                    <StyledTableCell align="center">Kategorie</StyledTableCell>
+                    <StyledTableCell align="center">Beschreibung</StyledTableCell>
                   </StyledTableRow>
                 </TableHead>
                 <TableBody>
@@ -188,14 +184,14 @@ useEffect(()=>{
                   <StyledTableRow>
                       <StyledTableCell />
                       <StyledTableCell />
-                      <StyledTableCell >Approve</StyledTableCell>
-                      <StyledTableCell >Created At</StyledTableCell>
-                      <StyledTableCell >Rating</StyledTableCell>
-                      <StyledTableCell >Comment</StyledTableCell>
-                      <StyledTableCell >User</StyledTableCell>
-                      <StyledTableCell >Email</StyledTableCell>
-                      <StyledTableCell >Product Name</StyledTableCell>
-                      <StyledTableCell >Product's Rating</StyledTableCell>
+                        <StyledTableCell>Genehmigen</StyledTableCell>
+                        <StyledTableCell>Erstellt am</StyledTableCell>
+                        <StyledTableCell>Bewertung</StyledTableCell>
+                        <StyledTableCell>Kommentar</StyledTableCell>
+                        <StyledTableCell>Benutzer</StyledTableCell>
+                        <StyledTableCell>E-Mail</StyledTableCell>
+                        <StyledTableCell>Produktname</StyledTableCell>
+                        <StyledTableCell>Produktbewertung</StyledTableCell>
                   </StyledTableRow>
               </TableHead>
               <TableBody>

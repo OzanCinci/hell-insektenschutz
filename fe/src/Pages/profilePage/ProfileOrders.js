@@ -5,6 +5,9 @@ import TempImg from '../../images/details/plissee.jpg';
 import TempImg2 from '../../images/details/alt_schiebetür.jpg';
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import Rating from '@mui/material/Rating';
+import { useNavigate } from 'react-router-dom';
+import NoOrderImg from '../../images/account/sepet.jpeg';
 
 ////////////////////////////////////////////////
 /////// DESKTOP COMPONENTS BELOW ////////////////
@@ -29,11 +32,11 @@ const Body = styled.div`
 `;
 
 const SingleOrder = styled.div`
-    border: 1px solid #f0f2f2;
     border-radius: 0px 0px 10px 10px;
     margin-top: 25px;
     width: 100%;
 
+    border: 1px solid #f0f2f2;
     box-shadow: 2px 4px 9px 0px rgba(0,0,0,0.75);
     -webkit-box-shadow: 2px 4px 9px 0px rgba(0,0,0,0.75);
     -moz-box-shadow: 2px 4px 9px 0px rgba(0,0,0,0.75);
@@ -122,7 +125,6 @@ const MobileOrderContainer = styled.div`
     transform: ${props => props.showDetail? "translateX(-50%)" : "translateX(0%)"};
     transition: all 0.8s ease-in-out;
 
-    border: 2px solid red;
 `;
 
 const MobileOrderWrapper = styled.div`
@@ -173,14 +175,74 @@ const MobileDetailsOrder = styled.div`
 `;
 
 const BackButtonWrapper = styled.div`
-    border: 1px solid red;
     text-align: left;
     padding-left: 50px;
 `;
 
 const CustomMobileDetailsOrder = styled(MobileDetailsOrder)`
-    border: 2px solid yellow;
+    height: fit-content;
 `;
+
+const HoverBlock = styled.div`
+    margin: 10px auto;
+    text-align: left;
+    padding: 10px 30px;
+    background: white;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid grey;
+`;
+
+const CustomHoverBlock = styled(HoverBlock)`
+    border-bottom: none;
+`;
+
+const MobileSingleItemImg = styled.img`
+    height: auto;
+    width: 70%;
+    align-self: center;
+    display: block;
+    margin: 0px auto;
+    margin-bottom: 10px;
+`;
+
+const CustomMobileSingleItemImg = styled.img`
+    height: auto;
+    width: 70%;
+    max-width: 300px;
+    align-self: center;
+    display: block;
+    margin: 0px auto;
+`;
+
+const MobileOrderTitle = styled(OrderTitle)`
+    color: #f59f4c;
+    font-size: 18px;
+    font-weight: bold;
+`;
+
+const MobileItemName = styled.div`
+    font-size: 21px;
+`;
+
+const CustomRating = styled(Rating)`
+    margin-bottom: 20px;
+    transform: scale(0.7);
+`;
+
+const MobileDetailItem = styled.div`
+`;
+
+const NoOrderMessage = styled.div`
+    width: 80%;
+    margin: 20px auto;
+    margin-bottom: 0px;
+    font-size: 20px;
+    color: rgb(82, 82, 102);
+`;
+
 ////////////////////////////////////////////////
 /////// MOBILE COMPONENTS ABOVE ////////////////
 ////////////////////////////////////////////////
@@ -188,6 +250,7 @@ const CustomMobileDetailsOrder = styled(MobileDetailsOrder)`
 function ProfileOrders({orders}) {
     const [showDetail,setShowDetail] = useState(false);
     const [orderShowed,setOrderShowed] = useState(null);
+    const nav = useNavigate();
 
     const handleShowDetail = (order) => {
         // TODO: navigation to detail page;
@@ -199,7 +262,7 @@ function ProfileOrders({orders}) {
     const handleHideDetail = () => {
         // TODO: navigation to detail page;
         setShowDetail(false);
-        setOrderShowed(null);
+        setTimeout(()=>setOrderShowed(null),700);
     }
 
     const handleAddReview = (e) => {
@@ -215,8 +278,9 @@ function ProfileOrders({orders}) {
         {
             orders.length === 0 && 
             <div>
-                <div>No Order Yet</div>
-                <button>Go shopping</button>
+                <NoOrderMessage>Sie haben bisher keine Bestellungen aufgegeben. Entdecken Sie unsere vielfältige Produktauswahl auf unserer Einkaufsseite und finden Sie etwas, das Ihnen gefällt!</NoOrderMessage>
+                <CustomMobileSingleItemImg src={NoOrderImg}/>
+                <Button onClick={(e)=>nav("/geschaft")} size='large' variant="outlined" color="warning">Sehen Sie unsere Produkte</Button>
             </div>
         }
         <DesktopOrderContainer>
@@ -255,12 +319,12 @@ function ProfileOrders({orders}) {
                                             <OrderItemContainer key={index}>
                                                     <CustomImage src={TempImg}/>
                                                     <ItemDetailWrapper>
-                                                        <div>{item.quantity} x {item.product.name}</div>
+                                                        <div>{item.quantity> 1 ? `${item.quantity} x`: ""} {item.product.name}</div>
                                                         <div>{item.measurements}</div>
                                                         <div>{item.quantity} x {item.price}€</div>
                                                     </ItemDetailWrapper>
                                                     <ButtonWrapper>
-                                                        <Button onClick={(e)=>{}} size='small' variant="outlined" color="warning">Buy Again</Button>
+                                                        <Button onClick={(e)=>{}} size='small' variant="outlined" color="warning">Wieder Kaufen</Button>
                                                         <Button 
                                                             onClick={(e)=>{
                                                                 e.preventDefault();
@@ -332,12 +396,63 @@ function ProfileOrders({orders}) {
                 </MobileDetailsOrder>
             }
             {
-                orders.length > 0 &&
+                orders.length > 0 && orderShowed!==null &&
                 <CustomMobileDetailsOrder>
                     <BackButtonWrapper onClick={()=>handleHideDetail()}>
                         <ArrowBackIcon fontSize='large' color='warning'/>
                     </BackButtonWrapper>
-                    <div>details</div>
+                    <HoverBlock>
+                        <MobileOrderTitle>Einzelheiten:</MobileOrderTitle>
+                        <div>
+                            Status: {orderShowed.orderStatus}
+                        </div>
+                        <div>
+                            Bezahlverfahren: {orderShowed.paymentMethod}
+                        </div>
+                        <div>
+                            Erstellt am: {convertDate(orderShowed.createdAt)}
+                        </div>
+                        <div>
+                            Letztes Update: {convertDate(orderShowed.lastUpdate)}
+                        </div>
+                    </HoverBlock>
+
+                    <HoverBlock>
+                        <MobileOrderTitle>Lieferadresse:</MobileOrderTitle>
+                        <div>{orderShowed.address}</div>
+                        <div>{orderShowed.city} / {orderShowed.country}</div>
+                        <div>{orderShowed.postalCode}</div>
+                    </HoverBlock>
+
+                    <CustomHoverBlock>
+                        <MobileOrderTitle>Artikel:</MobileOrderTitle>
+                        <div>
+                            {
+                                orderShowed.orderItems?.map((item,index)=>{
+                                    console.log("here: ",item);
+                                    return (
+                                        <div className='my-5' key={index}>
+                                            <MobileSingleItemImg src={index%2==0? TempImg: TempImg2} height='100px'/>
+                                            <MobileDetailItem>
+                                                <MobileItemName>{item.quantity> 1 ? `${item.quantity} x`: ""} {item.product.name}</MobileItemName>
+                                                {
+                                                    item.product.numberOfRating > 0 && 
+                                                    <div>
+                                                        <CustomRating fontSize='large' name="half-rating-read" defaultValue={item.product.rating} precision={0.5} readOnly />
+                                                    </div>
+                                                }
+                                                <div>{item.measurements}</div>
+                                                <div>{item.price}€  {item.quantity>1 ? `(${item.price/item.quantity} euro pro Artikel)`: ""}</div>
+                                                <Button className='my-2' onClick={(e)=>handleAddReview(e)} size='small' variant="outlined" color="warning">Kommentar</Button>
+                                                <Button className='mx-2' onClick={(e)=>{}} size='small' variant="outlined" color="warning">Wieder Kaufen</Button>
+                                            </MobileDetailItem>
+                                            
+                                        </div>
+                                    );
+                                })
+                            }
+                        </div>
+                    </CustomHoverBlock>
                 </CustomMobileDetailsOrder>
             }
             </MobileOrderContainer>

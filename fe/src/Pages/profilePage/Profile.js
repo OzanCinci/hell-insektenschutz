@@ -268,10 +268,10 @@ function Profile() {
                     </LogOutButton>
                     {
                         role!=="USER" &&
-                    <LogOutButton className='my-2' onClick={()=> nav('/admin-panel')}>
-                        Admin Dashboard
-                        <LogoutImage src={DashBoardIcon} alt='admin-icon-for-users'/>
-                    </LogOutButton>
+                        <LogOutButton className='my-2' onClick={()=> nav('/admin-panel')}>
+                            Admin Dashboard
+                            <LogoutImage src={DashBoardIcon} alt='admin-icon-for-users'/>
+                        </LogOutButton>
                     }
                     <UserInfoWrapper>
                         <IconWrapper>
@@ -313,10 +313,13 @@ function Profile() {
                         Logout
                         <LogoutImage src={LogoutIcon} alt='logout-icon-for-users'/>
                     </LogOutButton>
-                    <LogOutButton className='my-2' onClick={()=> nav('/admin-panel')}>
-                        Admin Dashboard
-                        <LogoutImage src={DashBoardIcon} alt='admin-icon-for-users'/>
-                    </LogOutButton>
+                    {
+                        role!=="USER" &&
+                        <LogOutButton className='my-2' onClick={()=> nav('/admin-panel')}>
+                            Admin Dashboard
+                            <LogoutImage src={DashBoardIcon} alt='admin-icon-for-users'/>
+                        </LogOutButton>
+                    }
                     <UserInfoWrapper>
                         <IconWrapper>
                             <UserImage src={UserIcon}/>

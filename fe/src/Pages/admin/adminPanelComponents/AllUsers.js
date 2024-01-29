@@ -81,23 +81,23 @@ function Row({ row }) {
             <Collapse in={open} timeout="auto" unmountOnExit>
               <Box sx={{ margin: 1 }}>
                 <Typography variant="h5" gutterBottom component="div">
-                  Reviews
+                  Rezension
                 </Typography>
                 <Table size="medium" aria-label="purchases">
                   <TableHead>
                     <StyledTableRow>
-                      <StyledTableCell align="left">Approved</StyledTableCell>
-                      <StyledTableCell align="left">Comment</StyledTableCell>
-                      <StyledTableCell align="left">Review Rating</StyledTableCell>
-                      <StyledTableCell align="left">Product Name</StyledTableCell>
-                      <StyledTableCell align="left">Product's Rating Count</StyledTableCell>
-                      <StyledTableCell align="left">Product's Rating</StyledTableCell>
+                      <StyledTableCell align="left">Genehmigt</StyledTableCell>
+                      <StyledTableCell align="left">Kommentar</StyledTableCell>
+                      <StyledTableCell align="left">Bewertung der Rezension</StyledTableCell>
+                      <StyledTableCell align="left">Produktname</StyledTableCell>
+                      <StyledTableCell align="left">Anzahl der Produktbewertungen</StyledTableCell>
+                      <StyledTableCell align="left">Produktbewertung</StyledTableCell>
                     </StyledTableRow>
                   </TableHead>
                   <TableBody>
                     {row.reviews.map((review,index) => (
                       <StyledTableRow key={index}>
-                        <StyledTableCell align="left">{review.approved?"Approved":"Not Approved"}</StyledTableCell>
+                        <StyledTableCell align="left">{review.approved?"Ja":"Nein"}</StyledTableCell>
                         <StyledTableCell align="left">{review.comment}</StyledTableCell>
                         <StyledTableCell align="left">{review.rating}</StyledTableCell>
                         <StyledTableCell align="left">{review.product.name}</StyledTableCell>
@@ -116,18 +116,18 @@ function Row({ row }) {
                 <Collapse in={open} timeout="auto" unmountOnExit>
                 <Box sx={{ margin:1 }}>
                     <Typography variant="h5" gutterBottom component="div">
-                    Orders
+                      Bestellungen
                     </Typography>
                     <Table size="medium" aria-label="purchases">
                     <TableHead>
                         <StyledTableRow>
-                        <StyledTableCell  align="left">Order Status</StyledTableCell>
-                        <StyledTableCell  align="left">Total Price</StyledTableCell>
-                        <StyledTableCell  align="left">Payment Method</StyledTableCell>
-                        <StyledTableCell  align="left">Created At</StyledTableCell>
-                        <StyledTableCell  align="left">City</StyledTableCell>
-                        <StyledTableCell  align="left">Address</StyledTableCell>
-                        <StyledTableCell  align="left">Postal Code</StyledTableCell>
+                          <StyledTableCell align="left">Bestellstatus</StyledTableCell>
+                          <StyledTableCell align="left">Gesamtpreis</StyledTableCell>
+                          <StyledTableCell align="left">Zahlungsmethode</StyledTableCell>
+                          <StyledTableCell align="left">Erstellt am</StyledTableCell>
+                          <StyledTableCell align="left">Stadt</StyledTableCell>
+                          <StyledTableCell align="left">Adresse</StyledTableCell>
+                          <StyledTableCell align="left">Postleitzahl</StyledTableCell>
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
@@ -189,14 +189,14 @@ function AllUsers() {
                   <StyledTableRow>
                       <StyledTableCell />
                       <StyledTableCell />
-                      <StyledTableCell  >First Name</StyledTableCell>
-                      <StyledTableCell  >Last Name</StyledTableCell>
-                      <StyledTableCell  >E-mail</StyledTableCell>
-                      <StyledTableCell  >Created At</StyledTableCell>
-                      <StyledTableCell  >Phone</StyledTableCell>
-                      <StyledTableCell  >Role</StyledTableCell>
-                      <StyledTableCell  >Review Count</StyledTableCell>
-                      <StyledTableCell  >Order Count</StyledTableCell>
+                        <StyledTableCell>Vorname</StyledTableCell>
+                        <StyledTableCell>Nachname</StyledTableCell>
+                        <StyledTableCell>E-Mail</StyledTableCell>
+                        <StyledTableCell>Erstellt am</StyledTableCell>
+                        <StyledTableCell>Telefon</StyledTableCell>
+                        <StyledTableCell>Rolle</StyledTableCell>
+                        <StyledTableCell>Anzahl der Bewertungen</StyledTableCell>
+                        <StyledTableCell>Anzahl der Bestellungen</StyledTableCell>
                   </StyledTableRow>
               </TableHead>
               <TableBody>
