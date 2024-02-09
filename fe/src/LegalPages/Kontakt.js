@@ -184,7 +184,7 @@ function Kontakt() {
         </Box>
         <Box>
             <img height='30px' alt='location-icon' src={LocationIcon}/>
-            <div> Adresse: Zeppelinstraße 10 PLZ und Stadt: 76448 Durmersheim</div>
+            <div> Adresse: Lochfeldstraße 30, 76437 Rastatt, Deutschland</div>
         </Box>
         <BoxColumn>
             <div>Umsatz Identifikationsnummer </div>

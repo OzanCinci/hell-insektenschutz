@@ -152,10 +152,10 @@ function LandingPagePhoto() {
       <SubtextWrapper data-aos-offset="50" data-aos="zoom-out">
         <div>
           <SubText>
-            Sie sind auf der Suche nach maßgefertigter Insektenschutz für Ihr Zuhause?
+            Sie sind auf der Suche nach einem massgefertigten Insektenschutz für Ihr Zuhause?
           </SubText>
           <Subtitle>
-            Jedes unsere Elemente ist ein, für Sie individuell gefertigtes, Unikat
+            Jedes unserer Elemente ist ein für Sie individuell gefertigtes Unikat.
           </Subtitle>
         </div>
         <div>

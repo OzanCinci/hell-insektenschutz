@@ -113,7 +113,7 @@ function Footer() {
       <FooterWrapper>
         <div>
           <LogoImg alt='logo' src={Logo}/>
-          <div style={{fontSize:"17px"}}>Zeppelinstraße 10, 76448 Durmersheim</div>
+          <div style={{fontSize:"17px"}}>Lochfeldstraße 30, 76437 Rastatt, Deutschland</div>
           <div>Öffnungszeiten: Mo-Sa 09.00-18.00 Uhr</div>
           <div onClick={() => {
               window.location.href="tel:+49176/62960342";

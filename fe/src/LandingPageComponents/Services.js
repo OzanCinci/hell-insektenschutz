@@ -107,13 +107,13 @@ const serviceMap = [
   {
     title: null,
     img: service1,
-    text: "Schnaken und andere Insekten in Ihren Wohnräumen gehören bald der Vergangenheit an. Lehnen Sie sich entspannt zurück, Ihr Auftrag geht bei uns in Arbeit und Sie erhalten in Kürze millimetergenau gefertigte und optimal montierte Fliegengitter. Hochwertige Materialien, ein umfassendes Produktportfolio und erstklassige Kundenbetreuung zeichnen.",
+    text: "Schnaken und andere Insekten in Ihren Wohnräumen gehören bald der Vergangenheit an. Lehnen Sie sich entspannt zurück, Ihr Auftrag geht bei uns in Arbeit und Sie erhalten in Kürze millimetergenau gefertigte und optimal montierte Fliegengitter. Hochwertige Materialien, ein umfassendes Produktportfolio und erstklassige Kundenbetreuung zeichen uns aus.",
     def: true
   },
   {
     title: null,
     img: service2,
-    text: "Der Wunsch nach hellen, lichtdurchfluteten Räumen und energieeffizienten Häusern beeinflusst den modernen Objektbau. Klar, dass es unser Anspruch ist Fliegengitter zu produzieren, die nahezu unsichtbar sind und eine extrem komfortable Bedienung aufweisen. Unsere Mission ist, die besten Insektenschutzlösungen auf dem Markt zu bieten.",
+    text: "Der Wunsch nach hellen, lichtdurchfluteten Räumen und energieeffizienten Häusern beeinflusst den modernen Objektbau. Es ist unsere Aufgabe,Fliegengitter zu produzieren,die nahezu unsichtbar sind und eine komfortable Bedienung aufweisen. Unsere Mission ist, die besten Insektenschutzlösungen auf dem Markt zu bieten.",
     def: false
   }
 ]
@@ -296,7 +296,7 @@ function Services() {
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
               <AccordionText class="accordion-body">
-                Schnaken und andere Insekten in Ihren Wohnräumen gehören bald der Vergangenheit an. Lehnen Sie sich entspannt zurück, Ihr Auftrag geht bei uns in Arbeit und Sie erhalten in Kürze millimetergenau gefertigte und optimal montierte Fliegengitter. Hochwertige Materialien, ein umfassendes Produktportfolio und erstklassige Kundenbetreuung zeichnen.
+                Schnaken und andere Insekten in Ihren Wohnräumen gehören bald der Vergangenheit an. Lehnen Sie sich entspannt zurück, Ihr Auftrag geht bei uns in Arbeit und Sie erhalten in Kürze millimetergenau gefertigte und optimal montierte Fliegengitter. Hochwertige Materialien, ein umfassendes Produktportfolio und erstklassige Kundenbetreuung zeichen uns aus.
               </AccordionText>
             </div>
           </div>
@@ -308,7 +308,7 @@ function Services() {
             </h2>
             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
               <AccordionText class="accordion-body">
-                Der Wunsch nach hellen, lichtdurchfluteten Räumen und energieeffizienten Häusern beeinflusst den modernen Objektbau. Klar, dass es unser Anspruch ist Fliegengitter zu produzieren, die nahezu unsichtbar sind und eine extrem komfortable Bedienung aufweisen. Unsere Mission ist, die besten Insektenschutzlösungen auf dem Markt zu bieten.
+                Der Wunsch nach hellen, lichtdurchfluteten Räumen und energieeffizienten Häusern beeinflusst den modernen Objektbau. Es ist unsere Aufgabe,Fliegengitter zu produzieren,die nahezu unsichtbar sind und eine komfortable Bedienung aufweisen. Unsere Mission ist, die besten Insektenschutzlösungen auf dem Markt zu bieten.
               </AccordionText>
             </div>
           </div>
