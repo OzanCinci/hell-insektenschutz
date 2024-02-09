@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { allUsersAction } from '../../../actions/adminActions';
 import styled from 'styled-components';
@@ -18,6 +18,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { convertDate } from '../../../utils/datetime';
+import useFetch from '../../../hooks/useFetch';
+import Paginate from '../../../CustomComponents/Paginate';
 
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -155,24 +157,18 @@ function Row({ row }) {
 
 
 function AllUsers() {
-    const dispatch = useDispatch();
-    const {usersData,loading,error} = useSelector(state=>state.allUsers);
-    const {userInfo} = useSelector(state=>state.login);
-
-
- 
-
-    useEffect(()=>{
-      const getAllUsers = () => {
-        if (!usersData && userInfo?.access_token){
-            console.log("request is made usersData");
-            dispatch(allUsersAction(userInfo?.access_token));
+  const [pageNumber,setPageNumber] = useState(0);
+  const [url, setUrl] = useState("/api/management/all-users");
+  const {userInfo} = useSelector(state=>state.login);
+  const [config, setConfig] = useState({
+    "method": "get",
+    "headers": {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userInfo?.access_token}`
         }
-        console.log("getAllUsers: ",usersData);
-    }
-
-     return () => getAllUsers();
-    },[userInfo?.access_token,dispatch,usersData]);
+  });
+  const {data, loading, error} = useFetch(url,config,pageNumber);
+  const usersData = data!==null? data.content : null;
 
   return (
     <div>
@@ -182,6 +178,7 @@ function AllUsers() {
       {
         loading!==false &&  usersData===null && <CircularProgress color="warning" /> 
       }
+      { data!=null && <Paginate data={data} setPageNumber={setPageNumber} pageNumber={pageNumber}/>}
       {   usersData &&
           <TableContainer component={Paper}>
               <Table aria-label="collapsible table">

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { convertDate } from '../../../utils/datetime';
 import styled from 'styled-components';
 import Alert from '@mui/material/Alert';
@@ -18,7 +18,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useDispatch, useSelector } from 'react-redux';
 import { activeOrdersAction } from '../../../actions/adminActions';
-
+import Paginate from '../../../CustomComponents/Paginate';
+import useFetch from '../../../hooks/useFetch';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -121,20 +122,38 @@ const ModifiedAlert = styled(Alert)`
 `;
 
 function ActiveOrderTable() {
+  const [pageNumber,setPageNumber] = useState(0);
+  const [url, setUrl] = useState("/api/management/active-orders");
+  const {userInfo} = useSelector(state=>state.login);
+  const [config, setConfig] = useState({
+    "method": "get",
+    "headers": {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userInfo?.access_token}`
+        },
+    "data":{
+        "filter": null,
+    }
+  });
+  const {data, loading, error} = useFetch(url,config,pageNumber);
+  const orderData = data!==null? data.content : null;
+  /*
+   
   const dispatch = useDispatch();
   const {orderData,loading,error} = useSelector(state=>state.activeOrders);
   const {userInfo} = useSelector(state=>state.login);
-
+  
   const getActiveOrders = ()=>{
-      if (!orderData && userInfo?.access_token)
-          dispatch(activeOrdersAction(userInfo?.access_token))
-      //console.log("orderData: ",orderData);
-  }
+    if (!orderData && userInfo?.access_token)
+    dispatch(activeOrdersAction(userInfo?.access_token))
+  //console.log("orderData: ",orderData);
+}
 
 
-  useEffect(()=>{
-      return ()=>getActiveOrders();
-  },[orderData]);
+useEffect(()=>{
+  return ()=>getActiveOrders();
+},[orderData]);
+*/
 
 
 return (
@@ -145,6 +164,7 @@ return (
       {
         loading!==false &&  orderData===null && <CircularProgress color="warning" /> 
       }
+      { data!=null && <Paginate data={data} setPageNumber={setPageNumber} pageNumber={pageNumber}/>}
       {   orderData &&
           <TableContainer component={Paper}>
               <Table aria-label="collapsible table">
@@ -169,7 +189,7 @@ return (
               </TableHead>
               <TableBody>
                   {orderData.map((row,index) => (
-                      <Row key={index} row={row} />
+                      <Row key={row.id} row={row} />
                   ))}
               </TableBody>
               </Table>

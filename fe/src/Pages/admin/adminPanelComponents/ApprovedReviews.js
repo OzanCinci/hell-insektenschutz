@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { reviewsAction } from '../../../actions/adminActions';
 import styled from 'styled-components';
@@ -19,6 +19,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import CachedIcon from '@mui/icons-material/Cached';
+import useFetch from '../../../hooks/useFetch';
+import Paginate from '../../../CustomComponents/Paginate';
 
 
 const ModifiedAlert = styled(Alert)`
@@ -124,40 +126,19 @@ function Row({ row }) {
 
 
 function ApprovedReviews() {
-  const {reviews,loading,error} = useSelector(state=>state.reviews);
+  const [pageNumber,setPageNumber] = useState(0);
+  const [url, setUrl] = useState("/api/management/approved-reviews");
   const {userInfo} = useSelector(state=>state.login);
-  const dispatch = useDispatch();
-
-  const getApprovedReviews = ()=>{
-    if (reviews===null && userInfo?.access_token)
-        dispatch(reviewsAction(userInfo?.access_token))
-    console.log("getApprovedReviews: ",reviews);
-  }
-
-  // debouncer
-  function debounce(func, delay) {
-    let timerId;
+  const [config, setConfig] = useState({
+    "method": "get",
+    "headers": {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userInfo?.access_token}`
+        }
+  });
+  const {data, loading, error} = useFetch(url,config,pageNumber);
+  const reviews = data!==null? data.content : null;
   
-    return function (...args) {
-      clearTimeout(timerId);
-  
-      timerId = setTimeout(() => {
-        func.apply(this, args);
-      }, delay);
-    };
-  }
-
-  const refreshData = () => {
-    dispatch(reviewsAction(userInfo?.access_token));
-  }
-
-  const debouncedRefreshData = debounce(refreshData, 500);
-
-
-  useEffect(()=>{
-      return ()=>getApprovedReviews();
-  },[reviews]);
-
 
   return (
     <div>
@@ -167,12 +148,7 @@ function ApprovedReviews() {
       {
         loading!==false &&  reviews===null && <CircularProgress color="warning" /> 
       }
-      {
-        reviews && 
-        <ReloadWrapper onClick={()=>debouncedRefreshData()}>
-          <CachedIcon fontSize='large'/>
-        </ReloadWrapper>
-      }
+      { data!=null && <Paginate data={data} setPageNumber={setPageNumber} pageNumber={pageNumber}/>}
       {   reviews &&
           <TableContainer component={Paper}>
               <Table aria-label="collapsible table">

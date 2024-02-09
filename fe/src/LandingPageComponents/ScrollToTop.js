@@ -6,10 +6,11 @@ function ScrollToTop() {
     const currentPath = location.pathname;
 
     useLayoutEffect(()=>{
+      return () => {
         window.scrollTo({top: 0});
-
         console.log("RENDERED!");
-        },[currentPath])
+      }
+    },[currentPath])
     
 
   return (

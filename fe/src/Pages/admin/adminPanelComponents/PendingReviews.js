@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { approveReview, deleteReview, pendingReviewsAction } from '../../../actions/adminActions';
+import { approveReview, deleteReview } from '../../../actions/adminActions';
 import { convertDate } from '../../../utils/datetime';
 import styled from 'styled-components';
 import Alert from '@mui/material/Alert';
@@ -22,6 +22,8 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import SendIcon from '@mui/icons-material/Send';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
+import useFetch from '../../../hooks/useFetch';
+import Paginate from '../../../CustomComponents/Paginate';
 
 const ModifiedAlert = styled(Alert)`
   width: 90%;
@@ -153,21 +155,18 @@ function Row({ row }) {
 
 
 function PendingReviews() {
-  const {reviews,loading,error} = useSelector(state=>state.pendingReviews);
+  const [pageNumber,setPageNumber] = useState(0);
+  const [url, setUrl] = useState("/api/management/pending-reviews");
   const {userInfo} = useSelector(state=>state.login);
-  const dispatch = useDispatch();
-
-  const getReviews = ()=>{
-    if (reviews===null && userInfo?.access_token)
-        dispatch(pendingReviewsAction(userInfo?.access_token))
-    console.log("getReviews: ",reviews);
-}
-
-
-useEffect(()=>{
-    return ()=>getReviews();
-},[reviews]);
-
+  const [config, setConfig] = useState({
+    "method": "get",
+    "headers": {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${userInfo?.access_token}`
+        }
+  });
+  const {data, loading, error} = useFetch(url,config,pageNumber);
+  const reviews = data!==null? data.content : null;
 
   return (
     <div>
@@ -177,6 +176,7 @@ useEffect(()=>{
       {
         loading!==false &&  reviews===null && <CircularProgress color="warning" /> 
       }
+      { data!=null && <Paginate data={data} setPageNumber={setPageNumber} pageNumber={pageNumber}/>}
       {   reviews &&
           <TableContainer component={Paper}>
               <Table aria-label="collapsible table">

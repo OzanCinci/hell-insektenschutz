@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { convertDate } from '../../../utils/datetime';
 import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Alert from '@mui/material/Alert';
 import { completedOrdersAction } from '../../../actions/adminActions';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -18,6 +18,8 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import useFetch from '../../../hooks/useFetch';
+import Paginate from '../../../CustomComponents/Paginate';
 
 const ModifiedAlert = styled(Alert)`
   width: 90%;
@@ -120,21 +122,21 @@ function Row({ row }) {
 
 
 function CompletedOrders() {
-    const dispatch = useDispatch();
-    const {orderData,loading,error} = useSelector(state=>state.completedOrders);
+    const [pageNumber,setPageNumber] = useState(0);
+    const [url, setUrl] = useState("/api/management/completed-orders");
     const {userInfo} = useSelector(state=>state.login);
-
-    const getCompletedOrders = () => {
-        if (!orderData && userInfo?.access_token){
-            console.log("request is made getCompletedOrders");
-            dispatch(completedOrdersAction(userInfo?.access_token));
-        }
-        //console.log("getCompletedOrders: ",orderData);
-    }
-
-    useEffect(()=>{
-        return () => getCompletedOrders();
-    },[]);
+    const [config, setConfig] = useState({
+      "method": "get",
+      "headers": {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${userInfo?.access_token}`
+          },
+      "data":{
+          "filter": null,
+      }
+    });
+    const {data, loading, error} = useFetch(url,config,pageNumber);
+    const orderData = data!==null? data.content : null;
     
   return (
     <div>
@@ -144,7 +146,8 @@ function CompletedOrders() {
         {
             loading!==null &&  orderData===null && <CircularProgress color="warning" /> 
         }
-              {   orderData &&
+        { data!=null && <Paginate data={data} setPageNumber={setPageNumber} pageNumber={pageNumber}/>}
+        {   orderData &&
           <TableContainer component={Paper}>
               <Table aria-label="collapsible table">
               <TableHead>
@@ -168,7 +171,7 @@ function CompletedOrders() {
               </TableHead>
               <TableBody>
                   {orderData.map((row,index) => (
-                      <Row key={index} row={row} />
+                      <Row key={row.id} row={row} />
                   ))}
               </TableBody>
               </Table>

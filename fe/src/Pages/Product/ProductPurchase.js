@@ -106,15 +106,6 @@ const MeasurementsWrapper = styled.div`
   margin-bottom: 50px;
 `;
 
-const CustomInput = styled.input`
-    width: 40px;
-    text-align: center;
-    border: none;
-    border-bottom: 1px solid rgba(237, 108, 2, 0.5);
-    border-top: 1px solid rgba(237, 108, 2, 0.5);
-    color: #696984;
-`;
-
 const ButtonGroupWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -155,7 +146,6 @@ const QuantityWrapper = styled.div`
 
 const TotalPrice = styled.div`
     font-size: 22px;
-
 `;
 
 const AddToCardContainer = styled.div`
@@ -173,13 +163,6 @@ const AddToCardContainer = styled.div`
 `;
 
 const OptionsContainer = styled.div`
-`;
-
-const OptionTitle = styled.div`
-  color: #696984;
-  font-size: 22px;
-  text-align: left;
-  padding-left: 10%;
 `;
 
 const SingleOption = styled.div`

@@ -41,6 +41,7 @@ import Warenkorb from './Pages/order/Warenkorb';
 import ScrollToTop from './LandingPageComponents/ScrollToTop';
 import ReviewModal from './CustomComponents/ReviewModal';
 import Shop from './Pages/shop/Shop';
+import SingleProduct from './Pages/SingleProductPage/SingleProduct';
 
 function App() {
 
@@ -112,6 +113,10 @@ function App() {
 
 
             <Route path='/produkt/:productID' element={<ProductPurchase/>}>
+            </Route>
+
+
+            <Route path='/test-produkt/:productID' element={<SingleProduct/>}>
             </Route>
 
 
