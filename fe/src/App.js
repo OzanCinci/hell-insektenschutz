@@ -40,8 +40,9 @@ import OrderSuccess from './Pages/order/OrderSuccess';
 import Warenkorb from './Pages/order/Warenkorb';
 import ScrollToTop from './LandingPageComponents/ScrollToTop';
 import ReviewModal from './CustomComponents/ReviewModal';
-import Shop from './Pages/shop/Shop';
 import SingleProduct from './Pages/SingleProductPage/SingleProduct';
+import ShopLanding from './Pages/shop/ShopLanding';
+import Insek from './Pages/shop/Insek';
 
 function App() {
 
@@ -125,7 +126,8 @@ function App() {
             <Route path='warenkorb' element={<Warenkorb/>} />
 
 
-            <Route path='geschaft' element={<Shop/>}/>
+            <Route path='geschaft' element={<ShopLanding/>}/>
+            <Route path='geschaft/insektenschutz' element={<Insek/>}/>
 
 
             <Route default path='/*' element={<PageNotFound/>}/>

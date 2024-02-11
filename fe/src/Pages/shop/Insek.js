@@ -174,10 +174,10 @@ const CustomImg = styled.img`
 
 const Title = styled.div`
     text-align: left;
-    padding-left: 30px;
     color: #696984;
     font-size: 21px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    margin-left: -20px;
     font-weight: bold;
     width: 80%;
 
@@ -231,7 +231,7 @@ const LineText = styled.div`
     }   
 `;
 
-function Shop() {
+function Insek() {
     const nav = useNavigate();
 
     const handleClick = (url) => {
@@ -326,4 +326,4 @@ function Shop() {
   )
 }
 
-export default Shop
+export default Insek
