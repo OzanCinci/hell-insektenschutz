@@ -1,7 +1,7 @@
-import TurenImg from '../../images/product/p1.jpg';
-import FensterImg from '../../images/dumps/fenster3.jpg';
-import DachfensterImg from '../../images/dumps/dach2.jpg';
-import LichImg from '../../images/product/p4.jpg';
+import TurenImg from '../../../images/product/p1.jpg';
+import FensterImg from '../../../images/dumps/fenster3.jpg';
+import DachfensterImg from '../../../images/dumps/dach2.jpg';
+import LichImg from '../../../images/product/p4.jpg';
 
 export const data = [
     {

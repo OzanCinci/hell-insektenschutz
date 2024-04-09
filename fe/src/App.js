@@ -42,7 +42,10 @@ import ScrollToTop from './LandingPageComponents/ScrollToTop';
 import ReviewModal from './CustomComponents/ReviewModal';
 import SingleProduct from './Pages/SingleProductPage/SingleProduct';
 import ShopLanding from './Pages/shop/ShopLanding';
-import Insek from './Pages/shop/Insek';
+import Insek from './Pages/shop/pages/Insek';
+import Plissee from './Pages/shop/pages/Plissee';
+import ShopDetail from './Pages/shop/ShopDetail';
+import OptionsPage from './Pages/shop/OptionsPage';
 
 function App() {
 
@@ -127,8 +130,12 @@ function App() {
 
 
             <Route path='geschaft' element={<ShopLanding/>}/>
-            <Route path='geschaft/insektenschutz' element={<Insek/>}/>
+            <Route  path='geschaft' element={<ShopDetail/>}>
+              <Route path='insektenschutz' element={<Insek/>}/>
+              <Route path='plissees' element={<Plissee/>}/>
+            </Route>
 
+            <Route path='/geschaft/:category/:model' element={<OptionsPage/>}/>
 
             <Route default path='/*' element={<PageNotFound/>}/>
 

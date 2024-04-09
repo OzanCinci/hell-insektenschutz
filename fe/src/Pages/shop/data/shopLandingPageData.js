@@ -12,7 +12,7 @@ export const data = [
         links: [
             {
                 text: "Alle Plissee-Produkte anzeigen",
-                url: null,
+                url: "plissees",
             }
         ]
     },
@@ -23,7 +23,7 @@ export const data = [
         links: [
             {
                 text: "Alle Jalousien-Produkte anzeigen",
-                url: null,
+                url: "jalousien",
             }
         ]
     },
@@ -34,7 +34,7 @@ export const data = [
         links: [
             {
                 text: "Alle Rollo-Produkte anzeigen",
-                url: null,
+                url: "rollos",
             }
         ]
     },
@@ -45,7 +45,7 @@ export const data = [
         links: [
             {
                 text: "Alle Lamellenvorhang-Produkte anzeigen",
-                url: null,
+                url: "lamellenvorhang",
             }
         ]
     },

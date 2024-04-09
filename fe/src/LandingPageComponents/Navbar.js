@@ -366,26 +366,20 @@ function Navbar() {
             <LegalText onClick={ () => toggleFunction("/widerrufsbelehrung")}>Widerrufsbelehrung</LegalText>
             <LegalText onClick={ () => toggleFunction("/datenschutz")}>Datenschutz</LegalText>
           </MobileLegal>
-          <LinkButton onClick={ () => toggleFunction("/turen")}>
-            Für Türen
+          <LinkButton onClick={ () => toggleFunction("/geschaft/plissees")}>
+            Plissees
           </LinkButton>
-          <LinkButton onClick={() => toggleFunction("/fenster")}>
-            Für Fenster
+          <LinkButton onClick={ () => toggleFunction("/geschaft/jalousien")}>
+            Jalousien
           </LinkButton>
-          <LinkButton onClick={() => toggleFunction("/dachfenster")}>
-            Für Dachfenster
+          <LinkButton onClick={ () => toggleFunction("/geschaft/rollos")}>
+            Rollos
           </LinkButton>
-          <LinkButton onClick={() => toggleFunction("/lich")}>
-            Für Lichtschächte
+          <LinkButton onClick={ () => toggleFunction("/geschaft/lamellenvorhang")}>
+            Lamellenvorhang
           </LinkButton>
-          <LinkButton onClick={() => toggleFunction("/sonderformen")}>
-            Sonderformen
-          </LinkButton>
-          <LinkButton onClick={() => toggleFunction("/zusatzprodukte")}>
-            Zusatzprodukte
-          </LinkButton>
-          <LinkButton onClick={() => toggleFunction("/gewebearten")}>
-            Gewebearten
+          <LinkButton onClick={ () => toggleFunction("/geschaft/insektenschutz")}>
+            Insektenschutz
           </LinkButton>
         </LinkContainer>
       </NavbarWrapper>

@@ -117,7 +117,7 @@ const SingleProduct = styled.div`
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 
     @media only screen and (max-width: 1200px) {

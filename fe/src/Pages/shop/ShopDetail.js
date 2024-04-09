@@ -4,11 +4,12 @@ import StraightenIcon from '@mui/icons-material/Straighten';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import HandymanIcon from '@mui/icons-material/Handyman';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import {data} from './shopData';
+import {data} from './data/insekData';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import Services from '../../LandingPageComponents/Services';
 import Reviews from '../../LandingPageComponents/Reviews';
 import { useNavigate } from 'react-router-dom';
+import {  Outlet } from "react-router-dom";
 
 const Container = styled.div`
     max-width: 1700px;
@@ -231,7 +232,7 @@ const LineText = styled.div`
     }   
 `;
 
-function Insek() {
+function ShopDetail() {
     const nav = useNavigate();
 
     const handleClick = (url) => {
@@ -277,40 +278,9 @@ function Insek() {
             <LineText>Unsere Produkte</LineText>
             <Line></Line>
         </Splitter>
-        <ProductsContainer>
-            {
-                data.map((item,index)=>{
-                    return (
-                        <SingleProduct key={index}>
-                            <Title>{item.title}</Title>
-                            <SingleProductBody>
-                                <ImageWrapper>
-                                    <CustomImg src={item.image}></CustomImg>
-                                </ImageWrapper>
-                                <div>
-                                    <Desc>{item.desc}</Desc>
-                                    <div style={{color: "black",fontWeight:"bold", marginBottom: "10px"}}>Unsere Produkte:</div>
-                                    <div>
-                                        {
-                                            item.links.map((link)=>{
-                                                return (
-                                                    <div onClick={()=>handleClick(link.url)} style={{marginBottom: "1px"}} key={link.text}>
-                                                        <ArrowRightIcon style={{ color: "#696984" }}/>
-                                                        <ProductLink>
-                                                            {link.text}
-                                                        </ProductLink>
-                                                    </div>
-                                                )
-                                            })
-                                        }
-                                    </div>
-                                </div>
-                            </SingleProductBody>
-                        </SingleProduct>
-                    );
-                })
-            }
-        </ProductsContainer>
+        
+        <Outlet/>
+
 
         <br></br>
         <br></br>
@@ -326,4 +296,4 @@ function Insek() {
   )
 }
 
-export default Insek
+export default ShopDetail
