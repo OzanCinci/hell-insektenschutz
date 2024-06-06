@@ -62,6 +62,7 @@ export const logoutAction = (token) => async(dispatch)=> {
         })
         .catch(e => {
             console.log("error reaised: ", e);
+            localStorage.removeItem("userInfo");
             //dispatch({type: LOGIN_FAIL, payload: "error raised!"});
         });
 } 

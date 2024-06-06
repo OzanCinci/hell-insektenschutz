@@ -1,0 +1,211 @@
+import React, { useState } from 'react';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import styled from 'styled-components';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import Popover from '@mui/material/Popover';
+import Typography from '@mui/material/Typography';
+
+const ColorSelector = styled.div`
+    border-radius: 50%;
+    background: ${props => props.bg};
+    border: 1px solid grey;
+    width: 35px;
+    height: 35px;
+    cursor: pointer;
+    position: relative;
+
+    &::before, &::after {
+        content: "";
+        display: ${props => props.isSelected ? "block" : "none"};
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 60%;
+        height: 2px;
+        background: ${props => props.bg==="rgb(50, 50, 50)" ? "white" : "black"};
+        transform-origin: center;
+    }
+
+    &::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+`;
+
+const FilterContainer = styled.div`
+    width: 300px;
+`;
+
+const CustomAccordionSummary = styled(AccordionSummary)`
+    background: #f1f1f1 !important;
+`;
+
+const CustomAccordionDetails = styled(AccordionDetails)`
+    display: flex;
+    flex-direction: column;
+    justfiy-content: center;
+    align-items: flex-start;
+`;
+
+const CustomExpandMoreIcon = styled(ExpandMoreIcon)`
+    color: orange; /* Change this to your desired color */
+`;
+
+const FilterComponent = ({ filterObj, handleFilterClick, selection, defaultExpandedPanels = {} }) => {
+    /////// expand code ///////
+    const [expandedPanels, setExpandedPanels] = useState(defaultExpandedPanels);
+
+    const handleAccordionChange = (panel) => (event, isExpanded) => {
+        setExpandedPanels(prevExpanded => ({
+            ...prevExpanded,
+            [panel]: isExpanded
+        }));
+    };
+    /////// expand code ///////
+    
+    /////// hover popever code ///////
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [openPopoverId, setOpenPopoverId] = useState(null);
+
+    const handlePopoverOpen = (event, id) => {
+        setAnchorEl(event.currentTarget);
+        setOpenPopoverId(id);
+    };
+
+    const handlePopoverClose = () => {
+        setAnchorEl(null);
+        setOpenPopoverId(null);
+    };
+    /////// hover popever code ///////
+
+    return (
+        <FilterContainer>
+            {
+                Object.entries(filterObj).map(([filterType, { singleChoice, data }]) => {
+                    if (filterType === "Farbton") {
+                        return (
+                            <Accordion 
+                                className='my-2'
+                                key={filterType} 
+                                expanded={expandedPanels[filterType] || false} 
+                                onChange={handleAccordionChange(filterType)}
+                                TransitionProps={{ timeout: 500 }}
+                            >
+                                <CustomAccordionSummary
+                                    expandIcon={<CustomExpandMoreIcon/>}
+                                    aria-controls={`panel${filterType}-content`}
+                                    id={`panel${filterType}-header`}
+                                >
+                                    {filterType}
+                                </CustomAccordionSummary>
+                                <AccordionDetails>
+                                    <div className="d-flex flex-row flex-wrap">
+                                        {
+                                            data.map(({ name, image, extraInfo }) => {
+                                                return (
+                                                    <div className='mx-1' key={name}>
+                                                        <ColorSelector 
+                                                            className='my-1'
+                                                            onClick={() => handleFilterClick(name, singleChoice, filterType)} 
+                                                            isSelected={(selection.filters[filterType] || "") === name} 
+                                                            bg={image}
+                                                        />
+                                                    </div>
+                                                );
+                                            })
+                                        }
+                                    </div>
+                                </AccordionDetails>
+                            </Accordion>
+                        );
+                    } else {
+                        return (
+                            <Accordion 
+                                className='my-2'
+                                key={filterType} 
+                                expanded={expandedPanels[filterType] || false} 
+                                onChange={handleAccordionChange(filterType)}
+                                TransitionProps={{ timeout: 500 }}
+                            >
+                                <CustomAccordionSummary
+                                    expandIcon={<CustomExpandMoreIcon />}
+                                    aria-controls={`panel${filterType}-content`}
+                                    id={`panel${filterType}-header`}
+                                >
+                                    {filterType}
+                                </CustomAccordionSummary>
+                                <CustomAccordionDetails>
+                                    {
+                                        data.map(({ name, image, extraInfo }) => {
+                                            return (
+                                                <div key={name} style={{display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems:"center", width: "100%"}}>
+                                                    <div style={{ display: "flex", flexDirection: "row", justifyContent: "flex-start", alignItems:"center"}}>
+                                                        <div>
+                                                            <FormControlLabel
+                                                                control={
+                                                                    <Checkbox
+                                                                        color='warning'
+                                                                        checked={selection.filters[filterType]?.includes(name) || false}
+                                                                        onChange={() => handleFilterClick(name, singleChoice, filterType)}
+                                                                    />
+                                                                }
+                                                            />
+                                                            {image!==null && <img src={image} alt={name} style={{ width: '25px', height: '25px', marginLeft: "-20%", marginRight: "10%" }} />}
+                                                        </div>
+                                                        <span>{name}</span>
+                                                    </div>
+                                                    {extraInfo &&
+                                                            <div key={name}>
+                                                            <Typography
+                                                                aria-owns={openPopoverId === name ? `mouse-over-popover${name}` : undefined}
+                                                                aria-haspopup="true"
+                                                                onMouseEnter={(event) => handlePopoverOpen(event, name)}
+                                                                onMouseLeave={handlePopoverClose}
+                                                            >
+                                                                <HelpOutlineOutlinedIcon style={{ color: "grey" }} />
+                                                            </Typography>
+                                                            <Popover
+                                                                id={`mouse-over-popover${name}`}
+                                                                sx={{
+                                                                    pointerEvents: 'none',
+                                                                }}
+                                                                open={openPopoverId === name}
+                                                                anchorEl={anchorEl}
+                                                                anchorOrigin={{
+                                                                    vertical: 'bottom',
+                                                                    horizontal: 'left',
+                                                                }}
+                                                                transformOrigin={{
+                                                                    vertical: 'top',
+                                                                    horizontal: 'left',
+                                                                }}
+                                                                onClose={handlePopoverClose}
+                                                                disableRestoreFocus
+                                                            >
+                                                                <Typography style={{ maxWidth: "400px", padding: "10px" }}>{extraInfo}</Typography>
+                                                            </Popover>
+                                                        </div>
+                                                     }
+                                                </div>
+                                            )
+                                        })
+                                    }
+                                </CustomAccordionDetails>
+                            </Accordion>
+                        );
+                    }
+                })
+            }
+        </FilterContainer>
+    );
+};
+
+export default React.memo(FilterComponent);

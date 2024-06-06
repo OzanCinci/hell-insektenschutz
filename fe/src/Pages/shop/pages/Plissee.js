@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import {data} from '../data/plisseeData';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
-import { useNavigate } from 'react-router-dom';
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
+import VerifiedIcon from '@mui/icons-material/Verified';
 
 const ProductsContainer = styled.div`
     margin-bottom: 20px;
@@ -45,6 +45,19 @@ const SingleProduct = styled.div`
         margin-bottom: 40px;
     }
 
+
+    padding-top: 10px;
+    padding-bottom: 20px;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 10px;
+    -webkit-box-shadow: 24px 16px 31px -24px rgba(245,159,76,0.5);
+    -moz-box-shadow: 24px 16px 31px -24px rgba(245,159,76,0.5);
+    box-shadow: 24px 16px 31px -24px rgba(245,159,76,0.25);
+
+    &:hover {
+        transition: all 0.1s ease-in;
+        box-shadow: 24px 16px 31px -24px rgba(245,159,76,1);
+    }
 `;
 
 const SingleProductBody = styled.div`
@@ -73,7 +86,7 @@ const ImageWrapper = styled.div`
 
 const CustomImg = styled.img`
     height: auto;
-    width: 270px;
+    width: 400px;
     align-self: center;
     border-radius: 3px;
 
@@ -106,6 +119,8 @@ const ProductLink = styled.span`
     color: #f59f4c;
     cursor: pointer;
     width: fit-content;
+    font-size: 20px;
+    margin-left: 5px;
 
     position: relative;
     width: fit-content;
@@ -116,51 +131,55 @@ const ProductLink = styled.span`
 `;
 
 function Plissee() {
-    const nav = useNavigate();
-
-    const handleClick = (url) => {
-        if (!url)
-            return;
-
-        console.log(url);
-        nav(url);
-    }
-
-
   return (
-    <ProductsContainer>
-        {
-            data.map((item,index)=>{
-                return (
-                    <SingleProduct key={index}>
-                        <Title>{item.title}</Title>
-                        <SingleProductBody>
-                            <ImageWrapper>
-                                <CustomImg src={item.image}></CustomImg>
-                            </ImageWrapper>
-                            <div>
-                                <Desc>{item.desc}</Desc>
-                                <div>
-                                    {
-                                        item.links.map((link)=>{
-                                            return (
-                                                <div onClick={()=>handleClick(link.url)} style={{marginBottom: "1px"}} key={link.text}>
-                                                    <ArrowRightIcon style={{ color: "#696984" }}/>
-                                                    <ProductLink>
-                                                        {link.text}
-                                                    </ProductLink>
-                                                </div>
-                                            )
-                                        })
-                                    }
+    <>
+        <ProductsContainer>
+            {
+                data.map((item,index)=>{
+                    return (
+                        <SingleProduct key={index}>
+                            <Title>{item.title}</Title>
+                            <SingleProductBody>
+                                <ImageWrapper>
+                                    <CustomImg src={item.image}></CustomImg>
+                                </ImageWrapper>
+                                <div className='d-flex flex-column justify-content-around align-items-center'>
+                                    <Desc>
+                                        {
+                                            item.desc.map((i,indexOfI) => {
+                                                return (
+                                                    <div index={indexOfI} className='my-1'>
+                                                        <VerifiedIcon style={{ color: "#f59f4c" }} fontSize='small' />
+                                                        <span style={{fontSize: "17px"}} className='mx-1'>{i}</span>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </Desc>
+                                    <div>
+                                        {
+                                            item.links.map((link)=>{
+                                                return (
+                                                    <a href={`${link.url}`} style={{textDecoration:"none"}}>
+                                                        <div style={{marginBottom: "1px"}} key={link.text}>
+                                                            <DoubleArrowIcon style={{ color: "#f59f4c" }}/>
+                                                            <ProductLink>
+                                                                {link.text}
+                                                            </ProductLink>
+                                                        </div>
+                                                    </a>
+                                                )
+                                            })
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                        </SingleProductBody>
-                    </SingleProduct>
-                );
-            })
-        }
-    </ProductsContainer>
+                            </SingleProductBody>
+                        </SingleProduct>
+                    );
+                })
+            }
+        </ProductsContainer>
+    </>
   )
 }
 

@@ -20,9 +20,9 @@ const Wrapper = styled.div`
     gap: 20px;
 `;
 
-
-const PAGE_SIZE = 5;
-function Paginate({data, setPageNumber, pageNumber}) {
+// TODO: check if it works!
+//const PAGE_SIZE = 5;
+function Paginate({data, setPageNumber, pageNumber, PAGE_SIZE = 5}) {
     const pageable = data.pageable;
     const init = pageable.offset;
     const last = (init+PAGE_SIZE) > data.totalElements ? data.totalElements: (init+PAGE_SIZE);

@@ -7,11 +7,9 @@ const useFetch = (url, _config, pageNumber) => {
     const [data,setData] = useState(null);
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
-    //const req_url = `${BASE_URL}${url}`;
     const config = useRef(_config).current;
 
     useEffect(()=>{
-        //console.log("TRIGGERED USEFETCH: ",url,config);
         const abortController = new AbortController();
 
         const fetchData = async () => {
@@ -24,11 +22,9 @@ const useFetch = (url, _config, pageNumber) => {
             }
             let req = {...config};
             req.url = req_url;
-            //console.log("req.url: ",req.url);
 
             setError(null);
             setLoading(true);
-            //console.log("FIRLATACAK!", req);
             axios.request(req, { signal: abortController.signal })
             .then(res => {
                 if (res.status !== 200) {
@@ -48,7 +44,7 @@ const useFetch = (url, _config, pageNumber) => {
                 if (e.name === "AbortError") {
                     console.log(`FETCH IS ABORTED: ${url}`);
                 } else {   
-                    setError("error raised! (completed orders)");
+                    setError("Bitte aktualisieren Sie die Seite oder versuchen Sie es später erneut");
                     setLoading(false);
                     setData(null);
                     console.log(`ERROR: ${req.url} ->`,e);
@@ -57,7 +53,6 @@ const useFetch = (url, _config, pageNumber) => {
         }
 
         if (url!==null && config!==null) {
-            console.log("içine girdi");
             fetchData();
         } 
 
