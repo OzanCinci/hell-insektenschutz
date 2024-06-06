@@ -92,7 +92,20 @@ const useFilter = (filterObj, rawData) => {
         handleFilterChange(filterType, value);
     }, [handleFilterChange, selection.filters]);
 
-    return [result, filterLoading, handleFilterClick, selection];
+
+    const clearAllFilters = useCallback(() => {
+        setFilterLoading(true);
+        setSelection({
+            valid: false,
+            filters: {}
+        });
+        setTimeout(() => {
+            setFilterLoading(false);
+        }, 600);
+    }, []);
+
+
+    return [result, filterLoading, handleFilterClick, selection, clearAllFilters];
 };
 
 export default useFilter;

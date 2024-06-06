@@ -7,7 +7,11 @@ function ScrollToTop() {
 
     useLayoutEffect(()=>{
       return () => {
-        window.scrollTo({top: 0});
+        //window.scrollTo({top: 0});
+        window.scrollTo({
+          top: 0,
+          behavior: 'instant'
+        });
         console.log("RENDERED!");
       }
     },[currentPath])

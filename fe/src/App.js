@@ -46,6 +46,7 @@ import Insek from './Pages/shop/pages/Insek';
 import Plissee from './Pages/shop/pages/Plissee';
 import ShopDetail from './Pages/shop/ShopDetail';
 import OptionsPage from './Pages/shop/OptionsPage';
+import ProductPlissee from './Pages/products/ProductPlissee';
 
 function App() {
 
@@ -136,6 +137,8 @@ function App() {
             </Route>
 
             <Route path='/geschaft/:category/:model' element={<OptionsPage/>}/>
+
+            <Route path='/produkts/BasicPlissee/:id' element={<ProductPlissee/>}/>
 
             <Route default path='/*' element={<PageNotFound/>}/>
 

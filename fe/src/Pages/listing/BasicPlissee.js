@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import useFilter from './listingComponents/useFilter';
 import FilterComponent from './listingComponents/FilterComponent';
 import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
 
 // images
 import PlisseImg from '../../images/shopCategories/MaterialTypePlissee.svg';
@@ -23,14 +24,24 @@ const ModifiedAlert = styled(Alert)`
     width: fit-content;
     font-size: 18px !important;
     text-align: left;
-    border: 1px solid black;
     margin: 0 auto;
 `;
 
 const Container = styled.div`
-    border: 2px solid black;
     display: flex;
     flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 1600px;
+    margin: auto;
+
+    @media (max-width: 850px) {
+        gap: 10px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
 `;
 
 const url = "/api/external-products/colors/BasicPlissee";
@@ -86,12 +97,20 @@ const filterValues = {
     }
 };
 
+const CustomButton = styled(Button)`
+    @media (min-width: 850px) {
+        display: none !important;
+    }   
+    margin-left: 5px !important;
+    text-transform: none !important;
+`;
+
 function BasicPlissee() {
     const { data, loading, error } = useFetch(url, config, pageNumber);
     const [blendColors, setBlendColors] = useState(null);
     const [colors, setColors] = useState(null);
     const [subCategories, setSubCategories] = useState(null);
-    const [result, filterLoading, handleFilterClick,selection] = useFilter(filterValues, colors);
+    const [result, filterLoading, handleFilterClick,selection, clearAllFilters] = useFilter(filterValues, colors);
 
     useEffect(() => {
         if (data !== null) {
@@ -119,18 +138,23 @@ function BasicPlissee() {
 
     return (
         <>
-            {colors && <div>data loaded!</div>}
-            <button onClick={() => console.log(colors)}>test</button>
-            <button onClick={() => console.log("FILTERED RESULT: ", result)}>print result set</button>
             <Container>
-
+                <CustomButton 
+                    variant="outlined" color="warning"
+                    onClick={(e)=>{
+                        e.preventDefault();
+                        const button = document.getElementById("filter-modal-mobile-filter");
+                        if (button)
+                            button.click();
+                }}> Filteroptionen </CustomButton>
                 <FilterComponent 
                     filterObj={filterValues} 
                     handleFilterClick={handleFilterClick} 
                     selection={selection} 
+                    clearAllFilters={clearAllFilters}
                     defaultExpandedPanels={{ Farbton: true, Lichtdurchlässigkeit: true , Stoffart: true}}
                 />
-                <Grid loading={filterLoading} data={result || []}/>
+                <Grid loading={filterLoading} data={result || []} link={"BasicPlissee"}/>
             </Container>
         </>
     );
