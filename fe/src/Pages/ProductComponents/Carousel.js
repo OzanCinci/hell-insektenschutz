@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Image1 from '../../images/dumps/lich2.jpg';
 import Image2 from '../../images/dumps/lich3.jpg';
 import Image3 from '../../images/details/alt_schiebetür.jpg';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
-import Slider from "react-slick";
+import CircularProgress from '@mui/material/CircularProgress';
+import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
+//import Slider from "react-slick";
 
 
 const settings = {
@@ -49,11 +51,11 @@ const Container = styled.div`
 
 
 const LeftColumn = styled.div`
-    width: 80%;
+    width: 100%;
     min-height: 45vh;
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-start;
 `;
 
 const RightColumn = styled.div`
@@ -72,10 +74,11 @@ const RightColumn = styled.div`
 
 const CustomImage = styled.img`
     height: auto;
-    width: 95%;
+    width: 100%;
     align-self: center;
     max-width: 100%;
-    max-height: 45vh;
+    /*max-height: 45vh;*/
+    max-height: 35vw;
 `;
 
 const CustomImageMobile = styled.img`
@@ -145,69 +148,99 @@ const HorizantalSlide = styled.div`
     align-item: center;
 `;
 
-function Carousel() {
+const StickyDiv = styled.div`
+  position: -webkit-sticky; /* For Safari */
+  position: sticky;
+    
+  top: 150px;
+  left: 50px;
+  width: 700px;
+  background-color: #f8f9fa;
+  background-color: white;
+  padding: 0px; /* Optional: Add padding */
+`;
+
+const ColumHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+`;
+
+function Carousel({images, itemData}) {
     const [i,setI] = useState(0);
     const [slide,setSlide] = useState(0);
 
-    const images = [
+    // TODO: for test purposes, do not forget to remove them!
+    const images1 = [
         Image1,
         Image2,
         Image3,
         Image1,
         Image2,
         Image3,
-        Image1,
-        Image2,
-        Image3,
-        // Add more images as needed
-      ];
+    ]
 
-      const handleClick = (value) => {
-        let calcIndex;
-        if ( value < 0)
-            calcIndex = i + value < 0 ? -1 : i-1;
-        else
-            calcIndex = i + value > images.length -1 ? -1 : i+1;
+    const handleClick = (value) => {
+    let calcIndex;
+    if ( value < 0)
+        calcIndex = i + value < 0 ? -1 : i-1;
+    else
+        calcIndex = i + value > images.length -1 ? -1 : i+1;
 
-        if (calcIndex===-1)
-            return;
+    if (calcIndex===-1)
+        return;
 
-        setI(calcIndex);
-        const img = document.getElementById(`slicked-img${calcIndex}`).getBoundingClientRect();
-        const slider = document.getElementById("slider-element").getBoundingClientRect();
-        if (img && slider) {
-            const diff =  slider.top - (img.top);
-            setSlide(diff + "px");
-        }
-      }
+    setI(calcIndex);
+    const img = document.getElementById(`slicked-img${calcIndex}`).getBoundingClientRect();
+    const slider = document.getElementById("slider-element").getBoundingClientRect();
+    if (img && slider) {
+        const diff =  slider.top - (img.top);
+        setSlide(diff + "px");
+    }
+    }
 
   return (
-    <div>
-        <DesktopWrapper>
-            <Container >
-                <LeftColumn>
-                    <div style={{cursor: "pointer"}}>
-                        <ArrowCircleLeftIcon fontSize='large' onClick={()=>handleClick(-1)}/>
-                    </div>
-                    <div>
-                        <CustomImage alt='image-of-the-product' src={images[i]} />
-                    </div>
-                    <div style={{cursor: "pointer"}}>
-                        <ArrowCircleRightIcon fontSize='large' onClick={()=>handleClick(1)}/>
-                    </div>
-                </LeftColumn>
-                <RightColumn id='slider-element' slide={slide}>
-                    {
-                        images.map((item,index)=>{
-                            return (
-                                <CustomSmallImage id={`slicked-img${index}`} active={i===index} key={index} src={item} alt='small-image'/>
-                                );
-                            })
-                    }
-                </RightColumn>
+    images.length!==0 
+    ?(<>
+        <StickyDiv>
+            <ColumHeader>
+                <div
+                    onClick={()=>window.history.back()} 
+                    style={{cursor: "pointer", textAlign: "left", paddingLeft: "20px", color: "rgb(82, 82, 102)"}}>
+                    <KeyboardDoubleArrowLeftIcon fontSize='medium' color='warning'/>     
+                    <span style={{fontSize: "16px"}}>Zurück zur Auswahlseite</span>
+                </div>
+                <div style={{textAlign: "right"}}>
+                    <div style={{color: "rgb(82, 82, 102)"}}>{( itemData?.id || "").split(/(?=[A-Z])/).join(" ")}</div>
+                    <div style={{fontSize: "21px", fontWeight: "bold", color: "rgb(82, 82, 102)"}}>{itemData?.color?.title} </div>
+                </div>
+            </ColumHeader>
+            <DesktopWrapper>
+                <Container >
+                    <LeftColumn>
+                        <div style={{cursor: "pointer", position: "sticky", top: "190px"}}>
+                            <ArrowCircleLeftIcon fontSize='large' onClick={()=>handleClick(-1)}/>
+                        </div>
+                        <div style={{borderRadius: "8px", overflow: "clip"}}>
+                            <CustomImage alt='image-of-the-product' src={images[i]} />
+                        </div>
+                        <div style={{cursor: "pointer", position: "sticky", top: "190px"}}>
+                            <ArrowCircleRightIcon fontSize='large' onClick={()=>handleClick(1)}/>
+                        </div>
+                    </LeftColumn>
+                    <RightColumn id='slider-element' slide={slide}>
+                        {
+                            images.map((item,index)=>{
+                                return (
+                                    <CustomSmallImage id={`slicked-img${index}`} active={i===index} key={index} src={item} alt='small-image'/>
+                                    );
+                                })
+                        }
+                    </RightColumn>
 
-            </Container>
-        </DesktopWrapper>
+                </Container>
+            </DesktopWrapper>
+        </StickyDiv>
         <MobileWrapper>
             <MobileContainer>
                 <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -253,6 +286,9 @@ function Carousel() {
 
             </MobileContainer>
         </MobileWrapper>
+    </>)
+    : <div style={{marginTop: "0px"}}>
+    <   CircularProgress color='warning' fontSize='large'/>
     </div>
   )
 }

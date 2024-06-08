@@ -1,15 +1,290 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
+import useFetch from '../../hooks/useFetch';
+import Alert from '@mui/material/Alert';
+import CircularProgress from '@mui/material/CircularProgress';
+import Carousel from '../ProductComponents/Carousel';
+import ProductDetails from '../ProductComponents/ProductDetails';
+import Selection from '../ProductComponents/Selection';
 
-const Container = styled.div`
-    margin-top: 150px;
-
+const ModifiedAlert = styled(Alert)`
+  width: fit-content;
+  font-size: 18px !important;
+  text-align: left;
+  margin: 0 auto;
 `;
 
+const ColumnContainer = styled.div`
+  margin-top: 150px;
+  border: 1px solid red;
+  min-height: fit-content;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: center;
+  align-items: stretch;
+`;
+
+const Column = styled.div`
+  flex: 1;
+  padding: 20px;
+`;
+
+const LeftColumn = styled(Column)`
+  /*position: relative;*/
+  /*height: ${props=>`${props.w}px`};*/
+  border: 2px solid blue;
+`;
+
+const RightColumn = styled(Column)`
+  height: 2000px; /* Example height to demonstrate scrolling */
+  border: 2px solid purple;
+`;
+
+const config = {
+  method: 'get',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
+const defaultImages = [
+    'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4586_1688031027_1000x1000.webp',
+    'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4587_1688031051_1000x1000.webp',
+    'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4585_1688031004_1000x1000.webp',
+    'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4588_1688031079_1000x1000.webp',
+]
+
+const selectionData = [
+    {
+        title: "Montageposition",
+        multichoice: false,
+        options: [
+            {
+                title: "Glasfalz",
+                note: "meist gewählt",
+                defaultSelected: true,
+                image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_5_1666613448_450x450.webp",
+                explanation: {
+                    title: "Glasfalz",
+                    text: [
+                        "Bei dieser beliebten Montageart verschrauben Sie die Plissees standardmäßig, mit den im Lieferumfang enthaltenen Abspannschuhen, im Glasfalz - dieser kann auch leicht schräg zur Glasscheibe hin abfallen.",
+                        "Optional auswählbare Befestigungsarten sind die Montage mit Klebeleisten oder Klebeplatten (Modell VS2).",
+                        "Die Mindest-Glasleistentiefe beträgt 18 mm. Dies ist die Tiefe von der Rahmenvorderkante zum Glas (bei der Klebeleiste wird keine Mindesttiefe benötigt).",
+                    ]
+                },
+                explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_85_1678865265_450x450.webp",
+                forbids: [],
+                allows: [],
+                price: 0
+            },
+            {
+                title: "Fensterflügel",
+                image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_33_1666613279_450x450.webp",
+                explanation: {
+                    title: "Fensterflügel",
+                    text: [
+                        "Hier schrauben Sie die im Lieferumfang enthaltenen Winkelträger an den Fensterflügel (Schrauben inkl.).",
+                        "Optional kann die Montage ohne zu schrauben mit Klemmträgern gewählt werden.",
+                    ]
+                },
+                explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_86_1683704113_450x450.webp",
+                forbids: [],
+                allows: [],
+                price: 0
+            },
+            {
+                title: "Wand",
+                image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_11_1666613476_450x450.webp",
+                explanation: {
+                    title: "Wand",
+                    text: [
+                        "Bei dieser Montageart schrauben Sie die im Lieferumfang enthaltenen Winkelträger an die Wand (Schrauben inkl.).",
+                    ]
+                },
+                explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_88_1683704125_450x450.webp",
+                forbids: [],
+                allows: [],
+                price: 0
+            },
+            {
+                title: "Decke/Nische",
+                image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_12_1666613467_450x450.webp",
+                explanation: {
+                    title: "Decke oder Nische",
+                    text: [
+                        "Bei dieser Montageart erhalten Sie, je nach bestelltem Plisseemodell, Abspannschuhe oder Deckenträger, die nach oben in die Decke oder Nische verschraubt werden (Schrauben inkl.).",
+                    ]
+                },
+                explanationImg: null,
+                forbids: [],
+                allows: [],
+                price: 0
+            },
+        ]
+    },
+    {
+        title: "Plisseemodell",
+        multichoice: false,
+        hardcodedSelected: true,
+        options: [
+            {
+                title: "MP2",
+                defaultSelected: true,
+                image: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_7037_1705999731_450x450.webp",
+                explanation: {
+                    title: "Der Bestseller - Modell MP2 verspannt",
+                    text: [
+                        "Das Plissee kann jeweils mit der Ober- und Unterschiene nach oben und unten bewegt werden.",
+                    ]
+                },
+                explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_7037_1705999731_450x450.webp",
+                forbids: [],
+                allows: [],
+                price: 0
+            },
+        ]
+    }
+]
+
+const pageNumber = 0;
+
+const SelectorComponent = styled(({data})=>{ 
+    return (
+        <div>
+            <button id='product-color-option-detail-btn' style={{display: "none"}} type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productColorMoreDetail"/>
+            { data ?
+                (<div>
+                    <div class="modal fade" id="productColorMoreDetail" tabindex="-1" aria-labelledby="productColorMoreDetailLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="productColorMoreDetailLabel">{data.title}</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div className="modal-body">
+                                <img height='200px' width='auto' src={data.img}/>
+                                <div style={{textAlign: "left"}} className='my-4'>
+                                    {
+                                        data.body.map((item,index)=>{
+                                            return <li className='my-2' key={index}>{item}</li>
+                                        })
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>)
+                :(<div></div>)
+            }
+        </div>
+)})``;
+
 function ProductPlissee() {
+  const [moreDetailInfo,setMoreDetailInfo] = useState(null);
+  /////// ITEM REQUEST AND RESPONSE DATA ///////
+  const { id } = useParams();
+  const url = `/api/external-products/colors/BasicPlissee/${id}`;
+  const { data, loading, error } = useFetch(url, config, pageNumber);
+  const [itemData, setItemData] = useState(null);
+  const [images, setImages] =  useState([])
+  
+  useEffect(() => {
+    if (data !== null) {
+      setItemData(data);
+      console.log(data)
+      const mainImage = data.color.previewImage;
+      const secondaryImage = data.color.tileImage;
+      const tmp = [mainImage, secondaryImage, ...defaultImages];
+      setImages(tmp);
+    }
+  }, [data]);
+  /////// ITEM REQUEST AND RESPONSE DATA ///////
+
+
+
+  /////// CONFIGURATION DATA ///////
+  const [itemConfiguration,setItemConfiguration] = useState(null);
+  const [configPrice,setConfigPrice] = useState(0);
+
+  useEffect(()=>{
+    if (itemConfiguration===null) {
+        let tempItemConfiguration = {};
+        selectionData.forEach(item => {
+            
+            let arr = [];
+            const options = item.options;
+
+            options.forEach(singleOption=> {
+                if (singleOption.defaultSelected === true) {
+                    arr.push(singleOption.title) 
+                }
+            });
+
+            tempItemConfiguration[item.title] = [...arr];
+        });
+
+        setItemConfiguration(tempItemConfiguration);
+        console.log("tempItemConfiguration: ",tempItemConfiguration);
+    }
+  },[])
+  /////// CONFIGURATION DATA ///////
+
+
+
+
+  /////// TOTAL PRICE DATA ///////
+  const [totalPrice,setTotalPrice] = useState(0);
+  /////// TOTAL PRICE DATA ///////
+
+
+
+  if (loading) {
+    return <CircularProgress color="warning" />;
+  }
+
+  if (error) {
+    return (
+      <div>
+        {error !== null && <ModifiedAlert severity="error">{error}</ModifiedAlert>}
+      </div>
+    );
+  }
+
   return (
-    <Container>ProductPlissee</Container>
-  )
+    <>
+        {
+            itemData ? 
+            (
+            <ColumnContainer>
+                <LeftColumn>
+                    <Carousel images={images} itemData={itemData}/>
+                </LeftColumn>
+                <RightColumn>
+                    <ProductDetails itemData={itemData} image={images[1]}/>
+                    <SelectorComponent data={moreDetailInfo}/>
+                    {
+                        selectionData.map((item,index)=>{
+                            return (
+                            <Selection
+                                key={index}
+                                optionList={item}
+                                itemConfiguration={itemConfiguration}
+                                setItemConfiguration={setItemConfiguration}
+                                setConfigPrice={setConfigPrice}
+                                setMoreDetailInfo={setMoreDetailInfo}
+                            />)
+                        })
+                    }
+                </RightColumn>
+            </ColumnContainer>
+            )
+            : (<div></div>)
+        }
+    </>
+  );
 }
 
-export default ProductPlissee
+export default ProductPlissee;

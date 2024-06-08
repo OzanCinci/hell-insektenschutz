@@ -107,10 +107,8 @@ const CustomButton = styled(Button)`
 
 function BasicPlissee() {
     const { data, loading, error } = useFetch(url, config, pageNumber);
-    const [blendColors, setBlendColors] = useState(null);
     const [colors, setColors] = useState(null);
-    const [subCategories, setSubCategories] = useState(null);
-    const [result, filterLoading, handleFilterClick,selection, clearAllFilters] = useFilter(filterValues, colors);
+    const [result, filterLoading, handleFilterClick, selection, clearAllFilters] = useFilter(filterValues, colors);
 
     useEffect(() => {
         if (data !== null) {
@@ -120,9 +118,7 @@ function BasicPlissee() {
                 const ternaryImage = item.properties.MaterialType === "Plissee" ? PlisseImg : WabenPlisseImg;
                 return {mainImage, secondaryImage, ternaryImage, ...item};
             })
-            setBlendColors(data.blendColors);
             setColors(upgradedColors);
-            setSubCategories(data.subCategories);
         }
     }, [data]);
 

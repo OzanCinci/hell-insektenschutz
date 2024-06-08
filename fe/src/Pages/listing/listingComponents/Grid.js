@@ -46,30 +46,6 @@ const ImgWrapper = styled.div`
     }
 `;
 
-/*
-const MoreDetail = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: white;
-    color: black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-    transition: all 0.3s ease;
-    /*opacity: ${props => (props.visible ? 1 : 0)};*/
-//    height: ${props => (props.visible ? "100%" : 0)};
-//    overflow: hidden;
-//    pointer-events: ${props => (props.visible ? 'auto' : 'none')};
-//
-//    @media (max-width: 850px) {
-//        overflow-x: visible;
-//    }
-//`;
 
 const MoreDetail = styled.div`
     position: absolute;
