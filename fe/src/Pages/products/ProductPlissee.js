@@ -76,7 +76,6 @@ const selectionData = [
                 },
                 explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_85_1678865265_450x450.webp",
                 forbids: [],
-                allows: [],
                 price: 0
             },
             {
@@ -91,7 +90,6 @@ const selectionData = [
                 },
                 explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_86_1683704113_450x450.webp",
                 forbids: [],
-                allows: [],
                 price: 0
             },
             {
@@ -105,7 +103,6 @@ const selectionData = [
                 },
                 explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_88_1683704125_450x450.webp",
                 forbids: [],
-                allows: [],
                 price: 0
             },
             {
@@ -119,7 +116,6 @@ const selectionData = [
                 },
                 explanationImg: null,
                 forbids: [],
-                allows: [],
                 price: 0
             },
         ]
@@ -141,11 +137,131 @@ const selectionData = [
                 },
                 explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_7037_1705999731_450x450.webp",
                 forbids: [],
-                allows: [],
                 price: 0
             },
         ]
-    }
+    },
+    {
+        title: "Befestigungsart",
+        multichoice: false,
+        checkAllowList: true,
+        options: [
+            {
+                title: "Abspannschuhe",
+                defaultSelected: false,
+                image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_221_1711541147_450x450.webp",
+                explanation: {
+                    title: "Der Bestseller - Modell MP2 verspannt",
+                    text: [
+                        "Das Plissee kann jeweils mit der Ober- und Unterschiene nach oben und unten bewegt werden.",
+                    ]
+                },
+                explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_7037_1705999731_450x450.webp",
+                forbids: [],
+                allows: {
+                    type: "single",
+                    dependecies: [
+                        {"Montageposition":"Glasfalz"},
+                        {"Montageposition":"Decke/Nische"},
+                    ]
+                },
+                price: 0
+            },
+            {
+                title: "Gelenkklebeplatte",
+                defaultSelected: false,
+                image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_209_1706006725_450x450.webp",
+                explanation: {
+                    title: "Der Bestseller - Modell MP2 verspannt",
+                    text: [
+                        "Das Plissee kann jeweils mit der Ober- und Unterschiene nach oben und unten bewegt werden.",
+                    ]
+                },
+                explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_7037_1705999731_450x450.webp",
+                forbids: [],
+                allows: {
+                    type: "single",
+                    dependecies: [
+                        {"Montageposition":"Glasfalz"},
+                    ]
+                },
+                price: 14.90
+            },
+            {
+                title: "Winkelträger",
+                defaultSelected: false,
+                image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_222_1711541147_450x450.webp",
+                explanation: {
+                    title: "Der Bestseller - Modell MP2 verspannt",
+                    text: [
+                        "Das Plissee kann jeweils mit der Ober- und Unterschiene nach oben und unten bewegt werden.",
+                    ]
+                },
+                explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_7037_1705999731_450x450.webp",
+                forbids: [],
+                allows: {
+                    type: "single",
+                    dependecies: [
+                        {"Montageposition":"Fensterflügel"},
+                        {"Montageposition":"Wand"},
+                    ]
+                },
+                price: 0
+            },
+            {
+                title: "Klemmträger",
+                defaultSelected: false,
+                image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_213_1706006727_450x450.webp",
+                explanation: {
+                    title: "Der Bestseller - Modell MP2 verspannt",
+                    text: [
+                        "Das Plissee kann jeweils mit der Ober- und Unterschiene nach oben und unten bewegt werden.",
+                    ]
+                },
+                explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_7037_1705999731_450x450.webp",
+                forbids: [],
+                allows: {
+                        type: "single",
+                        dependecies: [
+                            {"Montageposition":"Fensterflügel"},
+                        ]
+                },
+                price: 15.90
+            },
+        ]
+    },
+    {
+        title: "Zubehör",
+        multichoice: true,
+        options: [
+            {
+                title: "Bedienstab",
+                cancallable: true,
+                image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_223_1716377905_450x450.webp",
+                explanation: {
+                    title: "Bedienstab",
+                    text: [
+                        "Wenn das Plissee schwer zugänglich ist, oder höher angebracht ist, ist der Bedienstab sehr hilfreich. Es wird ein spezieller beweglicher Bediengriff verbaut (s. Bild), der mit dem Bedienstab kompatibel ist.",
+                    ]
+                },
+                explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_169_1714983431_450x450.webp",
+                price: 26
+            },
+            {
+                title: "Magnethalter",
+                cancallable: true,
+                image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_208_1706006725_450x450.webp",
+                explanation: {
+                    title: "Magnetische Fixierung",
+                    text: [
+                        "Ober- und Unterschiene werden magnetisch an den Abspannschuhen fixiert.",
+                    ]
+                },
+                explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_208_1706006725_450x450.webp",
+                price: 12
+            },
+        ]
+    },
 ]
 
 const pageNumber = 0;
@@ -181,6 +297,27 @@ const SelectorComponent = styled(({data})=>{
             }
         </div>
 )})``;
+
+function sumValues(obj) {
+    let sum = 0;
+
+    function traverse(obj) {
+        if (Array.isArray(obj)) {
+            obj.forEach(item => traverse(item));
+        } else if (typeof obj === 'object' && obj !== null) {
+            for (const key in obj) {
+                if (obj.hasOwnProperty(key)) {
+                    traverse(obj[key]);
+                }
+            }
+        } else if (typeof obj === 'number') {
+            sum += obj;
+        }
+    }
+
+    traverse(obj);
+    return sum;
+}
 
 function ProductPlissee() {
   const [moreDetailInfo,setMoreDetailInfo] = useState(null);
@@ -219,7 +356,10 @@ function ProductPlissee() {
 
             options.forEach(singleOption=> {
                 if (singleOption.defaultSelected === true) {
-                    arr.push(singleOption.title) 
+                    // TODO: you assume default ones add 0€ cost!
+                    // if not change the code here!
+                    const tmp = {[singleOption.title]:0};
+                    arr.push(tmp); 
                 }
             });
 
@@ -228,8 +368,12 @@ function ProductPlissee() {
 
         setItemConfiguration(tempItemConfiguration);
         console.log("tempItemConfiguration: ",tempItemConfiguration);
+    } else {
+        // calculate price logic
+        const tempConfigPrice = sumValues(itemConfiguration);
+        setConfigPrice(tempConfigPrice);
     }
-  },[])
+  },[itemConfiguration])
   /////// CONFIGURATION DATA ///////
 
 
@@ -273,11 +417,15 @@ function ProductPlissee() {
                                 optionList={item}
                                 itemConfiguration={itemConfiguration}
                                 setItemConfiguration={setItemConfiguration}
-                                setConfigPrice={setConfigPrice}
                                 setMoreDetailInfo={setMoreDetailInfo}
                             />)
                         })
                     }
+                    <div>
+                        {
+                            `Config prices: ${configPrice}€`
+                        }
+                    </div>
                 </RightColumn>
             </ColumnContainer>
             )
