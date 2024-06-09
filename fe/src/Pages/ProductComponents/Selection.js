@@ -25,18 +25,38 @@ const Body = styled.div`
 const CustomImgWrapper = styled.div`
     position: relative;
     display: inline-block;
-`;
 
+    &::after {
+        content: ${props => (props.note ? `"${props.note}"` : "")};
+        display: ${props => (props.note ? "block" : "none")};
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        transform: translate(0,calc(3px - 100%));
+        width: 100%;
+        height: fit-content;
+        z-index: 95;
+        background-color: #f59f4c;
+        background: linear-gradient(143deg, rgb(255, 171, 100) -1.15%, rgb(255, 125, 14) 100%);
+        border-radius: 8px 8px 0px 0px;
+        color: white;
+        font-size: 14px;
+        font-weight: bold; 
+    }
+`;
+// sehr beliebt
+// meist gewählt
 const CustomImg = styled.img`
     height: 160px;
     width: auto;
     cursor: pointer;
     transition: all 0.1s ease;
     padding: 0px;
+
     border: ${props => props.isActive ? "3px solid #f59f4c" : "1px solid #e0e0e0"};
     
     &:hover {
-        border: ${props => props.isActive ? "3px solid #f59f4c" : "2px solid rgb(82, 82, 102)"};
+        border: ${props => props.isActive ? "3px solid #f59f4c" : "1px solid #f59f4c"};
     }
 `;
 
@@ -52,7 +72,7 @@ const SelectedIcon = styled(GpsFixedSharpIcon)`
 
 const SingleOptionWrapper = styled.div`
     margin-bottom: 20px;
-    margin-top: 5px;
+    margin-top: 20px;
     margin-right: 30px;
 `;
 
@@ -354,7 +374,10 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                 const isActive = optionList.multichoice ? active && active[index] : active === index;
                                 return (
                                     <SingleOptionWrapper key={index}>
-                                        <CustomImgWrapper>
+                                        <CustomImgWrapper
+                                                note={item.note}
+                                                isActive={isActive}
+                                            >
                                             <CustomImg
                                                 onClick={() => handleClick(item,index,isActive)}
                                                 isActive={isActive}
@@ -380,7 +403,10 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                 const isActive = active[index];
                                 return (
                                     <SingleOptionWrapper key={index}>
-                                        <CustomImgWrapper>
+                                        <CustomImgWrapper
+                                                note={item.note}
+                                                isActive={isActive}
+                                            >
                                             <CustomImg
                                                 onClick={() => handleClick(item,index,isActive,true)}
                                                 isActive={isActive}

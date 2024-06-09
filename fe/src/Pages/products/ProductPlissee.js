@@ -148,6 +148,7 @@ const selectionData = [
         options: [
             {
                 title: "Abspannschuhe",
+                note: "meist gewählt",
                 defaultSelected: false,
                 image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_221_1711541147_450x450.webp",
                 explanation: {
@@ -170,6 +171,7 @@ const selectionData = [
             {
                 title: "Gelenkklebeplatte",
                 defaultSelected: false,
+                note: "sehr beliebt",
                 image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_209_1706006725_450x450.webp",
                 explanation: {
                     title: "Der Bestseller - Modell MP2 verspannt",
@@ -190,6 +192,7 @@ const selectionData = [
             {
                 title: "Winkelträger",
                 defaultSelected: false,
+                note: "meist gewählt",
                 image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_222_1711541147_450x450.webp",
                 explanation: {
                     title: "Der Bestseller - Modell MP2 verspannt",
@@ -211,6 +214,7 @@ const selectionData = [
             {
                 title: "Klemmträger",
                 defaultSelected: false,
+                note: "sehr beliebt",
                 image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_213_1706006727_450x450.webp",
                 explanation: {
                     title: "Der Bestseller - Modell MP2 verspannt",
@@ -249,6 +253,7 @@ const selectionData = [
             },
             {
                 title: "Magnethalter",
+                note: "sehr beliebt",
                 cancallable: true,
                 image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_208_1706006725_450x450.webp",
                 explanation: {
