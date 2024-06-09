@@ -157,7 +157,9 @@ const StickyDiv = styled.div`
   width: 700px;
   background-color: #f8f9fa;
   background-color: white;
-  padding: 0px; /* Optional: Add padding */
+  
+  padding: 30px 20px;
+  box-shadow: 0px 0px 34px rgba(0, 0, 0, 0.11);
 `;
 
 const ColumHeader = styled.div`

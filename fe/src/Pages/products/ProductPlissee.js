@@ -16,14 +16,18 @@ const ModifiedAlert = styled(Alert)`
 `;
 
 const ColumnContainer = styled.div`
-  margin-top: 150px;
-  border: 1px solid red;
+  margin-top: 120px;
   min-height: fit-content;
   display: flex;
   width: 100%;
   flex-direction: row;
   justify-content: center;
   align-items: stretch;
+
+  max-width: 1250px;
+  gap: 50px;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 const Column = styled.div`
@@ -32,14 +36,11 @@ const Column = styled.div`
 `;
 
 const LeftColumn = styled(Column)`
-  /*position: relative;*/
-  /*height: ${props=>`${props.w}px`};*/
-  border: 2px solid blue;
+  
 `;
 
 const RightColumn = styled(Column)`
-  height: 2000px; /* Example height to demonstrate scrolling */
-  border: 2px solid purple;
+  height: fit-content;
 `;
 
 const config = {

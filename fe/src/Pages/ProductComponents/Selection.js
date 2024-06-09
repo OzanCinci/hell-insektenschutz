@@ -365,7 +365,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 <div>
                     <Title>
                         {optionList.title} 
-                        <button onClick={()=>console.log("itemConfiguration: ",itemConfiguration)}>printconfig</button>
+                        {/*<button onClick={()=>console.log("itemConfiguration: ",itemConfiguration)}>printconfig</button> */}
                     </Title>
                     <Body>
                         {
