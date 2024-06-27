@@ -108,7 +108,7 @@ const CustomButton = styled(Button)`
 function BasicPlissee() {
     const { data, loading, error } = useFetch(url, config, pageNumber);
     const [colors, setColors] = useState(null);
-    const [result, filterLoading, handleFilterClick, selection, clearAllFilters] = useFilter(filterValues, colors);
+    const [result, filterLoading, handleFilterClick, selection, clearAllFilters,handleSearchChange] = useFilter(filterValues, colors);
 
     useEffect(() => {
         if (data !== null) {
@@ -149,6 +149,7 @@ function BasicPlissee() {
                     selection={selection} 
                     clearAllFilters={clearAllFilters}
                     defaultExpandedPanels={{ Farbton: true, Lichtdurchlässigkeit: true , Stoffart: true}}
+                    handleSearchChange={handleSearchChange}
                 />
                 <Grid loading={filterLoading} data={result || []} link={"BasicPlissee"}/>
             </Container>

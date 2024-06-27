@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -10,6 +10,13 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+
+import SearchIcon from '@mui/icons-material/Search';
+import IconButton from "@mui/material/IconButton";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import ClearIcon from '@mui/icons-material/Clear';
+import FormControl from "@mui/material/FormControl";
 
 const ColorSelector = styled.div`
     border-radius: 50%;
@@ -69,11 +76,9 @@ const MobileFilterContainer = styled.div`
     }
 `;
 
-
 const CustomAccordionSummary = styled(AccordionSummary)`
     background: #f1f1f1 !important;
 `;
-
 
 const CustomAccordionDetails = styled(AccordionDetails)`
     display: flex;
@@ -86,9 +91,17 @@ const CustomExpandMoreIcon = styled(ExpandMoreIcon)`
     color: orange;
 `;
 
-const FilterComponent = ({ filterObj, handleFilterClick, clearAllFilters, selection, defaultExpandedPanels = {} }) => {
-    /////// expand code ///////
+const FilterComponent = ({ filterObj, handleFilterClick, clearAllFilters, selection, defaultExpandedPanels = {}, handleSearchChange }) => {
     const [expandedPanels, setExpandedPanels] = useState(defaultExpandedPanels);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    useEffect(() => {
+        const debounceTimeout = setTimeout(() => {
+            handleSearchChange(searchTerm);
+        }, 500);
+
+        return () => clearTimeout(debounceTimeout);
+    }, [searchTerm, handleSearchChange]);
 
     const handleAccordionChange = (panel) => (event, isExpanded) => {
         setExpandedPanels(prevExpanded => ({
@@ -96,9 +109,7 @@ const FilterComponent = ({ filterObj, handleFilterClick, clearAllFilters, select
             [panel]: isExpanded
         }));
     };
-    /////// expand code ///////
-    
-    /////// hover popever code ///////
+
     const [anchorEl, setAnchorEl] = useState(null);
     const [openPopoverId, setOpenPopoverId] = useState(null);
 
@@ -111,17 +122,44 @@ const FilterComponent = ({ filterObj, handleFilterClick, clearAllFilters, select
         setAnchorEl(null);
         setOpenPopoverId(null);
     };
-    /////// hover popever code ///////
+
+    const clearEverything = (e) => {
+        e.preventDefault();
+        setSearchTerm("");
+        clearAllFilters();
+    }
 
     return (
         <>
             <DesktopFilter>
                 <FilterContainer>
-                    <div class="d-flex flex-row justify-content-end">
-                        <Button onClick={(e)=>clearAllFilters()} variant="outlined" color="warning">Filter zurücksetzen</Button>
+                    <div className="d-flex flex-row justify-content-end">
+                        <Button onClick={(e)=>clearEverything(e)} variant="outlined" color="warning">Filter zurücksetzen</Button>
                     </div>
-                    <div>
-                        <input></input>
+                    <div className="d-flex flex-row justify-content-end">
+                        <FormControl sx={{ width: "90%", marginLeft: "auto", marginTop: "10px" }} variant="outlined">
+                            <OutlinedInput
+                                type="text"
+                                color="warning"
+                                placeholder="Nummer, Farbe, Stichwort"
+                                value={searchTerm} 
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        {
+                                            searchTerm.trim()!==""
+                                            ? <IconButton
+                                            aria-label="toggle password visibility"
+                                            edge="start"
+                                            >
+                                                <ClearIcon onClick={()=>setSearchTerm("")}/>
+                                            </IconButton>
+                                            : <SearchIcon/>
+                                        }
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
                     </div>
                     {
                         Object.entries(filterObj).map(([filterType, { singleChoice, data }]) => {
@@ -242,19 +280,45 @@ const FilterComponent = ({ filterObj, handleFilterClick, clearAllFilters, select
                 </FilterContainer>
             </DesktopFilter>      
             <MobileFilterContainer>
-                <button style={{display: "none"}} id="filter-modal-mobile-filter" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+                <button style={{display: "none"}} id="filter-modal-mobile-filter" type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
                 </button>
-                <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="filterModalLabel">Filter</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div className="modal fade" id="filterModal" tabIndex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title" id="filterModalLabel">Filter</h5>
+                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
+                    <div className="modal-body">
                     <FilterContainer>
-                    <div class="d-flex flex-row justify-content-end">
+                    <div className="d-flex flex-row justify-content-end">
                         <Button className='my-2' onClick={(e)=>clearAllFilters()} variant="outlined" color="warning">Filter zurücksetzen</Button>
+                        <Button className='my-2 mx-3' data-bs-dismiss="modal" variant="outlined" color="warning">Anwenden</Button>
+                    </div>
+                    <div className="d-flex flex-row justify-content-end">
+                        <FormControl sx={{ width: "100%", marginLeft: "auto", marginTop: "10px", marginBottom: "10px" }} variant="outlined">
+                            <OutlinedInput
+                                type="text"
+                                color="warning"
+                                placeholder="Nummer, Farbe, Stichwort"
+                                value={searchTerm} 
+                                onChange={(e) => setSearchTerm(e.target.value)}
+                                startAdornment={
+                                    <InputAdornment position="start">
+                                        {
+                                            searchTerm.trim()!==""
+                                            ? <IconButton
+                                            aria-label="toggle password visibility"
+                                            edge="start"
+                                            >
+                                                <ClearIcon onClick={()=>setSearchTerm("")}/>
+                                            </IconButton>
+                                            : <SearchIcon/>
+                                        }
+                                    </InputAdornment>
+                                }
+                            />
+                        </FormControl>
                     </div>
                     {
                         Object.entries(filterObj).map(([filterType, { singleChoice, data }]) => {

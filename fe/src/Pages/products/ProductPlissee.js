@@ -366,7 +366,7 @@ function sumValues(obj) {
 }
 
 function ProductPlissee() {
-  const [moreDetailInfo,setMoreDetailInfo] = useState(null);
+  const [moreDetailInfo, setMoreDetailInfo] = useState(null);
   /////// ITEM REQUEST AND RESPONSE DATA ///////
   const { id } = useParams();
   const url = `/api/external-products/colors/BasicPlissee/${id}`;
@@ -423,8 +423,6 @@ function ProductPlissee() {
   /////// CONFIGURATION DATA ///////
 
 
-
-
   /////// TOTAL PRICE DATA ///////
   const [totalPrice,setTotalPrice] = useState(0);
   /////// TOTAL PRICE DATA ///////
@@ -472,6 +470,10 @@ function ProductPlissee() {
                             {
                                 `Config prices: ${configPrice}€`
                             }
+                        </div>
+                        <div>
+                            <input></input>
+                            <input></input>
                         </div>
                     </RightColumn>
                 </ColumnContainer>
