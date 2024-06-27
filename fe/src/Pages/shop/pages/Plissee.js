@@ -78,6 +78,7 @@ const SingleProductBody = styled.div`
     @media only screen and (max-width: 450px) {
         max-width: 450px;
         width: 80vw;
+        align-items: flex-start;
     }
 `;
 
@@ -107,12 +108,17 @@ const Title = styled.div`
 
     @media only screen and (max-width: 450px) {
         width: 100%;
+        padding-left: 10%;
     }    
 `;
 
 const Desc = styled.div`
     color: #696984;
     margin-bottom: 10px;
+
+    @media only screen and (max-width: 450px) {
+        padding-left: 5%;
+    }
 `;
 
 const ProductLink = styled.span`
@@ -130,6 +136,27 @@ const ProductLink = styled.span`
     }
 `;
 
+const BottomBoxWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    @media only screen and (max-width: 450px) {
+        align-items: flex-start;
+        width: 100%;
+    }
+`;
+
+const ClickForRedirectionWrapper = styled.div`
+@media only screen and (max-width: 450px) {
+    width: 100%;
+    text-align: right;
+    padding-right: 5%;
+}
+
+`;
+
 function Plissee() {
   return (
     <>
@@ -143,7 +170,7 @@ function Plissee() {
                                 <ImageWrapper>
                                     <CustomImg src={item.image}></CustomImg>
                                 </ImageWrapper>
-                                <div className='d-flex flex-column justify-content-around align-items-center'>
+                                <BottomBoxWrapper>
                                     <Desc>
                                         {
                                             item.desc.map((i,indexOfI) => {
@@ -156,7 +183,7 @@ function Plissee() {
                                             })
                                         }
                                     </Desc>
-                                    <div>
+                                    <ClickForRedirectionWrapper>
                                         {
                                             item.links.map((link)=>{
                                                 return (
@@ -171,8 +198,8 @@ function Plissee() {
                                                 )
                                             })
                                         }
-                                    </div>
-                                </div>
+                                    </ClickForRedirectionWrapper>
+                                </BottomBoxWrapper>
                             </SingleProductBody>
                         </SingleProduct>
                     );

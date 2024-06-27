@@ -120,6 +120,9 @@ const FilterComponent = ({ filterObj, handleFilterClick, clearAllFilters, select
                     <div class="d-flex flex-row justify-content-end">
                         <Button onClick={(e)=>clearAllFilters()} variant="outlined" color="warning">Filter zurücksetzen</Button>
                     </div>
+                    <div>
+                        <input></input>
+                    </div>
                     {
                         Object.entries(filterObj).map(([filterType, { singleChoice, data }]) => {
                             if (filterType === "Farbton") {

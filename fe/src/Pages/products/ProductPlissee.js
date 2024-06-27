@@ -7,6 +7,8 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Carousel from '../ProductComponents/Carousel';
 import ProductDetails from '../ProductComponents/ProductDetails';
 import Selection from '../ProductComponents/Selection';
+import Installation from '../ProductComponents/Installation';
+import Reviews from '../../LandingPageComponents/Reviews';
 
 const ModifiedAlert = styled(Alert)`
   width: fit-content;
@@ -268,6 +270,44 @@ const selectionData = [
             },
         ]
     },
+    {
+        // , , , , 
+        title: "Schienenfarbe",
+        multichoice: false,
+        options: [
+            {
+                title: "Weiß",
+                defaultSelected: true,
+                image: "rgb(243, 246, 246)",
+                price: 0
+            },
+            {
+                title: "Silber",
+                image: "linear-gradient(58.82deg, rgb(233, 233, 233) 2.73%, rgb(196, 196, 196) 50.11%, rgb(221, 221, 221) 67.69%, rgb(233, 233, 233) 78.93%, rgb(224, 224, 224) 96.51%)",
+                price: 0
+            },
+            {
+                title: "Anthrazit matt",
+                image: "rgb(90, 90, 90)",
+                price: 0
+            },
+            {
+                title: "Schwarz matt",
+                image: "rgb(30, 26, 26)",
+                price: 0
+            },
+            {
+                title: "Elfenbein",
+                image: "rgb(245, 239, 224)",
+                price: 0
+            },
+            {
+                title: "Mahagoni",
+                image: "rgb(87, 62, 57)",
+                price: 0
+            },
+        ]
+    },
 ]
 
 const pageNumber = 0;
@@ -408,32 +448,41 @@ function ProductPlissee() {
         {
             itemData ? 
             (
-            <ColumnContainer>
-                <LeftColumn>
-                    <Carousel images={images} itemData={itemData}/>
-                </LeftColumn>
-                <RightColumn>
-                    <ProductDetails itemData={itemData} image={images[1]}/>
-                    <SelectorComponent data={moreDetailInfo}/>
-                    {
-                        selectionData.map((item,index)=>{
-                            return (
-                            <Selection
-                                key={index}
-                                optionList={item}
-                                itemConfiguration={itemConfiguration}
-                                setItemConfiguration={setItemConfiguration}
-                                setMoreDetailInfo={setMoreDetailInfo}
-                            />)
-                        })
-                    }
-                    <div>
+            <div>
+                <ColumnContainer>
+                    <LeftColumn>
+                        <Carousel images={images} itemData={itemData}/>
+                    </LeftColumn>
+                    <RightColumn>
+                        <ProductDetails itemData={itemData} image={images[1]}/>
+                        <SelectorComponent data={moreDetailInfo}/>
                         {
-                            `Config prices: ${configPrice}€`
+                            selectionData.map((item,index)=>{
+                                return (
+                                <Selection
+                                    key={index}
+                                    optionList={item}
+                                    itemConfiguration={itemConfiguration}
+                                    setItemConfiguration={setItemConfiguration}
+                                    setMoreDetailInfo={setMoreDetailInfo}
+                                />)
+                            })
                         }
-                    </div>
-                </RightColumn>
-            </ColumnContainer>
+                        <div>
+                            {
+                                `Config prices: ${configPrice}€`
+                            }
+                        </div>
+                    </RightColumn>
+                </ColumnContainer>
+                <Installation/>
+                <br/>
+                <br/>
+                <br/>
+                <Reviews/>
+                <br/>
+                <br/>
+            </div>
             )
             : (<div></div>)
         }

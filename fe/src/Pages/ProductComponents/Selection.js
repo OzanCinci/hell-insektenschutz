@@ -76,6 +76,21 @@ const SingleOptionWrapper = styled.div`
     margin-right: 30px;
 `;
 
+const BodyColors = styled.div`
+    /*display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-top: 10px;
+    margin-bottom: 30px;*/
+    
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 0px; /* Adjust the gap as needed */
+    justify-items: center; /* Align items horizontally center */
+    align-items: flex-start; 
+`;
+
 const TitleWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -84,6 +99,37 @@ const TitleWrapper = styled.div`
     padding-left: 5px;
     margin-top: 8px;
 `;
+
+const ColorSelector = styled.div`
+    border-radius: 50%;
+    background: ${props => props.bg};
+    border: 1px solid grey;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    position: relative;
+
+    &::before, &::after {
+        content: "";
+        display: ${props => props.isSelected ? "block" : "none"};
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 60%;
+        height: 2px;
+        background: ${props => props.bg==="rgb(30, 26, 26)" || props.bg==="rgb(90, 90, 90)"  ? "#f59f4c" : "#f59f4c"};
+        transform-origin: center;
+    }
+
+    &::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    &::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
+    }
+`;
+
 
 function arraysEqual(arr1, arr2) {
     if (!arr1 || arr1.length !== arr2.length) {
@@ -362,6 +408,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 </div>
             )
             : (
+                optionList.title !== "Schienenfarbe" ?
                 <div>
                     <Title>
                         {optionList.title} 
@@ -430,6 +477,37 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                             })
                         }
                     </Body>
+                </div>
+                :
+                <div style={{marginBottom: "80px"}}>
+                    <Title>
+                        {optionList.title} 
+                    </Title>
+                    <BodyColors>
+                        
+                        {
+                            optionList.options.map((item, index) => {
+                                const isActive = optionList.multichoice ? active && active[index] : active === index;
+                                return (
+                                    <SingleOptionWrapper key={index}>
+                                        <div style={{display: "flex", flexDirection: "column", justifyContent: "center",alignItems: "center"}}>
+                                            <div className='mx-1'>
+                                                <ColorSelector 
+                                                    className='my-1'
+                                                    onClick={() => handleClick(item,index,isActive)}
+                                                    isSelected={isActive} 
+                                                    bg={item.image}
+                                                />
+                                            </div>
+                                            <TitleWrapper>
+                                                <div>{item.title}</div>
+                                            </TitleWrapper>
+                                        </div>
+                                    </SingleOptionWrapper>
+                                )
+                            })
+                        }
+                    </BodyColors>
                 </div>
             )
     )

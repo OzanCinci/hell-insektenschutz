@@ -91,7 +91,7 @@ const filterValues = {
             { name: 'Feucht abwischbar', image: Feucht, extraInfo: null },
             { name: 'Handwaschbar bis 30°', image: Hand, extraInfo: null },
             { name: 'Hitzeschutz', image: Hitzes, extraInfo: 'Die Stoffe sind mit einer Perlmuttbeschichtung ausgerüstet und reflektieren dadurch die Hitze sehr gut. Optimal für südlich ausgerichtete Räume.' },
-            { name: 'Schadstoffgeprüft', image: Schad, extraInfo: 'Schadstoffgeprüft means the product is tested for harmful substances.' },
+            { name: 'Schadstoffgeprüft', image: Schad, extraInfo: 'Produkt auf schädliche Substanzen getestet wurde.' },
             { name: 'Schwer entflammbar', image: Schwer, extraInfo: null }
         ]
     }
