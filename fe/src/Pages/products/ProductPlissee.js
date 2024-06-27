@@ -1,7 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useFetch from '../../hooks/useFetch';
+import axios from 'axios';
+import { debounce, get } from 'lodash';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import Carousel from '../ProductComponents/Carousel';
@@ -344,6 +346,11 @@ const SelectorComponent = styled(({data})=>{
         </div>
 )})``;
 
+const subcategoryTitle = "Plisseemodell";
+const blendcolorTitle = "Schienenfarbe";
+const requestCategory = "BasicPlissee";
+const saleMultiplier = 10 / 4;
+
 function sumValues(obj) {
     let sum = 0;
 
@@ -377,7 +384,7 @@ function ProductPlissee() {
   useEffect(() => {
     if (data !== null) {
       setItemData(data);
-      console.log(data)
+      console.log("SINGLE COLOR DATA:" ,data);
       const mainImage = data.color.previewImage;
       const secondaryImage = data.color.tileImage;
       const tmp = [mainImage, secondaryImage, ...defaultImages];
@@ -391,6 +398,10 @@ function ProductPlissee() {
   /////// CONFIGURATION DATA ///////
   const [itemConfiguration,setItemConfiguration] = useState(null);
   const [configPrice,setConfigPrice] = useState(0);
+  const [dimensions,setDimensions] = useState({
+        height: 500,
+        width: 300,
+    });
 
   useEffect(()=>{
     if (itemConfiguration===null) {
@@ -424,7 +435,84 @@ function ProductPlissee() {
 
 
   /////// TOTAL PRICE DATA ///////
-  const [totalPrice,setTotalPrice] = useState(0);
+  const [validPrice,setValidPrice] = useState(0);
+
+  useEffect(()=>{
+     if (itemConfiguration!==null && itemData!==null) {
+        let request = {};
+
+        const sampleColor = itemData.color.id;
+        const sampleSubCategories = itemData.subCategories;
+        const sampleBlendColors = itemData.blendColors;
+
+        
+        const subCat = Object.keys(itemConfiguration[subcategoryTitle][0])[0];
+        const blendCol = Object.keys(itemConfiguration[blendcolorTitle][0])[0];
+        
+        let current;
+        for (let i=0;i<sampleSubCategories.length;i++) {
+            current = sampleSubCategories[i];
+            if (current.title===subCat) {
+                request.subcategory = Number(current.id);
+                break;
+            }
+        }
+
+        for (let i=0;i<sampleBlendColors.length;i++) {
+            current = sampleBlendColors[i];
+            if (current.title===blendCol) {
+                request.blendcolor = Number(current.id);
+                break;
+            }
+        }
+
+        request.color = Number(sampleColor);
+
+        request.width = Math.floor(dimensions.width / 10); 
+        request.height = Math.floor(dimensions.height / 10);
+        request.category = requestCategory;
+
+        // TODO: todo list:
+        /* 
+        1. go do request
+        2. validate request
+        3. multiply 2.5x
+        4. update global price
+        5. add debouncer!
+        */
+
+        console.log("AAAAAAAAAAAA!!!!!");
+        console.log("REQUEST OBJ: ", request);
+        debouncedGetPriceFromBackend(request);
+        console.log("AAAAAAAAAAAA!!!!!");
+        
+    }
+  },[itemConfiguration, dimensions]);
+
+  const getPriceFromBackend = async (requestBody) => {
+    const BASE_URL = process.env.REACT_APP_BE_API;
+    try {
+        const response = await axios.post(`${BASE_URL}/api/external-products/price`, requestBody, {
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+        console.log('Response:', response.data);
+        const salePriceStr = get(response.data, 'data.price.salePrice');
+        const parsedSalePrice = parseFloat(salePriceStr.replace(',', '.'));
+        console.log("parsedSalePrice: ",parsedSalePrice);
+        const tmpValidPrice = parsedSalePrice * saleMultiplier;
+        console.log("validPrice: ", tmpValidPrice); 
+        setValidPrice(tmpValidPrice);
+      } catch (error) {
+        console.error('HEBELE HÜBELEEE:', error);
+        // Handle the error as needed
+      }
+  }
+
+  // Wrap the getPriceFromBackend function with debounce
+  const debouncedGetPriceFromBackend = useCallback(debounce(getPriceFromBackend, 500), []);
+
   /////// TOTAL PRICE DATA ///////
 
 
@@ -470,10 +558,13 @@ function ProductPlissee() {
                             {
                                 `Config prices: ${configPrice}€`
                             }
+                            {
+                                `Total: ${validPrice + configPrice}€`
+                            }
                         </div>
                         <div>
-                            <input></input>
-                            <input></input>
+                            <input value={dimensions.height} onChange={(e)=>setDimensions((prev)=>({...prev, height: e.target.value}))}></input>
+                            <input value={dimensions.width} onChange={(e)=>setDimensions((prev)=>({...prev, width: e.target.value}))}></input>
                         </div>
                     </RightColumn>
                 </ColumnContainer>
