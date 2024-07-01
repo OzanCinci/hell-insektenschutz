@@ -21,31 +21,12 @@ export const cartReducer = (state=emptyCart,action) => {
     switch(action.type){
         case ADD_TO_CART:
             // payload is directly the item itself
-            /* 
-            {
-                measurements: "248x500",
-                price: 140, // tekil fiyat
-                quantity: 2, // 2 x 140€
-                uniqueCode: 11,
-                details: {
-                    ...
-                },
-                product: {
-                    category: "ürün kategorisi",
-                    description: "ürün hakkında açıklama: ",
-                    id: 1,
-                    imageUrl: "url",
-                    name: "Ürün adı 2",
-                    rating: 4.8,
-                    numberOfRating: 12
-                }
-            },
-            */
             const newItem = action.payload;
             updatedState = state;
             updatedState.items = [...updatedState.items, newItem];
             updatedState.numberOfItems +=  newItem.quantity;
             updatedState.price +=  newItem.quantity * newItem.price;
+            localStorage.setItem('localCartInfo', JSON.stringify({...updatedState}));
             return {...updatedState};
         case REMOVE_FROM_CART:
             // payload is unique code
@@ -55,6 +36,7 @@ export const cartReducer = (state=emptyCart,action) => {
             updatedState.numberOfItems -= removedItem.quantity;
             updatedState.price -=  removedItem.quantity * removedItem.price;
             updatedState.items = updatedState.items.filter(element => element.uniqueCode!==uniqueCode);
+            localStorage.setItem('localCartInfo', JSON.stringify({...updatedState}));
             return {...updatedState};
         case INCREMENT_NUMBER_IN_CART:
             // payload is unique code
@@ -70,6 +52,7 @@ export const cartReducer = (state=emptyCart,action) => {
                 updatedItem.quantity += 1;
                 return updatedItem;
             });
+            localStorage.setItem('localCartInfo', JSON.stringify({...updatedState}));
             return {...updatedState};
         case DECREMENT_NUMBER_FROM_CART:
             // payload is unique code
@@ -89,13 +72,11 @@ export const cartReducer = (state=emptyCart,action) => {
             } else {
                 updatedState.items = updatedState.items.filter(item=>item.uniqueCode!=uniqueCode);
             }
+            localStorage.setItem('localCartInfo', JSON.stringify({...updatedState}));
             return {...updatedState};
         case REMOVE_ALL_CART:
-            updatedState = state;
-            updatedState.price = 0;
-            updatedState.numberOfItems = 0;
-            updatedState.items = [];
-            return {...updatedState};
+            localStorage.setItem('localCartInfo', JSON.stringify({...emptyCart}));
+            return {...emptyCart};
         default:
             return state;
     }

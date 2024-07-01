@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import MuiAlert from '@mui/material/Alert';
@@ -10,7 +9,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
 
 function Notification() {
     const [open, setOpen] = useState(false);
-    const vertical = 'top';
+    const vertical = 'bottom';
     const horizontal = 'right';
   
     const handleClick = () => {

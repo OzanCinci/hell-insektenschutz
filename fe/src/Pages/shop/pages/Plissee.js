@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {data} from '../data/plisseeData';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import VerifiedIcon from '@mui/icons-material/Verified';
+import { useNavigate } from 'react-router-dom';
 
 const ProductsContainer = styled.div`
     margin-bottom: 20px;
@@ -158,6 +159,9 @@ const ClickForRedirectionWrapper = styled.div`
 `;
 
 function Plissee() {
+    const nav = useNavigate();
+
+
   return (
     <>
         <ProductsContainer>
@@ -187,14 +191,14 @@ function Plissee() {
                                         {
                                             item.links.map((link)=>{
                                                 return (
-                                                    <a href={`${link.url}`} style={{textDecoration:"none"}}>
+                                                    <div onClick={()=>nav(link.url)} style={{textDecoration:"none"}}>
                                                         <div style={{marginBottom: "1px"}} key={link.text}>
                                                             <DoubleArrowIcon style={{ color: "#f59f4c" }}/>
                                                             <ProductLink>
                                                                 {link.text}
                                                             </ProductLink>
                                                         </div>
-                                                    </a>
+                                                    </div>
                                                 )
                                             })
                                         }

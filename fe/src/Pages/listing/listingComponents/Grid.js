@@ -5,6 +5,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import Button from '@mui/material/Button';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+import { useNavigate } from 'react-router-dom';
 
 const Wrapper = styled.div`
     display: grid;
@@ -306,6 +307,7 @@ function extractProperties(properties) {
 }
 
 const Grid = ({ loading, data, link }) => {
+    const nav = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [currentData, setCurrentData] = useState([]);
     const [detailVisible, setDetailVisible] = useState([]);
@@ -398,9 +400,9 @@ const Grid = ({ loading, data, link }) => {
                                     <ItemContainer>
                                         <InfoButton onClick={()=>toggleDetail(index)}>{detailVisible[index] ? "Weniger Infos" : "Mehr Infos"} <CustomArrowDropDownIcon visible={detailVisible[index]}/></InfoButton>
                                         <ImgWrapper url={item.secondaryImage}>
-                                            <a style={{textDecoration: "none"}} href={`/produkts/${link}/${item.id}`}>
+                                            <div style={{cursor: "pointer"}} onClick={e=>nav(`/produkts/${link}/${item.id}`)}>
                                                 <CustomImg src={item.mainImage} width='100%' height='auto' />
-                                            </a>
+                                            </div>
                                             <MoreDetail visible={detailVisible[index]}>
                                                 <ModeDetailInnerPage>
                                                 {
@@ -425,9 +427,9 @@ const Grid = ({ loading, data, link }) => {
                                                 {`${item.properties.MinPrice}€`}
                                             </PriceTag>
                                         </BottomInfoWrapper>
-                                        <a style={{textDecoration: "none"}} href={`/produkts/${link}/${item.id}`}>
-                                            <CustomButton onClick={(e)=>console.log("asd")} variant="outlined" color="warning">Jetzt konfigurieren</CustomButton>
-                                        </a>
+                                        <div>
+                                            <CustomButton onClick={(e)=>nav(`/produkts/${link}/${item.id}`)} variant="outlined" color="warning">Jetzt konfigurieren</CustomButton>
+                                        </div>
                                     </ItemContainer>
                                 );
                             })}

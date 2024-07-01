@@ -49,7 +49,6 @@ import OptionsPage from './Pages/shop/OptionsPage';
 import ProductPlissee from './Pages/products/ProductPlissee';
 
 function App() {
-
   useEffect(()=>{
     AOS.init({
       // Global settings:

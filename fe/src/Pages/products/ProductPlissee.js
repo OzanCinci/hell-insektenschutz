@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useFetch from '../../hooks/useFetch';
 import axios from 'axios';
+import { ADD_TO_CART } from '../../constants/user';
+import { useDispatch } from 'react-redux';
 import { debounce, get } from 'lodash';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -11,6 +13,10 @@ import ProductDetails from '../ProductComponents/ProductDetails';
 import Selection from '../ProductComponents/Selection';
 import Installation from '../ProductComponents/Installation';
 import Reviews from '../../LandingPageComponents/Reviews';
+import OutlinedInput from "@mui/material/OutlinedInput";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import AddToCart from '../SingleProductPage/components/AddToCart';
 
 const ModifiedAlert = styled(Alert)`
   width: fit-content;
@@ -45,6 +51,13 @@ const LeftColumn = styled(Column)`
 
 const RightColumn = styled(Column)`
   height: fit-content;
+`;
+
+const MeasurementWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-top: 15px;
+    margin-bottom: 50px;
 `;
 
 const config = {
@@ -346,6 +359,15 @@ const SelectorComponent = styled(({data})=>{
         </div>
 )})``;
 
+const Title = styled.div`
+    font-size: 18px;
+    color: rgb(82, 82, 102);
+    font-weight: bold;
+    border-bottom: 2px solid rgb(82, 82, 102);
+    text-align: left;
+    padding-left: 15px;
+`;
+
 const subcategoryTitle = "Plisseemodell";
 const blendcolorTitle = "Schienenfarbe";
 const requestCategory = "BasicPlissee";
@@ -372,7 +394,37 @@ function sumValues(obj) {
     return sum;
 }
 
+function extractAttributes(obj) {
+    const result = [];
+
+    for (const key in obj) {
+        if (obj.hasOwnProperty(key) && key.charAt(0) === key.charAt(0).toUpperCase()) {
+            const value = obj[key];
+            if (Array.isArray(value)) {
+                value.forEach(item => {
+                    for (const subKey in item) {
+                        if (item.hasOwnProperty(subKey)) {
+                            if (typeof item[subKey] === 'object' && !Array.isArray(item[subKey])) {
+                                for (const innerKey in item[subKey]) {
+                                    if (item[subKey].hasOwnProperty(innerKey)) {
+                                        result.push(`${key}: ${subKey} ${innerKey}`);
+                                    }
+                                }
+                            } else {
+                                result.push(`${key}: ${subKey}`);
+                            }
+                        }
+                    }
+                });
+            }
+        }
+    }
+
+    return result;
+};
+
 function ProductPlissee() {
+  const dispatch = useDispatch();
   const [moreDetailInfo, setMoreDetailInfo] = useState(null);
   /////// ITEM REQUEST AND RESPONSE DATA ///////
   const { id } = useParams();
@@ -472,19 +524,10 @@ function ProductPlissee() {
         request.height = Math.floor(dimensions.height / 10);
         request.category = requestCategory;
 
-        // TODO: todo list:
-        /* 
-        1. go do request
-        2. validate request
-        3. multiply 2.5x
-        4. update global price
-        5. add debouncer!
-        */
-
-        console.log("AAAAAAAAAAAA!!!!!");
-        console.log("REQUEST OBJ: ", request);
+        //console.log("AAAAAAAAAAAA!!!!!");
+        //console.log("REQUEST OBJ: ", request);
         debouncedGetPriceFromBackend(request);
-        console.log("AAAAAAAAAAAA!!!!!");
+        //console.log("AAAAAAAAAAAA!!!!!");
         
     }
   },[itemConfiguration, dimensions]);
@@ -511,10 +554,45 @@ function ProductPlissee() {
   }
 
   // Wrap the getPriceFromBackend function with debounce
-  const debouncedGetPriceFromBackend = useCallback(debounce(getPriceFromBackend, 500), []);
-
+  const debouncedGetPriceFromBackend = useCallback(debounce(getPriceFromBackend, 1000), []);
   /////// TOTAL PRICE DATA ///////
 
+
+  /////// ADD TO CART LOGIC ///////
+  const generateUniqueCode = () => Date.now().toString(36) + Math.random().toString(36).substring(2);
+
+  const handleAddIntoCard = (e,quantity,itemPrice) => {
+    e.preventDefault();
+
+    const uniqueCode = generateUniqueCode();
+    const itemName = ( itemData?.id || "").split(/(?=[A-Z])/).join(" ");
+    const secondaryName = itemData?.color?.title;
+    const temp = extractAttributes(itemConfiguration);
+    const attributes = [`Höhe: ${dimensions.height/10}cm`, `Breite: ${dimensions.width/10}cm`, ...temp];
+
+    const item = {
+        ...dimensions,
+        attributes: attributes,
+        shippingWidth: dimensions.width,
+        cartImage: images[0],
+        quantity: quantity,
+        price: itemPrice,
+        uniqueCode: uniqueCode,
+        itemName: itemName,
+        secondaryName: secondaryName
+    };
+
+    console.log("CART ITEM: ", item);
+
+    dispatch({type:ADD_TO_CART,payload:item});
+
+    const button = document.getElementById('open-notification-button');
+    if (button)
+        setTimeout(()=>button.click(),300);
+  }
+
+
+  /////// ADD TO CART LOGIC ///////
 
 
   if (loading) {
@@ -554,17 +632,50 @@ function ProductPlissee() {
                                 />)
                             })
                         }
+                        <Title>Abmessungen</Title>
+                        <MeasurementWrapper>
+                            <div className='d-flex flex-column justify-content-center align-items-start'>
+                                <div>{`Höhe (${dimensions.height/10}cm)`}</div>
+                                
+                                <FormControl sx={{ width: "60%", marginTop: "5px" }} variant="outlined">
+                                    <OutlinedInput
+                                        type="text"
+                                        color="warning"
+                                        placeholder="Höhe (mm)"
+                                        value={dimensions.height} 
+                                        onChange={(e)=>setDimensions((prev)=>({...prev, height: e.target.value}))}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                mm
+                                            </InputAdornment>
+                                        }
+                                    />
+                                </FormControl>
+                            </div>
+                            <div className='d-flex flex-column justify-content-center align-items-start'>
+                                <div>{`Breite (${dimensions.width/10}cm)`}</div>
+                                <FormControl sx={{ width: "60%", marginTop: "5px" }} variant="outlined">
+                                    <OutlinedInput
+                                        type="text"
+                                        color="warning"
+                                        placeholder="Breite (mm)"
+                                        value={dimensions.width} 
+                                        onChange={(e)=>setDimensions((prev)=>({...prev, width: e.target.value}))}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                mm
+                                            </InputAdornment>
+                                        }
+                                    />
+                                </FormControl>
+                            </div>
+                        </MeasurementWrapper>
                         <div>
-                            {
-                                `Config prices: ${configPrice}€`
-                            }
-                            {
-                                `Total: ${validPrice + configPrice}€`
-                            }
-                        </div>
-                        <div>
-                            <input value={dimensions.height} onChange={(e)=>setDimensions((prev)=>({...prev, height: e.target.value}))}></input>
-                            <input value={dimensions.width} onChange={(e)=>setDimensions((prev)=>({...prev, width: e.target.value}))}></input>
+                            <AddToCart 
+                                itemPrice={validPrice + configPrice}
+                                setMoreDetailInfo={setMoreDetailInfo}
+                                handleAddIntoCard={handleAddIntoCard}
+                            />
                         </div>
                     </RightColumn>
                 </ColumnContainer>

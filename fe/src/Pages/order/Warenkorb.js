@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import TempImg from '../../images/details/plissee.jpg';
-import TempImg2 from '../../images/details/alt_schiebetür.jpg';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
@@ -129,13 +127,15 @@ const ButtonGroupWrapper = styled.div`
     justify-content: space-between;
     align-items: flex-end;
     gap: 20px;
+    margin-top: 25px;
 
     @media only screen and (max-width: 800px) {
         margin-top: 10px;
     }
 `;
 
-const Preis = styled.div`
+const Preis = styled.b`
+    font-size: 19px;
     @media only screen and (max-width: 800px) {
         display: none;
     }
@@ -159,15 +159,24 @@ const CustomTextField = styled.div`
     align-items: center;
 `;
 
-const SingleItem = styled(({url,index, measurements, quantity, price, product, handleButtonClick,uniqueCode,removeFromCart})=>{
+const SingleItem = styled(({url,index,attributes,secondaryName, quantity, price, itemName, handleButtonClick,uniqueCode,removeFromCart})=>{
     return (
         <SingItemContainer>
             <LeftPart>
-                <CustomImg src={index%2===0? TempImg: TempImg2}/>
+                <CustomImg src={url}/>
                 <ItemInfo>
                     <div>
-                        <div>{product.name}</div>
-                        <div>{measurements}</div>
+                        <b>{itemName}</b>
+                        <div>{secondaryName}</div>
+                        <div>
+                            {
+                                attributes.map((att,i)=>{
+                                    return (
+                                        <li key={i}>{att}</li>
+                                    )
+                                })
+                            }
+                        </div>
                         
                     </div>
                     <AntiPreis>{price} €</AntiPreis>
@@ -197,43 +206,6 @@ const SingleItem = styled(({url,index, measurements, quantity, price, product, h
 })`
 
 `;
-
-/*
-const mockData = {
-    shippingPrice: 6.0,
-    price : 460.0,
-    items : [
-        {
-            measurements: "248x500",
-            price: 140,
-            quantity: 2,
-            product: {
-                category: "ürün kategorisi",
-                description: "ürün hakkında açıklama: ",
-                id: 1,
-                imageUrl: "url",
-                name: "Ürün adı 1",
-                rating: 4.8,
-                numberOfRating: 12
-            }
-        },
-        {
-            measurements: "560x1200",
-            price: 180,
-            quantity: 1,
-            product: {
-                category: "ürün kategorisi",
-                description: "ürün hakkında açıklama: ",
-                id: 1,
-                imageUrl: "url",
-                name: "Ürün adı 1",
-                rating: 4.4,
-                numberOfRating: 78
-            }
-        }
-    ]
-};
-*/
 
 const NoOrderMessage = styled.div`
     width: 80%;
@@ -322,11 +294,14 @@ function Warenkorb() {
                                 <SingleItem 
                                     key={index} 
                                     index={index} 
-                                    url='' 
-                                    measurements={item.measurements} 
+                                    url={item.cartImage}
                                     quantity={item.quantity} 
                                     price={item.price} 
-                                    product={item.product} 
+                                    
+                                    itemName={item.itemName} 
+                                    secondaryName={item.secondaryName}
+                                    attributes={item.attributes}
+                                    
                                     handleButtonClick={handleButtonClick}
                                     uniqueCode={item.uniqueCode}
                                     removeFromCart={removeFromCart}
@@ -337,7 +312,7 @@ function Warenkorb() {
                         })
                     }
                 </div>
-                <TotalAmount><TotalAmountDesc>Zwischensumme ({cart.numberOfItems}) Artikel: </TotalAmountDesc>{cart.price} €</TotalAmount>
+                <TotalAmount><TotalAmountDesc>Zwischensumme ({cart.numberOfItems}) Artikel: </TotalAmountDesc>{cart.price.toFixed(2)} €</TotalAmount>
             </Items>
             <Summary>
                 <div class="card" style={{width: "18rem"}}>
@@ -350,7 +325,7 @@ function Warenkorb() {
                                 Artikel: 
                             </span>
                             <span>
-                                {cart.price} €
+                                {cart.price.toFixed(2)} €
                             </span>
                         </li>
                         <li className="list-group-item d-flex justify-content-space-around">
@@ -366,7 +341,7 @@ function Warenkorb() {
                                 Gesamt:
                             </div>
                             <div>
-                                {cart.shippingPrice + cart.price} €
+                                {(cart.shippingPrice + cart.price).toFixed(2)} €
                             </div>
                         </div>
                     </ul>
