@@ -111,6 +111,7 @@ const LeftPart = styled.div`
     @media only screen and (max-width: 1200px) {
         flex-direction: column;
         align-items: flex-start;
+        
     }
 `;
 

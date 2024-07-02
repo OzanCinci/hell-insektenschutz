@@ -424,7 +424,7 @@ const Grid = ({ loading, data, link }) => {
                                                 {item.ternaryImage !== null && <img height='35px' width='35px' src={item.ternaryImage}/>}
                                             </div>
                                             <PriceTag>
-                                                {`${item.properties.MinPrice}€`}
+                                                {`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}
                                             </PriceTag>
                                         </BottomInfoWrapper>
                                         <div>

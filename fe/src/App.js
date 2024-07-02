@@ -5,11 +5,11 @@ import {Route,Routes,BrowserRouter} from 'react-router-dom'
 // PAGES
 import HomePage from './Pages/HomePage';
 import PageNotFound from './Pages/PageNotFound';
-import Navbar from './LandingPageComponents/Navbar'
-import Footer from './LandingPageComponents/Footer'
-import AOS from 'aos'
-import 'aos/dist/aos.css'
-import { useEffect, } from 'react';
+import Navbar from './LandingPageComponents/Navbar';
+import Footer from './LandingPageComponents/Footer';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useEffect } from 'react';
 import Türen from './Pages/detailPages/Türen';
 import Fenster from './Pages/detailPages/Fenster';
 import Dachfenster from './Pages/detailPages/Dachfenster';
@@ -47,6 +47,7 @@ import Plissee from './Pages/shop/pages/Plissee';
 import ShopDetail from './Pages/shop/ShopDetail';
 import OptionsPage from './Pages/shop/OptionsPage';
 import ProductPlissee from './Pages/products/ProductPlissee';
+import Measurement from './Pages/howToMeasure/Measurement';
 
 function App() {
   useEffect(()=>{
@@ -138,6 +139,9 @@ function App() {
             <Route path='/geschaft/:category/:model' element={<OptionsPage/>}/>
 
             <Route path='/produkts/BasicPlissee/:id' element={<ProductPlissee/>}/>
+
+
+            <Route path='/messanleitung/:category' element={<Measurement/>}/>
 
             <Route default path='/*' element={<PageNotFound/>}/>
 
