@@ -59,7 +59,7 @@ const Container = styled.div`
 
   overflow: hidden; /* Hide any overflowing content */
   text-overflow: ellipsis; /* Display "..." to indicate truncated text */
-`
+`;
 
 
 const TopPart = styled.div`
@@ -69,12 +69,12 @@ const TopPart = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-`
+`;
 
 const Description = styled.div`
   text-align: left;
   color: rgb(82, 82, 102);
-  font-size: 22px;
+  font-size: 18px;
 
   @media only screen and (max-width: 860px) {
     font-size: 18px;
@@ -82,7 +82,7 @@ const Description = styled.div`
   @media only screen and (max-width: 600px) {
     font-size: 18px
   }
-`
+`;
 
 const Dot = styled.div`
   width: 18px;
@@ -131,7 +131,7 @@ const SingleReview = styled(({name,date,rating,description})=>{
         </div>
       </TopPart>
       <Description>
-        {description && (description.length <= 250 ? description : description.substring(0, 250) + "...")}
+        {description && (description.length <= 300 ? description : description.substring(0, 300) + "...")}
       </Description>
     </Container>
   )})``;
@@ -258,7 +258,7 @@ function Reviews({noAnimation}) {
       </GoogleReviewContainer>
       <ReviewsWrapper data-aos={noAnimation?"":"zoom-in"}  data-aos-offset={noAnimation?"":"200"} data-aos-delay={noAnimation?"":"100"}>
         <Title> Zufriedene Kunden </Title>
-        <Slider   {...settings}>
+        <Slider {...settings}>
             {
               data.map((item,index) => <SingleReview key={index} name={item.name} date={item.date} rating={item.rating} description={item.description} />)
             }

@@ -4,8 +4,19 @@ import styled from 'styled-components';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import Button from '@mui/material/Button';
+import ReviewList from '../../../CustomComponents/ReviewList';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import { useNavigate } from 'react-router-dom';
+import useFetch from '../../../hooks/useFetch';
+import Alert from '@mui/material/Alert';
+import Rating from '@mui/material/Rating';
+
+const ModifiedAlert = styled(Alert)`
+    width: fit-content;
+    font-size: 18px !important;
+    text-align: left;
+    margin: 0 auto;
+`;
 
 const Wrapper = styled.div`
     display: grid;
@@ -13,7 +24,6 @@ const Wrapper = styled.div`
     grid-template-columns: repeat(4, 1fr);
     row-gap: 40px;
     column-gap: 10px;
-    /*border: 2px solid purple;*/
     width: fit-content;
 
     /* Grid layout for screens smaller than or equal to 1350px */
@@ -69,6 +79,17 @@ const MoreDetail = styled.div`
     @media (max-width: 600px) {
         overflow: visible;
     }
+`;
+
+const CustomButtonFilter = styled(Button)`
+    @media (min-width: 850px) {
+        display: none !important;
+    }   
+    text-transform: none !important;
+`;
+
+const CustomButtonFilterWrapper = styled.div`
+    margin-bottom: 5px;
 `;
 
 
@@ -138,6 +159,7 @@ const CustomButton = styled(Button)`
     @media (max-width: 1050px) {
         font-size: 11px !important;
     }
+
 `;
 
 const ItemContainer = styled.div`
@@ -198,6 +220,78 @@ const GridContainer = styled.div`
     }   
 `;
 
+const ProductInfo = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+    max-width: 1150px;
+    margin: auto;
+    margin-bottom: 40px;
+    gap: 10px;
+
+    @media (max-width: 1200px) {
+       flex-direction: column;
+    }
+    @media (max-width: 800px) {
+        flex-direction: row; 
+        justify-content: flex-end; 
+        align-items: center; 
+        margin-bottom: 20px;
+        gap: 0px;
+        padding-left: 5px;
+    }
+`;
+const RightCol = styled.div`
+    width: 80%;
+    max-width: 750px;
+    text-align: left;
+    font-size: 18px;
+
+    @media (max-width: 1200px) {
+        width: 90%;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    @media (max-width: 800px) {
+        display: none;
+    }
+`;
+
+const LeftCol = styled.div`
+    width: 20%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    justfiy-content: flex-start;
+    align-items: center;
+
+    @media (max-width: 1200px) {
+        width: fit-content;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    @media (max-width: 800px) {
+        text-align: right;
+        align-items: flex-end;
+    }
+`;
+
+const Title = styled.div`
+    font-size: 24px;
+    font-weight: bold;
+    color: rgb(82, 82, 102);
+`;
+
+const RatingWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  font-size: 21px;
+  color: #696984;
+`;
 
 const SignleAttribute = styled.div`
     @media (max-width: 600px) {
@@ -306,13 +400,31 @@ function extractProperties(properties) {
     return result;
 }
 
-const Grid = ({ loading, data, link }) => {
+const config = {
+    "method": "get",
+    "headers": {
+        'Content-Type': 'application/json',
+    }
+};
+
+const Grid = ({ loading, data, link, productInfoUrl }) => {
     const nav = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [currentData, setCurrentData] = useState([]);
     const [detailVisible, setDetailVisible] = useState([]);
     const [pageLoading, setPageLoading] = useState(false);
     const itemsPerPage = 12;
+
+    const { data: productData, loading: productLoading, error: productError } = useFetch(productInfoUrl, config, 0);
+
+    useEffect(()=>{
+        window.scrollTo({
+            top: 0,
+            behavior: 'instant'
+          });
+    },[]);
+
+
 
     useEffect(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
@@ -331,6 +443,7 @@ const Grid = ({ loading, data, link }) => {
     useEffect(()=>{
         setCurrentPage(1);
     },[data]);
+
 
     const toggleDetail = (index) => {
         setDetailVisible(prevState => {
@@ -369,106 +482,155 @@ const Grid = ({ loading, data, link }) => {
         
     }
 
+    const handleClickReviewList = () => {
+        const button = document.getElementById("review-list-modal-pop-up-btn");
+        if (button) {
+            setTimeout(() => {
+                button.click();
+            }, 0);
+        }
+    }
     
 
     return (
-        <GridContainer>
-            <PaginationWrapper>
-                <ProductCount>
-                    Wir haben 
-                    <b>{` ${data.length} Optionen `}</b>
-                    für Sie gefunden
-                </ProductCount> 
-                <ButtonWrapper>
-                    <Button disabled={currentPage===1} onClick={()=>handlePageChange(-1)} variant="outlined" color="warning">Zurück</Button>
-                    <div>
-                        {`Seite ${currentPage} von ${Math.ceil(data.length / itemsPerPage)}`}
-                    </div>
-                    <Button disabled={currentPage===Math.ceil(data.length / itemsPerPage)} onClick={()=>handlePageChange(1)} variant="outlined" color="warning">Weiter</Button>
-                </ButtonWrapper>
-            </PaginationWrapper>
-            {(loading === true || pageLoading === true) ? (
-                <div style={{marginTop: "150px"}}>
-                    <CircularProgress color='warning' />
-                </div>
-            ) : (
-                <div>
-                    <Wrapper>
-                        {data !== null &&
-                            currentData.map((item, index) => {
-                                return (
-                                    <ItemContainer>
-                                        <InfoButton onClick={()=>toggleDetail(index)}>{detailVisible[index] ? "Weniger Infos" : "Mehr Infos"} <CustomArrowDropDownIcon visible={detailVisible[index]}/></InfoButton>
-                                        <ImgWrapper url={item.secondaryImage}>
-                                            <div style={{cursor: "pointer"}} onClick={e=>nav(`/produkts/${link}/${item.id}`)}>
-                                                <CustomImg src={item.mainImage} width='100%' height='auto' />
-                                            </div>
-                                            <MoreDetail visible={detailVisible[index]}>
-                                                <ModeDetailInnerPage>
-                                                {
-                                                 item.extraDetails.map((el, elIndex) => {
-                                                    return (
-                                                        <SignleAttribute key={elIndex}>
-                                                            <TaskAltIcon className='mx-1' fontSize='small' color='warning'/>
-                                                            {el}
-                                                        </SignleAttribute>
-                                                    )
-                                                 })   
-                                                }
-                                                </ModeDetailInnerPage>
-                                            </MoreDetail>
-                                        </ImgWrapper>
-                                        <div className='my-2' style={{ textAlign: "left", marginTop: "10px", fontSize: "18px", paddingLeft: "10px" }}>{item.title}</div>
-                                        <BottomInfoWrapper>
-                                            <div style={{minWidth: "35px"}}>
-                                                {item.ternaryImage !== null && <img height='35px' width='35px' src={item.ternaryImage}/>}
-                                            </div>
-                                            <PriceTag>
-                                                {`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}
-                                            </PriceTag>
-                                        </BottomInfoWrapper>
-                                        <div>
-                                            <CustomButton onClick={(e)=>nav(`/produkts/${link}/${item.id}`)} variant="outlined" color="warning">Jetzt konfigurieren</CustomButton>
-                                        </div>
-                                    </ItemContainer>
-                                );
-                            })}
-                    </Wrapper>
-                    {   
-                            (data && data.length > 6) ?
-                            <PaginationWrapper className='my-5'>
-                                <ProductCount>
-                                    Wir haben 
-                                    <b>{` ${data.length} Optionen `}</b>
-                                    für Sie gefunden
-                                </ProductCount> 
-                                <ButtonWrapper>
-                                    <Button disabled={currentPage===1} onClick={()=>handlePageBottomChange(-1)} variant="outlined" color="warning">Zurück</Button>
-                                    <div>
-                                        {`Seite ${currentPage} von ${Math.ceil(data.length / itemsPerPage)}`}
+        <>        
+            <GridContainer>
+                {productData && <ReviewList productId={productData.id}/>}
+                {
+                    productLoading && <CircularProgress color='warning' />
+                }
+                {
+                    productError && <ModifiedAlert severity="error">{productError}</ModifiedAlert>
+                }
+            
+                <CustomButtonFilterWrapper>
+                    {
+                        !productLoading && !productError && productData &&
+                        <ProductInfo>
+                            <CustomButtonFilter 
+                                variant="outlined" color="warning"
+                                onClick={(e)=>{
+                                    e.preventDefault();
+                                    const button = document.getElementById("filter-modal-mobile-filter");
+                                    if (button)
+                                        button.click();
+                            }}> Filteroptionen </CustomButtonFilter>
+                            <LeftCol>
+                                <Title>{productData.name}</Title>
+                                <RatingWrapper>
+                                    <div className='d-flex gap-3'>
+                                    <div>{(productData.rating).toFixed(1)}/5</div>
+                                    <Rating name="read-only" value={productData.rating} precision={0.5} readOnly />
                                     </div>
-                                    <Button disabled={currentPage===Math.ceil(data.length / itemsPerPage)} onClick={()=>handlePageBottomChange(1)} variant="outlined" color="warning">Weiter</Button>
-                                </ButtonWrapper>
-                            </PaginationWrapper>
-                            :
-                            <>
-                                {
-                                (loading===false && pageLoading===false && data.length===0)
-                                ? 
-                                <div className='my-3'>
-                                    <ProductionQuantityLimitsIcon style={{fontSize: "150px"}}/>
-                                    <div style={{maxWidth: "80%", margin: "30px auto", textAlign: "left"}}>
-                                        Entschuldigung, es wurden keine Produkte gefunden, die zu Ihren Filtern passen. Versuchen Sie, die Filter zurückzusetzen, um Produkte zu finden.
-                                    </div>
+                                    <div onClick={()=>handleClickReviewList()} style={{textDecoration: "underline", cursor: "pointer"}}>({productData.numberOfRating} Bewertungen)</div>
+                                </RatingWrapper>
+                            </LeftCol>
+                            <RightCol>
+                                <div>
+                                    {productData.description}
                                 </div>
-                                :<div></div>
-                                }
-                            </>
+                            </RightCol>
+                        </ProductInfo>
                     }
-                    
-                </div>
-            )}
-        </GridContainer>
+                                        
+                </CustomButtonFilterWrapper>
+                <PaginationWrapper>
+                    <ProductCount>
+                        Wir haben 
+                        <b>{` ${data.length} Optionen `}</b>
+                        für Sie gefunden
+                    </ProductCount> 
+                    <ButtonWrapper>
+                        <Button disabled={currentPage===1} onClick={()=>handlePageChange(-1)} variant="outlined" color="warning">Zurück</Button>
+                        <div>
+                            {`Seite ${currentPage} von ${Math.ceil(data.length / itemsPerPage)}`}
+                        </div>
+                        <Button disabled={currentPage===Math.ceil(data.length / itemsPerPage)} onClick={()=>handlePageChange(1)} variant="outlined" color="warning">Weiter</Button>
+                    </ButtonWrapper>
+                </PaginationWrapper>
+                {(loading === true || pageLoading === true) ? (
+                    <div style={{marginTop: "150px"}}>
+                        <CircularProgress color='warning' />
+                    </div>
+                ) : (
+                    <div>
+                        <Wrapper>
+                            {data !== null &&
+                                currentData.map((item, index) => {
+                                    return (
+                                        <ItemContainer>
+                                            <InfoButton onClick={()=>toggleDetail(index)}>{detailVisible[index] ? "Weniger Infos" : "Mehr Infos"} <CustomArrowDropDownIcon visible={detailVisible[index]}/></InfoButton>
+                                            <ImgWrapper url={item.secondaryImage}>
+                                                <div style={{cursor: "pointer"}} onClick={e=>nav(`/produkts/${link}/${item.id}`)}>
+                                                    <CustomImg src={item.mainImage} width='100%' height='auto' />
+                                                </div>
+                                                <MoreDetail visible={detailVisible[index]}>
+                                                    <ModeDetailInnerPage>
+                                                    {
+                                                    item.extraDetails.map((el, elIndex) => {
+                                                        return (
+                                                            <SignleAttribute key={elIndex}>
+                                                                <TaskAltIcon className='mx-1' fontSize='small' color='warning'/>
+                                                                {el}
+                                                            </SignleAttribute>
+                                                        )
+                                                    })   
+                                                    }
+                                                    </ModeDetailInnerPage>
+                                                </MoreDetail>
+                                            </ImgWrapper>
+                                            <div className='my-2' style={{ textAlign: "left", marginTop: "10px", fontSize: "18px", paddingLeft: "10px" }}>{item.title}</div>
+                                            <BottomInfoWrapper>
+                                                <div style={{minWidth: "35px"}}>
+                                                    {item.ternaryImage !== null && <img height='35px' width='35px' src={item.ternaryImage}/>}
+                                                </div>
+                                                <PriceTag>
+                                                    {`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}
+                                                </PriceTag>
+                                            </BottomInfoWrapper>
+                                            <div>
+                                                <CustomButton onClick={(e)=>nav(`/produkts/${link}/${item.id}`)} variant="outlined" color="warning">Jetzt konfigurieren</CustomButton>
+                                            </div>
+                                        </ItemContainer>
+                                    );
+                                })}
+                        </Wrapper>
+                        {   
+                                (data && data.length > 6) ?
+                                <PaginationWrapper className='my-5'>
+                                    <ProductCount>
+                                        Wir haben 
+                                        <b>{` ${data.length} Optionen `}</b>
+                                        für Sie gefunden
+                                    </ProductCount> 
+                                    <ButtonWrapper>
+                                        <Button disabled={currentPage===1} onClick={()=>handlePageBottomChange(-1)} variant="outlined" color="warning">Zurück</Button>
+                                        <div>
+                                            {`Seite ${currentPage} von ${Math.ceil(data.length / itemsPerPage)}`}
+                                        </div>
+                                        <Button disabled={currentPage===Math.ceil(data.length / itemsPerPage)} onClick={()=>handlePageBottomChange(1)} variant="outlined" color="warning">Weiter</Button>
+                                    </ButtonWrapper>
+                                </PaginationWrapper>
+                                :
+                                <>
+                                    {
+                                    (loading===false && pageLoading===false && data.length===0)
+                                    ? 
+                                    <div className='my-3'>
+                                        <ProductionQuantityLimitsIcon style={{fontSize: "150px"}}/>
+                                        <div style={{maxWidth: "80%", margin: "30px auto", textAlign: "left"}}>
+                                            Entschuldigung, es wurden keine Produkte gefunden, die zu Ihren Filtern passen. Versuchen Sie, die Filter zurückzusetzen, um Produkte zu finden.
+                                        </div>
+                                    </div>
+                                    :<div></div>
+                                    }
+                                </>
+                        }
+                        
+                    </div>
+                )}
+            </GridContainer>
+        </>
     );
 };
 

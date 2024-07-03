@@ -87,42 +87,8 @@ const moreDetailObj = {
     ]
 };
 
-function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard}) {
+function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard,canAddCart}) {
     const [quantity,setQuantity] = useState(1);
-    const dispatch = useDispatch();
-    // to help finding the customized item easily later on...
-    const generateUniqueCode = () => Date.now().toString(36) + Math.random().toString(36).substring(2);
-
-    const handleAddToCard = (e) => {
-        e.preventDefault();
-        console.log("add to card!!");
-        const uniqueCode = generateUniqueCode();
-
-        const item = {
-            //measurements: `${breite}x${tiefe}`,
-
-            // TODO: GERÇEK OLÇÜLER GELCEK TABİKİ
-            measurements: `300X400`,
-            price: 140, // tekil fiyat
-            quantity: quantity, // 2 x 140€
-            uniqueCode: uniqueCode,
-            product: {
-                category: "ürün kategorisi",
-                description: "ürün hakkında açıklama: ",
-                id: 1,
-                imageUrl: "url",
-                name: "Ürün adı 2",
-                rating: 4.8,
-                numberOfRating: 12
-            }
-        }
-
-        dispatch({type:ADD_TO_CART,payload:item});
-
-        const button = document.getElementById('open-notification-button');
-        if (button)
-            setTimeout(()=>button.click(),300);
-    }
 
     const handleSetMoreInfoClick = (e) => {
         e.preventDefault();
@@ -165,10 +131,14 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard}) {
                 </QuantityWrapper>
                 <TotalPrice>
                 <div>Gesamt:</div>
-                <b>{`${itemPrice*quantity}€`}</b>
+                <b>{canAddCart && `${itemPrice*quantity}€`}</b>
+                {
+                    !canAddCart &&
+                    <div style={{fontSize: "21px", textAlign: "center", color: "#f59f4c"}}>Wir können die Produkte in diesen Maßen nicht anbieten.</div>
+                }
                 </TotalPrice>
             </Wrapper>
-            <Button onClick={e=>handleAddIntoCard(e,quantity,itemPrice)} style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>
+            <Button disabled={canAddCart===false} onClick={e=>handleAddIntoCard(e,quantity,itemPrice)} style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>
 
         </Container>
     </>

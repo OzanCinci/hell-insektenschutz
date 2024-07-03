@@ -3,7 +3,7 @@ import axios from 'axios';
 
 const BASE_URL = process.env.REACT_APP_BE_API;
 
-const useFetch = (url, _config, pageNumber) => {
+const useFetch = (url, _config, pageNumber, alreadyParamed=false) => {
     const [data,setData] = useState(null);
     const [loading,setLoading] = useState(false);
     const [error,setError] = useState(null);
@@ -17,6 +17,8 @@ const useFetch = (url, _config, pageNumber) => {
             let req_url;
             if (pageNumber===0){
                 req_url = `${BASE_URL}${url}`;
+            } else if (alreadyParamed) {
+                req_url = `${BASE_URL}${url}&page=${pageNumber}`;
             } else {
                 req_url = `${BASE_URL}${url}?page=${pageNumber}`;
             }

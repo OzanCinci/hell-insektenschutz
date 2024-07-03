@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import useFilter from './listingComponents/useFilter';
 import FilterComponent from './listingComponents/FilterComponent';
 import CircularProgress from '@mui/material/CircularProgress';
-import Button from '@mui/material/Button';
 
 // images
 import PlisseImg from '../../images/shopCategories/MaterialTypePlissee.svg';
@@ -97,18 +96,11 @@ const filterValues = {
     }
 };
 
-const CustomButton = styled(Button)`
-    @media (min-width: 850px) {
-        display: none !important;
-    }   
-    margin-left: 5px !important;
-    text-transform: none !important;
-`;
-
+const productDetailUrl = "/api/product/Plissee/Basic Plissee";
 function BasicPlissee() {
     const { data, loading, error } = useFetch(url, config, pageNumber);
     const [colors, setColors] = useState(null);
-    const [result, filterLoading, handleFilterClick, selection, clearAllFilters,handleSearchChange] = useFilter(filterValues, colors);
+    const [result, filterLoading, handleFilterClick, selection, clearAllFilters, handleSearchChange] = useFilter(filterValues, colors);
 
     useEffect(() => {
         if (data !== null) {
@@ -135,14 +127,6 @@ function BasicPlissee() {
     return (
         <>
             <Container>
-                <CustomButton 
-                    variant="outlined" color="warning"
-                    onClick={(e)=>{
-                        e.preventDefault();
-                        const button = document.getElementById("filter-modal-mobile-filter");
-                        if (button)
-                            button.click();
-                }}> Filteroptionen </CustomButton>
                 <FilterComponent 
                     filterObj={filterValues} 
                     handleFilterClick={handleFilterClick} 
@@ -151,7 +135,12 @@ function BasicPlissee() {
                     defaultExpandedPanels={{ Farbton: true, Lichtdurchlässigkeit: true , Stoffart: true}}
                     handleSearchChange={handleSearchChange}
                 />
-                <Grid loading={filterLoading} data={result || []} link={"BasicPlissee"}/>
+                <Grid 
+                    loading={filterLoading} 
+                    data={result || []} 
+                    link={"BasicPlissee"}
+                    productInfoUrl={productDetailUrl}
+                />
             </Container>
         </>
     );

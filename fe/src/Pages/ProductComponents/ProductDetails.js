@@ -38,6 +38,11 @@ const Body = styled.div`
     justify-content: space-around;
     align-items: center;
     margin-top: 10px;
+    padding: 20px 0px;
+
+    @media only screen and (max-width: 500px) {
+       margin-bottom: 15px;
+    }
 `;
 
 const DetailList = styled.div`

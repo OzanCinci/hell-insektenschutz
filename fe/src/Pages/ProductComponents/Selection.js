@@ -20,6 +20,10 @@ const Body = styled.div`
     align-items: flex-start;
     margin-top: 10px;
     margin-bottom: 30px;
+
+    @media only screen and (max-width: 500px) {
+       width: 105vw;
+  }
 `;
 
 const CustomImgWrapper = styled.div`
@@ -44,6 +48,7 @@ const CustomImgWrapper = styled.div`
         font-weight: bold; 
     }
 `;
+
 // sehr beliebt
 // meist gewählt
 const CustomImg = styled.img`
@@ -57,6 +62,13 @@ const CustomImg = styled.img`
     
     &:hover {
         border: ${props => props.isActive ? "3px solid #f59f4c" : "1px solid #f59f4c"};
+    }
+
+
+    @media only screen and (max-width: 500px) {
+       width: 42vw;
+       height: auto;
+       align-self: center;
     }
 `;
 
@@ -77,13 +89,6 @@ const SingleOptionWrapper = styled.div`
 `;
 
 const BodyColors = styled.div`
-    /*display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    margin-top: 10px;
-    margin-bottom: 30px;*/
-    
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
     gap: 0px; /* Adjust the gap as needed */
@@ -479,12 +484,11 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                     </Body>
                 </div>
                 :
-                <div style={{marginBottom: "80px"}}>
+                <div style={{marginBottom: "20px"}}>
                     <Title>
                         {optionList.title} 
                     </Title>
                     <BodyColors>
-                        
                         {
                             optionList.options.map((item, index) => {
                                 const isActive = optionList.multichoice ? active && active[index] : active === index;

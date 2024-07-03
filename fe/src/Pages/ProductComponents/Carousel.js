@@ -1,40 +1,13 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import Image1 from '../../images/dumps/lich2.jpg';
-import Image2 from '../../images/dumps/lich3.jpg';
-import Image3 from '../../images/details/alt_schiebetür.jpg';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import CircularProgress from '@mui/material/CircularProgress';
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft';
-//import Slider from "react-slick";
+import ReviewList from '../../CustomComponents/ReviewList';
+import Rating from '@mui/material/Rating';
+import useFetch from '../../hooks/useFetch';
 
-
-const settings = {
-    dots: true,
-    infinite: true,
-    autoplay: true,
-    autoplaySpeed: 7000,
-    speed: 800,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    initialSlide: 0,
-    customPaging: i => (
-      <Dot className='dot'>
-      </Dot>
-    )
-  };
-
-const Dot = styled.div`
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  margin-top: 20px;
-  background: white;
-  -webkit-box-shadow: 11px 19px 24px -18px rgba(0,0,0,1);
-  -moz-box-shadow: 11px 19px 24px -18px rgba(0,0,0,1);
-  box-shadow: 11px 19px 24px -18px rgba(0,0,0,1);
-`
 
 const Container = styled.div`
     margin: auto;
@@ -82,26 +55,17 @@ const CustomImage = styled.img`
 `;
 
 const CustomImageMobile = styled.img`
+    /*height: auto;
+    width: 100vw;
+    align-self: center;*/
+    width: 100vw;
     height: auto;
-    width: 95vw;
-    align-self: center;
-    max-width: 100%;
-    max-height: 35vh;
 `;
 
 const CustomSmallImage = styled.img`
     height: auto;
     width: 75%;
     align-self: center;
-    border: ${props => props.active ? "3px solid #f59f4c": "none"};
-    cursor: pointer;
-    border-radius: 2px;
-    margin-top: 15px;
-`;
-
-const CustomSmallImageMobile = styled.img`
-    height: 40px;
-    width: auto;
     border: ${props => props.active ? "3px solid #f59f4c": "none"};
     cursor: pointer;
     border-radius: 2px;
@@ -118,6 +82,7 @@ const MobileWrapper = styled.div`
     @media only screen and (min-width: 1000px) {
         display: none;
     }
+    margin-top: -7%;
 `;
 
 const MobileContainer = styled.div`
@@ -125,95 +90,134 @@ const MobileContainer = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 95vw;
+    width: 100vw;
+
+    @media only screen and (max-width: 500px) {
+       margin-left: -2vw;
+    }
 `;
 
-const Photos = styled.div`
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    align-items: center;
-    transform: ${props => "translateX(" + props.slide + ")"};
-    transition: all 0.4s ease-in-out;
-`;
-
-const MobileImage = styled.div`
-    height: 35vh;
-`;
-
-const HorizantalSlide = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-item: center;
-`;
 
 const StickyDiv = styled.div`
   position: -webkit-sticky; /* For Safari */
   position: sticky;
     
-  top: 150px;
+  top: 130px;
   left: 50px;
   width: 700px;
   background-color: #f8f9fa;
   background-color: white;
   
   padding: 30px 20px;
+  padding-top: 15px;
   box-shadow: 0px 0px 34px rgba(0, 0, 0, 0.11);
+
+  @media only screen and (max-width: 1200px) {
+        width: 500px;
+  }
+
+  @media only screen and (max-width: 1000px) {
+       display: none;
+  }
 `;
 
 const ColumHeader = styled.div`
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: flex-end;
+    padding-bottom: 8px;
 `;
 
-function Carousel({images, itemData}) {
+const CarouselNavigationWrapper = styled.div`
+  padding: 10px 15px;
+  background: white;
+  opacity: 0.85;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const RatingWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  font-size: 17px;
+  color: #696984;
+`;
+
+const RatingContainer = styled.div`
+    width: fit-content;
+    margin-left: auto;
+`;
+
+const config = {
+    "method": "get",
+    "headers": {
+        'Content-Type': 'application/json',
+        }
+};
+
+
+function Carousel({images, itemData,productDetailUrl}) {
     const [i,setI] = useState(0);
     const [slide,setSlide] = useState(0);
+    const { data, loading, error } = useFetch(productDetailUrl, config, 0);
+    const productId = data?.id;
 
-    // TODO: for test purposes, do not forget to remove them!
-    const images1 = [
-        Image1,
-        Image2,
-        Image3,
-        Image1,
-        Image2,
-        Image3,
-    ]
+    const handleClickReviewList = () => {
+        const button = document.getElementById("review-list-modal-pop-up-btn");
+        if (button) {
+            setTimeout(() => {
+                button.click();
+            }, 0);
+        }
+    }
+
 
     const handleClick = (value) => {
-    let calcIndex;
-    if ( value < 0)
-        calcIndex = i + value < 0 ? -1 : i-1;
-    else
-        calcIndex = i + value > images.length -1 ? -1 : i+1;
+        let calcIndex;
+        if ( value < 0)
+            calcIndex = i + value < 0 ? -1 : i-1;
+        else
+            calcIndex = i + value > images.length -1 ? -1 : i+1;
 
-    if (calcIndex===-1)
-        return;
+        if (calcIndex===-1)
+            return;
 
-    setI(calcIndex);
-    const img = document.getElementById(`slicked-img${calcIndex}`).getBoundingClientRect();
-    const slider = document.getElementById("slider-element").getBoundingClientRect();
-    if (img && slider) {
-        const diff =  slider.top - (img.top);
-        setSlide(diff + "px");
-    }
+        setI(calcIndex);
+        const img = document.getElementById(`slicked-img${calcIndex}`).getBoundingClientRect();
+        const slider = document.getElementById("slider-element").getBoundingClientRect();
+        if (img && slider) {
+            const diff =  slider.top - (img.top);
+            setSlide(diff + "px");
+        }
     }
 
   return (
     images.length!==0 
     ?(<>
+        <ReviewList productId={productId}/>
         <StickyDiv>
             <ColumHeader>
                 <div
-                    onClick={()=>window.history.back()} 
-                    style={{cursor: "pointer", textAlign: "left", paddingLeft: "20px", color: "rgb(82, 82, 102)"}}>
+                    style={{ textAlign: "left", paddingLeft: "10px", color: "rgb(82, 82, 102)"}}>
                     <KeyboardDoubleArrowLeftIcon fontSize='medium' color='warning'/>     
-                    <span style={{fontSize: "16px"}}>Zurück zur Auswahlseite</span>
+                    <span style={{cursor: "pointer", fontSize: "16px"}} onClick={()=>window.history.back()}>Zurück</span>
+                    <div style={{fontSize: "21px", marginTop: "3px"}}>{( itemData?.id || "").split(/(?=[A-Z])/).join(" ")}</div>
                 </div>
                 <div style={{textAlign: "right"}}>
-                    <div style={{color: "rgb(82, 82, 102)"}}>{( itemData?.id || "").split(/(?=[A-Z])/).join(" ")}</div>
+                    <RatingContainer>
+                    {       
+                            !loading && !error && data && 
+                            <RatingWrapper>
+                                <div onClick={()=>handleClickReviewList()} style={{textDecoration: "underline", cursor: "pointer"}}>{data.numberOfRating} Bewertungen</div>
+                                <div className='d-flex gap-3'>
+                                    <div>({(data.rating).toFixed(1)}/5)</div>
+                                    <Rating name="read-only" value={data.rating} precision={0.5} readOnly />
+                                </div>
+                            </RatingWrapper>
+                        }
+                    </RatingContainer>
                     <div style={{fontSize: "21px", fontWeight: "bold", color: "rgb(82, 82, 102)"}}>{itemData?.color?.title} </div>
                 </div>
             </ColumHeader>
@@ -243,15 +247,42 @@ function Carousel({images, itemData}) {
                 </Container>
             </DesktopWrapper>
         </StickyDiv>
-        <MobileWrapper>
+        <MobileWrapper>   
+            <ColumHeader>
+                <div
+                    onClick={()=>window.history.back()} 
+                    style={{cursor: "pointer", textAlign: "left", paddingLeft: "0px", color: "rgb(82, 82, 102)"}}>     
+                    <span style={{fontSize: "16px"}}>
+                        <KeyboardDoubleArrowLeftIcon fontSize='medium' color='warning'/>
+                        Zurück
+                    </span>
+                    <div style={{fontSize: "21px"}}>{( itemData?.id || "").split(/(?=[A-Z])/).join(" ")}</div>
+                </div>
+                <div style={{textAlign: "right"}}>
+                    <RatingContainer>
+                        {       
+                            !loading && !error && data && 
+                            <RatingWrapper>
+                                <div onClick={()=>handleClickReviewList()} style={{textDecoration: "underline", cursor: "pointer"}}>{data.numberOfRating} Bewertungen</div>
+                                <div className='d-flex gap-3'>
+                                    <div>({(data.rating).toFixed(1)}/5)</div>
+                                    <Rating name="read-only" value={data.rating} precision={0.5} readOnly />
+                                </div>
+                            </RatingWrapper>
+                        }
+                    </RatingContainer>
+                    <div style={{fontSize: "21px", fontWeight: "bold", color: "rgb(82, 82, 102)"}}>{itemData?.color?.title} </div>
+                </div>
+            </ColumHeader>
             <MobileContainer>
                 <div id="carouselExampleDark" class="carousel carousel-dark slide" data-bs-ride="carousel">
                  
-                    <div class="carousel-indicators">
+                    <div style={{background: "white", opacity: "0.9", borderRadius: "15px", transform: "scaleY(1.25)"}} class="carousel-indicators">
                         {
                             images.map((item,index)=>{
                                 return (
-                                    <button 
+                                    <button
+                                        style={{transform: "scaleY(2.25)"}} 
                                         type="button" 
                                         data-bs-target="#carouselExampleDark" 
                                         data-bs-slide-to={index} 
@@ -262,7 +293,7 @@ function Carousel({images, itemData}) {
                             })
                         }
                     </div>
-                    <div class="carousel-inner" style={{height: "42vh"}}>
+                    <div class="carousel-inner" style={{height: "52vh"}}>
                         {
                         images.map((item,index)=>{
                             return (
@@ -277,12 +308,14 @@ function Carousel({images, itemData}) {
                         }
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
+                        <CarouselNavigationWrapper>
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </CarouselNavigationWrapper>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
+                        <CarouselNavigationWrapper>
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </CarouselNavigationWrapper>
                     </button>
                 </div>
 

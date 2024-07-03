@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import useFetch from '../../hooks/useFetch';
 import axios from 'axios';
@@ -17,6 +17,8 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import AddToCart from '../SingleProductPage/components/AddToCart';
+import StraightenSharpIcon from '@mui/icons-material/StraightenSharp';
+import ReviewList from '../../CustomComponents/ReviewList';
 
 const ModifiedAlert = styled(Alert)`
   width: fit-content;
@@ -34,15 +36,32 @@ const ColumnContainer = styled.div`
   justify-content: center;
   align-items: stretch;
 
-  max-width: 1250px;
+  max-width: 1300px;
   gap: 50px;
   margin-left: auto;
   margin-right: auto;
+
+
+    @media only screen and (max-width: 1300px) {
+        gap: 10px;
+    }    
+
+    @media only screen and (max-width: 1000px) {
+        flex-direction: column;
+    }    
+
+    @media only screen and (max-width: 500px) {
+        width: 100vw;
+    }    
 `;
 
 const Column = styled.div`
   flex: 1;
   padding: 20px;
+
+    @media only screen and (max-width: 500px) {
+        padding: 2vw;
+    }
 `;
 
 const LeftColumn = styled(Column)`
@@ -327,37 +346,54 @@ const selectionData = [
 
 const pageNumber = 0;
 
-const SelectorComponent = styled(({data})=>{ 
+const SelectorComponent = styled(({ data }) => {
     return (
-        <div>
-            <button id='product-color-option-detail-btn' style={{display: "none"}} type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productColorMoreDetail"/>
-            { data ?
-                (<div>
-                    <div class="modal fade" id="productColorMoreDetail" tabindex="-1" aria-labelledby="productColorMoreDetailLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="productColorMoreDetailLabel">{data.title}</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div className="modal-body">
-                                <img height='200px' width='auto' src={data.img}/>
-                                <div style={{textAlign: "left"}} className='my-4'>
-                                    {
-                                        data.body.map((item,index)=>{
-                                            return <li className='my-2' key={index}>{item}</li>
-                                        })
-                                    }
-                                </div>
-                            </div>
-                        </div>
+      <div>
+        <button
+          id="product-color-option-detail-btn"
+          style={{ display: "none" }}
+          type="button"
+          className="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#productColorMoreDetail"
+        />
+        {data ? (
+          <div>
+            <div
+              className="modal fade"
+              id="productColorMoreDetail"
+              tabIndex="-1"
+              aria-labelledby="productColorMoreDetailLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 style={{textAlign: "left"}} className="modal-title" id="productColorMoreDetailLabel">{data.title}</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className="modal-body">
+                    <img height="200px" width="auto" src={data.img} alt="Modal Content" />
+                    <div style={{ textAlign: "left" }} className="my-4">
+                      {data.body.map((item, index) => (
+                        <li className="my-2" key={index}>{item}</li>
+                      ))}
                     </div>
-                    </div>
-                </div>)
-                :(<div></div>)
-            }
-        </div>
-)})``;
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </div>
+    );
+  })`
+    .modal-dialog-centered {
+        display: flex;
+    }
+  `;
 
 const Title = styled.div`
     font-size: 18px;
@@ -368,10 +404,31 @@ const Title = styled.div`
     padding-left: 15px;
 `;
 
+const HowtoMeasureWrapper = styled.div`
+  text-align: left;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding-left: 10px;
+`;
+
+const FormControlContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+
+    @media only screen and (max-width: 500px) {
+       align-items: center;
+    } 
+`;
+
+
 const subcategoryTitle = "Plisseemodell";
 const blendcolorTitle = "Schienenfarbe";
 const requestCategory = "BasicPlissee";
 const saleMultiplier = 10 / 4;
+const measurementUrl = "/messanleitung/plissee";
+const productDetailUrl = "/api/product/Plissee/Basic Plissee";
 
 function sumValues(obj) {
     let sum = 0;
@@ -425,6 +482,7 @@ function extractAttributes(obj) {
 
 function ProductPlissee() {
   const dispatch = useDispatch();
+  const nav = useNavigate();
   const [moreDetailInfo, setMoreDetailInfo] = useState(null);
   /////// ITEM REQUEST AND RESPONSE DATA ///////
   const { id } = useParams();
@@ -448,6 +506,7 @@ function ProductPlissee() {
 
 
   /////// CONFIGURATION DATA ///////
+  const [canAddCart,setCanAddCart] = useState(true);
   const [itemConfiguration,setItemConfiguration] = useState(null);
   const [configPrice,setConfigPrice] = useState(0);
   const [dimensions,setDimensions] = useState({
@@ -540,16 +599,16 @@ function ProductPlissee() {
             'Content-Type': 'application/json'
           }
         });
-        console.log('Response:', response.data);
+        //console.log('Response:', response.data);
         const salePriceStr = get(response.data, 'data.price.salePrice');
         const parsedSalePrice = parseFloat(salePriceStr.replace(',', '.'));
-        console.log("parsedSalePrice: ",parsedSalePrice);
+        //console.log("parsedSalePrice: ",parsedSalePrice);
         const tmpValidPrice = parsedSalePrice * saleMultiplier;
-        console.log("validPrice: ", tmpValidPrice); 
+        //console.log("validPrice: ", tmpValidPrice); 
         setValidPrice(tmpValidPrice);
+        setCanAddCart(true);
       } catch (error) {
-        console.error('HEBELE HÜBELEEE:', error);
-        // Handle the error as needed
+        setCanAddCart(false);
       }
   }
 
@@ -615,11 +674,13 @@ function ProductPlissee() {
             <div>
                 <ColumnContainer>
                     <LeftColumn>
-                        <Carousel images={images} itemData={itemData}/>
+                        <Carousel productDetailUrl={productDetailUrl} images={images} itemData={itemData}/>
                     </LeftColumn>
                     <RightColumn>
-                        <ProductDetails itemData={itemData} image={images[1]}/>
+                        {/* component below is a popup */}
                         <SelectorComponent data={moreDetailInfo}/>
+                        {/* component above is a popup */}
+                        <ProductDetails itemData={itemData} image={images[1]}/>
                         {
                             selectionData.map((item,index)=>{
                                 return (
@@ -633,8 +694,14 @@ function ProductPlissee() {
                             })
                         }
                         <Title>Abmessungen</Title>
+                            <HowtoMeasureWrapper>
+                                Anleitung zum 
+                                <span onClick={()=>nav(measurementUrl)} className='mx-1' style={{textDecoration: "underline", color: "#f59f4c", cursor: "pointer", fontWeight: "bold"}}>
+                                    Richtig messen
+                                </span>
+                            </HowtoMeasureWrapper>
                         <MeasurementWrapper>
-                            <div className='d-flex flex-column justify-content-center align-items-start'>
+                            <FormControlContainer>
                                 <div>{`Höhe (${dimensions.height/10}cm)`}</div>
                                 
                                 <FormControl sx={{ width: "60%", marginTop: "5px" }} variant="outlined">
@@ -651,8 +718,8 @@ function ProductPlissee() {
                                         }
                                     />
                                 </FormControl>
-                            </div>
-                            <div className='d-flex flex-column justify-content-center align-items-start'>
+                            </FormControlContainer>
+                            <FormControlContainer>
                                 <div>{`Breite (${dimensions.width/10}cm)`}</div>
                                 <FormControl sx={{ width: "60%", marginTop: "5px" }} variant="outlined">
                                     <OutlinedInput
@@ -668,10 +735,11 @@ function ProductPlissee() {
                                         }
                                     />
                                 </FormControl>
-                            </div>
+                            </FormControlContainer>
                         </MeasurementWrapper>
                         <div>
                             <AddToCart 
+                                canAddCart={canAddCart}
                                 itemPrice={validPrice + configPrice}
                                 setMoreDetailInfo={setMoreDetailInfo}
                                 handleAddIntoCard={handleAddIntoCard}
