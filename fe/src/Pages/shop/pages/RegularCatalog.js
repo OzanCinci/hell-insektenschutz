@@ -1,9 +1,21 @@
 import React from 'react';
 import styled from 'styled-components';
-import {data} from '../data/plisseeData';
+import { catalogData } from '../data/productCatalog';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import VerifiedIcon from '@mui/icons-material/Verified';
-import { useNavigate } from 'react-router-dom';
+import Button from '@mui/material/Button';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+const CustomButton = styled(Button)`
+    margin-top: 5px !important;
+    text-transform: none !important;
+    font-size: 17px !important;
+
+    @media only screen and (max-width: 800px) {
+        margin-top: 15px !important;
+        width: 100%;
+    }    
+`;
 
 const ProductsContainer = styled.div`
     margin-bottom: 20px;
@@ -150,20 +162,47 @@ const BottomBoxWrapper = styled.div`
 `;
 
 const ClickForRedirectionWrapper = styled.div`
-@media only screen and (max-width: 450px) {
-    width: 100%;
-    text-align: right;
-    padding-right: 5%;
-}
-
+    @media only screen and (max-width: 450px) {
+        width: 100%;
+        text-align: right;
+        padding-right: 5%;
+    }
 `;
 
-function Plissee() {
-    const nav = useNavigate();
+const ButtonWrapper = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2%;
+    max-width: 1000px;
+    margin: auto;
+    margin-top: -20px;
+    margin-bottom: 30px;
 
+    @media only screen and (max-width: 800px) {
+        flex-direction: column;
+        width: fit-content;
+    }
+`;
+
+
+function RegularCatalog() {
+    const nav = useNavigate();
+    const location = useLocation()?.pathname.split("/").at(-1);
+    const {data, measurement, installation} = catalogData[location];
+    console.log("location: ", data);
+
+    const handleNavigate = (e, path) => {
+        e.preventDefault();
+        nav(path);
+    }
 
   return (
     <>
+        <ButtonWrapper>
+                <CustomButton onClick={(e)=>handleNavigate(e,measurement)} variant='outlined' color='warning'>Anleitung für die richtige Messung</CustomButton>
+                <CustomButton onClick={(e)=>{}} variant='outlined' color='warning'>Anleitung für die richtige Installation</CustomButton>
+        </ButtonWrapper>
         <ProductsContainer>
             {
                 data.map((item,index)=>{
@@ -214,4 +253,4 @@ function Plissee() {
   )
 }
 
-export default Plissee
+export default RegularCatalog;

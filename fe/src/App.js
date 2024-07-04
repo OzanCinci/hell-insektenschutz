@@ -43,11 +43,11 @@ import ReviewModal from './CustomComponents/ReviewModal';
 import SingleProduct from './Pages/SingleProductPage/SingleProduct';
 import ShopLanding from './Pages/shop/ShopLanding';
 import Insek from './Pages/shop/pages/Insek';
-import Plissee from './Pages/shop/pages/Plissee';
 import ShopDetail from './Pages/shop/ShopDetail';
 import OptionsPage from './Pages/shop/OptionsPage';
 import ProductPlissee from './Pages/products/ProductPlissee';
 import Measurement from './Pages/howToMeasure/Measurement';
+import RegularCatalog from './Pages/shop/pages/RegularCatalog';
 
 function App() {
   useEffect(()=>{
@@ -131,10 +131,17 @@ function App() {
 
 
             <Route path='geschaft' element={<ShopLanding/>}/>
+
+            {/* CATALOG KISMI */}
             <Route  path='geschaft' element={<ShopDetail/>}>
+              <Route path='plissees' element={<RegularCatalog/>}/>
+              <Route path='jalousien' element={<RegularCatalog/>}/>
+              <Route path='rollos' element={<RegularCatalog/>}/> 
+              <Route path='lamellenvorhang' element={<RegularCatalog/>}/>
+
               <Route path='insektenschutz' element={<Insek/>}/>
-              <Route path='plissees' element={<Plissee/>}/>
             </Route>
+            {/* CATALOG KISMI */}
 
             <Route path='/geschaft/:category/:model' element={<OptionsPage/>}/>
 
