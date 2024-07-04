@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
@@ -158,7 +158,7 @@ const config = {
 };
 
 
-function Carousel({images, itemData,productDetailUrl}) {
+function Carousel({images, itemData,productDetailUrl,setCurrentProduct}) {
     const [i,setI] = useState(0);
     const [slide,setSlide] = useState(0);
     const { data, loading, error } = useFetch(productDetailUrl, config, 0);
@@ -193,10 +193,14 @@ function Carousel({images, itemData,productDetailUrl}) {
         }
     }
 
+    useEffect(()=>{
+        setCurrentProduct(data);
+    },[productId])
+
   return (
     images.length!==0 
     ?(<>
-        <ReviewList productId={productId}/>
+        {productId && <ReviewList productId={productId}/>}
         <StickyDiv>
             <ColumHeader>
                 <div
@@ -323,7 +327,7 @@ function Carousel({images, itemData,productDetailUrl}) {
         </MobileWrapper>
     </>)
     : <div style={{marginTop: "0px"}}>
-    <   CircularProgress color='warning' fontSize='large'/>
+    <CircularProgress color='warning' fontSize='large'/>
     </div>
   )
 }

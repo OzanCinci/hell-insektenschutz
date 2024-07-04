@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import useFetch from '../../hooks/useFetch';
 import axios from 'axios';
 import { ADD_TO_CART } from '../../constants/user';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { debounce, get } from 'lodash';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -17,8 +17,23 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
 import AddToCart from '../SingleProductPage/components/AddToCart';
-import StraightenSharpIcon from '@mui/icons-material/StraightenSharp';
-import ReviewList from '../../CustomComponents/ReviewList';
+import Button from '@mui/material/Button';
+import ReviewModal from '../../CustomComponents/ReviewModal';
+
+const CustomButton = styled(Button)`
+    margin-top: 5px !important;
+    text-transform: none !important;
+    font-size: 17px !important;
+
+    @media only screen and (max-width: 800px) {
+        margin-top: 15px !important;
+    }    
+`;
+
+const CustomButtonWrapper = styled.div`
+    text-align: right;
+`;
+
 
 const ModifiedAlert = styled(Alert)`
   width: fit-content;
@@ -484,6 +499,7 @@ function ProductPlissee() {
   const dispatch = useDispatch();
   const nav = useNavigate();
   const [moreDetailInfo, setMoreDetailInfo] = useState(null);
+  const {userInfo} = useSelector(state=>state.login);
   /////// ITEM REQUEST AND RESPONSE DATA ///////
   const { id } = useParams();
   const url = `/api/external-products/colors/BasicPlissee/${id}`;
@@ -649,9 +665,27 @@ function ProductPlissee() {
     if (button)
         setTimeout(()=>button.click(),300);
   }
-
-
   /////// ADD TO CART LOGIC ///////
+
+  /////// DO REVIEW LOGIC ///////
+  const [currentProduct,setCurrentProduct] = useState(null);
+
+  const handleClickReview = (e) => {
+    e.preventDefault();
+    console.log("userInfo: ",userInfo);
+
+    if (userInfo===null) {
+        const button = document.getElementById("loginPopup");
+        if (button)
+            setTimeout(()=>{button.click();},0);
+    } else {
+        const button = document.getElementById("leave-a-review-modal");
+        if (button)
+            setTimeout(()=>{button.click();},0);
+    }
+  }
+  /////// DO REVIEW LOGIC ///////
+
 
 
   if (loading) {
@@ -674,12 +708,24 @@ function ProductPlissee() {
             <div>
                 <ColumnContainer>
                     <LeftColumn>
-                        <Carousel productDetailUrl={productDetailUrl} images={images} itemData={itemData}/>
+                        <Carousel productDetailUrl={productDetailUrl} images={images} itemData={itemData} setCurrentProduct={setCurrentProduct}/>
                     </LeftColumn>
                     <RightColumn>
                         {/* component below is a popup */}
                         <SelectorComponent data={moreDetailInfo}/>
                         {/* component above is a popup */}
+                        <CustomButtonWrapper>
+                            {
+                                userInfo?.access_token && currentProduct &&
+                                <ReviewModal 
+                                    token={userInfo.access_token}
+                                    currentProduct={currentProduct}
+                                    productImage={images[0]}
+                                />
+                                
+                            }
+                            <CustomButton onClick={(e)=>handleClickReview(e)} variant='outlined' color='warning'>Bewertung abgeben</CustomButton>
+                        </CustomButtonWrapper>
                         <ProductDetails itemData={itemData} image={images[1]}/>
                         {
                             selectionData.map((item,index)=>{

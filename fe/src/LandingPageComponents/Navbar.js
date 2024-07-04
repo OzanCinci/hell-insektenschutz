@@ -4,7 +4,6 @@ import Logo from '../images/landingPage/logo.png';
 import MobileLogo from '../images/landingPage/mobile_logo.png';
 import { useNavigate} from 'react-router-dom';
 import BurgerIcon from './BurgerIcon';
-import LoginIcon from '../images/account/login.png';
 import { useSelector } from 'react-redux';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
@@ -87,14 +86,17 @@ const LinkContainer = styled.div`
 `;
 
 const LogoImg = styled.img`
-  height: 60px;
+  height: 70px;
+  transform: translateY(7.5%);
 
   @media only screen and (max-width: 1200px) {
-    height: 50px;
+    height: 60px;
+    margin-right: 20px;
   }
 
   @media only screen and (max-width: 500px) {
     display: none;
+    margin-right: 0px;
   }
 
   &:hover {
@@ -254,7 +256,7 @@ const LogoContainer = styled.div`
   gap: 2px;
   font-size: 22px;
 
-  @media only screen and (min-width: 800px) {
+  @media only screen and (min-width: 1200px) {
     width: fit-content; 
     gap: 40px;
   }
@@ -277,16 +279,6 @@ const SingleLoginComponent = styled.div`
     align-items: center;
   }
   transform: translateY(10%);
-`;
-
-
-const LoginImage = styled.img`
-  height: 26px;
-  width: auto;
-
-  @media only screen and (max-width: 500px) {
-    height: 28px;
-  }
 `;
 
 
@@ -387,4 +379,4 @@ function Navbar() {
   )
 }
 
-export default Navbar
+export default Navbar;

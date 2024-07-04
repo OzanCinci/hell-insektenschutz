@@ -1,9 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import TempImg from '../images/details/plissee.jpg';
 import Rating from '@mui/material/Rating';
 import Button from '@mui/material/Button';
+import CircularProgress from '@mui/material/CircularProgress';
 import SuccessIcon from '../images/account/success.png';
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
+import axios from 'axios';
+import _ from 'lodash';
+import Alert from '@mui/material/Alert';
+
+const ModifiedAlert = styled(Alert)`
+  width: fit-content;
+  font-size: 18px !important;
+  text-align: left;
+  margin: 0 auto;
+`;
 
 const TopBox = styled.div`
     display: flex;
@@ -16,6 +27,9 @@ const TopBox = styled.div`
 `;
 
 const BottomBox = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 `;
 
 const ModalBody = styled.div`
@@ -24,13 +38,13 @@ const ModalBody = styled.div`
 
 const CustomImg = styled.img`
     height: auto;
-    width: 120px;
+    width: 25%;
     align-self: center;
 `;
 
 const CommentInput = styled.textarea`
     resize: vertical; 
-    overflow: hidden; /* Hide content that overflows its box */
+    overflow: scroll; /* Hide content that overflows its box */
     width: 80%; /* Set an initial width */
     min-height: 130px;
     border-radius: 5px;
@@ -50,7 +64,7 @@ const CommentText = styled.div`
     margin: auto;
     text-align: left;
     margin-bottom: 5px;
-    font-size: 14px;
+    font-size: 18px;
     color: rgb(82, 82, 102);
 `;
 
@@ -78,7 +92,7 @@ const CustomImgSuccess = styled.img`
 
 const Desc = styled.div`
     color: #696984;
-    font-size: 20px;
+    font-size: 19px;
     max-width: 600px;
     min-width: 150px;
     margin: auto;
@@ -86,7 +100,19 @@ const Desc = styled.div`
     text-align: left;
 `;
 
-function ReviewModal() {
+const RatingWrapper = styled.div`
+    width: 60%;
+`;
+
+const TitleWrapper = styled.div`
+    text-align: left;
+    width: fit-content;
+    margin-bottom: 10px;
+`;
+
+const BASE_URL = process.env.REACT_APP_BE_API;
+const url = `${BASE_URL}/api/review`;
+function ReviewModal({currentProduct, productImage, token}) {
     // TODO:
     // reducer kısmı implement edildi
     // reducerı baştan yazmana gerek yok sen git ve
@@ -96,27 +122,61 @@ function ReviewModal() {
     // seçilen ürün değiştiğinde tüm datalar sıfırlansın!
     const [value, setValue] = useState(null);
     const [consent, setConsent] = useState(true);
+    const [comment,setComment] = useState("");
     const [success, setSuccess] = useState(false);
+    const [waiting,setWaiting] = useState(false);
+    const [error,setError] = useState(false);
 
-    const handleReviewSent = (e) => {
+    const handleReviewSent = async (e) => {
         e.preventDefault();
 
-        // TODO: required data check
+        const configObject = {
+            "url": url,
+            "method": "post",
+            "headers": {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            "data": {
+                productId: currentProduct.id,
+                rating: value,
+                comment: comment
+            }
+        };
+    
+        setError(false);
+        setWaiting(true);
+        await axios.request(configObject)
+            .then(res => {
+                setSuccess(true);
+            })
+            .catch(e => {
+                const reviewMessage = _.get(e, 'response.data.errors[0].detail', 'Default message if not found');
+                console.log("reviewMessage: ",reviewMessage);
+                if (reviewMessage==="You have already made a review on this product.")
+                    setError("Sie haben bereits eine Bewertung für dieses Produkt abgegeben.")
+                else 
+                    setError("Bitte aktualisieren Sie die Seite oder versuchen Sie es später erneut!");
+            });
 
-        // make api call
-
-        // show success and close the window
-        setSuccess(true);
+        setWaiting(false);
     }
 
     const resetState = () => {
         setValue(null);
         setConsent(true);
         setSuccess(false);
+        setError(null);
     }
 
+
+    useEffect(()=>{
+        console.log("currentProduct: ",currentProduct);
+    },[currentProduct]);
+
   return (
-    <div>
+    currentProduct ?
+    (<div>
 
         <button style={{display:"none"}} onClick={()=>resetState()} id='leave-a-review-modal' type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#reviewModal">
             launch review modal
@@ -126,23 +186,40 @@ function ReviewModal() {
             <div class="modal-dialog">
                 <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="reviewModalLabel">{success===false?"Wie haben Sie das Produkt gefunden?": "Danke"}</h5>
+                    <h5 style={{textAlign: "left"}} class="modal-title" id="reviewModalLabel">{success===false?"Wie haben Sie das Produkt gefunden?": "Danke"}</h5>
                     <button  id='close-button-review-model' type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <ModalBody class="modal-body">
                     {
                         success===true
-                        ?(<div>
+                        ?(<div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                             <CustomImgSuccess src={SuccessIcon} alt='action-succes-image'/>
                             <Desc style={{padding: "20px"}}>Vielen Dank für Ihre Bewertung des Produkts. Nach einer schnellen Vorprüfung wird Ihre Bewertung veröffentlicht werden. Wir wünschen Ihnen einen schönen Tag. - Hell Insektenschutz</Desc>
                         </div>)
                         :(
                             <>
+                            {error && <ModifiedAlert severity="error">{error}</ModifiedAlert>}
                             <TopBox>
-                                <CustomImg src={TempImg} alt='image-of-current-product'/>
-                                <div>
-                                    <div className='my-2'>Drehfenster</div>
-                                    <div>
+                                <CustomImg src={productImage} alt='image-of-current-product'/>
+                                <RatingWrapper>
+                                    <TitleWrapper>
+                                        <div>
+                                            <div style={{fontSize: "18px"}}>{currentProduct.category}</div>
+                                            <div style={{display: "flex", alignItems: "center"}}>
+                                                <SubdirectoryArrowRightIcon/>
+                                                <span style={{fontSize: "18px"}}>
+                                                    {currentProduct.name}
+                                                </span>
+                                                <span style={{marginLeft: "10px", textDecoration: "underline", fontWeight: "bold"}}>
+                                                    {currentProduct.rating < 0.1 ? "Noch keine Bewertungen": `(${currentProduct.rating.toFixed(1)}/5)` }
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            {}
+                                        </div>
+                                    </TitleWrapper>
+                                    <TitleWrapper>
                                         <Rating
                                             name="simple-controlled"
                                             value={value}
@@ -150,12 +227,17 @@ function ReviewModal() {
                                             setValue(newValue);
                                             }}
                                         />
-                                    </div>
-                                </div>
+                                    </TitleWrapper>
+                                </RatingWrapper>
                             </TopBox>
                             <BottomBox>
-                                <CommentText>Ihre Bewertung</CommentText>
+                                <div style={{width: "80%", display: "flex", justifyContent: "space-between"}}>
+                                    <CommentText>Ihre Bewertung</CommentText>
+                                    <div>{`${comment.length}/1000`}</div>
+                                </div>
                                 <CommentInput
+                                    value={comment}
+                                    onChange={(e)=>setComment(e.target.value)}
                                     style={{fontSize: "14px"}}
                                     class="resizable-input"
                                     placeholder='Das Produkt ist sowohl preislich erschwinglich als auch qualitativ hochwertig, so wie es aussieht. Ich bin wirklich zufrieden.'
@@ -174,7 +256,11 @@ function ReviewModal() {
                     }
                 </ModalBody>
                 {
-                    success===false &&
+                    waiting 
+                    ? <div>
+                        <CircularProgress color='warning' fontSize='large'/>
+                    </div>
+                    : (success===false &&
                     <div class="modal-footer">
                         <Button 
                             className='my-1' 
@@ -182,18 +268,20 @@ function ReviewModal() {
                             size='small' 
                             variant="outlined" 
                             color="warning"
-                            disabled={value===null}
+                            disabled={comment.length>1000 || value===null || !consent}
                         >
                             Eine Bewertung abgeben
                         </Button>
-                    </div>
+                    </div>)
                 }
                 </div>
             </div>
         </div>
     
-    </div>
+    </div>)
+    :(<div>
+    </div>)
   )
 }
 
-export default ReviewModal
+export default ReviewModal;

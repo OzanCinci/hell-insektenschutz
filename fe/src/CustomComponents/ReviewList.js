@@ -8,6 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
+import SingleReview from './SingleReview';
 
 const config = {
     "method": "get",
@@ -76,6 +77,7 @@ const DateWrapper = styled.div`
     align-items: center;
 `;
 
+/*
 const SingleReview = styled(({name,date,rating,description})=>{ 
     return (
       <Container>
@@ -96,6 +98,7 @@ const SingleReview = styled(({name,date,rating,description})=>{
         </Description>
       </Container>
     )})``;
+    */
 
 function ReviewList({productId}) {
     const [page,setPageNumber] = useState(0);
@@ -111,7 +114,6 @@ function ReviewList({productId}) {
     }
 
     useEffect(()=>{
-        console.log("ÜRÜN YORUMLARI: ", data);
         if (data) {
             setAllReviews(prev=>[...prev,...data.content]);
             if (data.last) {

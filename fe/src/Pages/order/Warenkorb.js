@@ -28,6 +28,13 @@ const Container = styled.div`
         padding-top: 100px;
         gap: 30px;
     }
+
+    @media only screen and (max-width: 600px) {
+        flex-direction: column-reverse;
+        padding-right: 20px;
+        padding-left: 20px;
+        padding-top: 100px;
+    }
 `;
 
 const Items = styled.div`
@@ -37,6 +44,10 @@ const Items = styled.div`
     padding: 40px;
     text-align: left;
     margin-bottom: 200px;
+
+    @media only screen and (max-width: 600px) {
+
+    }
 `;
 
 const Summary = styled.div`
