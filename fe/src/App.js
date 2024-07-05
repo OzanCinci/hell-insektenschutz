@@ -34,7 +34,6 @@ import PendingReviews from './Pages/admin/adminPanelComponents/PendingReviews';
 import ApprovedReviews from './Pages/admin/adminPanelComponents/ApprovedReviews';
 import AllUsers from './Pages/admin/adminPanelComponents/AllUsers';
 import ChangeRole from './Pages/admin/adminPanelComponents/ChangeRole';
-import ProductPurchase from './Pages/ProductComponents/ProductPurchase';
 import CreateOrder from './Pages/order/CreateOrder';
 import OrderSuccess from './Pages/order/OrderSuccess';
 import Warenkorb from './Pages/order/Warenkorb';
@@ -114,10 +113,6 @@ function App() {
               <Route path='approved-reviews' element={<ApprovedReviews/>}/>
               <Route path='all-users' element={<AllUsers/>}/>
               <Route path='change-role' element={<ChangeRole/>}/>
-            </Route>
-
-
-            <Route path='/produkt/:productID' element={<ProductPurchase/>}>
             </Route>
 
 
