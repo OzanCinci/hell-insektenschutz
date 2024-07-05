@@ -44,14 +44,18 @@ function ReviewList({productId}) {
         setPageNumber(prev=>prev+1);
     }
 
-    useEffect(()=>{
-        if (data) {
-            setAllReviews(prev=>[...prev,...data.content]);
-            if (data.last) {
-                setIsLastPage(true);
-            }
-        }
-    },[data]);
+    useEffect(() => {
+      if (data) {
+          setAllReviews(prev => {
+              const uniqueIds = new Set(prev.map(review => review.id));
+              const newReviews = data.content.filter(review => !uniqueIds.has(review.id));
+              return [...prev, ...newReviews];
+          });
+          if (data.last) {
+              setIsLastPage(true);
+          }
+      }
+  }, [data]);  
 
     return (
         <div>
