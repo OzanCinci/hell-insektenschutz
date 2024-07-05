@@ -301,7 +301,12 @@ const selectionData = [
                     ]
                 },
                 explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_169_1714983431_450x450.webp",
-                price: 26
+                price: {
+                    "1,25m" : 26,
+                    "1,5m" : 26,
+                    "2m" : 26
+                },
+                priceExplanation: "Stablänge"
             },
             {
                 title: "Magnethalter",
@@ -320,7 +325,6 @@ const selectionData = [
         ]
     },
     {
-        // , , , , 
         title: "Schienenfarbe",
         multichoice: false,
         options: [
@@ -739,6 +743,7 @@ function ProductPlissee() {
                                 />)
                             })
                         }
+                        <button onClick={()=>console.log("ITEM CONFIGURATION: ", itemConfiguration)}>printf item configuration</button>
                         <Title>Abmessungen</Title>
                             <HowtoMeasureWrapper>
                                 Anleitung zum 

@@ -3,6 +3,10 @@ import styled from 'styled-components';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import CircularProgress from '@mui/material/CircularProgress';
 import GpsFixedSharpIcon from '@mui/icons-material/GpsFixedSharp';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
 
 const Title = styled.div`
     font-size: 18px;
@@ -49,8 +53,6 @@ const CustomImgWrapper = styled.div`
     }
 `;
 
-// sehr beliebt
-// meist gewählt
 const CustomImg = styled.img`
     height: 160px;
     width: auto;
@@ -63,7 +65,6 @@ const CustomImg = styled.img`
     &:hover {
         border: ${props => props.isActive ? "3px solid #f59f4c" : "1px solid #f59f4c"};
     }
-
 
     @media only screen and (max-width: 500px) {
        width: 42vw;
@@ -135,6 +136,10 @@ const ColorSelector = styled.div`
     }
 `;
 
+const DropDownWrapper = styled.div`
+    margin-top: 15px;
+    display: ${props => props.hide ? "none" : "block"};
+`;
 
 function arraysEqual(arr1, arr2) {
     if (!arr1 || arr1.length !== arr2.length) {
@@ -158,6 +163,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
     const [internalChoice, setInternalChoice] = useState(false);
     const [availableList, setAvailableList] = useState([]);
     const [prevAvailableList, setPrevAvailableList] = useState(null)
+    const [selectedPrice, setSelectedPrice] = useState({});
 
     useEffect(() => {
         if (!optionList.checkAllowList) {
@@ -196,8 +202,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
             const itemsAllows = item.allows;
             if (itemsAllows.type==="single") {
 
-                //console.log("itemsAllows: ", itemsAllows);
-
                 let contains = false;
                 for (let i=0; i<itemsAllows.dependecies.length;i++) {
                     const dependency = itemsAllows.dependecies[i];
@@ -213,7 +217,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                         const currentObj = currentSelectedDependency[j];
                         const currentObjKey = Object.keys(currentObj)[0];
 
-                        //console.log("COMPARE THEM! ",currentObjKey,value);
                         if (currentObjKey===value) {
                             contains = true;
                             break;
@@ -231,9 +234,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
 
         if (arraysEqual(availableList,tempAvailableList))
             return;
-
-        console.log("prevAvailableList: ",prevAvailableList)
-        console.log("tempAvailableList: ",tempAvailableList)
 
         setPrevAvailableList([...availableList]);
         setAvailableList([...tempAvailableList]);
@@ -262,10 +262,8 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
         }
 
         setActive([...availableListActive]);
-        console.log("GELDİĞ")
 
         if (selectedItem!==null && selectedItemIndex!==null) {
-            console.log("FUNCTION CALL")
             handleSelectionAllowed(selectedItem,selectedItemIndex, false);
         }
 
@@ -275,15 +273,25 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
         if (!optionList.multichoice) {
             setActive(index);
 
-            const configObj = {
-                [optionList.options[index].title] : optionList.options[index].price
-            };
+            const item = optionList.options[index];
+            let configObj;
+
+            if (typeof item.price === 'object') {
+                const selectedOption = selectedPrice[item.title] || Object.keys(item.price)[0];
+                configObj = {
+                    [`${item.title} ${selectedOption}`]: item.price[selectedOption]
+                };
+            } else {
+                configObj = {
+                    [item.title]: item.price
+                };
+            }
+
             const updatedItemConfiguration = {
                 ...itemConfiguration,
                 [optionList.title]: [configObj]
             };
 
-            console.log("updatedItemConfiguration: ",updatedItemConfiguration);
             setItemConfiguration(updatedItemConfiguration);
             return;
         } else {
@@ -291,14 +299,25 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
             arr[index] = !arr[index];
             setActive([...arr]);
 
-            // TODO: update global config object!!!
-            const configObj = {
-                [optionList.options[index].title] : optionList.options[index].price
-            };
+            const item = optionList.options[index];
+            let configObj;
+
+            if (typeof item.price === 'object') {
+                const selectedOption = selectedPrice[item.title] || Object.keys(item.price)[0];
+                configObj = {
+                    [`${item.title} ${selectedOption}`]: item.price[selectedOption]
+                };
+            } else {
+                configObj = {
+                    [item.title]: item.price
+                };
+            }
 
             const updatedItemConfiguration = {
                 ...itemConfiguration,
-                [optionList.title]: [configObj, ...itemConfiguration[optionList.title]]
+                [optionList.title]: arr[index] 
+                    ? [configObj, ...itemConfiguration[optionList.title].filter(i => !Object.keys(i)[0].startsWith(item.title))]
+                    : itemConfiguration[optionList.title].filter(i => !Object.keys(i)[0].startsWith(item.title))
             };
 
             setItemConfiguration(updatedItemConfiguration);
@@ -313,11 +332,18 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 setActive([...arr]);
             }
 
-            const configObj = {
-                [item.title] : item.price
-            };
+            let configObj;
 
-            console.log("ITEM: ", configObj);
+            if (typeof item.price === 'object') {
+                const selectedOption = selectedPrice[item.title] || Object.keys(item.price)[0];
+                configObj = {
+                    [`${item.title} ${selectedOption}`]: item.price[selectedOption]
+                };
+            } else {
+                configObj = {
+                    [item.title]: item.price
+                };
+            }
 
             const updatedItemConfiguration = {
                 ...itemConfiguration,
@@ -326,7 +352,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
 
             setInternalChoice(true);
 
-            console.log("updatedItemConfiguration: ",updatedItemConfiguration);
             setItemConfiguration(updatedItemConfiguration);
             return;
         }
@@ -350,13 +375,13 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
     }
 
     const handleCancel = (currentItem, index) => {
+        if (!currentItem.cancallable) return;
+
         if (!optionList.multichoice) {
             setActive(null);
             let configArray = itemConfiguration[optionList.title];
             const tmp = configArray.filter(item=>{
                 const key = Object.keys(item)[0];
-                // TODO: test it well before publish!!!!
-                //console.log("key, currentItem.title: ",key , currentItem.title);
                 return key !== currentItem.title;
             })
 
@@ -376,12 +401,9 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
             let configArray = itemConfiguration[optionList.title];
             const tmp = configArray.filter(item=>{
                 const key = Object.keys(item)[0];
-                // TODO: test it well before publish!!!!
-                //console.log("key, currentItem.title: ",key , currentItem.title);
-                return key !== title;
+                return !key.startsWith(title);
             });
 
-            console.log("configArray: ",configArray);
             const updatedItemConfiguration = {
                 ...itemConfiguration,
                 [optionList.title]: [...tmp]
@@ -391,11 +413,33 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
         }
     }
 
-    const handleClick = (item,index,isActive, isAllowedSelection = false) => {
+    const handleDropdownChange = (item, index, event) => {
+        const selectedOption = event.target.value;
+        setSelectedPrice(prev => ({
+            ...prev,
+            [item.title]: selectedOption
+        }));
+
+        if (active[index]) {
+            const configObj = {
+                [`${item.title} ${selectedOption}`]: item.price[selectedOption]
+            };
+
+            const updatedItemConfiguration = {
+                ...itemConfiguration,
+                [optionList.title]: [
+                    ...itemConfiguration[optionList.title].filter(i => !Object.keys(i)[0].startsWith(item.title)),
+                    configObj
+                ]
+            };
+
+            setItemConfiguration(updatedItemConfiguration);
+        }
+    }
+
+    const handleClick = (item, index, isActive, isAllowedSelection = false) => {
         if (isActive) {
-            if (item.cancallable) {
-                handleCancel(item,index);
-            }
+            handleCancel(item,index);
         } else {
             if (!isAllowedSelection)
                 handleSelection(index);
@@ -403,7 +447,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 handleSelectionAllowed(item,index);
         }
     }
-
 
     return (
         itemConfiguration === null
@@ -417,7 +460,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 <div>
                     <Title>
                         {optionList.title} 
-                        {/*<button onClick={()=>console.log("itemConfiguration: ",itemConfiguration)}>printconfig</button> */}
                     </Title>
                     <Body>
                         {
@@ -444,9 +486,51 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                             </div>
                                         </TitleWrapper>
                                         {
-                                            item.price === 0
-                                            ? <div></div>
-                                            : <div style={{textAlign: "left", fontWeight: "bold", marginLeft: "5px"}}>+{item.price}€</div>
+                                            typeof item.price === 'object' ? (
+                                            <DropDownWrapper hide={isActive !== true}>
+                                                <FormControl fullWidth variant="outlined" sx={{ '& .MuiOutlinedInput-root': { '&.Mui-focused fieldset': { borderColor: '#f59f4c' } } }}>
+                                                <InputLabel
+                                                    id="demo-simple-select-helper-label"
+                                                    style={{ backgroundColor: 'white', padding: '0 4px' , color: "#f59f4c", fontWeight: "bold"}}
+                                                >
+                                                    {item.priceExplanation}
+                                                </InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-helper-label"
+                                                    id="demo-simple-select-helper"
+                                                    value={selectedPrice[item.title] || Object.keys(item.price)[0]}
+                                                    onChange={(e) => handleDropdownChange(item, index, e)}
+                                                    disabled={!isActive}
+                                                    label={item.priceExplanation}
+                                                    sx={{
+                                                    '& .MuiSelect-select': {
+                                                        '&:focus, &:hover': {
+                                                        backgroundColor: 'transparent',
+                                                        },
+                                                    },
+                                                    '& .MuiOutlinedInput-notchedOutline': {
+                                                        borderColor: isActive ? '#f59f4c' : 'rgba(0, 0, 0, 0.23)',
+                                                    },
+                                                    '& .MuiOutlinedInput-root': {
+                                                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                        borderColor: '#f59f4c',
+                                                        },
+                                                    },
+                                                    }}
+                                                >
+                                                    {Object.entries(item.price).map(([key, value]) => (
+                                                    <MenuItem key={key} value={key} sx={{ '&.Mui-selected': { backgroundColor: '#f59f4c', color: 'white' }, '&.Mui-selected:hover': { backgroundColor: '#f59f4c' } }}>
+                                                        {key}  (+{value}€)
+                                                    </MenuItem>
+                                                    ))}
+                                                </Select>
+                                                </FormControl>
+                                            </DropDownWrapper>
+                                            ) : (
+                                                item.price === 0
+                                                ? <div></div>
+                                                : <div style={{textAlign: "left", fontWeight: "bold", marginLeft: "5px"}}>+{item.price}€</div>
+                                            )
                                         }
                                     </SingleOptionWrapper>
                                 )
@@ -473,9 +557,52 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                             </div>
                                         </TitleWrapper>
                                         {
-                                            item.price === 0
-                                            ? <div></div>
-                                            : <div style={{textAlign: "left", fontWeight: "bold", marginLeft: "5px"}}>+{item.price}€</div>
+                                            typeof item.price === 'object' ? (
+                                            <DropDownWrapper hide={isActive !== true}>
+                                                <FormControl fullWidth variant="outlined" sx={{ '& .MuiOutlinedInput-root': { '&.Mui-focused fieldset': { borderColor: '#f59f4c' } } }}>
+                                                <InputLabel
+                                                    id="demo-simple-select-helper-label"
+                                                    style={{ backgroundColor: 'white', padding: '0 4px' }}
+                                                >
+                                                    {item.priceExplanation}
+                                                </InputLabel>
+                                                <Select
+                                                    labelId="demo-simple-select-helper-label"
+                                                    id="demo-simple-select-helper"
+                                                    value={selectedPrice[item.title] || Object.keys(item.price)[0]}
+                                                    onChange={(e) => handleDropdownChange(item, index, e)}
+                                                    disabled={!isActive}
+                                                    label={item.priceExplanation}
+                                                    sx={{
+                                                    '& .MuiSelect-select': {
+                                                        '&:focus': {
+                                                        backgroundColor: 'transparent',
+                                                        },
+                                                    },
+                                                    '& .MuiOutlinedInput-notchedOutline': {
+                                                        borderColor: isActive ? '#f59f4c' : 'rgba(0, 0, 0, 0.23)',
+                                                    },
+                                                    '& .MuiOutlinedInput-root': {
+                                                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                                                        borderColor: '#f59f4c',
+                                                        },
+                                                    },
+                                                    }}
+                                                >
+                                                    {Object.entries(item.price).map(([key, value]) => (
+                                                    <MenuItem key={key} value={key} sx={{ '&.Mui-selected': { backgroundColor: '#f59f4c', color: 'white' }, '&.Mui-selected:hover': { backgroundColor: '#f59f4c' } }}>
+                                                        {key}  (+{value}€)
+                                                    </MenuItem>
+                                                    ))}
+                                                </Select>
+                                                </FormControl>
+
+                                            </DropDownWrapper>
+                                            ) : (
+                                                item.price === 0
+                                                ? <div></div>
+                                                : <div style={{textAlign: "left", fontWeight: "bold", marginLeft: "5px"}}>+{item.price}€</div>
+                                            )
                                         }
                                     </SingleOptionWrapper>
                                 )
