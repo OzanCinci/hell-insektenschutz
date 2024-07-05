@@ -1,14 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import useFetch from '../hooks/useFetch';
-import Rating from '@mui/material/Rating';
-import { convertDate } from '../utils/datetime';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import CircularProgress from '@mui/material/CircularProgress';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import Alert from '@mui/material/Alert';
 import Button from '@mui/material/Button';
 import SingleReview from './SingleReview';
+import NoOrderImg from '../images/account/sepet.jpeg';
 
 const config = {
     "method": "get",
@@ -24,81 +22,14 @@ const ModifiedAlert = styled(Alert)`
     margin: 0 auto;
 `;
 
-const Container = styled.div`
-  padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
-  padding-bottom: 15px;
-  justify-content: space-between;
-  align-items: center;
-  margin: 10px 20px;
-  margin-bottom: 30px;
-  background: white;
-  border-bottom: 1px solid grey;
+const CustomMobileSingleItemImg = styled.img`
+    height: auto;
+    width: 70%;
+    max-width: 300px;
+    align-self: center;
+    display: block;
+    margin: 0px auto;
 `;
-
-const TopPart = styled.div`
-  display: flex;
-  width: 100%;
-  margin-bottom: 20px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const ReviewDate = styled.div`
-  @media only screen and (max-width: 470px) {
-    font-size: 14px;
-  }
-`;
-
-const Description = styled.div`
-  text-align: left;
-  color: rgb(82, 82, 102);
-  font-size: 18px;
-  width: 100%;
-
-  @media only screen and (max-width: 860px) {
-    font-size: 18px;
-  }
-  @media only screen and (max-width: 600px) {
-    font-size: 18px
-  }
-`;
-
-const ReviewTopWrapper = styled.div`
-    text-align: left;
-`;
-
-const DateWrapper = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-`;
-
-/*
-const SingleReview = styled(({name,date,rating,description})=>{ 
-    return (
-      <Container>
-        <TopPart>
-          <ReviewTopWrapper>
-            <div style={{fontSize: "18px", borderBottom: "1px solid #f59f4c", textDecorationColor: "#f59f4c"}}>
-                <AccountCircleIcon className='mx-2' fontSize='large' style={{color: "grey"}}/>
-                {name}
-            </div>
-            <DateWrapper>
-                <Rating className='mx-2' name="read-only" value={rating} precision={0.5} readOnly />
-                <ReviewDate>( {convertDate(date)} )</ReviewDate>  
-            </DateWrapper>
-          </ReviewTopWrapper>
-        </TopPart>
-        <Description>
-          {description}
-        </Description>
-      </Container>
-    )})``;
-    */
 
 function ReviewList({productId}) {
     const [page,setPageNumber] = useState(0);
@@ -156,6 +87,15 @@ function ReviewList({productId}) {
                                 </div>
                             )
                         })
+                      }
+                      {
+                        allReviews.length===0 &&
+                        <div style={{fontSize: "21px", margin: "auto", color: "rgb(82, 82, 102)"}}>
+                            Es gibt noch keinen Kommentar zu diesem Produkt. Wir freuen uns auf Ihre Rückmeldung!
+                          <div>
+                            <CustomMobileSingleItemImg src={NoOrderImg}/>
+                          </div>
+                        </div>
                       }
                       {
                         error && <ModifiedAlert severity="error">{error}</ModifiedAlert>

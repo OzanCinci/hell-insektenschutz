@@ -50,7 +50,6 @@ const config = {
         'Content-Type': 'application/json',
         }
 };
-const pageNumber = 0;
 
 const filterValues = {
     Farbton: {
@@ -98,7 +97,7 @@ const filterValues = {
 
 const productDetailUrl = "/api/product/Plissee/Basic Plissee";
 function BasicPlissee() {
-    const { data, loading, error } = useFetch(url, config, pageNumber);
+    const { data, loading, error } = useFetch(url, config, 0);
     const [colors, setColors] = useState(null);
     const [result, filterLoading, handleFilterClick, selection, clearAllFilters, handleSearchChange] = useFilter(filterValues, colors);
 

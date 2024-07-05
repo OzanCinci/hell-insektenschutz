@@ -233,7 +233,7 @@ const FilterComponent = ({ filterObj, handleFilterClick, clearAllFilters, select
                                                                     />
                                                                     {image!==null && <img src={image} alt={name} style={{ width: '25px', height: '25px', marginLeft: "-20%", marginRight: "10%" }} />}
                                                                 </div>
-                                                                <span>{name}</span>
+                                                                <span>{name.replace('"','')}</span>
                                                             </div>
                                                             {extraInfo &&
                                                                     <div key={name}>
@@ -392,7 +392,7 @@ const FilterComponent = ({ filterObj, handleFilterClick, clearAllFilters, select
                                                                     />
                                                                     {image!==null && <img src={image} alt={name} style={{ width: '25px', height: '25px', marginLeft: "-20%", marginRight: "10%" }} />}
                                                                 </div>
-                                                                <span>{name}</span>
+                                                                <span>{name.replace('"','')}</span>
                                                             </div>
                                                             {extraInfo &&
                                                                     <div key={name}>

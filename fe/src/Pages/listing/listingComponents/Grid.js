@@ -108,6 +108,7 @@ const ModeDetailInnerPage = styled.div`
     align-items: flex-start;
     gap: 5px;
     padding-left: 10%;
+    text-align: left;
 `;
 
 const BottomInfoWrapper = styled.div`
@@ -332,7 +333,6 @@ function extractProperties(properties) {
         "PearlCoated": "Perlbeschichtet",
         "OekoTexStandard100": "Öko-Tex Standard 100",
         "Availability": "Verfügbarkeit",
-        "MinPrice": "Mindestpreis",
         "Hue": "Farbton",
         "Material": "Material",
         "Room": "Raum",
@@ -341,7 +341,6 @@ function extractProperties(properties) {
         "Function": "Funktion",
         "halbtransparent": "Halbtransparent",
         "Feuchtraum": "Feuchtraum",
-        "Handwaschbar bis 30°": "Handwaschbar bis 30°",
         "Schadstoffgeprüft": "Schadstoffgeprüft",
         "100% Polyester": "100% Polyester",
         "Plissee": "Plissee",
@@ -366,6 +365,14 @@ function extractProperties(properties) {
 
     keysToExtract.forEach(key => {
         const value = properties[key];
+
+        if (key==="Function" || key==="Material") {
+            value.forEach(item=>{
+                if (item!==null && item!=='')
+                    result.push(item)
+            });
+            return;
+        }
         
         if (key==='MaxWidth') {
             result.push(`Max. Breite ${value} cm`);

@@ -44,7 +44,7 @@ import SingleProduct from './Pages/SingleProductPage/SingleProduct';
 import ShopLanding from './Pages/shop/ShopLanding';
 import Insek from './Pages/shop/pages/Insek';
 import ShopDetail from './Pages/shop/ShopDetail';
-import OptionsPage from './Pages/shop/OptionsPage';
+import OptionsPage from './Pages/listing/OptionsPage';
 import ProductPlissee from './Pages/products/ProductPlissee';
 import Measurement from './Pages/howToMeasure/Measurement';
 import RegularCatalog from './Pages/shop/pages/RegularCatalog';

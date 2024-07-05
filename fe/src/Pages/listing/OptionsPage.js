@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import BasicPlissee from '../listing/BasicPlissee';
+import BasicPlissee from './BasicPlissee';
+import OptionComponent from './OptionComponent';
 
 const Container = styled.div`
     margin-top: 150px;
@@ -21,23 +22,20 @@ const Container = styled.div`
 ////////////////////////////////////////////
 /////////////// options ////////////////////
 ////////////////////////////////////////////
-
+const defaultOptionsPage = ["plissees"];
 
 function OptionsPage() {
   const { category, model } = useParams();
 
-  useEffect(()=>{
-    //console.log("OPTIONS: ",category,model);
-  },[])
-
-
   return (
-    <Container>
-      {
-        model==="basic-plissee-optionen" && <BasicPlissee/>
-      }
-
-    </Container>
+    category 
+      ? <Container>
+        {
+          defaultOptionsPage.includes(category) && <OptionComponent category={category} model={model}/>
+        }
+        {/* DO NOT FORGET TO REMOVE "BasicPlissee" COMPONENT BEFORE GOING LIVE */}
+      </Container>
+      : <div>You've made a mistake!</div>
   )
 }
 
