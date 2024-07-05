@@ -44,9 +44,10 @@ import ShopLanding from './Pages/shop/ShopLanding';
 import Insek from './Pages/shop/pages/Insek';
 import ShopDetail from './Pages/shop/ShopDetail';
 import OptionsPage from './Pages/listing/OptionsPage';
-import ProductPlissee from './Pages/products/ProductPlissee';
+import ProductPlissee from './Pages/products/TwoDimProduct';
 import Measurement from './Pages/howToMeasure/Measurement';
 import RegularCatalog from './Pages/shop/pages/RegularCatalog';
+import Wrapper from './Pages/products/Wrapper';
 
 function App() {
   useEffect(()=>{
@@ -140,7 +141,7 @@ function App() {
 
             <Route path='/geschaft/:category/:model' element={<OptionsPage/>}/>
 
-            <Route path='/produkts/BasicPlissee/:id' element={<ProductPlissee/>}/>
+            <Route path='/produkts/:produkt/:id' element={<Wrapper/>}/>
 
 
             <Route path='/messanleitung/:category' element={<Measurement/>}/>

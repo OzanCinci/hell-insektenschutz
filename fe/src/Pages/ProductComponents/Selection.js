@@ -247,7 +247,9 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 availableListActive.push(false);
             else {
                 const currentElement = tempAvailableList[k];
-                if (currentElement.price===0) {
+                // winkeltrager paralı oldu
+                // mertlik bozuldu!
+                if (true || currentElement.price===0) {
                     availableListActive.push(true);
                     freeSelectionDone = true;
                     
