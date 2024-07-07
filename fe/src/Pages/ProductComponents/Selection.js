@@ -228,6 +228,29 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                         break;
                     }
                 }
+            } else if (itemsAllows.type==="allOfThem") {
+                let counter = 0;
+                for (let i=0; i<itemsAllows.dependecies.length;i++) {
+                    const dependency = itemsAllows.dependecies[i];
+                    const key = Object.keys(dependency)[0];
+                    const value = Object.values(dependency)[0];
+
+                    const currentSelectedDependency = itemConfiguration[key];
+                    if (!currentSelectedDependency || currentSelectedDependency.length===0)
+                        return; // mismatch found stop processing
+
+                    for (let j=0; j<currentSelectedDependency.length;j++) {
+                        const currentObj = currentSelectedDependency[j];
+                        const currentObjKey = Object.keys(currentObj)[0];
+
+                        if (currentObjKey===value) {
+                            counter +=1;
+                        }
+                    }
+                }
+
+                if (counter===itemsAllows.dependecies.length)
+                    tempAvailableList.push(item);
             }
 
         });
@@ -249,7 +272,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 const currentElement = tempAvailableList[k];
                 // winkeltrager paralı oldu
                 // mertlik bozuldu!
-                if (true || currentElement.price===0) {
+                if (!optionList.doNoDefaultSelection || currentElement.price===0) {
                     availableListActive.push(true);
                     freeSelectionDone = true;
                     
@@ -356,6 +379,48 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
 
             setItemConfiguration(updatedItemConfiguration);
             return;
+        } else {
+            let arr = [...active];
+            if (updateArr) {
+                arr = arr.map((item,i)=> {
+                    if (i===index)
+                        return true;
+                    return item;
+                });
+                setActive([...arr]);
+            }
+
+            let configObj;
+
+            if (typeof item.price === 'object') {
+                const selectedOption = selectedPrice[item.title] || Object.keys(item.price)[0];
+                configObj = {
+                    [`${item.title} ${selectedOption}`]: item.price[selectedOption]
+                };
+            } else {
+                configObj = {
+                    [item.title]: item.price
+                };
+            }
+
+            /*
+            const updatedItemConfiguration = {
+                ...itemConfiguration,
+                [optionList.title]: [configObj]
+            };
+            */
+
+            const updatedItemConfiguration = {
+                ...itemConfiguration,
+                [optionList.title]: arr[index] 
+                    ? [configObj, ...itemConfiguration[optionList.title].filter(i => !Object.keys(i)[0].startsWith(item.title))]
+                    : itemConfiguration[optionList.title].filter(i => !Object.keys(i)[0].startsWith(item.title))
+            };
+
+            setInternalChoice(true);
+
+            setItemConfiguration(updatedItemConfiguration);
+            return;
         }
         
     }
@@ -440,6 +505,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
     }
 
     const handleClick = (item, index, isActive, isAllowedSelection = false) => {
+        //console.log("HANDLE CLICK: ", item, index, isActive, isAllowedSelection);
         if (isActive) {
             handleCancel(item,index);
         } else {

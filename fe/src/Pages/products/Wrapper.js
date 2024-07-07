@@ -5,8 +5,10 @@ import TwoDimProduct from './TwoDimProduct';
 
 
 const twoDimensionalProducts = [
-    "BasicPlissee"
-]
+    "BasicPlissee",
+    "PremiumPlissee"
+];
+
 function Wrapper() {
     const {produkt, id} = useParams();
     const dataFromJSON = uniqueProductData[produkt];
