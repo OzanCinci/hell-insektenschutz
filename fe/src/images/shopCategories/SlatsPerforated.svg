@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="Ebene_1" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 150 150">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #1d1d1d;
+        stroke: #1d1d1d;
+        stroke-miterlimit: 10;
+      }
+    </style>
+  </defs>
+  <circle class="cls-1" cx="38.95" cy="8.71" r="6.3"/>
+  <circle class="cls-1" cx="78.22" cy="22.56" r="6.3"/>
+  <circle class="cls-1" cx="110.23" cy="8.71" r="6.3"/>
+  <circle class="cls-1" cx="139.51" cy="30.96" r="6.3"/>
+  <circle class="cls-1" cx="106.37" cy="47.3" r="6.3"/>
+  <circle class="cls-1" cx="73.45" cy="63.2" r="6.3"/>
+  <circle class="cls-1" cx="47.12" cy="41.01" r="6.3"/>
+  <circle class="cls-1" cx="7.56" cy="30.96" r="6.3"/>
+  <circle class="cls-1" cx="18.91" cy="63.2" r="6.3"/>
+  <circle class="cls-1" cx="48.19" cy="84.31" r="6.3"/>
+  <circle class="cls-1" cx="102.56" cy="85.9" r="6.3"/>
+  <circle class="cls-1" cx="142.44" cy="68.42" r="6.3"/>
+  <circle class="cls-1" cx="136.14" cy="102.24" r="6.3"/>
+  <circle class="cls-1" cx="110.23" cy="121.99" r="6.3"/>
+  <circle class="cls-1" cx="76.86" cy="107.46" r="6.3"/>
+  <circle class="cls-1" cx="43.03" cy="121.99" r="6.3"/>
+  <circle class="cls-1" cx="15.34" cy="102.24" r="6.3"/>
+  <circle class="cls-1" cx="12.61" cy="141.29" r="6.3"/>
+  <circle class="cls-1" cx="78.22" cy="139.7" r="6.3"/>
+  <circle class="cls-1" cx="137.01" cy="141.29" r="6.3"/>
+</svg>

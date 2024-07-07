@@ -60,6 +60,7 @@ function OptionComponent({category, model}) {
                 const ternaryImage = ternaryImageFunction(item);
                 return {mainImage, secondaryImage, ternaryImage, ...item};
             })
+
             setColors(upgradedColors);
         }
     }, [data]);
@@ -83,7 +84,7 @@ function OptionComponent({category, model}) {
                     handleFilterClick={handleFilterClick} 
                     selection={selection} 
                     clearAllFilters={clearAllFilters}
-                    defaultExpandedPanels={{ Farbton: true, Lichtdurchlässigkeit: true , Stoffart: true}}
+                    defaultExpandedPanels={{ Farbton: true, Lichtdurchlässigkeit: true , Stoffart: true, Lamellenbreite: true, Design: true}}
                     handleSearchChange={handleSearchChange}
                 />
                 <Grid 

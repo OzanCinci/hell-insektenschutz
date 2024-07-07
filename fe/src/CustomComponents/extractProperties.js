@@ -10,7 +10,6 @@ export function extractProperties(properties) {
         "DirtRepellant": "Schmutzabweisend",
         "PearlCoated": "Perlbeschichtet",
         "OekoTexStandard100": "Öko-Tex Standard 100",
-        "Availability": "Verfügbarkeit",
         "Hue": "Farbton",
         "Material": "Material",
         "Room": "Raum",
@@ -22,10 +21,25 @@ export function extractProperties(properties) {
         "Schadstoffgeprüft": "Schadstoffgeprüft",
         "100% Polyester": "100% Polyester",
         "Plissee": "Plissee",
-        "Hitzeschutz": "Hitzeschutz"
+        "Hitzeschutz": "Hitzeschutz",
+        "WoodGrain":"Holzmaserung",
+        "SlatsStandard": "Standard-Lamellen",
+        "SlatsPerforated": "Perforierte Lamellen",
+        "SlatsMatte": "Matte Lamellen",
+        "SlatsHighGloss": "Hochglanz-Lamellen",
+        "SlatsBrushed": "Gebürstete Lamellen",
+        "SlatsMetallic": "Metallische Lamellen",
     };
 
     const keysToExtract = [
+        "BlindWidth",
+        "LamellaWidth",
+        "SlatsStandard",
+        "SlatsPerforated",
+        "SlatsMatte",
+        "SlatsHighGloss",
+        "SlatsBrushed",
+        "SlatsMetallic",
         "Translucency",
         "MaxWidth",
         "MaterialType",
@@ -37,8 +51,9 @@ export function extractProperties(properties) {
         "Material",
         "Room",
         "Look",
-        "LamellaWidth",
-        "Function"
+        "Function",
+        "WoodGrain",
+        "HexColor",
     ];
 
     keysToExtract.forEach(key => {
@@ -53,15 +68,29 @@ export function extractProperties(properties) {
         }
         
         if (key==='MaxWidth') {
-            result.push(`Max. Breite ${value} cm`);
-            return;   
+            if (value!=="0.00") {
+                result.push(`Max. Breite ${value} cm`);
+            } 
+            return;
         }
+
+        if (key==="BlindWidth" && value) {
+            result.push(value);
+            return;
+        }
+
+        if (key==="HexColor" && value) {
+            result.push(`Hex-Farbe: #${value}`);
+            return;
+        }
+            
         
         if (value === '0') {
             // Skip if the value is 0
             return;
-        } else if (value === '1') {
+        } else if (value === "1") {
             // Add the German version of the key if the value is 1
+            
             if (translationMap[key]) {
                 result.push(translationMap[key]);
             }
@@ -82,5 +111,6 @@ export function extractProperties(properties) {
         }
     });
 
-    return result;
+    //console.log("result: ",result);
+    return Array.from(new Set(result.filter(item=>item)));
 };

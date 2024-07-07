@@ -1,7 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import BasicPlissee from './BasicPlissee';
 import OptionComponent from './OptionComponent';
 
 const Container = styled.div`
@@ -22,7 +21,7 @@ const Container = styled.div`
 ////////////////////////////////////////////
 /////////////// options ////////////////////
 ////////////////////////////////////////////
-const defaultOptionsPage = ["plissees"];
+const defaultOptionsPage = ["plissees", "jalousie"];
 
 function OptionsPage() {
   const { category, model } = useParams();

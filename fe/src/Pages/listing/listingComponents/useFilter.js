@@ -4,10 +4,13 @@ const filterData = (filters, keyValuePairs, searchTerm) => {
     const trimmedSearchWord = searchTerm.trim().toLowerCase();
 
     return Object.entries(keyValuePairs).reduce((acc, [key, value]) => {
+
         const matches = Object.entries(filters).every(([filterType, filterValue]) => {
+
             if (Array.isArray(filterValue)) {
                 return filterValue.every(val => key.includes(val));
             }
+
             return key.includes(filterValue);
         });
 
@@ -40,7 +43,7 @@ const useFilter = (filterObj, rawData) => {
     useEffect(() => {
         if (rawData !== null) {
             const keyValuePairs = rawData.reduce((acc, item) => {
-                const key = JSON.stringify({ ...item.properties, id: item.id });
+                const key = JSON.stringify({ ...item.properties, id: item.id , title: item.title});
                 acc[key] = item;
                 return acc;
             }, {});
