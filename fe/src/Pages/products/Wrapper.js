@@ -6,7 +6,8 @@ import TwoDimProduct from './TwoDimProduct';
 
 const twoDimensionalProducts = [
     "BasicPlissee",
-    "PremiumPlissee"
+    "PremiumPlissee",
+    "BasicJalousie"
 ];
 
 function Wrapper() {

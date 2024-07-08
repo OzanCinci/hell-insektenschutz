@@ -67,7 +67,7 @@ const CustomImg = styled.img`
     }
 
     @media only screen and (max-width: 500px) {
-       width: 42vw;
+       width: 40vw;
        height: auto;
        align-self: center;
     }
@@ -139,6 +139,7 @@ const ColorSelector = styled.div`
 const DropDownWrapper = styled.div`
     margin-top: 15px;
     display: ${props => props.hide ? "none" : "block"};
+    max-width: 35vw;
 `;
 
 function arraysEqual(arr1, arr2) {
@@ -243,7 +244,9 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                         const currentObj = currentSelectedDependency[j];
                         const currentObjKey = Object.keys(currentObj)[0];
 
-                        if (currentObjKey===value) {
+                        console.log("currentObjKey: ",currentObjKey);
+                        console.log("value: ",value);
+                        if (currentObjKey===value || currentObjKey.includes(value + " ")) {
                             counter +=1;
                         }
                     }
@@ -257,6 +260,8 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
 
         if (arraysEqual(availableList,tempAvailableList))
             return;
+
+        const tempPrevAvailableList = [...prevAvailableList || []];
 
         setPrevAvailableList([...availableList]);
         setAvailableList([...tempAvailableList]);
@@ -272,6 +277,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 const currentElement = tempAvailableList[k];
                 // winkeltrager paralı oldu
                 // mertlik bozuldu!
+
                 if (!optionList.doNoDefaultSelection || currentElement.price===0) {
                     availableListActive.push(true);
                     freeSelectionDone = true;
@@ -288,8 +294,63 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
 
         setActive([...availableListActive]);
 
+        console.log("IF ONCESSIIIIII!!!!!, tempAvailableList: ",tempAvailableList);
         if (selectedItem!==null && selectedItemIndex!==null) {
             handleSelectionAllowed(selectedItem,selectedItemIndex, false);
+            console.log("IF ICINE GIRDIIIII!!!!!");
+        } else {
+            // eğer zoraki işaretlemem gereken bir şey yok ise:
+            // ve hatta tam tersine silmem gereken bir şey var ise
+            const conf = itemConfiguration[optionList.title];
+
+            const newConf = conf.filter(obj=>{
+                
+                const currentKey = Object.keys(obj)[0];
+
+                for (let x=0; x<tempAvailableList.length; x++) {
+                    const currentItem = tempAvailableList[0];
+                    if (currentKey.startsWith(currentItem.title)) {
+                        return true;
+                    }
+                }
+
+                return false;
+            })
+
+            const updatedItemConfiguration = {
+                ...itemConfiguration,
+                [optionList.title]: [...newConf]
+            };
+
+            // set active list //
+            let newActiveList = [];
+            const keyArray = newConf.map(item => Object.keys(item)[0]);
+
+            for(let x=0; x<tempAvailableList.length; x++) {
+                let terminate = false;
+                const currentItem = tempAvailableList[x];
+
+                for(let j=0; j<keyArray.length ;j++) {
+                    const currentKey = keyArray[j];
+                    if (currentKey.startsWith(currentItem.title)) {
+                        newActiveList.push(true);
+                        terminate = true;
+                        break;
+                    }
+                }
+
+                if (terminate) continue;
+                else {
+                    newActiveList.push(false);
+                }
+            }
+            setActive([...newActiveList]);
+            // set active list //
+
+            setInternalChoice(false);
+
+            setItemConfiguration(updatedItemConfiguration);
+            return;
         }
 
     }, [itemConfiguration])
@@ -351,6 +412,8 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
     }
 
     const handleSelectionAllowed = (item,index, updateArr = true) => {
+        if (active===null) return;
+
         if (!optionList.multichoice) {
             if (updateArr) {
                 const arr = active.map((item,i)=> i===index);
@@ -524,7 +587,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 </div>
             )
             : (
-                optionList.title !== "Schienenfarbe" ?
+                (optionList.title !== "Schienenfarbe" && optionList.title !== "Oberkastenfarbe")?
                 <div>
                     <Title>
                         {optionList.title} 
@@ -549,9 +612,13 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                         </CustomImgWrapper>
                                         <TitleWrapper>
                                             <div>{item.title}</div>
-                                            <div style={{ cursor: "pointer" }} onClick={() => handleMoreDetailSelection(item)}>
-                                                <HelpOutlineOutlinedIcon style={{ color: "grey" }} />
-                                            </div>
+                                            {
+                                                item.explanation && 
+                                                <div style={{ cursor: "pointer" }} onClick={() => handleMoreDetailSelection(item)}>
+                                                    <HelpOutlineOutlinedIcon style={{ color: "grey" }} />
+                                                </div>
+                                            }
+                                            
                                         </TitleWrapper>
                                         {
                                             typeof item.price === 'object' ? (
@@ -620,9 +687,12 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                         </CustomImgWrapper>
                                         <TitleWrapper>
                                             <div>{item.title}</div>
-                                            <div style={{ cursor: "pointer" }} onClick={() => handleMoreDetailSelection(item)}>
-                                                <HelpOutlineOutlinedIcon style={{ color: "grey" }} />
-                                            </div>
+                                            {
+                                                item.explanation && 
+                                                <div style={{ cursor: "pointer" }} onClick={() => handleMoreDetailSelection(item)}>
+                                                    <HelpOutlineOutlinedIcon style={{ color: "grey" }} />
+                                                </div>
+                                            }
                                         </TitleWrapper>
                                         {
                                             typeof item.price === 'object' ? (
@@ -699,7 +769,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                                 />
                                             </div>
                                             <TitleWrapper>
-                                                <div>{item.title}</div>
+                                                <div>{item.price===0 ? item.title : `${item.title} (+${item.price} €)`}</div>
                                             </TitleWrapper>
                                         </div>
                                     </SingleOptionWrapper>

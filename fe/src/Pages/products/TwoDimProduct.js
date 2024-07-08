@@ -318,17 +318,24 @@ function TwoDimProduct({dataFromJSON,id}) {
         const sampleBlendColors = itemData.blendColors;
 
         
-        const subCat = Object.keys(itemConfiguration[subcategoryTitle][0])[0];
+        let subCat;
+        let current;
+        if (subcategoryTitle==="check-mm") {
+          subCat = itemData.color.properties.BlindWidth;
+        } else {
+          subCat = Object.keys(itemConfiguration[subcategoryTitle][0])[0];
+        }
+
+        for (let i=0;i<sampleSubCategories.length;i++) {
+          current = sampleSubCategories[i];
+          if (current.title===subCat) {
+              request.subcategory = Number(current.id);
+              break;
+          }
+      }
+        
         const blendCol = Object.keys(itemConfiguration[blendcolorTitle][0])[0];
         
-        let current;
-        for (let i=0;i<sampleSubCategories.length;i++) {
-            current = sampleSubCategories[i];
-            if (current.title===subCat) {
-                request.subcategory = Number(current.id);
-                break;
-            }
-        }
 
         for (let i=0;i<sampleBlendColors.length;i++) {
             current = sampleBlendColors[i];
@@ -346,6 +353,7 @@ function TwoDimProduct({dataFromJSON,id}) {
 
         //console.log("AAAAAAAAAAAA!!!!!");
         //console.log("REQUEST OBJ: ", request);
+        console.log("REQUESTTT: ",request);
         debouncedGetPriceFromBackend(request);
         //console.log("AAAAAAAAAAAA!!!!!");
         
