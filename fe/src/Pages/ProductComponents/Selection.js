@@ -24,6 +24,7 @@ const Body = styled.div`
     align-items: flex-start;
     margin-top: 10px;
     margin-bottom: 30px;
+    justify-content: flex-start;
 
     @media only screen and (max-width: 500px) {
        width: 105vw;
@@ -87,6 +88,10 @@ const SingleOptionWrapper = styled.div`
     margin-bottom: 20px;
     margin-top: 20px;
     margin-right: 30px;
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 `;
 
 const BodyColors = styled.div`
@@ -104,7 +109,16 @@ const TitleWrapper = styled.div`
     align-items: center;
     padding-left: 5px;
     margin-top: 8px;
+    text-align: center;
+    width: min(160px, 100%);
+
+    margin-bottom: 2px;
+
+    @media only screen and (max-width: 500px) {
+        width: ${props=>props.isColorTitle ? "100%" : "40vw"};
+    }
 `;
+
 
 const ColorSelector = styled.div`
     border-radius: 50%;
@@ -159,12 +173,86 @@ function arraysEqual(arr1, arr2) {
     return true;
 }
 
-function Selection({ optionList, itemConfiguration, setItemConfiguration, setMoreDetailInfo }) {
+function Selection({ optionList, itemConfiguration, setItemConfiguration, setMoreDetailInfo,index }) {
     const [active, setActive] = useState(null);
     const [internalChoice, setInternalChoice] = useState(false);
     const [availableList, setAvailableList] = useState([]);
     const [prevAvailableList, setPrevAvailableList] = useState(null)
     const [selectedPrice, setSelectedPrice] = useState({});
+
+
+    // experimental //
+    useEffect(()=>{
+        if (Array.isArray(active)) {
+            console.log("CHECKPOINT: 1 -> ", optionList.title);
+            // detect if anything in is active
+            // but not in the itemConfiguration list
+            const currentSelectionArray = itemConfiguration[optionList.title];
+            const keyArray = currentSelectionArray.map(obj=>Object.keys(obj)[0]);
+            let finalActiveList = [];
+
+            for (let x=0; x<availableList.length; x++) {
+                const currentTitle = availableList[x].title;
+
+                let isActive = false;
+                for (let j=0; j<keyArray.length; j++) {
+                    const currentKey = keyArray[j];
+                    if (currentKey.startsWith(currentTitle)) {
+                        isActive = true;
+                        break;
+                    }
+                }
+
+                finalActiveList.push(isActive);
+            }
+
+            const allFalse = finalActiveList.every(value => value === false);
+            console.log("GGGGGGGGG: ", optionList.title, finalActiveList);
+            setActive([...finalActiveList]);
+            if (finalActiveList.length!==0 && allFalse) {
+                const shouldSelect = availableList[0].defaultSelected;
+                if (shouldSelect) {
+                    finalActiveList[0] = true;
+                    // get the button and click it
+                    const btnId = `${optionList.title}-btn-0`;
+                    const button = document.getElementById(btnId);
+                    if (button) {
+                        setTimeout(() => {
+                            button.click();
+                        }, 100);
+                    }
+                }
+            } 
+
+            //setActive([...finalActiveList]);
+        } else if (optionList.multichoice===false && optionList.doNoDefaultSelection===false){ 
+            console.log("CHECKPOINT: 2 -> ", optionList.title);
+            let i = 0;
+            let shouldClick = false;
+            for (; i<availableList.length; i++) {
+                if (availableList[i].defaultSelected) {
+                    shouldClick = true;
+                    break;
+                }
+            }
+
+            if (shouldClick) {    
+                const btnId = `${optionList.title}-btn-${i}`;
+                setActive(null);
+                const button = document.getElementById(btnId);
+                if (button) {
+                    setTimeout(() => {
+                        button.click();
+                    }, 100);
+                }
+                console.log("CLICKED: ", optionList.title);
+            }
+        } else {
+            console.log("CHECKPOINT: 3 -> ", optionList.title);
+        }
+
+    },[availableList]);
+    // experimental //
 
     useEffect(() => {
         if (!optionList.checkAllowList) {
@@ -270,15 +358,17 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
         let freeSelectionDone = false;
         let selectedItem = null;
         let selectedItemIndex = null;
+        console.log("AAAAAAAAAAAAAAAAAAAAAAA")
+        const itemConfDictionary = itemConfiguration[optionList.title];
+        const itemKeys = itemConfDictionary.map(item => Object.keys(item)[0]);
         for(let k=0;k<tempAvailableList.length;k++) {
-            if (freeSelectionDone)
+            const currentElement = tempAvailableList[k];
+
+            if (freeSelectionDone && !itemKeys.includes(currentElement.title))
                 availableListActive.push(false);
             else {
-                const currentElement = tempAvailableList[k];
-                // winkeltrager paralı oldu
-                // mertlik bozuldu!
-
-                if (!optionList.doNoDefaultSelection || currentElement.price===0) {
+                if (itemKeys.includes(currentElement.title) || currentElement.conditionalSelected || !optionList.doNoDefaultSelection || currentElement.price===0) {
+                    console.log("currentElement: ",currentElement);
                     availableListActive.push(true);
                     freeSelectionDone = true;
                     
@@ -294,9 +384,28 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
 
         setActive([...availableListActive]);
 
-        console.log("IF ONCESSIIIIII!!!!!, tempAvailableList: ",tempAvailableList);
-        if (selectedItem!==null && selectedItemIndex!==null) {
-            handleSelectionAllowed(selectedItem,selectedItemIndex, false);
+        console.log("IF ONCESSIIIIII!!!!!, tempAvailableList: ",optionList.title, tempAvailableList);
+        if (tempAvailableList.length===0) {
+            // if nothing to be shown then just delete everything!
+            let localItemConfiguration = {...itemConfiguration};
+            localItemConfiguration = {
+                ...localItemConfiguration,
+                [optionList.title]: []
+            };
+            setInternalChoice(true);
+            setActive([]);
+            setTimeout(()=>{
+                setItemConfiguration(prev => ({
+                    ...prev,
+                    [optionList.title]: []
+                }));
+                console.log("localItemConfiguration: ",optionList.title,localItemConfiguration);
+            },100*index)
+            //setItemConfiguration({...localItemConfiguration});
+            //console.log("localItemConfiguration: ",optionList.title,localItemConfiguration);
+
+        } else if (selectedItem!==null && selectedItemIndex!==null) {
+            handleSelectionAllowed(selectedItem,selectedItemIndex, false, true, tempAvailableList);
             console.log("IF ICINE GIRDIIIII!!!!!");
         } else {
             // eğer zoraki işaretlemem gereken bir şey yok ise:
@@ -325,6 +434,8 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
             // set active list //
             let newActiveList = [];
             const keyArray = newConf.map(item => Object.keys(item)[0]);
+            console.log("keyArray: ",keyArray);
+            
 
             for(let x=0; x<tempAvailableList.length; x++) {
                 let terminate = false;
@@ -344,12 +455,18 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                     newActiveList.push(false);
                 }
             }
+            console.log("newActiveList:",newActiveList)
             setActive([...newActiveList]);
             // set active list //
 
             setInternalChoice(false);
 
-            setItemConfiguration(updatedItemConfiguration);
+            console.log("setItemConfiguration:1 ", updatedItemConfiguration);
+            setItemConfiguration(prev => ({
+                ...prev,
+                [optionList.title]: [...updatedItemConfiguration[optionList.title]]
+            }));
+            //setItemConfiguration(updatedItemConfiguration);
             return;
         }
 
@@ -378,7 +495,12 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 [optionList.title]: [configObj]
             };
 
-            setItemConfiguration(updatedItemConfiguration);
+            console.log("setItemConfiguration:2 ", updatedItemConfiguration);
+            setItemConfiguration(prev => ({
+                ...prev,
+                [optionList.title]: [...updatedItemConfiguration[optionList.title]]
+            }));
+            //setItemConfiguration(updatedItemConfiguration);
             return;
         } else {
             let arr = [...active];
@@ -406,15 +528,51 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                     : itemConfiguration[optionList.title].filter(i => !Object.keys(i)[0].startsWith(item.title))
             };
 
-            setItemConfiguration(updatedItemConfiguration);
+            console.log("setItemConfiguration:3 ", updatedItemConfiguration)
+            setItemConfiguration(prev => ({
+                ...prev,
+                [optionList.title]: [...updatedItemConfiguration[optionList.title]]
+            }));
+            //setItemConfiguration(updatedItemConfiguration);
             return;
         }
     }
 
-    const handleSelectionAllowed = (item,index, updateArr = true) => {
-        if (active===null) return;
+    const handleSelectionAllowed = (item,index, updateArr = true, activeNotNull = false, tempAvailableList=null) => {
+        let localItemConfiguration = {...itemConfiguration};
+        console.log("handleSelectionAllowed içine girdi: ", optionList.title);
+        if (tempAvailableList!==null) {
+            let tmp = [...itemConfiguration[optionList.title]];
+            let finalTmp = [];
+
+            tmp.forEach(obj=> {
+                const key = Object.keys(obj)[0];
+
+                let shouldPush = false;
+                tempAvailableList.forEach(item=>{
+                    if (item.title.startsWith(key))
+                        shouldPush = true;
+                })
+
+                if (shouldPush)
+                    finalTmp.push(obj);
+
+            })
+
+            console.log("finalTmp: ", optionList.title ,finalTmp)
+            localItemConfiguration = {
+                ...localItemConfiguration,
+                [optionList.title]: [...finalTmp]
+            }
+        } else {
+            console.log("çalışmadı: ", tempAvailableList);
+        }
+
+
+        if (activeNotNull===false && active===null) return;
 
         if (!optionList.multichoice) {
+            console.log("GIRDI ICERI: ", item.title)
             if (updateArr) {
                 const arr = active.map((item,i)=> i===index);
                 setActive([...arr]);
@@ -434,16 +592,28 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
             }
 
             const updatedItemConfiguration = {
-                ...itemConfiguration,
+                ...localItemConfiguration,
                 [optionList.title]: [configObj]
             };
 
+            //console.log("AGA BU: ",item.title,updatedItemConfiguration)
             setInternalChoice(true);
 
-            setItemConfiguration(updatedItemConfiguration);
+            console.log("setItemConfiguration:4 ", updatedItemConfiguration);
+            setItemConfiguration(prev => ({
+                ...prev,
+                [optionList.title]: [...updatedItemConfiguration[optionList.title]]
+            }));
+            
+            //setItemConfiguration(updatedItemConfiguration);
             return;
         } else {
-            let arr = [...active];
+            let arr; 
+            if (active===null)
+                arr = []
+            else
+                arr = [...active];
+
             if (updateArr) {
                 arr = arr.map((item,i)=> {
                     if (i===index)
@@ -474,15 +644,20 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
             */
 
             const updatedItemConfiguration = {
-                ...itemConfiguration,
+                ...localItemConfiguration,
                 [optionList.title]: arr[index] 
-                    ? [configObj, ...itemConfiguration[optionList.title].filter(i => !Object.keys(i)[0].startsWith(item.title))]
-                    : itemConfiguration[optionList.title].filter(i => !Object.keys(i)[0].startsWith(item.title))
+                    ? [configObj, ...localItemConfiguration[optionList.title].filter(i => !Object.keys(i)[0].startsWith(item.title))]
+                    : localItemConfiguration[optionList.title].filter(i => !Object.keys(i)[0].startsWith(item.title))
             };
 
             setInternalChoice(true);
 
-            setItemConfiguration(updatedItemConfiguration);
+            console.log("setItemConfiguration:5 ", updatedItemConfiguration)
+            setItemConfiguration(prev => ({
+                ...prev,
+                [optionList.title]: [...updatedItemConfiguration[optionList.title]]
+            }));
+            //setItemConfiguration(updatedItemConfiguration);
             return;
         }
         
@@ -520,7 +695,12 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 [optionList.title]: [...tmp]
             };
 
-            setItemConfiguration(updatedItemConfiguration);
+            console.log("setItemConfiguration:6 ", updatedItemConfiguration)
+            setItemConfiguration(prev => ({
+                ...prev,
+                [optionList.title]: [...updatedItemConfiguration[optionList.title]]
+            }));
+            //setItemConfiguration(updatedItemConfiguration);
             return;
         } else {
             const title = currentItem.title;
@@ -538,7 +718,12 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 ...itemConfiguration,
                 [optionList.title]: [...tmp]
             };
-            setItemConfiguration(updatedItemConfiguration);
+            console.log("setItemConfiguration:7 ", updatedItemConfiguration)
+            setItemConfiguration(prev => ({
+                ...prev,
+                [optionList.title]: [...updatedItemConfiguration[optionList.title]]
+            }));
+            //setItemConfiguration(updatedItemConfiguration);
             return;
         }
     }
@@ -563,7 +748,12 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 ]
             };
 
-            setItemConfiguration(updatedItemConfiguration);
+            console.log("setItemConfiguration:8 ", updatedItemConfiguration);
+            setItemConfiguration(prev => ({
+                ...prev,
+                [optionList.title]: [...updatedItemConfiguration[optionList.title]]
+            }));
+            //setItemConfiguration(updatedItemConfiguration);
         }
     }
 
@@ -586,12 +776,18 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                     <CircularProgress size='large' color='warning' />
                 </div>
             )
-            : (
-                (optionList.title !== "Schienenfarbe" && optionList.title !== "Oberkastenfarbe")?
+            :
+                (optionList.checkAllowList!==true || availableList.length!==0) &&
+             (
+                (optionList.title !== "Schienenfarbe" && optionList.title !== "Oberkastenfarbe" && optionList.title !== "Träger-/Kassettenfarbe")?
                 <div>
-                    <Title>
-                        {optionList.title} 
-                    </Title>
+                    {
+                        (optionList.checkAllowList!==true || availableList.length!==0) &&
+                        <Title>
+                            {optionList.title} 
+                        </Title>
+                    }
+                    
                     <Body>
                         {
                             optionList.checkAllowList!==true ?
@@ -679,6 +875,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                                 isActive={isActive}
                                             >
                                             <CustomImg
+                                                id={`${optionList.title}-btn-${index}`}
                                                 onClick={() => handleClick(item,index,isActive,true)}
                                                 isActive={isActive}
                                                 src={item.image}
@@ -768,7 +965,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                                     bg={item.image}
                                                 />
                                             </div>
-                                            <TitleWrapper>
+                                            <TitleWrapper isColorTitle={true}>
                                                 <div>{item.price===0 ? item.title : `${item.title} (+${item.price} €)`}</div>
                                             </TitleWrapper>
                                         </div>
@@ -779,6 +976,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                     </BodyColors>
                 </div>
             )
+            
     )
 }
 

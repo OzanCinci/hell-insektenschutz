@@ -108,7 +108,7 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard,canAddCart})
         <Container>
             <Wrapper>
                 <QuantityWrapper>
-                <div style={{width: "fit-content", fontSize: "17px"}}> {`${itemPrice}€ pro Produkt`}</div>
+                <div style={{width: "fit-content", fontSize: "17px"}}> {itemPrice ?`${itemPrice.toFixed(2)}€ pro Produkt`: ""}</div>
                 <ButtonGroupWrapper>
                     <ButtonGroup
                         disableElevation
@@ -131,7 +131,7 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard,canAddCart})
                 </QuantityWrapper>
                 <TotalPrice>
                 <div>Gesamt:</div>
-                <b>{canAddCart && `${itemPrice*quantity}€`}</b>
+                <b>{canAddCart && `${(itemPrice*quantity).toFixed(2)}€`}</b>
                 {
                     !canAddCart &&
                     <div style={{fontSize: "21px", textAlign: "center", color: "#f59f4c"}}>Wir können die Produkte in diesen Maßen nicht anbieten.</div>

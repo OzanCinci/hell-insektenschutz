@@ -226,7 +226,7 @@ const config = {
     },
 };
 
-function TwoDimProduct({dataFromJSON,id}) {
+function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
     /////// PARSE DATA IMMEDIATELY ///////
     const defaultImages = dataFromJSON.defaultImages;
     const selectionData = dataFromJSON.selectionData;
@@ -246,6 +246,29 @@ function TwoDimProduct({dataFromJSON,id}) {
   const nav = useNavigate();
   const [moreDetailInfo, setMoreDetailInfo] = useState(null);
   const {userInfo} = useSelector(state=>state.login);
+
+  /////////// QUERY PARAMS ///////////
+  const [queryParam, setQueryParam] = useState('');
+
+  useEffect(() => {
+    // Get the current URL
+    const currentUrl = window.location.href;
+
+    // Parse the URL
+    const url = new URL(currentUrl);
+
+    // Get the value of the 'q' query parameter
+    const queryParams = new URLSearchParams(url.search);
+    const qParamValue = queryParams.get('q');
+
+    // Update the state with the query parameter value
+    if (qParamValue) {
+      setQueryParam(qParamValue);
+    }
+  }, []);
+
+  /////////// QUERY PARAMS ///////////
+
   /////// ITEM REQUEST AND RESPONSE DATA ///////
   const url = `${EXTERNAL_URL}${id}`;
   const { data, loading, error } = useFetch(url, config, 0);
@@ -258,7 +281,12 @@ function TwoDimProduct({dataFromJSON,id}) {
       console.log("SINGLE COLOR DATA:" ,data);
       const mainImage = data.color.previewImage;
       const secondaryImage = data.color.tileImage;
-      const tmp = [mainImage, secondaryImage, ...defaultImages];
+      let tmp;
+      if (secondaryImage)
+        tmp = [mainImage, secondaryImage, ...defaultImages];
+      else
+        tmp = [mainImage, ...defaultImages];
+
       setImages(tmp);
     }
   }, [data]);
@@ -287,7 +315,15 @@ function TwoDimProduct({dataFromJSON,id}) {
                 if (singleOption.defaultSelected === true) {
                     // TODO: you assume default ones add 0€ cost!
                     // if not change the code here!
-                    const tmp = {[singleOption.title]:0};
+                    //const tmp = {[singleOption.title]:0};
+                    let tmp;
+                    if (typeof singleOption.price === 'object') {
+                      const selectedOption = Object.keys(singleOption.price)[0];
+                      tmp = {[`${singleOption.title} ${selectedOption}`]: singleOption.price[selectedOption]};
+                    } else {  
+                      tmp = {[singleOption.title]: singleOption.price};
+                    }
+                    
                     arr.push(tmp); 
                 }
             });
@@ -322,21 +358,32 @@ function TwoDimProduct({dataFromJSON,id}) {
         let current;
         if (subcategoryTitle==="check-mm") {
           subCat = itemData.color.properties.BlindWidth;
+        } else if (subcategoryTitle==="check-basic-plissee") {
+          subCat = queryParam;
+        } else if (subcategoryTitle==="") {
+          subCat = "rollo";
+        } else if (subcategoryTitle==="PlisseeWintergarten") {
+          // HARDCODED VALUE FOR WINTERGARTEN PLISSEE
+          subCat = "PL11"; 
         } else {
           subCat = Object.keys(itemConfiguration[subcategoryTitle][0])[0];
         }
 
-        for (let i=0;i<sampleSubCategories.length;i++) {
-          current = sampleSubCategories[i];
-          if (current.title===subCat) {
-              request.subcategory = Number(current.id);
-              break;
-          }
-      }
-        
-        const blendCol = Object.keys(itemConfiguration[blendcolorTitle][0])[0];
-        
 
+        if (subCat==="rollo") {
+          request.subcategory = "";
+        } else {
+          for (let i=0;i<sampleSubCategories.length;i++) {
+            current = sampleSubCategories[i];
+            if (current.title===subCat) {
+                request.subcategory = Number(current.id);
+                break;
+            }
+          }
+        }
+        
+        console.log("Object.keys(itemConfiguration[blendcolorTitle][0]): ",Object.keys(itemConfiguration[blendcolorTitle][0]));
+        const blendCol = Object.keys(itemConfiguration[blendcolorTitle][0])[0];
         for (let i=0;i<sampleBlendColors.length;i++) {
             current = sampleBlendColors[i];
             if (current.title===blendCol) {
@@ -352,13 +399,13 @@ function TwoDimProduct({dataFromJSON,id}) {
         request.category = requestCategory;
 
         //console.log("AAAAAAAAAAAA!!!!!");
-        //console.log("REQUEST OBJ: ", request);
+        console.log("PRICE REQUEST ATACAK");
         console.log("REQUESTTT: ",request);
         debouncedGetPriceFromBackend(request);
-        //console.log("AAAAAAAAAAAA!!!!!");
+        console.log("PRICE REQUEST ATTI");
         
     }
-  },[itemConfiguration, dimensions]);
+  },[itemConfiguration, dimensions,itemData]);
 
   const getPriceFromBackend = async (requestBody) => {
     const BASE_URL = process.env.REACT_APP_BE_API;
@@ -376,8 +423,10 @@ function TwoDimProduct({dataFromJSON,id}) {
         //console.log("validPrice: ", tmpValidPrice); 
         setValidPrice(tmpValidPrice);
         setCanAddCart(true);
+        console.log("PRICE REQUEST SON");
       } catch (error) {
         setCanAddCart(false);
+        console.log("PRICE REQUEST HATA");
       }
   }
 
@@ -396,7 +445,18 @@ function TwoDimProduct({dataFromJSON,id}) {
     const itemName = ( itemData?.id || "").split(/(?=[A-Z])/).join(" ");
     const secondaryName = itemData?.color?.title;
     const temp = extractAttributes(itemConfiguration);
-    const attributes = [`Höhe: ${dimensions.height/10}cm`, `Breite: ${dimensions.width/10}cm`, ...temp];
+    let attributes = [`Höhe: ${dimensions.height/10}cm`, `Breite: ${dimensions.width/10}cm`, ...temp];
+
+    if (queryParam) {
+      if (["127 mm", "89 mm"].includes(queryParam)) {
+        const additionalData = "Lamellenbreite: " + queryParam;
+        attributes = [additionalData, ...attributes];
+      }
+    }
+
+    if (extraCartInfoArray) {
+      attributes = [...extraCartInfoArray, ...attributes];
+    }
 
     const item = {
         ...dimensions,
@@ -479,12 +539,13 @@ function TwoDimProduct({dataFromJSON,id}) {
                             }
                             <CustomButton onClick={(e)=>handleClickReview(e)} variant='outlined' color='warning'>Bewertung abgeben</CustomButton>
                         </CustomButtonWrapper>
-                        <ProductDetails itemData={itemData} image={images[1]}/>
+                        <ProductDetails itemData={itemData} image={images[1]} queryParam={queryParam}/>
                         {
                             selectionData.map((item,index)=>{
                                 return (
                                 <Selection
                                     key={index}
+                                    index={index}
                                     optionList={item}
                                     itemConfiguration={itemConfiguration}
                                     setItemConfiguration={setItemConfiguration}

@@ -20,7 +20,7 @@ const CustomButton = styled(Button)`
 const ProductsContainer = styled.div`
     margin-bottom: 20px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     flex-wrap: wrap;
     max-width: 1800px;
     padding-left: 40px;
@@ -28,6 +28,7 @@ const ProductsContainer = styled.div`
 
     @media only screen and (max-width: 1200px) {
         flex-wrap: no-wrap;
+        justify-content: center;
     }
 
     @media only screen and (max-width: 470px) {

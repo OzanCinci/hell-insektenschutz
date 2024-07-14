@@ -50,12 +50,22 @@ const DetailList = styled.div`
     text-align: left;
 `;
 
-function ProductDetails({itemData, image}) {
+function ProductDetails({itemData, image, queryParam}) {
     const [details,setDetails] = useState(null);
 
     useEffect(()=>{
         if (itemData!==null && !details) {
-            setDetails(extractProperties(itemData.color.properties));
+            
+            let tmp = extractProperties(itemData.color.properties);
+
+            if (queryParam) {
+                if (["127 mm", "89 mm"].includes(queryParam)) {
+                    const additionalData = "Lamellenbreite: " + queryParam;
+                    tmp = [additionalData, ...tmp];
+                  }
+            }
+
+            setDetails(tmp);
         }
     },[itemData])
 

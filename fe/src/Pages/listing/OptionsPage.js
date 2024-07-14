@@ -21,7 +21,7 @@ const Container = styled.div`
 ////////////////////////////////////////////
 /////////////// options ////////////////////
 ////////////////////////////////////////////
-const defaultOptionsPage = ["plissees", "jalousie"];
+const defaultOptionsPage = ["plissees", "jalousie","lamellenvorhang", "rollo"];
 
 function OptionsPage() {
   const { category, model } = useParams();

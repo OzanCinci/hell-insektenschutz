@@ -482,7 +482,14 @@ const Grid = ({ loading, data, link, productInfoUrl }) => {
                                         <ItemContainer>
                                             <InfoButton onClick={()=>toggleDetail(index)}>{detailVisible[index] ? "Weniger Infos" : "Mehr Infos"} <CustomArrowDropDownIcon visible={detailVisible[index]}/></InfoButton>
                                             <ImgWrapper url={item.secondaryImage}>
-                                                <div style={{cursor: "pointer"}} onClick={e=>nav(`/produkts/${link}/${item.id}`)}>
+                                                <div style={{cursor: "pointer"}} onClick={e=>{
+                                                    if (item.q)
+                                                        nav(`/produkts/${link}/${item.id}?q=${item.q}`);
+                                                    else if (item.detailedLink)
+                                                        nav(`/produkts/${item.detailedLink}/${item.id}`);
+                                                    else
+                                                        nav(`/produkts/${link}/${item.id}`);
+                                                }}>
                                                     <CustomImg src={item.mainImage} width='100%' height='auto' />
                                                 </div>
                                                 <MoreDetail visible={detailVisible[index]}>
@@ -510,7 +517,14 @@ const Grid = ({ loading, data, link, productInfoUrl }) => {
                                                 </PriceTag>
                                             </BottomInfoWrapper>
                                             <div>
-                                                <CustomButton onClick={(e)=>nav(`/produkts/${link}/${item.id}`)} variant="outlined" color="warning">Jetzt konfigurieren</CustomButton>
+                                                <CustomButton onClick={(e)=>{
+                                                    if (item.q)
+                                                        nav(`/produkts/${link}/${item.id}?q=${item.q}`);
+                                                    else if (item.detailedLink)
+                                                        nav(`/produkts/${item.detailedLink}/${item.id}`);
+                                                    else
+                                                        nav(`/produkts/${link}/${item.id}`);
+                                                }} variant="outlined" color="warning">Jetzt konfigurieren</CustomButton>
                                             </div>
                                         </ItemContainer>
                                     );

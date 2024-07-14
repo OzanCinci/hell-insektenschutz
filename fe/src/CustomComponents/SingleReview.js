@@ -84,7 +84,7 @@ const SingleReview = styled(({ name, date, rating, description }) => {
         {isExpanded ? description : shortDescription}
         {isLongDescription && (
           <span style={{ color: '#f59f4c', cursor: 'pointer', fontWeight: "bold" }} onClick={handleReadMoreClick}>
-            {isExpanded ? ' read less' : ' read more'}
+            {isExpanded ? ' weniger lesen' : '  mehr lesen'}
           </span>
         )}
       </Description>

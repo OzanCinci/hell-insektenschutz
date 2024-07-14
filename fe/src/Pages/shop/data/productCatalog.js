@@ -1,9 +1,12 @@
 import BasicPlisseImg from '../../../images/shopCategories/basicplisse.webp';
 import PremPlisseImg from '../../../images/shopCategories/premplisse.webp';
+import Wintergardenplissee from '../../../images/shopCategories/wintergardenplissee.webp';
 
 import BasicJalousieImg from '../../../images/shopCategories/basicjalousie.webp';
 import PremJalousieImg from '../../../images/shopCategories/premjalousie.webp';
+import Holzjalousie from '../../../images/shopCategories/holzjalousie.webp';
 
+import BasicRolloImg from '../../../images/shopCategories/basicrollo.webp';
 import PremRolloImg from '../../../images/shopCategories/premrollo.webp';
 import DoppelRolloImg from '../../../images/shopCategories/doppelrollo.webp';
 
@@ -49,6 +52,22 @@ export const catalogData = {
                     }
                 ]
             },
+            {
+                title: "Wintergarten Plissee",
+                image: Wintergardenplissee,
+                desc: [
+                    "Schöner, eleganter Sonnen- und Hitzeschutz",
+                    "über 600 Stoffe",
+                    "Plissee- oder Wabenplissee-Optionen",
+                    "Verschiedene Lichtdurchlässigkeitsstufen",
+                ],
+                links: [
+                    {
+                        text: "siehe Optionen",
+                        url: "/geschaft/plissees/wintergarten-plissee-optionen",
+                    }
+                ]
+            },
         ],
         measurement: "/messanleitung/plissee",
         installation: null,
@@ -89,12 +108,46 @@ export const catalogData = {
                     }
                 ]
             },
+            {
+                title: "Holzjalousie",
+                image: Holzjalousie,
+                desc: [
+                    "Lamellenbreite wählbar",
+                    "Montage ohne bohren möglich",
+                    "25, 50 mm Lamellen",
+                    "hochwertiges Lindenholz",
+                    "Bedienung und Zubehör wählbar"
+                ],
+                links: [
+                    {
+                        text: "siehe Optionen",
+                        url: "/geschaft/jalousie/holzjalousie-optionen",
+                    }
+                ]
+            },
         ],
         measurement: "/messanleitung/jalousie",
         installation: null,
     },
     "rollos": {
         data: [
+            {
+                title: "Basic Rollo",
+                image: BasicRolloImg,
+                desc: [
+                    "über 90 Stoffe",
+                    "bis 180 cm Breite",
+                    "wartungsfreie Technik",
+                    "Montage ohne bohren ",
+                    "millimetergenau gefertigt"
+                ],
+                links: [
+                    {
+                        text: "siehe Optionen",
+                        url: "/geschaft/rollo/basic-rollo-optionen",
+                    }
+                ]
+            },
             {
                 title: "Premium Rollo",
                 image: PremRolloImg,
