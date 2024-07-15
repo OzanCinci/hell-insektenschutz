@@ -278,7 +278,7 @@ function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
   useEffect(() => {
     if (data !== null) {
       setItemData(data);
-      console.log("SINGLE COLOR DATA:" ,data);
+      //console.log("SINGLE COLOR DATA:" ,data);
       const mainImage = data.color.previewImage;
       const secondaryImage = data.color.tileImage;
       let tmp;
@@ -332,7 +332,7 @@ function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
         });
 
         setItemConfiguration(tempItemConfiguration);
-        console.log("tempItemConfiguration: ",tempItemConfiguration);
+        //console.log("tempItemConfiguration: ",tempItemConfiguration);
     } else {
         // calculate price logic
         const tempConfigPrice = sumValues(itemConfiguration);
@@ -382,7 +382,7 @@ function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
           }
         }
         
-        console.log("Object.keys(itemConfiguration[blendcolorTitle][0]): ",Object.keys(itemConfiguration[blendcolorTitle][0]));
+        //console.log("Object.keys(itemConfiguration[blendcolorTitle][0]): ",Object.keys(itemConfiguration[blendcolorTitle][0]));
         const blendCol = Object.keys(itemConfiguration[blendcolorTitle][0])[0];
         for (let i=0;i<sampleBlendColors.length;i++) {
             current = sampleBlendColors[i];
@@ -399,10 +399,10 @@ function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
         request.category = requestCategory;
 
         //console.log("AAAAAAAAAAAA!!!!!");
-        console.log("PRICE REQUEST ATACAK");
-        console.log("REQUESTTT: ",request);
+        //console.log("PRICE REQUEST ATACAK");
+        //console.log("REQUESTTT: ",request);
         debouncedGetPriceFromBackend(request);
-        console.log("PRICE REQUEST ATTI");
+        //console.log("PRICE REQUEST ATTI");
         
     }
   },[itemConfiguration, dimensions,itemData]);
@@ -423,10 +423,10 @@ function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
         //console.log("validPrice: ", tmpValidPrice); 
         setValidPrice(tmpValidPrice);
         setCanAddCart(true);
-        console.log("PRICE REQUEST SON");
+        //console.log("PRICE REQUEST SON");
       } catch (error) {
         setCanAddCart(false);
-        console.log("PRICE REQUEST HATA");
+        //console.log("PRICE REQUEST HATA");
       }
   }
 
@@ -470,7 +470,7 @@ function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
         secondaryName: secondaryName
     };
 
-    console.log("CART ITEM: ", item);
+    //console.log("CART ITEM: ", item);
 
     dispatch({type:ADD_TO_CART,payload:item});
 
@@ -485,7 +485,7 @@ function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
 
   const handleClickReview = (e) => {
     e.preventDefault();
-    console.log("userInfo: ",userInfo);
+    //console.log("userInfo: ",userInfo);
 
     if (userInfo===null) {
         const button = document.getElementById("loginPopup");

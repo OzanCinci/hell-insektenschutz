@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
-import { ADD_TO_CART } from '../../../constants/user';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
-import { useDispatch } from 'react-redux';
 import Notification from './Notification';
 import ShippingPriceTable from '../../../images/shop/shippingprices.webp';
 

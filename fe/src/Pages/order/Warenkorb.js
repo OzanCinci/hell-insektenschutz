@@ -4,9 +4,11 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { INCREMENT_NUMBER_IN_CART, DECREMENT_NUMBER_FROM_CART, REMOVE_FROM_CART, REMOVE_ALL_CART } from '../../constants/user';
+import { CHANGE_SHIPPING_COST, INCREMENT_NUMBER_IN_CART, DECREMENT_NUMBER_FROM_CART, REMOVE_FROM_CART, REMOVE_ALL_CART } from '../../constants/user';
 import NoOrderImg from '../../images/account/sepet.jpeg';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import ShippingPriceTable from '../../images/shop/shippingprices.webp';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 
 const Container = styled.div`
     min-height: 100vh;
@@ -191,7 +193,7 @@ const SingleItem = styled(({url,index,attributes,secondaryName, quantity, price,
                         </div>
                         
                     </div>
-                    <AntiPreis>{price} €</AntiPreis>
+                    <AntiPreis>{`${price.toFixed(2)}€`}</AntiPreis>
                     <ButtonGroupWrapper>
                         <ButtonGroup
                             disableElevation
@@ -215,8 +217,55 @@ const SingleItem = styled(({url,index,attributes,secondaryName, quantity, price,
             </Preis>
         </SingItemContainer>
     );
-})`
+})``;
 
+const SelectorComponent = styled(({ data }) => {
+    return (
+      <div>
+        <button
+          id="cart-shipping-price-more-detail-btn"
+          style={{ display: "none" }}
+          type="button"
+          className="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#productColorMoreDetail"
+        />
+        {data ? (
+          <div>
+            <div
+              className="modal fade"
+              id="productColorMoreDetail"
+              tabIndex="-1"
+              aria-labelledby="productColorMoreDetailLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 style={{textAlign: "left"}} className="modal-title" id="productColorMoreDetailLabel">{data.title}</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className="modal-body">
+                    <img height="200px" width="auto" src={data.img} alt="Modal Content" />
+                    <div style={{ textAlign: "left" }} className="my-4">
+                      {data.body.map((item, index) => (
+                        <li className="my-2" key={index}>{item}</li>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </div>
+    );
+  })`
+    .modal-dialog-centered {
+        display: flex;
+    }
 `;
 
 const NoOrderMessage = styled.div`
@@ -257,10 +306,65 @@ const CustomButton = styled(Button)`
     background-color: white !important;
 `;
 
+const HelpTextWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 5%;
+  margin: 10px 20px;
+  margin-right: 5px;
+  color: grey;
+  font-weight: bold;
+`;
+
+const moreDetailObj = {
+    title: "über den Versand",
+    img: ShippingPriceTable,
+    body: [
+        "Die Lieferzeit beträgt 5 bis 12 Werktage.",
+        "Der Preis beinhaltet die Mehrwertsteuer (MwSt.), jedoch fallen zusätzliche Versandkosten an.",
+        "Sie können der obigen Tabelle die detaillierten Versandkosten entnehmen.",
+        "Die Versandgebühr wird nur einmal pro Bestellung berechnet, auch wenn es mehr als ein Produkt sind. Die Berechnung erfolgt anhand des größten Produkts, und die Gebühr wird nur einmal erhoben."
+    ]
+};
+
 function Warenkorb() {
     const cart = useSelector(state=>state.cart);
     const nav = useNavigate();
     const dispatch = useDispatch();
+
+
+    useEffect(()=>{
+        console.log("cart: ", cart);
+        //console.log("CART İÇİNDEKİ USEEFFECT ÇALIŞTITTTTTIIII!!!")
+        handleShippingPriceChange();
+    },[]);
+
+    const handleMoreDetailclicked = () => {
+        const button = document.getElementById("cart-shipping-price-more-detail-btn");
+        if (button) {
+            setTimeout(() => {
+                button.click();
+            }, 0);
+        }
+    }
+
+    const handleShippingPriceChange = () => {
+        const widths = cart.items.map(item=>item.shippingWidth).filter(item=>item);
+        const maxWidth = Math.max(...widths);
+
+        console.log("maxWidth: ",maxWidth);
+        let shippingCost = 3.90;
+        if (maxWidth<=1800)
+            shippingCost = 5.90;
+        else if (maxWidth<=2500)
+            shippingCost = 15.90;
+        else if (maxWidth<=3800)
+            shippingCost = 49.90;
+        else if (maxWidth<=5000)
+            shippingCost = 99.90;
+
+        dispatch({type:CHANGE_SHIPPING_COST,payload:shippingCost});            
+    }
 
     const handleButtonClick = (e,type,uniqueCode) => {
         e.preventDefault();
@@ -269,18 +373,25 @@ function Warenkorb() {
             dispatch({type:INCREMENT_NUMBER_IN_CART,payload:uniqueCode});
         else
             dispatch({type:DECREMENT_NUMBER_FROM_CART,payload:uniqueCode});
+
+        handleShippingPriceChange()
     }
 
     const removeFromCart = (uniqueCode) => {
         dispatch({type:REMOVE_FROM_CART,payload:uniqueCode});
+
+        handleShippingPriceChange();
     }
 
     const removeAllInCart = () => {
         dispatch({type:REMOVE_ALL_CART});
+
+        handleShippingPriceChange();
     }
 
   return (
     <>
+    <SelectorComponent data={moreDetailObj}/>
     {
         cart.numberOfItems===0
         ? (<div>
@@ -291,75 +402,84 @@ function Warenkorb() {
             </NoProductWrapper>
         </div>)
         : ( <Container>
-            <Items>
-                <Desc>Artikel in Ihrem Warenkorb</Desc>
-                <SubDesc>
-                    <RemoveAll onClick={()=>removeAllInCart()}>Alles entfernen</RemoveAll>
-                    <Preis>Preis</Preis>
-                </SubDesc>
-                <hr></hr>
-                <div>
-                    {
-                        cart.items.map((item,index)=>{
-                            return (
-                                <>
-                                <SingleItem 
-                                    key={index} 
-                                    index={index} 
-                                    url={item.cartImage}
-                                    quantity={item.quantity} 
-                                    price={item.price} 
-                                    
-                                    itemName={item.itemName} 
-                                    secondaryName={item.secondaryName}
-                                    attributes={item.attributes}
-                                    
-                                    handleButtonClick={handleButtonClick}
-                                    uniqueCode={item.uniqueCode}
-                                    removeFromCart={removeFromCart}
-                                />
-                                <hr></hr>
-                                </>
-                            );
-                        })
-                    }
-                </div>
-                <TotalAmount><TotalAmountDesc>Zwischensumme ({cart.numberOfItems}) Artikel: </TotalAmountDesc>{cart.price.toFixed(2)} €</TotalAmount>
-            </Items>
-            <Summary>
-                <div class="card" style={{width: "18rem"}}>
-                    <div class="card-header">
-                        BESTELLÜBERSICHT
+                
+                <Items>
+                    <Desc>Artikel in Ihrem Warenkorb</Desc>
+                    <SubDesc>
+                        <RemoveAll onClick={()=>removeAllInCart()}>Alles entfernen</RemoveAll>
+                        <Preis>Preis</Preis>
+                    </SubDesc>
+                    <hr></hr>
+                    <div>
+                        {
+                            cart.items.map((item,index)=>{
+                                return (
+                                    <>
+                                    <SingleItem 
+                                        key={index} 
+                                        index={index} 
+                                        url={item.cartImage}
+                                        quantity={item.quantity} 
+                                        price={item.price} 
+                                        
+                                        itemName={item.itemName} 
+                                        secondaryName={item.secondaryName}
+                                        attributes={item.attributes}
+                                        
+                                        handleButtonClick={handleButtonClick}
+                                        uniqueCode={item.uniqueCode}
+                                        removeFromCart={removeFromCart}
+                                    />
+                                    <hr></hr>
+                                    </>
+                                );
+                            })
+                        }
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li className="list-group-item d-flex justify-content-space-around">
-                            <span style={{marginRight: "auto", marginLeft: "0"}}>
-                                Artikel: 
-                            </span>
-                            <span>
-                                {cart.price.toFixed(2)} €
-                            </span>
-                        </li>
-                        <li className="list-group-item d-flex justify-content-space-around">
-                            <span style={{marginRight: "auto", marginLeft: "0"}}>
-                                Versand:
-                            </span>
-                            <span>
-                                {cart.shippingPrice} €
-                            </span>
-                        </li>
-                        <div className="list-group-item d-flex justify-content-space-around">
-                            <div style={{marginRight: "auto", marginLeft: "0"}}>
-                                Gesamt:
-                            </div>
-                            <div>
-                                {(cart.shippingPrice + cart.price).toFixed(2)} €
-                            </div>
+                    <TotalAmount><TotalAmountDesc>Zwischensumme ({cart.numberOfItems}) Artikel: </TotalAmountDesc>{cart.price.toFixed(2)} €</TotalAmount>
+                </Items>
+                <Summary>
+                    <div class="card" style={{width: "18rem"}}>
+                        <div class="card-header">
+                            BESTELLÜBERSICHT
                         </div>
-                    </ul>
-                </div>
-                <Button onClick={()=>nav("/order-create")} style={{width: "18rem"}} variant="contained" color='warning'>Bestellung abschließen</Button>
-            </Summary>
+                        <ul class="list-group list-group-flush">
+                            <li className="list-group-item d-flex justify-content-space-around">
+                                <span style={{marginRight: "auto", marginLeft: "0"}}>
+                                    Artikel: 
+                                </span>
+                                <span>
+                                    {cart.price.toFixed(2)} €
+                                </span>
+                            </li>
+                            <li className="list-group-item d-flex justify-content-space-around">
+                                <span style={{marginRight: "auto", marginLeft: "0"}}>
+                                    Versand:
+                                </span>
+                                <span>
+                                    {cart.shippingPrice} €
+                                </span>
+                            </li>
+                            <div className="list-group-item d-flex justify-content-space-around">
+                                <div style={{marginRight: "auto", marginLeft: "0"}}>
+                                    Gesamt:
+                                </div>
+                                <div>
+                                    {(cart.shippingPrice + cart.price).toFixed(2)} €
+                                </div>
+                            </div>
+                            <HelpTextWrapper>
+                                <div>
+                                    Über die Versandgebühr
+                                </div>
+                                <div style={{cursor: "pointer"}} onClick={()=>handleMoreDetailclicked()}>
+                                    <HelpOutlineOutlinedIcon style={{ color: "grey" }} />
+                                </div>
+                            </HelpTextWrapper>
+                        </ul>
+                    </div>
+                    <Button onClick={()=>nav("/order-create")} style={{width: "18rem"}} variant="contained" color='warning'>Bestellung abschließen</Button>
+                </Summary>
         </Container>)
     }
    </>

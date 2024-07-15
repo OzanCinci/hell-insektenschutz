@@ -1,4 +1,4 @@
-import { ADD_TO_CART, DECREMENT_NUMBER_FROM_CART, INCREMENT_NUMBER_IN_CART, REMOVE_ALL_CART, REMOVE_FROM_CART, SET_REVIEW_DATA } from "../constants/user"
+import { ADD_TO_CART, DECREMENT_NUMBER_FROM_CART, INCREMENT_NUMBER_IN_CART, REMOVE_ALL_CART, REMOVE_FROM_CART, SET_REVIEW_DATA, CHANGE_SHIPPING_COST } from "../constants/user"
 // SAMPLE CART DATA EXAMPLE
 const emptyCart = {
     numberOfItems: 0,
@@ -19,6 +19,12 @@ export const createReviewDataReducer = (state=null,action) => {
 export const cartReducer = (state=emptyCart,action) => {
     let updatedState,uniqueCode,removedItem,selectedItem;
     switch(action.type){
+        case CHANGE_SHIPPING_COST:
+            const shippingCost = action.payload;
+            updatedState = {...state};
+            updatedState.shippingPrice = shippingCost;
+            localStorage.setItem('localCartInfo', JSON.stringify({...updatedState}));
+            return {...updatedState};
         case ADD_TO_CART:
             // payload is directly the item itself
             const newItem = action.payload;
