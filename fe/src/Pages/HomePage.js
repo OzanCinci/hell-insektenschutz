@@ -5,6 +5,8 @@ import Services from '../LandingPageComponents/Services'
 import Reviews from '../LandingPageComponents/Reviews'
 import Products from '../LandingPageComponents/Products'
 import Map from '../LandingPageComponents/Map'
+import ImageGalery from '../LandingPageComponents/ImageGalery'
+import ProduktCatalog from '../LandingPageComponents/ProduktCatalog'
 
 function HomePage() {
 
@@ -15,7 +17,9 @@ function HomePage() {
 
   return (
     <div>
-      <LandingPagePhoto/>
+      {/*<LandingPagePhoto/> */}
+      <ImageGalery/>
+      <ProduktCatalog/>
       <Services/>
       <Reviews/>
       <Products/>
