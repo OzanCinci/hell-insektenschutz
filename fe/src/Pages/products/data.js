@@ -269,6 +269,7 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/BasicPlissee/",
         defaultHeight: 500,
         defaultWidth: 300,
+        freeSamplingTitle: "Stoffmuster Basic Plissee",
     },
     "PremiumPlissee": {
         defaultImages : [
@@ -616,6 +617,7 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/Plissee/",
         defaultHeight: 500,
         defaultWidth: 300,
+        freeSamplingTitle: "Stoffmuster Premium Plissee"
     },
     "BasicJalousie25mm": {
         defaultImages: [
@@ -986,6 +988,7 @@ export const uniqueProductData = {
         measurementUrl: "/messanleitung/jalousie",
         productDetailUrl: "/api/product/Jalousie/Basic Jalousie",
         EXTERNAL_URL: "/api/external-products/colors/BasicJalousie/",
+        freeSamplingTitle:"Lamellenmuster Basic Alu Jalousien 25mm",
     },
     "BasicJalousie16mm": {
         defaultImages: [
@@ -1329,6 +1332,7 @@ export const uniqueProductData = {
         measurementUrl: "/messanleitung/jalousie",
         productDetailUrl: "/api/product/Jalousie/Basic Jalousie",
         EXTERNAL_URL: "/api/external-products/colors/BasicJalousie/",
+        freeSamplingTitle:"Lamellenmuster Basic Alu Jalousien 16mm",
     },
     "BasicJalousie50mm": {
         defaultImages: [
@@ -1469,6 +1473,7 @@ export const uniqueProductData = {
         measurementUrl: "/messanleitung/jalousie",
         productDetailUrl: "/api/product/Jalousie/Basic Jalousie",
         EXTERNAL_URL: "/api/external-products/colors/BasicJalousie/",
+        freeSamplingTitle:"Lamellenmuster Basic Alu Jalousien 50mm",
     },
     "BasicLamellenvorhang": {
         defaultImages: [
@@ -1672,6 +1677,7 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/BasicLamellenvorhang/",
         requestCategory: "BasicLamellenvorhang",
         blendcolorTitle: "Schienenfarbe",
+        freeSamplingTitle: "Stoffmuster Basic Lamellenvorhang"
     },
     "PremiumLamellenvorhang": {
         defaultImages: [
@@ -1905,6 +1911,7 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/Lamellenvorhang/",
         requestCategory: "Lamellenvorhang",
         blendcolorTitle: "Schienenfarbe",
+        freeSamplingTitle: "Stoffmuster Premium Lamellenvorhang",
     },
     "PremiumRollo": {
         defaultImages: [
@@ -2485,6 +2492,7 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/PremiumRollo/",
         subcategoryTitle: "",
         blendcolorTitle: "Träger-/Kassettenfarbe",
+        freeSamplingTitle: "Stoffmuster Premium Rollo",
     },
     "Doppelrollo": {
         defaultImages: [
@@ -3025,6 +3033,7 @@ export const uniqueProductData = {
         requestCategory: "Doppelrollo",
         defaultHeight: 1500,
         defaultWidth: 1000,
+        freeSamplingTitle: "Stoffmuster Premium Doppelrollo"
     },
     "BasicRollo": {
         defaultImages: [
@@ -3204,6 +3213,7 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/BasicRollo/",
         subcategoryTitle: "",
         blendcolorTitle: "Träger-/Kassettenfarbe",
+        freeSamplingTitle: "Stoffmuster Basic Rollo",
     },
     "WintergartenPlissee": {
         defaultImages: [
@@ -3378,6 +3388,7 @@ export const uniqueProductData = {
         requestCategory: "PlisseeWintergarten",
         productDetailUrl: "/api/product/Plissee/Wintergarten Plissee",
         subcategoryTitle: "PlisseeWintergarten",
+        freeSamplingTitle: "Stoffmuster Premium Plissee"
     },
     "PremiumJalousie25mm": {
         defaultImages: [
@@ -3877,6 +3888,7 @@ export const uniqueProductData = {
         requestCategory: "PremiumJalousie",
         EXTERNAL_URL: "/api/external-products/colors/PremiumJalousie/",
         subcategoryTitle: "check-mm",
+        freeSamplingTitle:"Lamellenmuster Premium Alu Jalousien 25mm",
     },
     "PremiumJalousie16mm": {
         defaultImages: [
@@ -4356,6 +4368,7 @@ export const uniqueProductData = {
         requestCategory: "PremiumJalousie",
         EXTERNAL_URL: "/api/external-products/colors/PremiumJalousie/",
         subcategoryTitle: "check-mm",
+        freeSamplingTitle:"Lamellenmuster Premium Alu Jalousien 16mm",
     },
     "PremiumJalousie50mm": {
         defaultImages: [
@@ -4478,6 +4491,7 @@ export const uniqueProductData = {
         requestCategory: "PremiumJalousie",
         EXTERNAL_URL: "/api/external-products/colors/PremiumJalousie/",
         subcategoryTitle: "check-mm",
+        freeSamplingTitle:"Lamellenmuster Premium Alu Jalousien 50mm",
     },
     "Holzjalousie25mm": {
         defaultImages: [
@@ -4751,6 +4765,7 @@ export const uniqueProductData = {
         requestCategory: "Holzjalousie",
         EXTERNAL_URL: "/api/external-products/colors/Holzjalousie/",
         subcategoryTitle: "check-mm",
+        freeSamplingTitle: "Lamellenmuster Holz Jalousien 25mm",
     },
     "Holzjalousie50mm": {
         defaultImages: [
@@ -4883,5 +4898,6 @@ export const uniqueProductData = {
         requestCategory: "Holzjalousie",
         EXTERNAL_URL: "/api/external-products/colors/Holzjalousie/",
         subcategoryTitle: "check-mm",
+        freeSamplingTitle: "Lamellenmuster Holz Jalousien 50mm",
     }
 };

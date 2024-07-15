@@ -353,8 +353,10 @@ function Warenkorb() {
         const maxWidth = Math.max(...widths);
 
         console.log("maxWidth: ",maxWidth);
-        let shippingCost = 3.90;
-        if (maxWidth<=1800)
+        let shippingCost;
+        if (maxWidth===-Infinity)
+            shippingCost = 3.90;
+        else if (maxWidth<=1800)
             shippingCost = 5.90;
         else if (maxWidth<=2500)
             shippingCost = 15.90;

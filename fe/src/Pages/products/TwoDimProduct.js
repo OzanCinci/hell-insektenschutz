@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useFetch from '../../hooks/useFetch';
@@ -6,6 +6,7 @@ import axios from 'axios';
 import { ADD_TO_CART } from '../../constants/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounce, get } from 'lodash';
+import { extractProperties } from '../../CustomComponents/extractProperties';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
 import Carousel from '../ProductComponents/Carousel';
@@ -226,7 +227,7 @@ const config = {
     },
 };
 
-function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
+function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     /////// PARSE DATA IMMEDIATELY ///////
     const defaultImages = dataFromJSON.defaultImages;
     const selectionData = dataFromJSON.selectionData;
@@ -239,6 +240,7 @@ function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
     const EXTERNAL_URL = dataFromJSON.EXTERNAL_URL;
     const defaultHeight = dataFromJSON.defaultHeight;
     const defaultWidth = dataFromJSON.defaultWidth;
+    let freeSamplingTitle = dataFromJSON.freeSamplingTitle;
     /////// PARSE DATA IMMEDIATELY ///////
 
 
@@ -478,6 +480,53 @@ function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
     if (button)
         setTimeout(()=>button.click(),300);
   }
+
+
+  const handleAddFreeSamplingIntoCard = (e) => {
+    e.preventDefault();
+
+    const uniqueCode = generateUniqueCode();
+    const secondaryName = itemData?.color?.title;
+    const temp = extractProperties(itemData?.color?.properties);
+    let attributes = [...temp];
+
+    if (queryParam) {
+      if (["127 mm", "89 mm"].includes(queryParam)) {
+        const additionalData = "Lamellenbreite: " + queryParam;
+        attributes = [additionalData, ...attributes];
+      }
+    }
+
+    if (extraCartInfoArray) {
+      attributes = [...extraCartInfoArray, ...attributes];
+    }
+
+    if (freeSamplingTitle.includes("Plissee")) {
+      const MaterialType = itemData.color.properties.MaterialType;
+      if (MaterialType==="Wabenplissee") {
+        freeSamplingTitle = freeSamplingTitle.replace("Plissee", "Wabenplissee");
+      }
+    }
+
+    const item = {
+        attributes: attributes,
+        shippingWidth: 0,
+        cartImage: images[1],
+        price: 0,
+        quantity: 1,
+        uniqueCode: uniqueCode,
+        itemName: freeSamplingTitle,
+        secondaryName: secondaryName
+    };
+
+    dispatch({type:ADD_TO_CART,payload:item});
+
+    const button = document.getElementById('open-notification-button');
+    if (button)
+        setTimeout(()=>button.click(),300);
+
+  }
+
   /////// ADD TO CART LOGIC ///////
 
   /////// DO REVIEW LOGIC ///////
@@ -604,6 +653,7 @@ function TwoDimProduct({dataFromJSON,id, extraCartInfoArray}) {
                                 itemPrice={validPrice + configPrice}
                                 setMoreDetailInfo={setMoreDetailInfo}
                                 handleAddIntoCard={handleAddIntoCard}
+                                handleAddFreeSamplingIntoCard={handleAddFreeSamplingIntoCard}
                             />
                         </div>
                     </RightColumn>

@@ -186,6 +186,66 @@ const ButtonWrapper = styled.div`
     }
 `;
 
+const SelectorComponent = styled(({ data }) => {
+    return (
+      <div>
+        <button
+          id="free-sampling-more-detail-btn"
+          style={{ display: "none" }}
+          type="button"
+          className="btn btn-primary"
+          data-bs-toggle="modal"
+          data-bs-target="#productColorMoreDetail"
+        />
+        {data ? (
+          <div>
+            <div
+              className="modal fade"
+              id="productColorMoreDetail"
+              tabIndex="-1"
+              aria-labelledby="productColorMoreDetailLabel"
+              aria-hidden="true"
+            >
+              <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 style={{textAlign: "left"}} className="modal-title" id="productColorMoreDetailLabel">{data.title}</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className="modal-body">
+                    <img height="200px" width="auto" src={data.img} alt="Modal Content" />
+                    <div style={{ textAlign: "left" }} className="my-4">
+                      {data.body.map((item, index) => (
+                        <li className="my-2" key={index}>{item}</li>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        ) : (
+          <div></div>
+        )}
+      </div>
+    );
+  })`
+    .modal-dialog-centered {
+        display: flex;
+    }
+`;
+
+const freeSamplingData = {
+    title: "Wie man ein Gratis-Muster erhält?",
+    img: null,
+    body: [
+        "Sie können für jedes Produkt ein Gratis-Muster erhalten.",
+        "Gehen Sie zur Produktseite und wählen Sie den Artikel aus.",
+        "Dann können Sie auf die oben gezeigte Box klicken, um das Gratis-Muster in Ihren Warenkorb zu legen.",
+        "Beachten Sie, dass Sie nur 8 Gratis-Muster auf einmal erhalten können."
+    ]
+}
+
 
 function RegularCatalog() {
     const nav = useNavigate();
@@ -198,11 +258,24 @@ function RegularCatalog() {
         nav(path);
     }
 
+    const handleFreeSampleClick = (e) => {
+        e.preventDefault();
+        const buttonId = "free-sampling-more-detail-btn";
+        const button = document.getElementById(buttonId);
+        if (button) {
+            setTimeout(() => {
+                button.click();
+            }, 0);
+        }
+    }
+
   return (
     <>
+        <SelectorComponent data={freeSamplingData}/>
         <ButtonWrapper>
                 <CustomButton onClick={(e)=>handleNavigate(e,measurement)} variant='outlined' color='warning'>Anleitung für die richtige Messung</CustomButton>
                 <CustomButton onClick={(e)=>{}} variant='outlined' color='warning'>Anleitung für die richtige Installation</CustomButton>
+                <CustomButton onClick={(e)=>handleFreeSampleClick(e)} variant='outlined' color='warning'>Gratis Muster</CustomButton>
         </ButtonWrapper>
         <ProductsContainer>
             {

@@ -4,7 +4,23 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Button from '@mui/material/Button';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import Notification from './Notification';
+import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShippingPriceTable from '../../../images/shop/shippingprices.webp';
+
+
+const CustomButton = styled(Button)`
+    text-transform: none !important;
+    font-size: 17px !important;
+    
+    width: fit-content !important;
+    padding: 0.75% 10% !important;
+    white-space: nowrap !important;
+
+    @media only screen and (max-width: 700px) {
+        font-size: 15px !important;
+        padding: 0.75% 11% !important;
+    }
+`;
 
 const Container = styled.div`
     box-shadow: -1px 3px 5px 0px rgba(0,0,0,0.75);
@@ -74,6 +90,13 @@ const ExtraInfoWrapper = styled.div`
     margin-bottom: 10px;
 `;
 
+const BottomButtonWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+`;
+
 const moreDetailObj = {
     title: "über den Versand",
     img: ShippingPriceTable,
@@ -85,7 +108,7 @@ const moreDetailObj = {
     ]
 };
 
-function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard,canAddCart}) {
+function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart, handleAddFreeSamplingIntoCard}) {
     const [quantity,setQuantity] = useState(1);
 
     const handleSetMoreInfoClick = (e) => {
@@ -136,7 +159,10 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard,canAddCart})
                 }
                 </TotalPrice>
             </Wrapper>
-            <Button disabled={canAddCart===false} onClick={e=>handleAddIntoCard(e,quantity,itemPrice)} style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>
+            <BottomButtonWrapper>
+                <Button disabled={canAddCart===false} onClick={e=>handleAddIntoCard(e,quantity,itemPrice)} style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>
+                <CustomButton onClick={(e)=>handleAddFreeSamplingIntoCard(e)} variant='outlined' color='warning'> <AddShoppingCartIcon className='mx-2'/> Gratis Muster  </CustomButton>
+            </BottomButtonWrapper>
 
         </Container>
     </>
