@@ -4,12 +4,11 @@ import StraightenIcon from '@mui/icons-material/Straighten';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import HandymanIcon from '@mui/icons-material/Handyman';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import {data} from './data/insekData';
+import { catalogData } from './data/productCatalog';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import Services from '../../LandingPageComponents/Services';
 import Reviews from '../../LandingPageComponents/Reviews';
-import { useNavigate } from 'react-router-dom';
-import {  Outlet } from "react-router-dom";
+import {  Outlet, useLocation } from "react-router-dom";
 
 const Container = styled.div`
     max-width: 1700px;
@@ -233,20 +232,13 @@ const LineText = styled.div`
 `;
 
 function ShopDetail() {
-    const nav = useNavigate();
-
-    const handleClick = (url) => {
-        if (!url)
-            return;
-
-        console.log(url);
-        nav(url);
-    }
+    const location = useLocation()?.pathname.split("/").at(-1);
+    const installation = location ? catalogData[location]?.installation : null;
 
   return (
     <Container>
         <InfoContainer>
-            <InfoTitle>MESS, GESTALTE, ZUSAMMENBAUEN – Einfacher geht's nicht!</InfoTitle>
+            <InfoTitle>{installation || "MESS, GESTALTE, ZUSAMMENBAUEN – Einfacher geht's nicht!"}</InfoTitle>
             <InfoBody>
                 <ItemWrapper>
                     <StraightenIcon color='warning' style={{ fontSize: 60 }}/>

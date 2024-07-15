@@ -602,7 +602,9 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                                 />)
                             })
                         }
-                        <button onClick={()=>console.log("ITEM CONFIGURATION: ", itemConfiguration)}>printf item configuration</button>
+
+                        {/*<button onClick={()=>console.log("ITEM CONFIGURATION: ", itemConfiguration)}>printf item configuration</button> */}
+                        
                         <Title>Abmessungen</Title>
                             <HowtoMeasureWrapper>
                                 Anleitung zum 

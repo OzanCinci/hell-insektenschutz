@@ -5,6 +5,7 @@ import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
+import GratisMutterImg from '../../../images/shop/gratis.webp';
 
 const CustomButton = styled(Button)`
     margin-top: 5px !important;
@@ -186,6 +187,17 @@ const ButtonWrapper = styled.div`
     }
 `;
 
+const CustomPopUpImg = styled.img`
+    height: 200px; 
+    width: auto;
+
+    @media only screen and (max-width: 800px) {
+        height: auto; 
+        width: 105%;
+        transform: translateX(-2.5%);
+    }
+`;
+
 const SelectorComponent = styled(({ data }) => {
     return (
       <div>
@@ -213,7 +225,7 @@ const SelectorComponent = styled(({ data }) => {
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                   </div>
                   <div className="modal-body">
-                    <img height="200px" width="auto" src={data.img} alt="Modal Content" />
+                    <CustomPopUpImg  src={data.img} alt="Modal Content" />
                     <div style={{ textAlign: "left" }} className="my-4">
                       {data.body.map((item, index) => (
                         <li className="my-2" key={index}>{item}</li>
@@ -237,11 +249,11 @@ const SelectorComponent = styled(({ data }) => {
 
 const freeSamplingData = {
     title: "Wie man ein Gratis-Muster erhält?",
-    img: null,
+    img: GratisMutterImg,
     body: [
         "Sie können für jedes Produkt ein Gratis-Muster erhalten.",
         "Gehen Sie zur Produktseite und wählen Sie den Artikel aus.",
-        "Dann können Sie auf die oben gezeigte Box klicken, um das Gratis-Muster in Ihren Warenkorb zu legen.",
+        "Scrollen Sie auf der Seite nach unten.Dann können Sie auf die oben gezeigte Box klicken, um das Gratis-Muster in Ihren Warenkorb zu legen.",
         "Beachten Sie, dass Sie nur 8 Gratis-Muster auf einmal erhalten können."
     ]
 }
