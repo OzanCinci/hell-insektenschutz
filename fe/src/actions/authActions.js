@@ -83,8 +83,8 @@ export const registerAction = (obj) => async(dispatch)=> {
         "data":{
                  "email": obj.email,
                  "password": obj.password,
-                 "firstname": obj.firstName,
-                 "lastname": obj.lastName,
+                 "firstName": obj.firstName,
+                 "lastName": obj.lastName,
                  "phone": String(obj.telephone),
                  "role": "USER"
                 }
