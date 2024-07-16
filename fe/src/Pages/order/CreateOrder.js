@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import styled from 'styled-components';
 import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -8,13 +9,9 @@ import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import InputAdornment from "@mui/material/InputAdornment";
 import AddCardIcon from '@mui/icons-material/AddCard';
-import LocalMallIcon from '@mui/icons-material/LocalMall';
-import TempImg from '../../images/details/plissee.jpg';
-import TempImg2 from '../../images/details/alt_schiebetür.jpg';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
@@ -104,6 +101,10 @@ const SingleSlide = styled.div`
     margin-top: -50px;
 `;
 
+const LastSingleSlide = styled(SingleSlide)`
+    margin-top: 10px;
+`;
+
 const ArrowWrapper = styled.div`
     display: flex;
     flex-direction: row;
@@ -121,6 +122,25 @@ const Title = styled.div`
     margin-bottom: 20px;
 `;
 
+const ProductTitle = styled.div`
+    text-align: left;
+    padding-left: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #696984;
+`;
+
+const SecondaryTitle = styled.div`
+    text-align: left;
+    padding-left: 10px;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: underline;
+    color: #696984;
+    color: black;
+    margin-bottom: 10px;
+`;
+
 const ModifiedAlert = styled(Alert)`
     width: 90%;
     font-size: 18px !important;
@@ -135,8 +155,13 @@ const Desc = styled.div`
 
 const CustomImage = styled.img`
     height: auto;
-    width: 80px;
-    align-self: center;
+    width: 180px;
+    align-self: start;
+    display: block;
+
+    @media only screen and (max-width: 800px) {
+        align-self: center;
+    }
 `;
 
 const ItemDetailWrapper = styled.div`
@@ -144,6 +169,10 @@ const ItemDetailWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+
+    @media only screen and (max-width: 800px) {
+        padding-left: 30px;
+    }
 `;
 
 const OrderItemContainer = styled.div`
@@ -154,6 +183,16 @@ const OrderItemContainer = styled.div`
     padding: 20px;
     padding-left: 25px;
     gap: 30px;
+    border-bottom: 1px solid grey;
+    margin-bottom: 20px;
+
+
+    @media only screen and (max-width: 800px) {
+        flex-direction: column;
+        width: 95vw;
+        transform: translateX(-10vw);
+        padding-left: 0px;
+    }
 `;
 
 const titleData = {
@@ -207,7 +246,7 @@ const Products = styled.div`
     margin-right: 40px;
 
     @media only screen and (max-width: 1200px) {
-        width: 40vw;
+        width: 64vw;
     }
 
     @media only screen and (max-width: 1000px) {
@@ -282,17 +321,59 @@ const CustomButton = styled(Button)`
     margin-bottom: -10px !important;
 `;
 
+const URL = process.env.REACT_APP_BE_API;
+const handleCreateOrder = async (token, address, creditCardInfo, cart) => {
+
+    const requestBody = {
+        address: {...address},
+        creditCart: {...creditCardInfo},
+        cart: {
+            numberOfItems: cart.numberOfItems,
+            price: cart.price,
+            shippingPrice: cart.shippingPrice,
+            items: cart.items.map(item=>({
+                attributes: JSON.stringify(item.attributes),
+                productID: item.productID,
+                cartImage: item.cartImage,
+                itemName: item.itemName,
+                secondaryName: item.secondaryName,
+                price: item.price,
+                quantity: item.quantity
+            }))
+        }
+    };
+
+    const url = `${URL}/api/orders`;
+    const configObject = {
+        "url": url,
+        "method": "post",
+        "headers": {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        "data": {...requestBody}
+    };
+
+    return await axios.request(configObject)
+        .then(res => {
+            console.log("request result: ", res.data);
+            return res.data;
+        })
+        .catch(e => {
+            console.log("error reaised: ", e);
+        });
+}
+
 
 function CreateOrder() {
     // backdrop code
     const [backdrop, setBackdrop] = useState(false);
-
-
     // backdrop code
-
+    const [buttonContent, setButtonContent] = useState("Weiter");
     const [progress, setProgress] = useState(0);
     const [formError,setFormError] = useState(null)
     const nav = useNavigate();
+
     /*
     Straße und Hausnummer (Sokak ve Kapı Numarası): Kullanıcının yaşadığı sokak adı ve ev numarası.
     Postleitzahl (Posta Kodu): Kullanıcının yaşadığı bölgenin posta kodu.
@@ -306,7 +387,6 @@ function CreateOrder() {
     Ort: [ ]
     Bundesland: [ ]
     Land: [ ]
-    
     */
 
     const [accountlessInfo,setAccountlessInfo] = useState({
@@ -318,52 +398,96 @@ function CreateOrder() {
 
     const [address,setAddress] = useState({
         street: "",
-        doorNumber: null,
-        postalCode: null,
+        doorNumber: "",
+        postalCode: "",
         city: "",
         state: "",
         country: "Deutschland",
     })
     const [creditCardInfo,setCreditCardInfo] = useState({
         name: "",
-        number: null,
-        expiration: null,
+        number: "",
+        expiration: "",
         cvv: null
     });
     const {userInfo} = useSelector(state=>state.login);
     const cart = useSelector(state=>state.cart);
 
-    const handleClickArrowButton = (e,direction) => {
+
+    const validateAddress = () => {
+        if (address.street.trim().length===0 || address.doorNumber.trim().length===0 || address.postalCode.trim().length===0 ||
+            address.city.trim().length===0 || address.state.trim().length===0 || address.country.trim().length===0) {
+                setFormError("Bitte füllen Sie das Adressformular vollständig aus.");
+                return false;
+        }
+        return true;
+    }
+
+    const validateCartInfo = () => {
+        if (creditCardInfo.name.trim().length===0 || creditCardInfo.number.trim().length<19 || creditCardInfo.expiration.trim().length<7 || creditCardInfo.cvv.trim().length<3) {
+            setFormError("Bitte füllen Sie das Kreditkartenformular vollständig aus.");
+            console.log("fail cart validation");
+            return false;
+        }
+        return true;
+    }
+
+    const handleClickArrowButton = async (e,direction) => {
         e.preventDefault();
+
+        //console.log("CHECKPOINT: 1");
         const change = direction==="left" 
             ? (progress === 0 ? progress : progress - 33.3) 
             : (progress > 99 ? progress : progress + 33.3);
 
+        if (direction==="right") {
+            // progress = 33.3 -> address check
+            // progress = 66.6 -> credit cart check
+            let valid = true;
+            if (progress<34) {
+                valid = validateAddress();
+            } else if (progress<68) {
+                valid = validateCartInfo();
+            } 
+
+            if (!valid) return;
+        }
+        
+
+        //console.log("CHECKPOINT: 2");
         if (progress > 99 && direction==="right"){
             // do checks for information
+            console.log("address: ", address);
+            console.log("creditCartInfo: ", creditCardInfo);
+            console.log("cart: ", cart);
 
             // use animation
             setBackdrop(true);
+            const result = await handleCreateOrder(userInfo.access_token, address, creditCardInfo, cart);
+            setTimeout(function() {
+                setBackdrop(false);
+            }, 3500);
+            return;
 
+            // redirect to success screen
             setTimeout(function() {
                 nav("/order-success");
                 setBackdrop(false);
             }, 3500);
-
-            
-
-            // redirect to success screen
         }
 
-
+        console.log("CHECKPOINT: 3");
         if (change===33.3 && userInfo===null){
+            //console.log("CHECKPOINT: 4");
             setFormError("Um fortzufahren, müssen Sie sich anmelden. Wenn Sie kein Konto haben, können Sie sich über die Schaltfläche 'Einloggen' auch registrieren.");
             return;
         }
 
-
+        console.log("CHECKPOINT: 5");
         setProgress(change);
+        console.log("CHECKPOINT: 6");
         setFormError(null);
+        //console.log("null'a setlemesi lazımdı?");
     } 
 
     const paymentInfoGenerator = () => {
@@ -381,11 +505,12 @@ function CreateOrder() {
         setCreditCardInfo({...creditCardInfo, expiration: formattedInput})
       };
 
-    function handleAuth(e){
+    function handleAuth(e) {
         e.preventDefault();
+        setFormError(null);
         const button = document.getElementById("loginPopup");
         if (button)
-        button.click();
+            button.click();
     }
 
     const handleCardNumberChange = (event) => {
@@ -405,6 +530,13 @@ function CreateOrder() {
         if (userInfo!==null && progress===0)
             setProgress(33.3);
     },[userInfo]);
+
+    useEffect(()=>{
+        if (progress>99 && buttonContent!=="Bestellung abschließen.")
+            setButtonContent("Bestellung abschließen.");
+        else if (progress<99 && buttonContent!=="Weiter")
+            setButtonContent("Weiter");
+    },[progress]);
 
   return (
     <Container>
@@ -433,7 +565,7 @@ function CreateOrder() {
                 <IconButton onClick={(e)=> handleClickArrowButton(e,"left")} aria-label="delete" size="large">
                     <ArrowCircleLeftIcon />
                 </IconButton>
-                <Button onClick={(e)=> handleClickArrowButton(e,"right")} size='large' variant="outlined" color="warning">Weiter</Button>
+                <Button onClick={(e)=> handleClickArrowButton(e,"right")} size='large' variant="outlined" color="warning">{buttonContent}</Button>
             </ArrowWrapper>
             <Title>{titleData[progress]}</Title>
             {formError!==null && <ModifiedAlert severity="error">{formError}</ModifiedAlert>}
@@ -579,7 +711,7 @@ function CreateOrder() {
                                 w="20%"
                                 m="18%" 
                                 value={creditCardInfo.cvv} 
-                                onChange={e=>setAddress({...creditCardInfo, cvv: e.target.value})} 
+                                onChange={e=>setCreditCardInfo({...creditCardInfo, cvv: e.target.value})} 
                                 label="CVC" 
                                 variant="outlined" 
                                 color="warning"
@@ -594,8 +726,7 @@ function CreateOrder() {
                 }
                 {
                     progress > 90 && 
-                    <SingleSlide>
-                        <LocalMallIcon className='my-2' style={{ fontSize: '5em' }}/>
+                    <LastSingleSlide>
                         <ConfirmContainer>
 
                             <Products>
@@ -620,18 +751,31 @@ function CreateOrder() {
                                     <div>
                                         {
                                             cart.items.map((item,index)=>{
-                                                return (
-                                                    <>
-                                                        <img/>
-                                                        <OrderItemContainer key={index}>
-                                                            <CustomImage src={index === 0 ? TempImg: TempImg2}/>
-                                                            <ItemDetailWrapper>
-                                                                <div>{item.product.name}</div>
-                                                                <div>{item.quantity} x {item.price}€</div>
-                                                            </ItemDetailWrapper>
-                                                        </OrderItemContainer>
-                                                    </>
-                                                );
+                                                return <OrderItemContainer key={index}>
+                                                    <CustomImage src={item.cartImage}/>
+                                                    <ItemDetailWrapper>
+                                                        <ProductTitle>{item.itemName}</ProductTitle>
+                                                        <SecondaryTitle>{item.secondaryName}</SecondaryTitle>
+                                                        <div>
+                                                            {
+                                                                item.attributes.map((attr,i)=>{
+                                                                    return (
+                                                                        <li 
+                                                                        style={{fontSize: "17px"}}
+                                                                        key={i}>{attr}</li>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </div>
+                                                        <div>
+                                                            <div
+                                                                style={{marginTop: "20px", fontSize: "18px", fontWeight: "bold", color: "#696984"}}
+                                                            >
+                                                                {item.quantity} x {item.price.toFixed(2)}€
+                                                            </div>
+                                                        </div>
+                                                    </ItemDetailWrapper>
+                                                </OrderItemContainer>;
                                             })
                                         }
                                     </div>
@@ -648,7 +792,7 @@ function CreateOrder() {
                                                 Artikel: 
                                             </span>
                                             <span>
-                                                {cart.price} €
+                                                {cart.price.toFixed(2)} €
                                             </span>
                                         </li>
                                         <li className="list-group-item d-flex justify-content-space-around">
@@ -664,14 +808,14 @@ function CreateOrder() {
                                                 Gesamt:
                                             </div>
                                             <div>
-                                                {cart.shippingPrice + cart.price} €
+                                                {(cart.shippingPrice + cart.price).toFixed(2)} €
                                             </div>
                                         </div>
                                     </ul>
                                 </div>
                             </Summary>
                         </ConfirmContainer>
-                    </SingleSlide>
+                    </LastSingleSlide>
                 }
                 
         </SlideContainer>
@@ -680,4 +824,4 @@ function CreateOrder() {
   )
 }
 
-export default CreateOrder
+export default CreateOrder;

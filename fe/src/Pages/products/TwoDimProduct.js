@@ -449,7 +449,7 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     const itemName = ( itemData?.id || "").split(/(?=[A-Z])/).join(" ");
     const secondaryName = itemData?.color?.title;
     const temp = extractAttributes(itemConfiguration);
-    let attributes = [`Höhe: ${dimensions.height/10}cm`, `Breite: ${dimensions.width/10}cm`, ...temp];
+    let attributes = [`Höhe: ${dimensions.height}mm`, `Breite: ${dimensions.width}mm`, ...temp];
 
     if (queryParam) {
       if (["127 mm", "89 mm"].includes(queryParam)) {
@@ -463,7 +463,6 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     }
 
     const item = {
-        ...dimensions,
         attributes: attributes,
         shippingWidth: dimensions.width,
         cartImage: images[0],
@@ -471,7 +470,8 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
         price: itemPrice,
         uniqueCode: uniqueCode,
         itemName: itemName,
-        secondaryName: secondaryName
+        secondaryName: secondaryName,
+        productID: currentProduct?.id,
     };
 
     //console.log("CART ITEM: ", item);
@@ -518,7 +518,8 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
         quantity: 1,
         uniqueCode: uniqueCode,
         itemName: freeSamplingTitle,
-        secondaryName: secondaryName
+        secondaryName: secondaryName,
+        productID: currentProduct?.id,
     };
 
     dispatch({type:ADD_TO_CART,payload:item});

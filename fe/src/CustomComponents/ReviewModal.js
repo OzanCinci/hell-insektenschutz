@@ -169,11 +169,6 @@ function ReviewModal({currentProduct, productImage, token}) {
         setError(null);
     }
 
-
-    useEffect(()=>{
-        console.log("currentProduct: ",currentProduct);
-    },[currentProduct]);
-
   return (
     currentProduct ?
     (<div>

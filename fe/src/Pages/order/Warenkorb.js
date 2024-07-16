@@ -213,7 +213,7 @@ const SingleItem = styled(({url,index,attributes,secondaryName, quantity, price,
                 </ItemInfo>
             </LeftPart>
             <Preis>
-                  {price} €
+                  {price.toFixed(2)} €
             </Preis>
         </SingItemContainer>
     );
