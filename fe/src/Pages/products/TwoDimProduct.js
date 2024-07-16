@@ -20,6 +20,7 @@ import FormControl from "@mui/material/FormControl";
 import AddToCart from '../SingleProductPage/components/AddToCart';
 import Button from '@mui/material/Button';
 import ReviewModal from '../../CustomComponents/ReviewModal';
+import HowToAssemble from '../ProductComponents/HowToAssemble';
 
 const CustomButton = styled(Button)`
     margin-top: 5px !important;
@@ -241,6 +242,7 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     const defaultHeight = dataFromJSON.defaultHeight;
     const defaultWidth = dataFromJSON.defaultWidth;
     let freeSamplingTitle = dataFromJSON.freeSamplingTitle;
+    const assemblyInfo = dataFromJSON.assemblyInfo;
     /////// PARSE DATA IMMEDIATELY ///////
 
 
@@ -660,6 +662,7 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                         </div>
                     </RightColumn>
                 </ColumnContainer>
+                <HowToAssemble assemblyInfo={assemblyInfo}/>
                 <Installation/>
                 <br/>
                 <br/>

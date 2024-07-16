@@ -71,6 +71,7 @@ export const catalogData = {
         ],
         measurement: "/messanleitung/plissee",
         installation: "Plissee nach Maß online kaufen",
+        assembly: "/montageanleitung/plissee",
     },
     "jalousien": {
         data: [
@@ -128,6 +129,7 @@ export const catalogData = {
         ],
         measurement: "/messanleitung/jalousie",
         installation: "Jalousie nach Maß online kaufen",
+        assembly: "/montageanleitung/jalousie",
     },
     "rollos": {
         data: [
@@ -184,6 +186,7 @@ export const catalogData = {
         ],
         measurement: "/messanleitung/rollo",
         installation: "Rollo nach Maß online kaufen",
+        assembly: "/montageanleitung/rollo",
     },
     "lamellenvorhang": {
         data: [
@@ -223,5 +226,6 @@ export const catalogData = {
         ],
         measurement: "/messanleitung/lamellenvorhang",
         installation: "Lamellenvorhang nach Maß online kaufen",
+        assembly: "/montageanleitung/lamellenvorhang",
     }
 };

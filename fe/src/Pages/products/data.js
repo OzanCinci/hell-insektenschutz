@@ -270,6 +270,10 @@ export const uniqueProductData = {
         defaultHeight: 500,
         defaultWidth: 300,
         freeSamplingTitle: "Stoffmuster Basic Plissee",
+        assemblyInfo: {
+            name: "Basic Plissee",
+            link: "/montageanleitung/plissee"
+        },
     },
     "PremiumPlissee": {
         defaultImages : [
@@ -617,7 +621,11 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/Plissee/",
         defaultHeight: 500,
         defaultWidth: 300,
-        freeSamplingTitle: "Stoffmuster Premium Plissee"
+        freeSamplingTitle: "Stoffmuster Premium Plissee",
+        assemblyInfo: {
+            name: "Premium Plissee",
+            link: "/montageanleitung/plissee"
+        },
     },
     "BasicJalousie25mm": {
         defaultImages: [
@@ -989,6 +997,10 @@ export const uniqueProductData = {
         productDetailUrl: "/api/product/Jalousie/Basic Jalousie",
         EXTERNAL_URL: "/api/external-products/colors/BasicJalousie/",
         freeSamplingTitle:"Lamellenmuster Basic Alu Jalousien 25mm",
+        assemblyInfo: {
+            name: "Basic Alu Jalousien 25mm",
+            link: "/montageanleitung/jalousie"
+        },
     },
     "BasicJalousie16mm": {
         defaultImages: [
@@ -1333,6 +1345,10 @@ export const uniqueProductData = {
         productDetailUrl: "/api/product/Jalousie/Basic Jalousie",
         EXTERNAL_URL: "/api/external-products/colors/BasicJalousie/",
         freeSamplingTitle:"Lamellenmuster Basic Alu Jalousien 16mm",
+        assemblyInfo: {
+            name: "Basic Alu Jalousien 16mm",
+            link: "/montageanleitung/jalousie"
+        },
     },
     "BasicJalousie50mm": {
         defaultImages: [
@@ -1474,6 +1490,10 @@ export const uniqueProductData = {
         productDetailUrl: "/api/product/Jalousie/Basic Jalousie",
         EXTERNAL_URL: "/api/external-products/colors/BasicJalousie/",
         freeSamplingTitle:"Lamellenmuster Basic Alu Jalousien 50mm",
+        assemblyInfo: {
+            name: "Basic Alu Jalousien 50mm",
+            link: "/montageanleitung/jalousie"
+        },
     },
     "BasicLamellenvorhang": {
         defaultImages: [
@@ -1677,7 +1697,11 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/BasicLamellenvorhang/",
         requestCategory: "BasicLamellenvorhang",
         blendcolorTitle: "Schienenfarbe",
-        freeSamplingTitle: "Stoffmuster Basic Lamellenvorhang"
+        freeSamplingTitle: "Stoffmuster Basic Lamellenvorhang",
+        assemblyInfo: {
+            name: "Basic Lamellenvorhang",
+            link: "/montageanleitung/lamellenvorhang"
+        },
     },
     "PremiumLamellenvorhang": {
         defaultImages: [
@@ -1912,6 +1936,10 @@ export const uniqueProductData = {
         requestCategory: "Lamellenvorhang",
         blendcolorTitle: "Schienenfarbe",
         freeSamplingTitle: "Stoffmuster Premium Lamellenvorhang",
+        assemblyInfo: {
+            name: "Premium Lamellenvorhang",
+            link: "/montageanleitung/lamellenvorhang"
+        },
     },
     "PremiumRollo": {
         defaultImages: [
@@ -2493,6 +2521,10 @@ export const uniqueProductData = {
         subcategoryTitle: "",
         blendcolorTitle: "Träger-/Kassettenfarbe",
         freeSamplingTitle: "Stoffmuster Premium Rollo",
+        assemblyInfo: {
+            name: "Premium Rollo",
+            link: "/montageanleitung/rollo"
+        },
     },
     "Doppelrollo": {
         defaultImages: [
@@ -3033,7 +3065,11 @@ export const uniqueProductData = {
         requestCategory: "Doppelrollo",
         defaultHeight: 1500,
         defaultWidth: 1000,
-        freeSamplingTitle: "Stoffmuster Premium Doppelrollo"
+        freeSamplingTitle: "Stoffmuster Premium Doppelrollo",
+        assemblyInfo: {
+            name: "Premium Doppelrollo",
+            link: "/montageanleitung/rollo"
+        },
     },
     "BasicRollo": {
         defaultImages: [
@@ -3214,6 +3250,10 @@ export const uniqueProductData = {
         subcategoryTitle: "",
         blendcolorTitle: "Träger-/Kassettenfarbe",
         freeSamplingTitle: "Stoffmuster Basic Rollo",
+        assemblyInfo: {
+            name: "Basic Rollo",
+            link: "/montageanleitung/rollo"
+        },
     },
     "WintergartenPlissee": {
         defaultImages: [
@@ -3388,7 +3428,11 @@ export const uniqueProductData = {
         requestCategory: "PlisseeWintergarten",
         productDetailUrl: "/api/product/Plissee/Wintergarten Plissee",
         subcategoryTitle: "PlisseeWintergarten",
-        freeSamplingTitle: "Stoffmuster Premium Plissee"
+        freeSamplingTitle: "Stoffmuster Premium Plissee",
+        assemblyInfo: {
+            name: "Wintergarten Plissee",
+            link: "/montageanleitung/plissee"
+        },
     },
     "PremiumJalousie25mm": {
         defaultImages: [
@@ -3889,6 +3933,10 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/PremiumJalousie/",
         subcategoryTitle: "check-mm",
         freeSamplingTitle:"Lamellenmuster Premium Alu Jalousien 25mm",
+        assemblyInfo: {
+            name: "Premium Alu Jalousien 25mm",
+            link: "/montageanleitung/jalousie"
+        },
     },
     "PremiumJalousie16mm": {
         defaultImages: [
@@ -4369,6 +4417,10 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/PremiumJalousie/",
         subcategoryTitle: "check-mm",
         freeSamplingTitle:"Lamellenmuster Premium Alu Jalousien 16mm",
+        assemblyInfo: {
+            name: "Premium Alu Jalousien 16mm",
+            link: "/montageanleitung/jalousie"
+        },
     },
     "PremiumJalousie50mm": {
         defaultImages: [
@@ -4492,6 +4544,10 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/PremiumJalousie/",
         subcategoryTitle: "check-mm",
         freeSamplingTitle:"Lamellenmuster Premium Alu Jalousien 50mm",
+        assemblyInfo: {
+            name: "Premium Alu Jalousien 50mm",
+            link: "/montageanleitung/jalousie"
+        },
     },
     "Holzjalousie25mm": {
         defaultImages: [
@@ -4766,6 +4822,10 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/Holzjalousie/",
         subcategoryTitle: "check-mm",
         freeSamplingTitle: "Lamellenmuster Holz Jalousien 25mm",
+        assemblyInfo: {
+            name: "Holz Jalousien 25mm",
+            link: "/montageanleitung/jalousie"
+        },
     },
     "Holzjalousie50mm": {
         defaultImages: [
@@ -4899,5 +4959,9 @@ export const uniqueProductData = {
         EXTERNAL_URL: "/api/external-products/colors/Holzjalousie/",
         subcategoryTitle: "check-mm",
         freeSamplingTitle: "Lamellenmuster Holz Jalousien 50mm",
+        assemblyInfo: {
+            name: "Holz Jalousien 50mm",
+            link: "/montageanleitung/jalousie"
+        },
     }
 };

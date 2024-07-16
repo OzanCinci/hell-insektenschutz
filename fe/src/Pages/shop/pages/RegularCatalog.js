@@ -262,7 +262,7 @@ const freeSamplingData = {
 function RegularCatalog() {
     const nav = useNavigate();
     const location = useLocation()?.pathname.split("/").at(-1);
-    const {data, measurement, installation} = catalogData[location];
+    const {data, measurement, assembly} = catalogData[location];
     console.log("location: ", data);
 
     const handleNavigate = (e, path) => {
@@ -286,7 +286,7 @@ function RegularCatalog() {
         <SelectorComponent data={freeSamplingData}/>
         <ButtonWrapper>
                 <CustomButton onClick={(e)=>handleNavigate(e,measurement)} variant='outlined' color='warning'>Anleitung für die richtige Messung</CustomButton>
-                <CustomButton onClick={(e)=>{}} variant='outlined' color='warning'>Anleitung für die richtige Installation</CustomButton>
+                <CustomButton onClick={(e)=>handleNavigate(e,assembly)} variant='outlined' color='warning'>Anleitung für die richtige Installation</CustomButton>
                 <CustomButton onClick={(e)=>handleFreeSampleClick(e)} variant='outlined' color='warning'>Gratis Muster</CustomButton>
         </ButtonWrapper>
         <ProductsContainer>

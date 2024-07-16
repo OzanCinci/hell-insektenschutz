@@ -47,6 +47,7 @@ import OptionsPage from './Pages/listing/OptionsPage';
 import Measurement from './Pages/howToMeasure/Measurement';
 import RegularCatalog from './Pages/shop/pages/RegularCatalog';
 import Wrapper from './Pages/products/Wrapper';
+import HowToInstall from './Pages/howToInstall/HowToInstall';
 
 function App() {
   useEffect(()=>{
@@ -144,6 +145,7 @@ function App() {
 
 
             <Route path='/messanleitung/:category' element={<Measurement/>}/>
+            <Route path='/montageanleitung/:category' element={<HowToInstall/>}/>
 
             <Route default path='/*' element={<PageNotFound/>}/>
 
