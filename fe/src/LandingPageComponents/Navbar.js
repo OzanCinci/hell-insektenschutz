@@ -9,6 +9,7 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SearchIcon from '@mui/icons-material/Search';
 
 const NavbarWrapper = styled.div`
   display: flex;
@@ -172,7 +173,7 @@ const LinkButton = styled.div`
   }
 
   @media only screen and (max-width: 490px) {
-    font-size: 13px;
+    font-size: 18px;
   }
 
 `;
@@ -244,7 +245,6 @@ const LoginContainer = styled.div`
   flex-direction: row;
   cursor: pointer;
   gap: 12px;
-
 `;
 
 const LogoContainer = styled.div`
@@ -279,6 +279,12 @@ const SingleLoginComponent = styled.div`
     align-items: center;
   }
   transform: translateY(10%);
+`;
+
+const CustomSingleLoginComponent = styled(SingleLoginComponent)`
+  @media only screen and (max-width: 450px) {
+    display: none;
+  }
 `;
 
 
@@ -346,6 +352,11 @@ function Navbar() {
                 <StorefrontIcon fontSize='large' />
                 <LogoText>Geschäft</LogoText>
               </SingleLoginComponent>
+
+              <CustomSingleLoginComponent onClick={ () => toggleFunction("/bestellung")}>
+                <SearchIcon fontSize='large' />
+                <LogoText>Bestellung</LogoText>
+              </CustomSingleLoginComponent>
           </LoginContainer>
           <NavbarButtonWrapper>
             <BurgerIcon toggle={toggle} setToggle={setToggle}/>
@@ -358,6 +369,9 @@ function Navbar() {
             <LegalText onClick={ () => toggleFunction("/widerrufsbelehrung")}>Widerrufsbelehrung</LegalText>
             <LegalText onClick={ () => toggleFunction("/datenschutz")}>Datenschutz</LegalText>
           </MobileLegal>
+          <LinkButton onClick={ () => toggleFunction("/bestellung")}>
+            Bestellung suchen
+          </LinkButton>
           <LinkButton onClick={ () => toggleFunction("/geschaft/plissees")}>
             Plissees
           </LinkButton>

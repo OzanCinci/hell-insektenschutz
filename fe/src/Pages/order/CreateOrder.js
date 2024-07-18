@@ -322,49 +322,6 @@ const CustomButton = styled(Button)`
 `;
 
 const URL = process.env.REACT_APP_BE_API;
-const handleCreateOrder = async (token, address, creditCardInfo, cart) => {
-
-    const requestBody = {
-        address: {...address},
-        creditCart: {...creditCardInfo},
-        cart: {
-            numberOfItems: cart.numberOfItems,
-            price: cart.price,
-            shippingPrice: cart.shippingPrice,
-            items: cart.items.map(item=>({
-                attributes: JSON.stringify(item.attributes),
-                productID: item.productID,
-                cartImage: item.cartImage,
-                itemName: item.itemName,
-                secondaryName: item.secondaryName,
-                price: item.price,
-                quantity: item.quantity
-            }))
-        }
-    };
-
-    const url = `${URL}/api/orders`;
-    const configObject = {
-        "url": url,
-        "method": "post",
-        "headers": {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-        },
-        "data": {...requestBody}
-    };
-
-    return await axios.request(configObject)
-        .then(res => {
-            console.log("request result: ", res.data);
-            return res.data;
-        })
-        .catch(e => {
-            console.log("error reaised: ", e);
-        });
-}
-
-
 function CreateOrder() {
     // backdrop code
     const [backdrop, setBackdrop] = useState(false);
@@ -432,6 +389,49 @@ function CreateOrder() {
         return true;
     }
 
+    const handleCreateOrder = async (token, address, creditCardInfo, cart) => {
+
+        const requestBody = {
+            address: {...address},
+            creditCart: {...creditCardInfo},
+            cart: {
+                numberOfItems: cart.numberOfItems,
+                price: cart.price,
+                shippingPrice: cart.shippingPrice,
+                items: cart.items.map(item=>({
+                    attributes: JSON.stringify(item.attributes),
+                    productID: item.productID,
+                    cartImage: item.cartImage,
+                    itemName: item.itemName,
+                    secondaryName: item.secondaryName,
+                    price: item.price,
+                    quantity: item.quantity
+                }))
+            }
+        };
+    
+        const url = `${URL}/api/orders`;
+        const configObject = {
+            "url": url,
+            "method": "post",
+            "headers": {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            "data": {...requestBody}
+        };
+    
+        return await axios.request(configObject)
+            .then(res => {
+                console.log("request result: ", res.data);
+                return res.data?.traceCode;
+            })
+            .catch(e => {
+                console.log("error reaised: ", e);
+                return false;
+            });
+    }
+
     const handleClickArrowButton = async (e,direction) => {
         e.preventDefault();
 
@@ -463,17 +463,21 @@ function CreateOrder() {
 
             // use animation
             setBackdrop(true);
-            const result = await handleCreateOrder(userInfo.access_token, address, creditCardInfo, cart);
+            const traceCode = await handleCreateOrder(userInfo.access_token, address, creditCardInfo, cart);
             setTimeout(function() {
                 setBackdrop(false);
-            }, 3500);
-            return;
+            }, 1500);
 
-            // redirect to success screen
-            setTimeout(function() {
-                nav("/order-success");
-                setBackdrop(false);
-            }, 3500);
+            if (traceCode) {
+                const redirectLink = `/order-success?traceCode=${traceCode}&init=true`;   
+                // redirect to success screen
+                nav(redirectLink);
+                return;
+            } else {
+                console.log("something went wrong");
+                setFormError("Etwas ist schiefgelaufen.")
+                return;
+            }
         }
 
         console.log("CHECKPOINT: 3");
@@ -539,6 +543,7 @@ function CreateOrder() {
     },[progress]);
 
   return (
+    <>    
     <Container>
             <Backdrop
                 sx={{ color: '#fff', zIndex: 99 }}
@@ -676,7 +681,7 @@ function CreateOrder() {
                             color="warning"
                         />
 
-                         <CustomLongInput
+                        <CustomLongInput
                             label="Kartennummer"
                             variant="outlined"
                             color='warning'
@@ -821,6 +826,7 @@ function CreateOrder() {
         </SlideContainer>
 
     </Container>
+    </>
   )
 }
 

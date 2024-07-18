@@ -48,6 +48,7 @@ import Measurement from './Pages/howToMeasure/Measurement';
 import RegularCatalog from './Pages/shop/pages/RegularCatalog';
 import Wrapper from './Pages/products/Wrapper';
 import HowToInstall from './Pages/howToInstall/HowToInstall';
+import SearchOrder from './Pages/order/SearchOrder';
 
 function App() {
   useEffect(()=>{
@@ -123,6 +124,7 @@ function App() {
 
             <Route path='order-create' element={<CreateOrder/>}/>
             <Route path='order-success' element={<OrderSuccess/>} />
+            <Route path='bestellung' element={<SearchOrder/>} />
             <Route path='warenkorb' element={<Warenkorb/>} />
 
 
