@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import useFetch from '../../hooks/useFetch';
 import styled from 'styled-components';
 import { convertDate } from '../../utils/datetime';
-import TempImg from '../../images/details/plissee.jpg';
-import TempImg2 from '../../images/details/alt_schiebetür.jpg';
+import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Rating from '@mui/material/Rating';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useNavigate } from 'react-router-dom';
 import NoOrderImg from '../../images/account/sepet.jpeg';
+import ReviewModal from '../../CustomComponents/ReviewModal';
 
 ////////////////////////////////////////////////
 /////// DESKTOP COMPONENTS BELOW ////////////////
@@ -23,12 +25,27 @@ const Header = styled.div`
     flex-direction: row;
     justify-content: space-between;
     padding: 10px 15px;
+    text-align: left;
 `;
 
 const Body = styled.div`
     display: flex;
     flex-direction: column;
     gap: 10px;
+
+    display: ${props => props.expand ? "block": "none"};
+`;
+
+const ImageBody = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 25px;
+    padding: 10px 20px;
+    flex-wrap: wrap;
+
+
+    display: ${props => props.expand ? "flex": "none"};
 `;
 
 const SingleOrder = styled.div`
@@ -44,21 +61,22 @@ const SingleOrder = styled.div`
 
 const OrderTitle = styled.div`
     text-decoration: underline;
+    text-align: left;
 `;
 
 const OrderItemContainer = styled.div`
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;
+    align-items: flex-start;
     padding: 20px;
     padding-left: 25px;
     gap: 30px;
 `;
 
 const CustomImage = styled.img`
-    height: 80px;
-    width: auto;
+    width: 200px;
+    height: auto;
 `;
 
 const ItemDetailWrapper = styled.div`
@@ -66,6 +84,7 @@ const ItemDetailWrapper = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
+    text-align: left;
 `;
 
 const ButtonWrapper = styled.div`
@@ -145,7 +164,7 @@ const MobileBody = styled.div`
 `; 
 
 const MobileCustomImg = styled.img`
-    height: 60px;
+    height: 100px;
     width: auto;
 `;
 
@@ -193,6 +212,7 @@ const HoverBlock = styled.div`
     margin-bottom: 20px;
     padding-bottom: 20px;
     border-bottom: 1px solid grey;
+    font-size: 19px;
 `;
 
 const CustomHoverBlock = styled(HoverBlock)`
@@ -219,7 +239,7 @@ const CustomMobileSingleItemImg = styled.img`
 
 const MobileOrderTitle = styled(OrderTitle)`
     color: #f59f4c;
-    font-size: 18px;
+    font-size: 21px;
     font-weight: bold;
 `;
 
@@ -233,6 +253,7 @@ const CustomRating = styled(Rating)`
 `;
 
 const MobileDetailItem = styled.div`
+    margin-bottom: 40px;
 `;
 
 const NoOrderMessage = styled.div`
@@ -247,16 +268,57 @@ const NoOrderMessage = styled.div`
 /////// MOBILE COMPONENTS ABOVE ////////////////
 ////////////////////////////////////////////////
 
-function ProfileOrders({orders}) {
+
+
+function ProfileOrders({token}) {
     const [showDetail,setShowDetail] = useState(false);
     const [orderShowed,setOrderShowed] = useState(null);
+    const [currentProduct,setCurrentProduct] = useState({
+        category: "category",
+        name: "name",
+        cartImage: null
+    });
     const nav = useNavigate();
+    
+    const [page,setPageNumber] = useState(0);
+    const [expandeds,setExpandeds] = useState([]);
+    const [orders, setOrders] = useState([]);
+    const [isLastPage,setIsLastPage] = useState(false);
+    const url = `/api/orders/me`;
+    const config = {
+        "url": url,
+        "method": "get",
+        "headers": {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    };
+    const { data, loading, error } = useFetch(url, config, page);
+
+
+    const handleLoadMore = (e) => {
+        e.preventDefault();
+        setPageNumber(prev=>prev+1);
+    }
+
+    useEffect(() => {
+        if (data) {
+            setOrders(prev => {
+                const uniqueIds = new Set(prev.map(order => order.id));
+                const newOrders = data.content.filter(order => !uniqueIds.has(order.id));
+                return [...prev, ...newOrders];
+            });
+            if (data.last) {
+                setIsLastPage(true);
+            }
+        }
+    }, [data]);  
+    
 
     const handleShowDetail = (order) => {
         // TODO: navigation to detail page;
         setShowDetail(true);
         setOrderShowed(order);
-        console.log("order: ",order);
     }
 
     const handleHideDetail = () => {
@@ -265,18 +327,28 @@ function ProfileOrders({orders}) {
         setTimeout(()=>setOrderShowed(null),700);
     }
 
-    const handleAddReview = (e) => {
+    const handleAddReview = (e,item) => {
         e.preventDefault();
+        const tempItem = {
+            category: item.itemName,
+            name: item.secondaryName,
+            cartImage: item.cartImage,
+            id: item.productId
+        };
+
+        console.log("item: ",item);
+        setCurrentProduct(tempItem);
         const button = document.getElementById("leave-a-review-modal");
         if (!button)
             return;
-        button.click();
+        setTimeout(()=>button.click(),0);
     }
 
   return (
     <Container>
+        <ReviewModal currentProduct={currentProduct} productImage={currentProduct? currentProduct.cartImage : null} token={token}/>
         {
-            orders.length === 0 && 
+            !loading && orders.length === 0 && 
             <div>
                 <NoOrderMessage>Sie haben bisher keine Bestellungen aufgegeben. Entdecken Sie unsere vielfältige Produktauswahl auf unserer Einkaufsseite und finden Sie etwas, das Ihnen gefällt!</NoOrderMessage>
                 <CustomMobileSingleItemImg src={NoOrderImg}/>
@@ -288,6 +360,7 @@ function ProfileOrders({orders}) {
             orders.length > 0 &&
             
             orders.map((order,index)=>{
+                const images = order.orderItems.map(item=>item.cartImage);
                 return (
                         <SingleOrder key={index}>
                             <Header>
@@ -300,31 +373,72 @@ function ProfileOrders({orders}) {
                                     <div>{order.orderStatus}</div>
                                 </HeaderColumn>
                                 <HeaderColumn>
-                                    <OrderTitle>Gesamt:</OrderTitle>
-                                    <div>{order.totalPrice} €</div>
+                                    <OrderTitle>Sendungscode:</OrderTitle>
+                                    <div>{order.cargoCode || "-"}</div>
                                 </HeaderColumn>
                                 <HeaderColumn>
-                                    <OrderTitle>Lieferadresse:</OrderTitle>
-                                    <div>{order.address}</div>
+                                    <OrderTitle>Bestellnummer:</OrderTitle>
+                                    <div>{order.traceCode.slice(0,3)+" - "+order.traceCode.slice(3,6)+" - "+order.traceCode.slice(6,9)}</div>
+                                </HeaderColumn>
+                            </Header>
+                            <Header>
+                                <HeaderColumn>
+                                    <OrderTitle>Artikel:</OrderTitle>
+                                    <div>{(order.price).toFixed(2)} €</div>
+                                </HeaderColumn>
+                                <HeaderColumn>
+                                    <OrderTitle>Versand:</OrderTitle>
+                                    <div>{(order.shippingPrice).toFixed(2)} €</div>
+                                </HeaderColumn>
+                                <HeaderColumn>
+                                    <OrderTitle>Gesamt:</OrderTitle>
+                                    <div>{(order.price + order.shippingPrice).toFixed(2)} €</div>
                                 </HeaderColumn>
                                 <HeaderColumn>
                                     <OrderTitle>Bezahlverfahren:</OrderTitle>
                                     <div>{order.paymentMethod}</div>
                                 </HeaderColumn>
                             </Header>
-                            <Body>
+                            <Header>
+                                <div><b>Lieferadresse:</b> {order.street} {order.doorNumber}, {order.city} / {order.state} ({order.postalCode})</div>
+                            </Header>
+                            {
+                                expandeds.includes(index) &&
+                                <ReapetOrderWrapper>
+                                <div onClick={()=>setExpandeds(prev=>{
+                                    if (prev.includes(index))
+                                        return prev.filter(item=>item!==index);
+                                    else
+                                        return [...prev, index];
+                                })}>
+                                    <Button color='warning'>Weniger Infos</Button>
+                                </div>
+                                </ReapetOrderWrapper>
+                            }
+                            
+                            <Body expand={expandeds.includes(index)}>
                                 {
                                     order.orderItems?.map((item,index)=>{
+                                        const attr = JSON.parse(item.attributes);
                                         return (
                                             <OrderItemContainer key={index}>
-                                                    <CustomImage src={TempImg}/>
+                                                    <CustomImage src={item.cartImage}/>
                                                     <ItemDetailWrapper>
-                                                        <div>{item.quantity> 1 ? `${item.quantity} x`: ""} {item.product.name}</div>
-                                                        <div>{item.measurements}</div>
-                                                        <div>{item.quantity} x {item.price}€</div>
+                                                        <div style={{color: "black", fontWeight: "700", fontSize: "20px"}}>{item.itemName}</div>
+                                                        <div style={{color: "#696984", fontWeight: "700", fontSize: "19px"}}>{item.secondaryName}</div>
+                                                        <div>
+                                                            {
+                                                                attr.map((a,i)=>{
+                                                                    return (
+                                                                        <li key={i}>{a}</li>
+                                                                    );
+                                                                })
+                                                            }
+                                                        </div>
+                                                        <div style={{color: "#696984", fontWeight: "700", fontSize: "19px", marginTop: "10px"}}>{item.quantity} x {item.price.toFixed(2)}€</div>
                                                     </ItemDetailWrapper>
                                                     <ButtonWrapper>
-                                                        <Button onClick={(e)=>{}} size='small' variant="outlined" color="warning">Wieder Kaufen</Button>
+                                                        <Button onClick={(e)=>handleAddReview(e,item)} size='small' variant="outlined" color="warning">Kommentar</Button>
                                                         <Button 
                                                             onClick={(e)=>{
                                                                 e.preventDefault();
@@ -336,20 +450,49 @@ function ProfileOrders({orders}) {
                                                         >
                                                             Kontaktiere uns
                                                         </Button>
-                                                        <Button onClick={(e)=>handleAddReview(e)} size='small' variant="outlined" color="warning">Kommentar</Button>
                                                     </ButtonWrapper>
                                             </OrderItemContainer>
                                         );
                                     })
                                 }
                             </Body>
+                            <ImageBody expand={!expandeds.includes(index)}>
+                                {
+                                    images.map((item,i)=> {
+                                        return (
+                                            <img alt='image of sold product' height='110px' width='auto' src={item}/>
+                                        )
+                                    })
+                                }
+                            </ImageBody>
                             <hr></hr>
                             <ReapetOrderWrapper>
-                                <Button onClick={(e)=>{}} size='small' variant="outlined" color="warning">Repeat The Order</Button>
+                                <div onClick={()=>setExpandeds(prev=>{
+                                    if (prev.includes(index))
+                                        return prev.filter(item=>item!==index);
+                                    else
+                                        return [...prev, index];
+                                })}>
+                                    <Button color='warning'>{expandeds.includes(index)?"Weniger Infos": "Mehr Infos"}</Button>
+                                </div>
                             </ReapetOrderWrapper>
                         </SingleOrder>
                 );
             })
+        }
+
+        {
+            isLastPage===false && !loading &&
+            <Button onClick={(e)=>handleLoadMore(e)} variant="contained" color='warning'>
+                    Mehr laden
+                <ArrowDropDownIcon style={{marginLeft: "5px", marginRight: "-12px"}}/>    
+            </Button>
+        }
+        {
+                loading && 
+                <div style={{}}>
+                    <CircularProgress color='warning' />    
+                </div>
         }
         </DesktopOrderContainer>
 
@@ -360,25 +503,23 @@ function ProfileOrders({orders}) {
                 <MobileDetailsOrder>
                         {  
                         orders.map((order,index)=>{
-                            const imageArray = order.orderItems.map(item=>item.product.imageUrl);
-                            const uniqueImageArray = imageArray.filter((value, index, self) => self.indexOf(value) === index);
-                            const mockDataArray = [TempImg2,TempImg,TempImg2,TempImg,TempImg2];
-
-                            const itemCount = order.orderItems.reduce((accumulator, item) => accumulator + item.quantity, 0);
+                            const imageArray = order.orderItems.map(item=>item.cartImage);
+                            const itemCount = order.numberOfItems;
                             return (
                                     <MobileOrderWrapper key={index}>
                                         <Header>
                                             <div>
                                                 <div>{convertDate(order.createdAt)}</div>
-                                                <div>Gesamt: {order.totalPrice} €</div>
+                                                <div>Bestellnummer: {order.traceCode.slice(0,3)+"-"+order.traceCode.slice(3,6)+"-"+order.traceCode.slice(6,9)}</div>
+                                                <div>Gesamt: {(order.price + order.shippingPrice).toFixed(2)} €</div>
                                             </div>
                                             <MobileDetailButton onClick={()=>handleShowDetail(order)}>Einzelheiten</MobileDetailButton>
                                         </Header>
                                         <MobileBody>
-                                            <div>{order.orderStatus}</div>
+                                            <div>Status: {order.orderStatus}</div>
                                             <MobileImageWrapper>
                                                 {
-                                                    mockDataArray.map((item,index)=>{
+                                                    imageArray.map((item,index)=>{
                                                         // TODO:  USE ITEM AS PROPS!!!!!!!!
                                                         return (
                                                             <MobileCustomImg key={index} src={item}/>
@@ -393,7 +534,26 @@ function ProfileOrders({orders}) {
                                 );
                             })
                         }
+                        {
+                        isLastPage===false && !loading &&
+                        <Button onClick={(e)=>handleLoadMore(e)} variant="contained" color='warning'>
+                                Mehr laden
+                            <ArrowDropDownIcon style={{marginLeft: "5px", marginRight: "-12px"}}/>    
+                        </Button>
+                        }
+                        {
+                            loading && 
+                            <div style={{}}>
+                                <CircularProgress color='warning' />    
+                            </div>
+                        }
                 </MobileDetailsOrder>
+            }
+            {
+                orders.length===0 && loading && 
+                    <div style={{transform: "translateX(45vw)"}}>
+                        <CircularProgress color='warning' />    
+                    </div>
             }
             {
                 orders.length > 0 && orderShowed!==null &&
@@ -410,18 +570,22 @@ function ProfileOrders({orders}) {
                             Bezahlverfahren: {orderShowed.paymentMethod}
                         </div>
                         <div>
+                            Sendungscode: {orderShowed.cargoCode || "-"}
+                        </div>
+                        <div>
+                                Bestellnummer: {orderShowed.traceCode.slice(0,3)+"-"+orderShowed.traceCode.slice(3,6)+"-"+orderShowed.traceCode.slice(6,9)}
+                        </div>
+                        <div>
                             Erstellt am: {convertDate(orderShowed.createdAt)}
                         </div>
                         <div>
-                            Letztes Update: {convertDate(orderShowed.lastUpdate)}
+                            Letztes Update: {convertDate(orderShowed.lastUpdate) || "-"}
                         </div>
                     </HoverBlock>
 
                     <HoverBlock>
                         <MobileOrderTitle>Lieferadresse:</MobileOrderTitle>
-                        <div>{orderShowed.address}</div>
-                        <div>{orderShowed.city} / {orderShowed.country}</div>
-                        <div>{orderShowed.postalCode}</div>
+                        <div>{orderShowed.street} {orderShowed.doorNumber}, {orderShowed.city} / {orderShowed.state} ({orderShowed.postalCode})</div>
                     </HoverBlock>
 
                     <CustomHoverBlock>
@@ -429,22 +593,41 @@ function ProfileOrders({orders}) {
                         <div>
                             {
                                 orderShowed.orderItems?.map((item,index)=>{
-                                    console.log("here: ",item);
+                                    const arr = JSON.parse(item.attributes);
                                     return (
                                         <div className='my-5' key={index}>
-                                            <MobileSingleItemImg src={index%2==0? TempImg: TempImg2} height='100px'/>
+                                            <MobileSingleItemImg src={item.cartImage} height='100px'/>
                                             <MobileDetailItem>
-                                                <MobileItemName>{item.quantity> 1 ? `${item.quantity} x`: ""} {item.product.name}</MobileItemName>
+                                                <MobileItemName style={{fontWeight: "bold", color: "black", fontSize: "22px"}}>{item.itemName}</MobileItemName>
+                                                <MobileItemName style={{fontWeight: "bold", color: "#696984", marginBottom: "15px"}}>{item.secondaryName}</MobileItemName>
                                                 {
-                                                    item.product.numberOfRating > 0 && 
+                                                    false && item.product.numberOfRating > 0 && 
                                                     <div>
                                                         <CustomRating fontSize='large' name="half-rating-read" defaultValue={item.product.rating} precision={0.5} readOnly />
                                                     </div>
                                                 }
-                                                <div>{item.measurements}</div>
-                                                <div>{item.price}€  {item.quantity>1 ? `(${item.price/item.quantity} euro pro Artikel)`: ""}</div>
-                                                <Button className='my-2' onClick={(e)=>handleAddReview(e)} size='small' variant="outlined" color="warning">Kommentar</Button>
-                                                <Button className='mx-2' onClick={(e)=>{}} size='small' variant="outlined" color="warning">Wieder Kaufen</Button>
+                                                <div>
+                                                    {
+                                                        arr.map((a,i)=>{
+                                                            return (
+                                                                <li key={i}>{a}</li>
+                                                            )
+                                                        })
+                                                    }
+                                                </div>
+                                                <div style={{fontWeight: "bold", color: "#696984", marginBottom: "15px", marginTop: "25px", fontSize: "21px"}}>{item.quantity} x {item.price.toFixed(2)}€  </div>
+                                                <Button className='my-2' onClick={(e)=>handleAddReview(e,item)} size='large' variant="outlined" color="warning">Kommentar</Button>
+                                                <Button className='mx-2' 
+                                                        size='large'
+                                                        onClick={(e)=>{
+                                                                e.preventDefault();
+                                                                window.location.href = "mailto:info@hell-insektenschutz.de";
+                                                            }} 
+                                                            variant="outlined" 
+                                                            color="warning"
+                                                        >
+                                                            Kontakt
+                                                        </Button>
                                             </MobileDetailItem>
                                             
                                         </div>
@@ -461,4 +644,4 @@ function ProfileOrders({orders}) {
   )
 }
 
-export default ProfileOrders
+export default ProfileOrders;

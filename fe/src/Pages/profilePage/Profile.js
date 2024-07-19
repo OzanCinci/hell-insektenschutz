@@ -1,11 +1,11 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import UserIcon from '../../images/account/user.png';
 import LogoutIcon from '../../images/account/logout.png';
 import DashBoardIcon from '../../images/account/dashboard.png';
 import { useDispatch, useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
-import { logoutAction, userProfileDetailAction } from '../../actions/authActions';
+import { logoutAction } from '../../actions/authActions';
 import { useNavigate } from 'react-router-dom';
 import ProfileOrders from './ProfileOrders';
 import Alert from '@mui/material/Alert';
@@ -221,6 +221,8 @@ function Profile() {
         if (!email)
             nav("/");
 
+        /*
+
         const getDetailData = () => {
             if (access_token && loading===false && userDetail===null && selfID){
                 console.log("user detail request is being made!");
@@ -230,6 +232,7 @@ function Profile() {
         };
 
         return () => getDetailData();
+        */
     },[email,nav])
 
     useEffect(()=>{
@@ -238,10 +241,6 @@ function Profile() {
         else
             setAlignment("My Orders");
     },[]);
-
-    useLayoutEffect(()=>{
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    },[])
 
 
   return (
@@ -301,7 +300,7 @@ function Profile() {
                 loading!==false &&  userDetail===null && <CircularProgress color="warning" /> 
             }
             {
-                alignment==="My Orders" && userDetail?.orders && <ProfileOrders orders={userDetail?.orders}/>
+                alignment==="My Orders" && <ProfileOrders token={access_token}/>
             }
             {
                 alignment==="My Reviews" && userDetail?.reviews && <ProfileReview reviews={userDetail?.reviews}/>

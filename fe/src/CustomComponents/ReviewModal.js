@@ -205,9 +205,12 @@ function ReviewModal({currentProduct, productImage, token}) {
                                                 <span style={{fontSize: "18px"}}>
                                                     {currentProduct.name}
                                                 </span>
-                                                <span style={{marginLeft: "10px", textDecoration: "underline", fontWeight: "bold"}}>
-                                                    {currentProduct.rating < 0.1 ? "(Noch keine Bewertungen)": `(${currentProduct.rating.toFixed(1)}/5)` }
-                                                </span>
+                                                {
+                                                    currentProduct.rating && 
+                                                    <span style={{marginLeft: "10px", textDecoration: "underline", fontWeight: "bold"}}>
+                                                        {currentProduct.rating < 0.1 ? "(Noch keine Bewertungen)": `(${currentProduct.rating.toFixed(1)}/5)` }
+                                                    </span>
+                                                }
                                             </div>
                                         </div>
                                         <div>

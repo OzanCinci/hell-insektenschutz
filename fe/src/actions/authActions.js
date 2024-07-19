@@ -4,8 +4,6 @@ import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCES, LOGOUT, REFRESH_FAIL, REFRESH_
 
 const URL = process.env.REACT_APP_BE_API;
 
-//
-
 export const loginAction = (loginInfo) => async(dispatch)=> {
 
     dispatch({type: LOGIN_REQUEST});
@@ -133,6 +131,7 @@ export const refreshAction = (token) => async(dispatch)=> {
         });
 } 
 
+/*
 export const userProfileDetailAction = (token,userID) => async(dispatch)=> {
 
     dispatch({type: USER_PROFILE_DETAIL_REQUEST});
@@ -158,3 +157,4 @@ export const userProfileDetailAction = (token,userID) => async(dispatch)=> {
             dispatch({type: USER_PROFILE_DETAIL_FAIL, payload: e});
         });
 } 
+*/
