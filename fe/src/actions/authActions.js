@@ -24,6 +24,18 @@ export const loginAction = (loginInfo) => async(dispatch)=> {
 
     axios.request(configObject)
         .then(res => {
+            const expirationTime = new Date();
+            expirationTime.setDate(expirationTime.getDate() + 27); // Add 27 days
+            
+            const refreshExpirationTime = new Date();
+            refreshExpirationTime.setMonth(refreshExpirationTime.getMonth() + 11); // Add 11 months
+            
+            res.data = {
+                ...res.data,
+                expirationTime,
+                refreshExpirationTime
+            };
+
             dispatch({type:LOGIN_SUCCES, payload:res.data});
             console.log("SUCCESS, LOGIN DATA: ", res.data);
             // TODO: save data to localstorage!
@@ -90,11 +102,24 @@ export const registerAction = (obj) => async(dispatch)=> {
 
     axios.request(configObject)
         .then(res => {
-            dispatch({type:REGISTER_SUCCES, payload:res.data});
+            const expirationTime = new Date();
+            expirationTime.setDate(expirationTime.getDate() + 27); // Add 27 days
+
+            const refreshExpirationTime = new Date();
+            refreshExpirationTime.setMonth(refreshExpirationTime.getMonth() + 11); // Add 11 months
+
+            res.data = {
+                ...res.data,
+                expirationTime,
+                refreshExpirationTime
+            };
+            
+            dispatch({ type: REGISTER_SUCCES, payload: res.data });
             console.log("SUCCESS, register DATA: ", res.data);
-            dispatch({type:LOGIN_SUCCES, payload:res.data});
+            dispatch({ type: LOGIN_SUCCES, payload: res.data });
+            
             // TODO: save data to localstorage!
-            localStorage.setItem("userInfo", JSON.stringify(res.data));
+            localStorage.setItem("userInfo", JSON.stringify(res.data));            
         })
         .catch(e => {
             console.log("error reaised: ", e);
@@ -108,26 +133,40 @@ export const refreshAction = (token) => async(dispatch)=> {
 
     dispatch({type: REFRESH_REQUEST});
 
-    const url = `${URL}api/auth/refresh`;
+    const url = `${URL}/api/auth/refresh-token`;
     const configObject = {
         "url": url,
         "method": "post",
         "headers": {
             'Content-Type': 'application/json'
             },
-        "data": token
+        "data": {
+            "refreshToken": token
+        }
        
     };
 
     axios.request(configObject)
-        .then(res => {
+        .then(res => {  
+            const expirationTime = new Date();
+            expirationTime.setDate(expirationTime.getDate() + 27); // Add 27 days
+            
+            const refreshExpirationTime = new Date();
+            refreshExpirationTime.setMonth(refreshExpirationTime.getMonth() + 11); // Add 11 months
+            
+            res.data = {
+                ...res.data,
+                expirationTime,
+                refreshExpirationTime
+            };
             dispatch({type:REFRESH_SUCCES, payload:res.data});
-            console.log("SUCCESS, register DATA: ", res.data);
-            // TODO: save data to localstorage!
+            dispatch({type:LOGIN_SUCCES, payload:res.data});
+            console.log("SUCCESS, refresh DATA: ", res.data);
+            localStorage.setItem("userInfo", JSON.stringify(res.data));
         })
         .catch(e => {
             console.log("error reaised: ", e);
-            dispatch({type: REFRESH_FAIL, payload: "error raised! (register)"});
+            dispatch({type: REFRESH_FAIL, payload: "error raised! (REFRESH)"});
         });
 } 
 

@@ -112,7 +112,7 @@ const TitleWrapper = styled.div`
 
 const BASE_URL = process.env.REACT_APP_BE_API;
 const url = `${BASE_URL}/api/review`;
-function ReviewModal({currentProduct, productImage, token}) {
+function ReviewModal({currentProduct, productImage, token, itemName, secondaryName}) {
     // TODO:
     // reducer kısmı implement edildi
     // reducerı baştan yazmana gerek yok sen git ve
@@ -140,7 +140,10 @@ function ReviewModal({currentProduct, productImage, token}) {
             "data": {
                 productId: currentProduct.id,
                 rating: value,
-                comment: comment
+                comment: comment,
+                reviewImage: productImage,
+                itemName: itemName ? itemName : currentProduct.category,
+                secondaryName: secondaryName? secondaryName: currentProduct.name
             }
         };
     
@@ -199,11 +202,11 @@ function ReviewModal({currentProduct, productImage, token}) {
                                 <RatingWrapper>
                                     <TitleWrapper>
                                         <div>
-                                            <div style={{fontSize: "18px"}}>{currentProduct.category}</div>
+                                            <div style={{fontSize: "18px"}}>{itemName ? itemName : currentProduct.category}</div>
                                             <div style={{display: "flex", alignItems: "center"}}>
                                                 <SubdirectoryArrowRightIcon/>
                                                 <span style={{fontSize: "18px"}}>
-                                                    {currentProduct.name}
+                                                    {secondaryName? secondaryName: currentProduct.name}
                                                 </span>
                                                 {
                                                     currentProduct.rating && 

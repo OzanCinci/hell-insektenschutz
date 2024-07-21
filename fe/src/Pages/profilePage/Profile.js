@@ -183,7 +183,7 @@ const titleData = {
 function Profile() {
     const [alignment, setAlignment] = useState(null);
     const {userInfo} = useSelector(state=>state.login);
-    const  {selfID, firstName, lastName, email, phone, access_token, createdAt, role} = userInfo ? userInfo : {};
+    const  {firstName, lastName, email, phone, access_token, createdAt, role, expirationTime} = userInfo ? userInfo : {};
     const {userDetail,loading,error} = useSelector(state=>state.userProfileDetail);
 
     const dispatch = useDispatch();
@@ -303,7 +303,7 @@ function Profile() {
                 alignment==="My Orders" && <ProfileOrders token={access_token}/>
             }
             {
-                alignment==="My Reviews" && userDetail?.reviews && <ProfileReview reviews={userDetail?.reviews}/>
+                alignment==="My Reviews" && <ProfileReview token={access_token}/>
             }
             {
                 alignment==="User Info" && 

@@ -9,11 +9,21 @@ import Rating from '@mui/material/Rating';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { useNavigate } from 'react-router-dom';
 import NoOrderImg from '../../images/account/sepet.jpeg';
+import Alert from '@mui/material/Alert';
 import ReviewModal from '../../CustomComponents/ReviewModal';
 
 ////////////////////////////////////////////////
 /////// DESKTOP COMPONENTS BELOW ////////////////
 ////////////////////////////////////////////////
+
+
+const ModifiedAlert = styled(Alert)`
+  width: fit-content;
+  font-size: 18px !important;
+  text-align: left;
+  margin: 0 auto;
+`;
+
 
 const Container = styled.div`
 
@@ -336,7 +346,7 @@ function ProfileOrders({token}) {
             id: item.productId
         };
 
-        console.log("item: ",item);
+        //console.log("item: ",item);
         setCurrentProduct(tempItem);
         const button = document.getElementById("leave-a-review-modal");
         if (!button)
@@ -348,11 +358,17 @@ function ProfileOrders({token}) {
     <Container>
         <ReviewModal currentProduct={currentProduct} productImage={currentProduct? currentProduct.cartImage : null} token={token}/>
         {
-            !loading && orders.length === 0 && 
+            !loading && !error &&  orders.length === 0 && 
             <div>
                 <NoOrderMessage>Sie haben bisher keine Bestellungen aufgegeben. Entdecken Sie unsere vielfältige Produktauswahl auf unserer Einkaufsseite und finden Sie etwas, das Ihnen gefällt!</NoOrderMessage>
                 <CustomMobileSingleItemImg src={NoOrderImg}/>
                 <Button onClick={(e)=>nav("/geschaft")} size='large' variant="outlined" color="warning">Sehen Sie unsere Produkte</Button>
+            </div>
+        }
+        {
+            !loading && error &&
+            <div>
+                <ModifiedAlert severity="error">Etwas ist auf unserer Seite schiefgelaufen. Bitte aktualisieren Sie die Seite.</ModifiedAlert>
             </div>
         }
         <DesktopOrderContainer>
@@ -482,7 +498,7 @@ function ProfileOrders({token}) {
         }
 
         {
-            isLastPage===false && !loading &&
+            isLastPage===false && !loading && !error &&
             <Button onClick={(e)=>handleLoadMore(e)} variant="contained" color='warning'>
                     Mehr laden
                 <ArrowDropDownIcon style={{marginLeft: "5px", marginRight: "-12px"}}/>    
@@ -535,7 +551,7 @@ function ProfileOrders({token}) {
                             })
                         }
                         {
-                        isLastPage===false && !loading &&
+                        isLastPage===false && !loading && !error &&
                         <Button onClick={(e)=>handleLoadMore(e)} variant="contained" color='warning'>
                                 Mehr laden
                             <ArrowDropDownIcon style={{marginLeft: "5px", marginRight: "-12px"}}/>    

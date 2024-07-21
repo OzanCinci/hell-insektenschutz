@@ -552,6 +552,9 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
   /////// DO REVIEW LOGIC ///////
 
 
+  useEffect(()=>{
+    console.log("currentProduct: ",currentProduct);
+  },[currentProduct])
 
   if (loading) {
     return <CircularProgress color="warning" />;
@@ -585,6 +588,8 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                                 <ReviewModal 
                                     token={userInfo.access_token}
                                     currentProduct={currentProduct}
+                                    itemName={currentProduct.name}
+                                    secondaryName={itemData?.color?.title}
                                     productImage={images[0]}
                                 />
                                 
