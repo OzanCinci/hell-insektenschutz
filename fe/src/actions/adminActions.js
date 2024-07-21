@@ -72,6 +72,7 @@ export const completedOrdersAction = (token) => async(dispatch)=> {
         });
 } 
 
+/*
 export const pendingReviewsAction = (token) => async(dispatch)=> {
 
     dispatch({type: ADMIN_PENDING_REVIEW_REQUEST});
@@ -100,7 +101,9 @@ export const pendingReviewsAction = (token) => async(dispatch)=> {
             dispatch({type: ADMIN_PENDING_REVIEW_FAIL, payload: "error raised! (pendingReviewsAction)"});
         });
 } 
+*/
 
+/*
 export const reviewsAction = (token) => async(dispatch)=> {
 
     dispatch({type: ADMIN_REVIEW_REQUEST});
@@ -129,6 +132,7 @@ export const reviewsAction = (token) => async(dispatch)=> {
             dispatch({type: ADMIN_REVIEW_FAIL, payload: "error raised! (reviewsAction)"});
         });
 } 
+*/
 
 export const allUsersAction = (token) => async(dispatch)=> {
 
@@ -241,31 +245,7 @@ export const adminLandingPageAction = (token) => async(dispatch)=> {
         });
 } 
 
-export const approveReview = (token,reviewID,productID) => async(dispatch)=> {
-
-    //dispatch({type: ADMIN_REVIEW_REQUEST});
-    // approveReview/{reviewID}/{productID}
-    const url = `${URL}/api/management/approveReview/${reviewID}/${productID}`;
-    const configObject = {
-        "url": url,
-        "method": "put",
-        "headers": {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-            },
-    };
-
-    axios.request(configObject)
-        .then(res => {
-            dispatch({type:ADMIN_APPROVED_PENDING_REVIEW, payload:reviewID});
-            console.log("SUCCESS, approveReview: ",reviewID," + ", res.data);
-        })
-        .catch(e => {
-            console.log("error reaised: approveReview -> ", e);
-            //dispatch({type: ADMIN_REVIEW_FAIL, payload: "error raised! (reviewsAction)"});
-        });
-} 
-
+/*
 export const deleteReview = (token,reviewID) => async(dispatch)=> {
 
     //dispatch({type: ADMIN_REVIEW_REQUEST});
@@ -290,3 +270,4 @@ export const deleteReview = (token,reviewID) => async(dispatch)=> {
             //dispatch({type: ADMIN_REVIEW_FAIL, payload: "error raised! (reviewsAction)"});
         });
 } 
+*/

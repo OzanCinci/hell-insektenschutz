@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { reviewsAction } from '../../../actions/adminActions';
+import React, { useState } from 'react'
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Alert from '@mui/material/Alert';
 import { convertDate } from '../../../utils/datetime';
@@ -18,7 +17,6 @@ import Paper from '@mui/material/Paper';
 import CircularProgress from '@mui/material/CircularProgress';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import CachedIcon from '@mui/icons-material/Cached';
 import useFetch from '../../../hooks/useFetch';
 import Paginate from '../../../CustomComponents/Paginate';
 
@@ -45,9 +43,11 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     backgroundColor: "#b0acac",
     color: "white",
     fontSize: 19,
+    verticalAlign: 'top' 
   },
   [`&.${tableCellClasses.body}`]: {
     fontSize: 18,
+    verticalAlign: 'top' 
   },
 }));
 
@@ -82,9 +82,18 @@ function Row({ row }) {
         <StyledTableCell align="left">{convertDate(row.approvedAt)}</StyledTableCell>
         <StyledTableCell align="left">{convertDate(row.createdAt)}</StyledTableCell>
         <StyledTableCell align="left">{row.rating}</StyledTableCell>
-        <StyledTableCell align="left">{row.comment}</StyledTableCell>
+        <StyledTableCell align="left">
+          <div style={{width: "350px"}}>
+            {row.comment}
+          </div>
+        </StyledTableCell>
         <StyledTableCell align="left">{row.userName}</StyledTableCell>
         <StyledTableCell align="left">{row.email}</StyledTableCell>
+        <StyledTableCell align="left">
+          <div style={{width: "250px"}}>
+            {row.itemName}--{row.secondaryName}
+          </div>
+        </StyledTableCell>
         <StyledTableCell align="left">{row.product.name}</StyledTableCell>
         <StyledTableCell align="left">{row.product.rating.toFixed(1)}</StyledTableCell>
       </StyledTableRow>
@@ -93,7 +102,7 @@ function Row({ row }) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box sx={{ margin: 1 }}>
               <Typography variant="h6" gutterBottom component="div">
-                Product Details
+                Produktdetails
               </Typography>
               <Table size="small" aria-label="purchases">
                 <TableHead>
@@ -102,7 +111,6 @@ function Row({ row }) {
                     <StyledTableCell align="center">Anzahl der Bewertungen</StyledTableCell>
                     <StyledTableCell align="center">Gesamtbewertung</StyledTableCell>
                     <StyledTableCell align="center">Kategorie</StyledTableCell>
-                    <StyledTableCell align="center">Beschreibung</StyledTableCell>
                   </StyledTableRow>
                 </TableHead>
                 <TableBody>
@@ -111,7 +119,6 @@ function Row({ row }) {
                     <StyledTableCell align="left">{row.product.numberOfRating}</StyledTableCell>
                     <StyledTableCell align="left">{row.product.rating.toFixed(1)}</StyledTableCell>
                     <StyledTableCell align="left">{row.product.category}</StyledTableCell>
-                    <StyledTableCell align="left">{row.product.description}</StyledTableCell>
                   </StyledTableRow>
                 </TableBody>
               </Table>
@@ -127,7 +134,7 @@ function Row({ row }) {
 
 function ApprovedReviews() {
   const [pageNumber,setPageNumber] = useState(0);
-  const [url, setUrl] = useState("/api/management/approved-reviews");
+  const [url, setUrl] = useState("/api/management/reviews?approved=true");
   const {userInfo} = useSelector(state=>state.login);
   const [config, setConfig] = useState({
     "method": "get",
@@ -136,7 +143,7 @@ function ApprovedReviews() {
         'Authorization': `Bearer ${userInfo?.access_token}`
         }
   });
-  const {data, loading, error} = useFetch(url,config,pageNumber);
+  const {data, loading, error} = useFetch(url,config,pageNumber, true);
   const reviews = data!==null? data.content : null;
   
 
@@ -148,7 +155,7 @@ function ApprovedReviews() {
       {
         loading!==false &&  reviews===null && <CircularProgress color="warning" /> 
       }
-      { data!=null && <Paginate data={data} setPageNumber={setPageNumber} pageNumber={pageNumber}/>}
+      { data!=null && <Paginate data={data} setPageNumber={setPageNumber} pageNumber={pageNumber} PAGE_SIZE={10}/>}
       {   reviews &&
           <TableContainer component={Paper}>
               <Table aria-label="collapsible table">
@@ -162,13 +169,14 @@ function ApprovedReviews() {
                         <StyledTableCell>Kommentar</StyledTableCell>
                         <StyledTableCell>Benutzer</StyledTableCell>
                         <StyledTableCell>E-Mail</StyledTableCell>
+                        <StyledTableCell>Artikel</StyledTableCell>
                         <StyledTableCell>Produktname</StyledTableCell>
                         <StyledTableCell>Produktbewertung</StyledTableCell>
                   </StyledTableRow>
               </TableHead>
               <TableBody>
                   {reviews.map((row,index) => (
-                      <Row key={index} row={row} />
+                      <Row key={row.id} row={row} />
                   ))}
               </TableBody>
               </Table>

@@ -45,11 +45,12 @@ const ImageContainer = styled.div`
     padding-bottom: 20px;
     padding-left: 20px;
     padding-right: 20px;
+    min-width: 250px;
 `;
 
 const Filler = styled.div`
     width: 100%;
-    height: 40px;
+    height: 30px;
     background-image: linear-gradient(to right, #db5424, #debe40);
 `;
 
@@ -91,7 +92,6 @@ const Container = styled.div`
 const CollapsePart = styled.div`
     width: 140%;
     text-align: right;
-    min-height: 40px;
     padding: 50px auto;
 `;
 
@@ -139,13 +139,7 @@ function Collapsable() {
                     <ArrowBackIosNewIcon fontSize='large' color='warning'/>
                 </Selection>
             </CollapsePart>
-            <ImageWrapper>
-                <img src={ManagerIcon} alt='manager-icon' height='120px'/>
-                <div>
-                    <TitleText>{firstName}</TitleText>
-                    <TitleText>{lastName}</TitleText>
-                </div>
-            </ImageWrapper>
+            <TitleText>{firstName} {lastName}</TitleText>
             <TitleText>Rolle: {role}</TitleText>
         </ImageContainer>
 

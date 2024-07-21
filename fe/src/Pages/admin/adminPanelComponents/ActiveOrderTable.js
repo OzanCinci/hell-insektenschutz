@@ -16,8 +16,7 @@ import Paper from '@mui/material/Paper';
 import CircularProgress from '@mui/material/CircularProgress';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import { useDispatch, useSelector } from 'react-redux';
-import { activeOrdersAction } from '../../../actions/adminActions';
+import { useSelector } from 'react-redux';
 import Paginate from '../../../CustomComponents/Paginate';
 import useFetch from '../../../hooks/useFetch';
 
@@ -123,7 +122,7 @@ const ModifiedAlert = styled(Alert)`
 
 function ActiveOrderTable() {
   const [pageNumber,setPageNumber] = useState(0);
-  const [url, setUrl] = useState("/api/management/active-orders");
+  const [url, setUrl] = useState("/api/management/orders?orderStatus=ACTIVE");
   const {userInfo} = useSelector(state=>state.login);
   const [config, setConfig] = useState({
     "method": "get",
@@ -131,29 +130,9 @@ function ActiveOrderTable() {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${userInfo?.access_token}`
         },
-    "data":{
-        "filter": null,
-    }
   });
-  const {data, loading, error} = useFetch(url,config,pageNumber);
+  const {data, loading, error} = useFetch(url, config, pageNumber, true);
   const orderData = data!==null? data.content : null;
-  /*
-   
-  const dispatch = useDispatch();
-  const {orderData,loading,error} = useSelector(state=>state.activeOrders);
-  const {userInfo} = useSelector(state=>state.login);
-  
-  const getActiveOrders = ()=>{
-    if (!orderData && userInfo?.access_token)
-    dispatch(activeOrdersAction(userInfo?.access_token))
-  //console.log("orderData: ",orderData);
-}
-
-
-useEffect(()=>{
-  return ()=>getActiveOrders();
-},[orderData]);
-*/
 
 
 return (
