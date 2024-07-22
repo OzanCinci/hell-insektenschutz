@@ -46,7 +46,7 @@ function AdminPanel() {
         </CollapsableContainer>
         <BodyModal>
             <div>
-                Admin DashBoard
+
             </div>
             <Outlet/>    
         </BodyModal>

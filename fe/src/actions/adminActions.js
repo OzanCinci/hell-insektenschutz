@@ -189,6 +189,7 @@ export const findUserAction = (token,searchWord) => async(dispatch)=> {
         });
 } 
 
+/*
 export const findManagerUserAction = (token) => async(dispatch)=> {
 
     dispatch({type: ADMIN_FIND_USER_REQUEST});
@@ -214,6 +215,7 @@ export const findManagerUserAction = (token) => async(dispatch)=> {
             dispatch({type: ADMIN_FIND_USER_FAIL, payload: "error raised! (findManagerUserAction)"});
         });
 } 
+*/
 
 export const selectAdminDataAction = (data) => async(dispatch)=> {
     dispatch({type: ADMIN_SELECT_DATA,payload:data});

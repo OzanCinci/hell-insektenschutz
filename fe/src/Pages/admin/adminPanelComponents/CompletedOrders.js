@@ -123,7 +123,7 @@ function Row({ row }) {
 
 function CompletedOrders() {
     const [pageNumber,setPageNumber] = useState(0);
-    const [url, setUrl] = useState("/api/management/completed-orders");
+    const [url, setUrl] = useState("/api/management/orders?orderStatus=DELIVERED");
     const {userInfo} = useSelector(state=>state.login);
     const [config, setConfig] = useState({
       "method": "get",

@@ -154,8 +154,11 @@ function Collapsable() {
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                 <div class="accordion-body">
                     <div>
-                        <SingleItem onClick={()=>handlePanelChange('active-orders')}>aktive Bestellungen</SingleItem>
-                        <SingleItem onClick={()=>handlePanelChange('completed-orders')}>vollendet Bestellungen</SingleItem>
+                    <SingleItem onClick={()=>handlePanelChange('bestellnummber')}>Suche mit Bestellnummer</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('orders/PENDING_PAYMENT')}>ausstehende Zahlung Bestellungen</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('orders/ACTIVE')}>aktive Bestellungen</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('orders/IN_SHIPPING')}>in Versand Bestellungen</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('orders/DELIVERED')}>vollendet Bestellungen</SingleItem>
                     </div>
                 </div>
                 </div>

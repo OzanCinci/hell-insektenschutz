@@ -49,6 +49,7 @@ import RegularCatalog from './Pages/shop/pages/RegularCatalog';
 import Wrapper from './Pages/products/Wrapper';
 import HowToInstall from './Pages/howToInstall/HowToInstall';
 import SearchOrder from './Pages/order/SearchOrder';
+import OrderSearch from './Pages/admin/adminPanelComponents/OrderSearch';
 
 function App() {
   useEffect(()=>{
@@ -109,12 +110,14 @@ function App() {
             <Route exact path='/profile' element={<Profile/>}/>
             
             <Route  path='admin-panel' element={<AdminPanel/>}>
-              <Route path='active-orders' element={<ActiveOrderTable/>}/>
-              <Route path='completed-orders' element={<CompletedOrders/>}/>
               <Route path='pending-reviews' element={<PendingReviews/>}/>
               <Route path='approved-reviews' element={<ApprovedReviews/>}/>
-              <Route path='all-users' element={<AllUsers/>}/>
+              <Route path='orders/:status' element={<ActiveOrderTable/>}/>
+              <Route path='bestellnummber' element={<OrderSearch/>}/>
               <Route path='change-role' element={<ChangeRole/>}/>
+
+              {/*<Route path='completed-orders' element={<CompletedOrders/>}/>*/}
+              <Route path='all-users' element={<AllUsers/>}/>
             </Route>
 
 

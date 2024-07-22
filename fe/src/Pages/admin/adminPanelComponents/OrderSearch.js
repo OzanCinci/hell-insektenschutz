@@ -18,12 +18,53 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
-import Paginate from '../../../CustomComponents/Paginate';
-import useFetch from '../../../hooks/useFetch';
-import { useLocation, useParams } from 'react-router-dom';
-import { handleOrderUpdate } from '../adminRequests';
+import { handleLoadContent, handleOrderUpdate } from '../adminRequests';
 import PositiveNotification from '../../../CustomComponents/Notifications/PositiveNotification';
 import NegativeNotification from '../../../CustomComponents/Notifications/NegativeNotification';
+import HorizontalRuleIcon from '@mui/icons-material/HorizontalRule';
+
+const CustomInput = styled.input`
+    width: 90px;
+    font-size: 18px;
+    text-align: center;
+    padding: 0px 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+
+    &:focus {
+        outline: none;
+        border-color: #f59f4c;
+    }
+`;
+
+const TopPartWrapper = styled.div`
+    width: 600px;
+    margin: auto;
+    border: 1px solid grey;
+    padding: 20px 40px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+`;
+
+const CustomButton = styled(Button)`
+    text-transform: none !important;
+    font-size: 17px !important;
+
+    @media only screen and (max-width: 800px) {
+        margin-top: 15px !important;
+    }    
+`;
+
+const InputWrapper = styled.div`
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    width: fit-content;
+
+     @media only screen and (max-width: 800px) {
+        gap: 2px;
+    }
+`;
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -120,7 +161,7 @@ function Row({ row, handleButtonClick}) {
                 </TableHead>
                 <TableBody>
                   {row.orderItems.map((orderItem, index) => {
-                    const attr = orderItem.price > 0 ? JSON.parse(orderItem.attributes): [];
+                    const attr = JSON.parse(orderItem.attributes);
                     console.log("attr: ",attr);
                     return (
                       <StyledTableRow key={index}>
@@ -162,20 +203,39 @@ const ModifiedAlert = styled(Alert)`
   border: 1px solid black;
 `;
 
-function ActiveOrderTable() {
-  const [pageNumber, setPageNumber] = useState(0);
-  const {status} = useParams();
-  const url = `/api/management/orders?orderStatus=${status}`;
+function OrderSearch() {
   const { userInfo } = useSelector(state => state.login);
-  const [config, setConfig] = useState({
+  const [orderData, setOrderData] = useState(null);
+  const [error,setError] = useState(null);
+  const [loading,setLoading] = useState(null);
+  const config = {
     method: "get",
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${userInfo?.access_token}`
     },
-  });
-  const { data, loading, error } = useFetch(url, config, pageNumber, true);
-  const orderData = data !== null ? data.content : null;
+  };
+  const [input1, setInput1] = useState('');
+  const [input2, setInput2] = useState('');
+  const [input3, setInput3] = useState('');
+
+  const handleSearch = async (e) => {
+      if (input1.length<3 || input2.length<3 || input3.length<3)
+          return;
+
+      const code =  input1 + "" + input2 + "" + input3;
+
+      setError(null);
+      setLoading(true);
+      const {data, status} = await handleLoadContent(code,userInfo?.access_token);
+      setLoading(false);
+
+      if (status) {
+        setOrderData([data]);
+      } else {
+        setError("Aktualisierung fehlgeschlagen");
+      }
+  }
 
   const handleButtonClick = async (rowId, cargoInfo, orderStatus ) => {
     const result = await handleOrderUpdate(rowId, cargoInfo, orderStatus, userInfo?.access_token);
@@ -193,6 +253,36 @@ function ActiveOrderTable() {
 
   return (
     <div>
+        <TopPartWrapper>
+            <div style={{margin: "15px auto", textAlign: "left", fontSize: "20px"}}>
+                Bitte geben Sie eine 9-stellige Bestellnummer an.
+            </div>
+            <InputWrapper>
+                <CustomInput
+                    value={input1}
+                    onChange={(e) => setInput1(e.target.value)}
+                    maxLength={3}
+                    placeholder="xxx"
+                />
+                <HorizontalRuleIcon fontSize='medium'/>
+                <CustomInput
+                    value={input2}
+                    onChange={(e) => setInput2(e.target.value)}
+                    maxLength={3}
+                    placeholder="xxx"
+                />
+                <HorizontalRuleIcon/>
+                <CustomInput
+                    value={input3}
+                    onChange={(e) => setInput3(e.target.value)}
+                    maxLength={3}
+                    placeholder="xxx"
+                />
+            </InputWrapper>
+            <div style={{width: "100%", textAlign: "right"}}>
+                <CustomButton onClick={(e)=>handleSearch(e)} variant='outlined' color='warning'>suchen</CustomButton>
+            </div>
+        </TopPartWrapper>
       <PositiveNotification buttonId={"order-admin-panel-success-button"} msg={"Aktualisierung erfolgreich"}/>
       <NegativeNotification buttonId={"order-admin-panel-fail-button"} msg={"Aktualisierung fehlgeschlagen"}/>
       {
@@ -201,7 +291,6 @@ function ActiveOrderTable() {
       {
         loading && orderData === null && <CircularProgress color="warning" />
       }
-      {data != null && <Paginate data={data} setPageNumber={setPageNumber} pageNumber={pageNumber} PAGE_SIZE={10}/>}
       {orderData &&
         <TableContainer component={Paper}>
           <Table aria-label="collapsible table">
@@ -239,4 +328,4 @@ function ActiveOrderTable() {
   );
 }
 
-export default ActiveOrderTable;
+export default OrderSearch;

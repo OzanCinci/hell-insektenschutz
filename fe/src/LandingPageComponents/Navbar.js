@@ -352,11 +352,6 @@ function Navbar() {
                 <StorefrontIcon fontSize='large' />
                 <LogoText>Geschäft</LogoText>
               </SingleLoginComponent>
-
-              <CustomSingleLoginComponent onClick={ () => toggleFunction("/bestellung")}>
-                <SearchIcon fontSize='large' />
-                <LogoText>Bestellung</LogoText>
-              </CustomSingleLoginComponent>
           </LoginContainer>
           <NavbarButtonWrapper>
             <BurgerIcon toggle={toggle} setToggle={setToggle}/>
