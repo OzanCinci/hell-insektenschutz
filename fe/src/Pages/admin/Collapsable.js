@@ -146,6 +146,20 @@ function Collapsable() {
 
         <div class="accordion" id="accordionPanelsStayOpenExample">
             <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingZero">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseZero" aria-expanded="false" aria-controls="panelsStayOpen-collapseZero">
+                <div>Analytisch</div>
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseZero" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingZero">
+                <div class="accordion-body">
+                    <div>
+                    <SingleItem onClick={()=>handlePanelChange('number-of-visits')}>Anzahl der Besucher</SingleItem>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
                 <h2 class="accordion-header" id="panelsStayOpen-headingOne">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
                     <div>Bestellungen</div>
@@ -154,7 +168,7 @@ function Collapsable() {
                 <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
                 <div class="accordion-body">
                     <div>
-                    <SingleItem onClick={()=>handlePanelChange('bestellnummber')}>Suche mit Bestellnummer</SingleItem>
+                        <SingleItem onClick={()=>handlePanelChange('bestellnummber')}>Suche mit Bestellnummer</SingleItem>
                         <SingleItem onClick={()=>handlePanelChange('orders/PENDING_PAYMENT')}>ausstehende Zahlung Bestellungen</SingleItem>
                         <SingleItem onClick={()=>handlePanelChange('orders/ACTIVE')}>aktive Bestellungen</SingleItem>
                         <SingleItem onClick={()=>handlePanelChange('orders/IN_SHIPPING')}>in Versand Bestellungen</SingleItem>

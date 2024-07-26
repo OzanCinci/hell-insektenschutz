@@ -55,6 +55,7 @@ const SearchOrder = lazy(() => import('./Pages/order/SearchOrder'));
 const OrderSearch = lazy(() => import('./Pages/admin/adminPanelComponents/OrderSearch'));
 const PayPalTest = lazy(() => import('./Pages/paypalTest/PayPalTest'));
 const AllTransactions = lazy(() => import('./Pages/admin/adminPanelComponents/AllTransactions'));
+const NumberOfVisitors = lazy(() => import('./Pages/admin/adminPanelComponents/analytic/NumberOfVisitors'));
 
 function App() {
   useEffect(() => {
@@ -89,6 +90,7 @@ function App() {
           <Suspense fallback={<div><CircularProgress color='warning'/></div>}>
             <Routes>
               <Route exact path='/' element={<HomePage />} />
+              
               <Route exact path='/turen' element={<Türen />} />
               <Route exact path='/fenster' element={<Fenster />} />
               <Route exact path='/dachfenster' element={<Dachfenster />} />
@@ -96,16 +98,21 @@ function App() {
               <Route exact path='/sonderformen' element={<Sonderformen />} />
               <Route exact path='/zusatzprodukte' element={<Zusatsprodukte />} />
               <Route exact path='/gewebearten' element={<Gewebearten />} />
+              
               <Route exact path='/impressum' element={<Impressum />} />
               <Route exact path='/widerrufsbelehrung' element={<Widerrufsbelehrung />} />
               <Route exact path='/datenschutz' element={<Datenschutz />} />
               <Route exact path='/kontakt' element={<Kontakt />} />
+              
               <Route exact path='/pforzheim' element={<RaumPforzheim />} />
               <Route exact path='/karlsruhe' element={<RaumKarlsruhe />} />
               <Route exact path='/baden-baden' element={<RaumBaden />} />
+              
               <Route exact path='/einzelheiten/:category/:detailName' element={<Detail />} />
+              
               <Route exact path='/profile' element={<Profile />} />
               <Route exact path='/test' element={<PayPalTest />} />
+
               <Route path='admin-panel' element={<AdminPanel />}>
                 <Route path='pending-reviews' element={<PendingReviews />} />
                 <Route path='approved-reviews' element={<ApprovedReviews />} />
@@ -113,14 +120,22 @@ function App() {
                 <Route path='bestellnummber' element={<OrderSearch />} />
                 <Route path='change-role' element={<ChangeRole />} />
                 <Route path='transactions' element={<AllTransactions />} />
+                <Route path='number-of-visits' element={<NumberOfVisitors />} />
+                
                 <Route path='all-users' element={<AllUsers />} />
               </Route>
+
               <Route path='/test-produkt/:productID' element={<SingleProduct />} />
+              
               <Route path='order-create' element={<CreateOrder />} />
               <Route path='order-success' element={<OrderSuccess />} />
+              
               <Route path='bestellung' element={<SearchOrder />} />
+              
               <Route path='warenkorb' element={<Warenkorb />} />
+              
               <Route path='geschaft' element={<ShopLanding />} />
+              
               <Route path='geschaft' element={<ShopDetail />}>
                 <Route path='plissees' element={<RegularCatalog />} />
                 <Route path='jalousien' element={<RegularCatalog />} />
@@ -128,6 +143,7 @@ function App() {
                 <Route path='lamellenvorhang' element={<RegularCatalog />} />
                 <Route path='insektenschutz' element={<Insek />} />
               </Route>
+
               <Route path='/geschaft/:category/:model' element={<OptionsPage />} />
               <Route path='/produkts/:produkt/:id' element={<Wrapper />} />
               <Route path='/messanleitung/:category' element={<Measurement />} />

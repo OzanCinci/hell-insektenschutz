@@ -63,7 +63,7 @@ function Row({ row }) {
       <StyledTableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
         <StyledTableCell align="left">{convertDateWitDetail(row.createdAt)}</StyledTableCell>
         <StyledTableCell align="left">{row.email}</StyledTableCell>
-        <StyledTableCell align="left">{`${row.traceCode.slice(0,3)}-${row.traceCode.slice(3,6)}-${row.traceCode.slice(6,9)}`}</StyledTableCell>
+        <StyledTableCell align="left">{row.traceCode ? `${row.traceCode.slice(0,3)}-${row.traceCode.slice(3,6)}-${row.traceCode.slice(6,9)}`: "-"}</StyledTableCell>
         <StyledTableCell align="left">{row.amount.toFixed(2)}€</StyledTableCell>
         <StyledTableCell align="left">{row.transactionResource}</StyledTableCell>
       </StyledTableRow>
