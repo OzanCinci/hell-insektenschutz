@@ -60,8 +60,8 @@ function Impressum() {
             <h3>
                 Hakan Aydin
             </h3>
-            <h3>Zeppelinstr.10</h3>
-            <h3>76448 Durmersheim</h3>
+            <h3>Lochfeldstraße 30,</h3>
+            <h3>76437 Rastatt, Deutschland</h3>
             <h3>Umsatzsteuer-Identi kationsnummer</h3>
             <h3>gemäß §27 a Umsatzsteuergesetz:</h3>
             <h3>Steur id Nr. 92415358078</h3>
@@ -70,4 +70,4 @@ function Impressum() {
   )
 }
 
-export default Impressum
+export default Impressum;
