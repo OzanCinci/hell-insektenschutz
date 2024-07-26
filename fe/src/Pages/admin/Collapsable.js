@@ -187,8 +187,21 @@ function Collapsable() {
                 <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
                 <div class="accordion-body">
                     <div>
-                        <SingleItem onClick={()=>handlePanelChange('all-users')}>alle Nutzer</SingleItem>
                         <SingleItem onClick={()=>handlePanelChange('change-role')}>Rolle ändern</SingleItem>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="panelsStayOpen-headingFour">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
+                    <div>Transaktion</div>
+                </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
+                <div class="accordion-body">
+                    <div>
+                        <SingleItem onClick={()=>handlePanelChange('transactions')}>Alle Transaktionen</SingleItem>
                     </div>
                 </div>
                 </div>

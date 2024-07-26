@@ -155,6 +155,13 @@ const Wrapper = styled.div`
     }
 `;
 
+const BankingTitle = styled.div`
+    font-size: 21px;
+    font-weight: bold;
+    color: #696984;
+    text-decoration: underline;
+`;
+
 function useQuery() {
     return new URLSearchParams(useLocation().search);
 }
@@ -168,17 +175,21 @@ const config = {
 
 const orderStatusMap = {
     ACTIVE: "AKTIV",
+    PENDING_PAYMENT: "Zahlung ausstehend",
+    IN_SHIPPING: "In Versand",
+    DELIVERED: "Zugestellt",
 }
 
 function OrderSuccess() {
     const query = useQuery();
     const traceCode = query.get('traceCode');
     const init = query.get('init');
+    const pending = query.get('pending');
     const url = `/api/orders/${traceCode}`;
     const { data, loading, error } = useFetch(url, config, 0);
 
     useEffect(()=>{
-        console.log("AAAAA: ", traceCode, init);
+        console.log("AAAAA: ", traceCode, init, data?.orderStatus);
     },[traceCode,init]);
 
     useEffect(()=>{
@@ -199,6 +210,21 @@ function OrderSuccess() {
                             Vielen Dank für Ihre Bestellung. Eine Kopie der Bestellübersicht wurde an Ihre E-Mail gesendet. Bitte prüfen Sie auch den Spam-Ordner. Wir informieren Sie per E-Mail über den Bestellstatus. Die Details Ihrer Bestellung finden Sie in Ihrem Profil. Wenn Sie kein registrierter Benutzer sind, nutzen Sie die Seite Bestellung. Notieren Sie Ihre <b>Bestellnummer</b> zur Abfrage. Mit dem Sendungscode können Sie Ihre Bestellung auf der Website des Lieferunternehmens nachverfolgen.
                         </Explanation>
                     </>
+                }
+                {
+                    pending==="true" &&
+                    <div style={{marginTop: "80px" , padding: "10px 20px"}}>
+                        <Explanation>
+                            Warnung: Wenn Sie per Banküberweisung bezahlen, wird die Bestellung ohne sofortige Zahlung erstellt. Überweisen Sie den Gesamtbetrag an das angegebene Bankkonto und fügen Sie die <b>Bestellnummer</b> in den <b>Verwendungszweck</b> ein. Eine Bestellbestätigung wurde an Ihre E-Mail gesendet. Prüfen Sie bitte auch den Spam-Ordner. Wir informieren Sie per E-Mail über den Bestellstatus. Bestelldetails finden Sie in Ihrem Profil oder auf der Bestellseite. Notieren Sie Ihre Bestellnummer und den Sendungscode zur Nachverfolgung.
+                        </Explanation>
+                        <div style={{textAlign: "left", fontSize: "20px", padding: "10px 20px", margin: "auto", minWidth: "300px", maxWidth: "800px"}}>
+                            <BankingTitle>Bitte zahlen Sie den Gesamtbetrag an</BankingTitle>
+                            <div>Hakan Aydin</div>
+                            <div>DE25661900000010661510</div>
+                            <div>GENODE61KA1</div>
+                            <div>Volksbank pur eG</div>
+                        </div>
+                    </div>
                 }
 
                 <Wrapper>

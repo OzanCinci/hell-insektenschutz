@@ -68,6 +68,7 @@ function LoginPopUp() {
 
     const handleSubmitLogin = (e) => {
         e.preventDefault();
+        setFormError(null);
         
         // TODO: do some checks
         if (!loginInfo.email || !loginInfo.password){
@@ -85,8 +86,16 @@ function LoginPopUp() {
 
     const handleSubmitSignUp = (e) => {
         e.preventDefault();
+        setFormError(null);
 
         // TODO: do some checks
+        if (signUpInfo.email.trim().length<1 || signUpInfo.firstName.trim().length<1 ||
+            signUpInfo.lastName.trim().length<1 || signUpInfo.telephone.trim().length<1 ||
+            signUpInfo.password.trim().length<1 || signUpInfo.passwordChecker.trim().length<1) {
+                setFormError("Bitte füllen Sie alle Felder aus");
+                return;
+        }
+
         // password match check!
         if (signUpInfo.passwordChecker!==signUpInfo.password) {
             setFormError("Passwords are not matching!");

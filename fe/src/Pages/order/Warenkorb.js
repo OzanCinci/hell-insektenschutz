@@ -459,7 +459,7 @@ function Warenkorb() {
                                     Versand:
                                 </span>
                                 <span>
-                                    {cart.shippingPrice} €
+                                    {cart.shippingPrice.toFixed(2)} €
                                 </span>
                             </li>
                             <div className="list-group-item d-flex justify-content-space-around">

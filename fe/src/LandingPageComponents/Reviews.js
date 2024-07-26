@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import StarImg from "../images/reviews/star.svg"
-import EmptyStarImg from "../images/reviews/empty.png"
+import StarImg from "../images/reviews/star.svg";
+import EmptyStarImg from "../images/reviews/empty.png";
 import { getReviews } from '../Requests/reviews';
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 const ReviewContainer = styled.div`
@@ -243,7 +244,7 @@ function Reviews({noAnimation}) {
         <div  className='d-flex flex-column justify-content-center'>
           <Font data-aos={noAnimation?"":"fade-left"}>Google Bewertungen</Font>
           <CommentCount data-aos={noAnimation?"":"fade-right"} className='d-flex flex-row justify-content-around'>
-            60+ Rezension   
+            120+ Rezension   
           </CommentCount>
           <div data-aos={noAnimation?"":"fade-left"}>
             <img alt='star-img'  height='20px' src={StarImg}/>
@@ -264,7 +265,7 @@ function Reviews({noAnimation}) {
             }
         </Slider>
       </ReviewsWrapper>
-    </ReviewContainer>) : <div>LOADING...</div>
+    </ReviewContainer>) : <div><CircularProgress color='warning'/></div>
   )
 }
 

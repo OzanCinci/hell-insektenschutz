@@ -50,6 +50,8 @@ import Wrapper from './Pages/products/Wrapper';
 import HowToInstall from './Pages/howToInstall/HowToInstall';
 import SearchOrder from './Pages/order/SearchOrder';
 import OrderSearch from './Pages/admin/adminPanelComponents/OrderSearch';
+import PayPalTest from './Pages/paypalTest/PayPalTest';
+import AllTransactions from './Pages/admin/adminPanelComponents/AllTransactions';
 
 function App() {
   useEffect(()=>{
@@ -108,6 +110,7 @@ function App() {
 
 
             <Route exact path='/profile' element={<Profile/>}/>
+            <Route exact path='/test' element={<PayPalTest/>}/>
             
             <Route  path='admin-panel' element={<AdminPanel/>}>
               <Route path='pending-reviews' element={<PendingReviews/>}/>
@@ -115,6 +118,7 @@ function App() {
               <Route path='orders/:status' element={<ActiveOrderTable/>}/>
               <Route path='bestellnummber' element={<OrderSearch/>}/>
               <Route path='change-role' element={<ChangeRole/>}/>
+              <Route path='transactions' element={<AllTransactions/>}/>
 
               {/*<Route path='completed-orders' element={<CompletedOrders/>}/>*/}
               <Route path='all-users' element={<AllUsers/>}/>

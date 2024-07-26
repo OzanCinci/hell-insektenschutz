@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import Box from '@mui/material/Box';
 import LinearProgress from '@mui/material/LinearProgress';
 import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
+import { Box } from '@mui/material';
 import { useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
-import InputAdornment from "@mui/material/InputAdornment";
 import AddCardIcon from '@mui/icons-material/AddCard';
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import { useNavigate } from 'react-router-dom';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import PayPalButton from '../paypalTest/PayPalButton';
 
 
 const Container = styled.div`
@@ -319,6 +321,17 @@ const LineText = styled.div`
 const CustomButton = styled(Button)`
     margin-top: 25px !important;
     margin-bottom: -10px !important;
+    text-transform: none !important;
+`;
+
+const PaymentSelectionWrapper = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+`;
+
+const PaymentSelectionContainer = styled.div`
+
 `;
 
 const URL = process.env.REACT_APP_BE_API;
@@ -346,11 +359,16 @@ function CreateOrder() {
     Land: [ ]
     */
 
+    const [paymentChoice, setPaymentChoice] = useState("Debit- oder Kreditkarte");
+    const handlePaymentChoice = (event) => {
+        setPaymentChoice(event.target.value);
+    };
+
     const [accountlessInfo,setAccountlessInfo] = useState({
         email: "",
         firstName: "",
         lastName: "",
-        telephone: null
+        telephone: ""
     });
 
     const [address,setAddress] = useState({
@@ -370,6 +388,12 @@ function CreateOrder() {
     const {userInfo} = useSelector(state=>state.login);
     const cart = useSelector(state=>state.cart);
 
+    const validateLoginInfo = () => {
+        if (userInfo) return true;
+        if (accountlessInfo.email.trim().length!==0 && accountlessInfo.firstName.trim().length!==0 && accountlessInfo.lastName.trim().length!==0 && accountlessInfo.telephone.trim().length!==0) return true;
+        setFormError("Sie müssen sich entweder einloggen oder das Formular ausfüllen, um fortzufahren.");
+        return false;
+    }
 
     const validateAddress = () => {
         if (address.street.trim().length===0 || address.doorNumber.trim().length===0 || address.postalCode.trim().length===0 ||
@@ -380,20 +404,12 @@ function CreateOrder() {
         return true;
     }
 
-    const validateCartInfo = () => {
-        if (creditCardInfo.name.trim().length===0 || creditCardInfo.number.trim().length<19 || creditCardInfo.expiration.trim().length<7 || creditCardInfo.cvv.trim().length<3) {
-            setFormError("Bitte füllen Sie das Kreditkartenformular vollständig aus.");
-            console.log("fail cart validation");
-            return false;
-        }
-        return true;
-    }
-
-    const handleCreateOrder = async (token, address, creditCardInfo, cart) => {
+    const handleCreateOrder = async (token, address, cart, transactionID, orderStatus) => {
 
         const requestBody = {
+            transactionID: transactionID,
+            orderStatus: orderStatus,
             address: {...address},
-            creditCart: {...creditCardInfo},
             cart: {
                 numberOfItems: cart.numberOfItems,
                 price: cart.price,
@@ -432,6 +448,120 @@ function CreateOrder() {
             });
     }
 
+    const handleCreateOrderVisitor = async (address, cart, transactionID, orderStatus) => {
+        const requestBody = {
+            transactionID: transactionID,
+            orderStatus: orderStatus,
+            address: {...address},
+            cart: {
+                numberOfItems: cart.numberOfItems,
+                price: cart.price,
+                shippingPrice: cart.shippingPrice,
+                items: cart.items.map(item=>({
+                    attributes: JSON.stringify(item.attributes),
+                    productID: item.productID,
+                    cartImage: item.cartImage,
+                    itemName: item.itemName,
+                    secondaryName: item.secondaryName,
+                    price: item.price,
+                    quantity: item.quantity
+                }))
+            },
+            ...accountlessInfo
+        };
+    
+        const url = `${URL}/api/orders/anonymous`;
+        const configObject = {
+            "url": url,
+            "method": "post",
+            "headers": {
+                'Content-Type': 'application/json',
+            },
+            "data": {...requestBody}
+        };
+    
+        return await axios.request(configObject)
+            .then(res => {
+                console.log("handleCreateOrderVisitor request result: ", res.data);
+                return res.data?.traceCode;
+            })
+            .catch(e => {
+                console.log("error reaised: ", e);
+                return false;
+            });
+    }
+
+    const handleCreateTransactionRecord = async (email, amount) => {
+        const requestBody = {
+            email: email,
+            amount: amount,
+            transactionResource: "PAYPAL",
+        };
+    
+        const url = `${URL}/api/transactions`;
+        const configObject = {
+            "url": url,
+            "method": "post",
+            "headers": {
+                'Content-Type': 'application/json',
+            },
+            "data": {...requestBody}
+        };
+    
+        return await axios.request(configObject)
+            .then(res => {
+                console.log("request result: ", res.data);
+                return res.data?.id;
+            })
+            .catch(e => {
+                console.log("error reaised: ", e);
+                return null;
+            });
+        
+    }
+
+    const handlePayPalPaymentSuccess = async () => {
+        let traceCode;
+        setBackdrop(true);
+        // initiate transaction record
+        const amount = cart.shippingPrice + cart.price;
+        let email;
+        if (userInfo) {
+            email = userInfo.email;
+        } else {
+            email = accountlessInfo.email;
+        }
+
+        const transactionID = await handleCreateTransactionRecord(email, amount);
+
+        if (!transactionID) {
+            console.log("Failed to create transaction.");
+            return;
+        }
+
+        if (userInfo) {
+            // handle transaction
+            traceCode = await handleCreateOrder(userInfo.access_token, address, cart, transactionID, "ACTIVE");
+        } else {
+            traceCode = await handleCreateOrderVisitor(address, cart, transactionID , "ACTIVE");
+        }
+
+        // redirect
+        setTimeout(function() {
+            setBackdrop(false);
+        }, 1000);
+
+        if (traceCode) {
+            const redirectLink = `/order-success?traceCode=${traceCode}&init=true`;   
+            nav(redirectLink);
+            return;
+        } else {
+            console.log("something went wrong");
+            setFormError("Etwas ist schiefgelaufen.")
+            return;
+        }
+    };
+
     const handleClickArrowButton = async (e,direction) => {
         e.preventDefault();
 
@@ -444,10 +574,12 @@ function CreateOrder() {
             // progress = 33.3 -> address check
             // progress = 66.6 -> credit cart check
             let valid = true;
-            if (progress<34) {
+            if (progress<10) {
+                valid = validateLoginInfo();
+            } else if (progress<34) {
                 valid = validateAddress();
             } else if (progress<68) {
-                valid = validateCartInfo();
+                valid = true;
             } 
 
             if (!valid) return;
@@ -456,20 +588,22 @@ function CreateOrder() {
 
         //console.log("CHECKPOINT: 2");
         if (progress > 99 && direction==="right"){
-            // do checks for information
-            console.log("address: ", address);
-            console.log("creditCartInfo: ", creditCardInfo);
-            console.log("cart: ", cart);
-
-            // use animation
             setBackdrop(true);
-            const traceCode = await handleCreateOrder(userInfo.access_token, address, creditCardInfo, cart);
+
+            let traceCode;
+            if (userInfo) {
+                // handle transaction
+                traceCode = await handleCreateOrder(userInfo.access_token, address, cart, null, "PENDING_PAYMENT");
+            } else {
+                traceCode = await handleCreateOrderVisitor(address, cart, null , "PENDING_PAYMENT");
+            }
+
             setTimeout(function() {
                 setBackdrop(false);
             }, 1500);
 
             if (traceCode) {
-                const redirectLink = `/order-success?traceCode=${traceCode}&init=true`;   
+                const redirectLink = `/order-success?traceCode=${traceCode}&init=false&pending=true`;   
                 // redirect to success screen
                 nav(redirectLink);
                 return;
@@ -480,24 +614,9 @@ function CreateOrder() {
             }
         }
 
-        console.log("CHECKPOINT: 3");
-        if (change===33.3 && userInfo===null){
-            //console.log("CHECKPOINT: 4");
-            setFormError("Um fortzufahren, müssen Sie sich anmelden. Wenn Sie kein Konto haben, können Sie sich über die Schaltfläche 'Einloggen' auch registrieren.");
-            return;
-        }
-
-        console.log("CHECKPOINT: 5");
         setProgress(change);
-        console.log("CHECKPOINT: 6");
         setFormError(null);
-        //console.log("null'a setlemesi lazımdı?");
     } 
-
-    const paymentInfoGenerator = () => {
-        const number = creditCardInfo.number;
-        return number?.slice(-4);
-    }
 
     const handleExpirationChange = (event) => {
         const input = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
@@ -570,7 +689,9 @@ function CreateOrder() {
                 <IconButton onClick={(e)=> handleClickArrowButton(e,"left")} aria-label="delete" size="large">
                     <ArrowCircleLeftIcon />
                 </IconButton>
-                <Button onClick={(e)=> handleClickArrowButton(e,"right")} size='large' variant="outlined" color="warning">{buttonContent}</Button>
+                {
+                    (paymentChoice==="Banküberweisung" || buttonContent==="Weiter") && <Button onClick={(e)=> handleClickArrowButton(e,"right")} size='large' variant="outlined" color="warning">{buttonContent}</Button>
+                }
             </ArrowWrapper>
             <Title>{titleData[progress]}</Title>
             {formError!==null && <ModifiedAlert severity="error">{formError}</ModifiedAlert>}
@@ -673,60 +794,50 @@ function CreateOrder() {
                     progress === 66.6 && 
                     <SingleSlide>
                         <AddCardIcon className='my-2' style={{ fontSize: '5em' }}/>
-                        <CustomLongInput 
-                            value={creditCardInfo.name} 
-                            onChange={e=>setCreditCardInfo({...creditCardInfo, name: e.target.value})} 
-                            label="Name des Karteninhabers" 
-                            variant="outlined" 
-                            color="warning"
-                        />
-
-                        <CustomLongInput
-                            label="Kartennummer"
-                            variant="outlined"
-                            color='warning'
-                            value={creditCardInfo.number}
-                            onChange={handleCardNumberChange}
-                            inputProps={{
-                                inputMode: 'numeric',
-                                pattern: '[0-9]*',
-                                maxLength: 19, // 16 digits + 3 spaces
-                            }}
-                            InputProps={{
-                                startAdornment: (
-                                <InputAdornment position="start">
-                                    <span role="img" aria-label="credit card">
-                                    💳
-                                    </span>
-                                </InputAdornment>
-                                ),
-                            }}
-                            />
-                            <DoubleInputWrapper style={{gap: "2%"}}>
-                            <CreditCardCustomInput 
-                                w="38%"
-                                m="60%"
-                                value={creditCardInfo.expiration} 
-                                onChange={handleExpirationChange} 
-                                label="Ablaufdatum (MM/JJ)" 
-                                variant="outlined" 
-                                color="warning"
-                                />
-                            <CreditCardCustomInput
-                                w="20%"
-                                m="18%" 
-                                value={creditCardInfo.cvv} 
-                                onChange={e=>setCreditCardInfo({...creditCardInfo, cvv: e.target.value})} 
-                                label="CVC" 
-                                variant="outlined" 
-                                color="warning"
-                                inputProps={{
-                                    inputMode: 'numeric',
-                                    pattern: '[0-9]*',
-                                    maxLength: 3, // 16 digits + 3 spaces
-                                }}
-                                />
-                        </DoubleInputWrapper>
+                        <Desc style={{textAlign: "left"}}>Bitte wählen Sie eine Zahlungsmethode aus. Die Zahlung erfolgt im nächsten Schritt.</Desc>
+                        <PaymentSelectionContainer>
+                            <div style={{width: "fit-content", margin: "auto"}}>
+                                <PaymentSelectionWrapper>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                color='warning'
+                                                checked={paymentChoice==="Debit- oder Kreditkarte"}
+                                                onChange={() => setPaymentChoice("Debit- oder Kreditkarte")}
+                                            />
+                                        }
+                                    />
+                                    <div style={{fontSize: "20px"}}>Debit- oder Kreditkarte</div>
+                                </PaymentSelectionWrapper>
+                                <PaymentSelectionWrapper>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                color='warning'
+                                                checked={paymentChoice==="PayPal"}
+                                                onChange={() => setPaymentChoice("PayPal")}
+                                            />
+                                        }
+                                    />
+                                    <div style={{fontSize: "20px"}}>PayPal</div>
+                                </PaymentSelectionWrapper>
+                                <PaymentSelectionWrapper>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                color='warning'
+                                                checked={paymentChoice==="Banküberweisung"}
+                                                onChange={() => setPaymentChoice("Banküberweisung")}
+                                            />
+                                        }
+                                    />
+                                    <div style={{fontSize: "20px"}}>Banküberweisung</div>
+                                </PaymentSelectionWrapper>
+                            </div>
+                            <Desc style={{textAlign: "left", fontSize: "18px", marginTop: "15px"}}>
+                                    Warnung: Wenn Sie mit Banküberweisung fortfahren, wird eine Bestellung ohne Zahlung erstellt. Sie sollten den Gesamtbetrag auf das Bankkonto überweisen, das Ihnen nach der Erstellung der Bestellung mitgeteilt wird. Sie sollten die 'Bestellnummer' Ihrer Bestellung in die Beschreibung einfügen, damit wir Ihre Zahlung nachverfolgen können.
+                            </Desc>
+                        </PaymentSelectionContainer>
                     </SingleSlide>
                 }
                 {
@@ -736,21 +847,26 @@ function CreateOrder() {
 
                             <Products>
                                 <Shipping>
-                                    <LastPageTitle>Adresse:</LastPageTitle>
+                                    <LastPageTitle>Lieferadresse:</LastPageTitle>
                                     <div>
                                         {address.street} {address.doorNumber}, {address.city} / {address.state} ({address.postalCode})
                                     </div>
                                 </Shipping>
                                 <br></br>
                                 <hr></hr>
-                                <Payment>
-                                    <LastPageTitle>Zahlung:</LastPageTitle>
-                                    <div>
-                                        **** **** **** {paymentInfoGenerator()}
-                                    </div>
-                                </Payment>
-                                <br></br>
-                                <hr></hr>
+                                {
+                                    false && 
+                                    <>
+                                        <Payment>
+                                            <LastPageTitle>Zahlung:</LastPageTitle>
+                                            <div>
+                                                {paymentChoice}
+                                            </div>
+                                        </Payment>
+                                        <br></br>
+                                        <hr></hr>
+                                        </>
+                                }
                                 <Payment>
                                     <LastPageTitle>Artikel:</LastPageTitle>
                                     <div>
@@ -805,7 +921,7 @@ function CreateOrder() {
                                                 Versand:
                                             </span>
                                             <span>
-                                                {cart.shippingPrice} €
+                                                {cart.shippingPrice.toFixed(2)} €
                                             </span>
                                         </li>
                                         <div className="list-group-item d-flex justify-content-space-around">
@@ -817,6 +933,12 @@ function CreateOrder() {
                                             </div>
                                         </div>
                                     </ul>
+                                    {
+                                        paymentChoice!== "Banküberweisung" &&
+                                        <div style={{marginTop: "15px"}}>
+                                            <PayPalButton amount={(cart.shippingPrice/10 + cart.price/10 + 0.55).toFixed(2)} onSuccess={()=>handlePayPalPaymentSuccess()}/>
+                                        </div>
+                                    }
                                 </div>
                             </Summary>
                         </ConfirmContainer>

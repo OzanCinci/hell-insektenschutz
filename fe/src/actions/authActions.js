@@ -43,7 +43,7 @@ export const loginAction = (loginInfo) => async(dispatch)=> {
         })
         .catch(e => {
             console.log("error reaised: ", e);
-            dispatch({type: LOGIN_FAIL, payload: "error raised!"});
+            dispatch({type: LOGIN_FAIL, payload: "falsche Email oder Passwort"});
         });
 } 
 

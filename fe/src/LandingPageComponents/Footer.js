@@ -18,6 +18,7 @@ const FooterContainer = styled.div`
     margin-bottom: 0;
     width: 100%;
     position: relative;
+    padding-top: 50px;
 
   .custom-shape-divider-top-1692110202 {
     position: absolute;
@@ -113,11 +114,21 @@ function Footer() {
       <FooterWrapper>
         <div>
           <LogoImg alt='logo' src={Logo}/>
-          <div style={{fontSize:"17px"}}>Zeppelinstraße 10, 76448 Durmersheim</div>
+          <div style={{fontSize:"17px"}}>Lochfeldstraße 30, 76437 Rastatt, Deutschland</div>
           <div>Öffnungszeiten: Mo-Sa 09.00-18.00 Uhr</div>
           <div onClick={() => {
               window.location.href="tel:+49176/62960342";
-          }} className='d-flex flex-row justify-content-center align-items-center my-2'> <img height='30px' alt='telephone-icon' src={TelephoneIcon}/> <span className='mx-2'> +49 176 62960342 </span></div>
+          }} className='d-flex flex-row justify-content-center align-items-center my-2'> <img height='30px' alt='telephone-icon' src={TelephoneIcon}/> 
+          <span className='mx-2'> +49 176 62960342 </span>
+          </div>
+          <div onClick={() => {
+              window.location.href="tel:+491573943936";
+          }} className='d-flex flex-row justify-content-center align-items-center my-2'> <img height='30px' alt='telephone-icon' src={TelephoneIcon}/> 
+          <span className='mx-2 my-1'>
+            <div>Torsten Köpke:</div>
+            <div>+49 1573 9439363 </div>
+          </span>
+          </div>
           <div className='my-2'></div>
           <div className='d-flex flex-row justify-content-center align-items-center my-2'>
             <a className='mx-3' href="https://instagram.com/hell_insektenschutz?igshid=OGQ5ZDc2ODk2ZA==" target="_blank" rel="noopener noreferrer">
