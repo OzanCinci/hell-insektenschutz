@@ -13,6 +13,9 @@ import FormControl from "@mui/material/FormControl";
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import { loginAction, registerAction } from '../actions/authActions';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { useNavigate } from 'react-router-dom';
 
 const ModalBody = styled.div`
     display: flex;
@@ -29,6 +32,9 @@ const ModalBody = styled.div`
 const NoAccountComponent = styled.div`
     text-decoration: underline;
     cursor: pointer;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 20px;
 `;
 
 const ModifiedAlert = styled(Alert)`
@@ -38,7 +44,15 @@ const ModifiedAlert = styled(Alert)`
     border: 1px solid black;
 `;
 
+const PaymentSelectionWrapper = styled.div`
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+`;
+
 function LoginPopUp() {
+    const nav = useNavigate();
+    const [consent, setConsent] = useState(true);
     const [formError,setFormError] = useState(null);
     const [loginType,setLoginType] = useState(true)
     const [showPassword, setShowPassword] = useState(false);
@@ -169,8 +183,9 @@ function LoginPopUp() {
                             </InputAdornment>
                             }
                             />
+                        <NoAccountComponent onClick={()=>changeFormType(false)}>Klicken Sie hier, wenn Sie kein Konto haben</NoAccountComponent>
                     </FormControl>
-                    <NoAccountComponent onClick={()=>changeFormType(false)}>Hat noch kein Konto?</NoAccountComponent>
+                    
                     { loading === true ?<CircularProgress color="warning" /> 
                                     :<Button onClick={(e)=>handleSubmitLogin(e)} variant="outlined" color="warning">Einloggen</Button>}
                 </>)
@@ -245,10 +260,31 @@ function LoginPopUp() {
                             </InputAdornment>
                             }
                             />
+                        <NoAccountComponent onClick={()=>changeFormType(true)}>Klicken Sie hier, wenn Sie bereits ein Konto haben</NoAccountComponent>
                     </FormControl>
-                    <NoAccountComponent onClick={()=>changeFormType(true)}>Schon ein Konto haben?</NoAccountComponent>
+                    <FormControl>
+                        <PaymentSelectionWrapper>
+                                    <FormControlLabel
+                                        control={
+                                            <Checkbox
+                                                color='warning'
+                                                checked={consent}
+                                                onChange={() => setConsent(prev=>!prev)}
+                                            />
+                                        }
+                                    />
+                                    <div style={{fontSize: "14px", textAlign: "left", marginLeft: "-20px"}}>Ich akzeptiere Ihre <b onClick={()=>{
+                                        nav("/datenschutz");
+                                        const closeBtn = document.getElementById("close-pop-up-btn");
+                                        if (closeBtn) {
+                                            setTimeout(()=>{closeBtn.click();},10)
+                                        }
+
+                                    }} style={{textDecoration: "underline", cursor: "pointer"}}>Datenschutzrichtlinie</b></div>
+                        </PaymentSelectionWrapper>
+                    </FormControl>
                     { loading === true ?<CircularProgress color="warning" /> 
-                                    :<Button onClick={(e)=>handleSubmitSignUp(e)} variant="outlined" color="warning">Register</Button>}
+                                    :<Button disabled={!consent} onClick={(e)=>handleSubmitSignUp(e)} variant="outlined" color="warning">Register</Button>}
                     </>
                 }
                 {/* SIGN UP SCREEN */}

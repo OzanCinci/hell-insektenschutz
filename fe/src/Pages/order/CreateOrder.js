@@ -690,7 +690,7 @@ function CreateOrder() {
                     <ArrowCircleLeftIcon />
                 </IconButton>
                 {
-                    (paymentChoice==="Banküberweisung" || buttonContent==="Weiter") && <Button onClick={(e)=> handleClickArrowButton(e,"right")} size='large' variant="outlined" color="warning">{buttonContent}</Button>
+                    (buttonContent==="Weiter") && <Button onClick={(e)=> handleClickArrowButton(e,"right")} size='large' variant="outlined" color="warning">{buttonContent}</Button>
                 }
             </ArrowWrapper>
             <Title>{titleData[progress]}</Title>
@@ -936,8 +936,11 @@ function CreateOrder() {
                                     {
                                         paymentChoice!== "Banküberweisung" &&
                                         <div style={{marginTop: "15px"}}>
-                                            <PayPalButton amount={(cart.shippingPrice/10 + cart.price/10 + 0.55).toFixed(2)} onSuccess={()=>handlePayPalPaymentSuccess()}/>
+                                            <PayPalButton amount={(cart.shippingPrice + cart.price).toFixed(2)} onSuccess={()=>handlePayPalPaymentSuccess()}/>
                                         </div>
+                                    }
+                                    {
+                                        (paymentChoice==="Banküberweisung") && <Button style={{marginTop: "0px"}} onClick={(e)=> handleClickArrowButton(e,"right")} size='large' variant="contained" color="warning">{buttonContent}</Button>
                                     }
                                 </div>
                             </Summary>

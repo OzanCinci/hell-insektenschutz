@@ -137,6 +137,7 @@ function OptionComponent({category, model}) {
         }
     }, [data]);
 
+
     if (loading) {
         return <CircularProgress color="warning" />;
     }
