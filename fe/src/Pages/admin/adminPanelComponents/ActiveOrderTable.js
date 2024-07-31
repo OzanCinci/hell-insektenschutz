@@ -72,10 +72,10 @@ function Row({ row, handleButtonClick}) {
             value={orderStatus}
             onChange={(e) => setOrderStatus(e.target.value)}
           >
-            <option value="PENDING_PAYMENT">PENDING_PAYMENT</option>
-            <option value="ACTIVE">ACTIVE</option>
-            <option value="IN_SHIPPING">IN_SHIPPING</option>
-            <option value="DELIVERED">DELIVERED</option>
+            <option value="PENDING_PAYMENT">Zahlung ausstehend</option>
+            <option value="ACTIVE">AKTIV</option>
+            <option value="IN_SHIPPING">In Versand</option>
+            <option value="DELIVERED">Zugestellt</option>
           </select>
         </StyledTableCell>
         <StyledTableCell align="left">
@@ -121,7 +121,7 @@ function Row({ row, handleButtonClick}) {
                 <TableBody>
                   {row.orderItems.map((orderItem, index) => {
                     const attr = orderItem.price > 0 ? JSON.parse(orderItem.attributes): [];
-                    console.log("attr: ",attr);
+                    //console.log("attr: ",attr);
                     return (
                       <StyledTableRow key={index}>
                         <StyledTableCell align="left">{orderItem.itemName}</StyledTableCell>

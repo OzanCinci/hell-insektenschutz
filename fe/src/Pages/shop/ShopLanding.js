@@ -238,7 +238,7 @@ function ShopLanding() {
         if (!url)
             return;
 
-        console.log(url);
+        //console.log(url);
         nav(url);
     }
 

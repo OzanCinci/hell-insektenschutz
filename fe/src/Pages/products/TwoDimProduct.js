@@ -243,6 +243,7 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     const defaultWidth = dataFromJSON.defaultWidth;
     let freeSamplingTitle = dataFromJSON.freeSamplingTitle;
     const assemblyInfo = dataFromJSON.assemblyInfo;
+    const cartName = dataFromJSON.cartName;
     /////// PARSE DATA IMMEDIATELY ///////
 
 
@@ -446,10 +447,23 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     e.preventDefault();
 
     const uniqueCode = generateUniqueCode();
-    const itemName = ( itemData?.id || "").split(/(?=[A-Z])/).join(" ");
+    let itemName = cartName ? cartName:( itemData?.id || "").split(/(?=[A-Z])/).join(" ");
     const secondaryName = itemData?.color?.title;
     const temp = extractAttributes(itemConfiguration);
     let attributes = [`Höhe: ${dimensions.height}mm`, `Breite: ${dimensions.width}mm`, ...temp];
+
+
+    if (itemName.includes("Plissee")) {
+      //console.log("itemData: ",itemData);
+      const material = itemData?.color?.properties.MaterialType;
+      if (material && material==="Wabenplissee") {
+        itemName = itemName.replace("Plissee","Wabenplissee");
+      }
+    }
+    
+    if (itemName.includes("Lamellenvorhang")) {
+      itemName = itemName + " "  + queryParam;
+    }
 
     if (queryParam) {
       if (["127 mm", "89 mm"].includes(queryParam)) {
@@ -576,7 +590,7 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
             <div>
                 <ColumnContainer>
                     <LeftColumn>
-                        <Carousel productDetailUrl={productDetailUrl} images={images} itemData={itemData} setCurrentProduct={setCurrentProduct}/>
+                        <Carousel productDetailUrl={productDetailUrl} images={images} itemData={itemData} setCurrentProduct={setCurrentProduct} itemName2={cartName}/>
                     </LeftColumn>
                     <RightColumn>
                         {/* component below is a popup */}
@@ -661,6 +675,7 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                             <AddToCart 
                                 canAddCart={canAddCart}
                                 itemPrice={validPrice + configPrice}
+                                validPrice={validPrice}
                                 setMoreDetailInfo={setMoreDetailInfo}
                                 handleAddIntoCard={handleAddIntoCard}
                                 handleAddFreeSamplingIntoCard={handleAddFreeSamplingIntoCard}

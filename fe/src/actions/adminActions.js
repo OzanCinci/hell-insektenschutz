@@ -34,11 +34,11 @@ export const activeOrdersAction = (token) => async(dispatch)=> {
     axios.request(configObject)
         .then(res => {
             dispatch({type:ADMIN_ACTIVE_ORDER_SUCCES, payload:res.data});
-            console.log("SUCCESS, activeOrdersAction: ", res.data);
+            //console.log("SUCCESS, activeOrdersAction: ", res.data);
             // TODO: save data to localstorage!
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            //console.log("error reaised: ", e);
             dispatch({type: ADMIN_ACTIVE_ORDER_FAIL, payload: "error raised! (active orders)"});
         });
 } 
@@ -63,11 +63,11 @@ export const completedOrdersAction = (token) => async(dispatch)=> {
     axios.request(configObject)
         .then(res => {
             dispatch({type:ADMIN_COMPLETED_ORDER_SUCCES, payload:res.data});
-            console.log("SUCCESS, completedOrdersAction: ", res.data);
+            //console.log("SUCCESS, completedOrdersAction: ", res.data);
             // TODO: save data to localstorage!
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            //console.log("error reaised: ", e);
             dispatch({type: ADMIN_COMPLETED_ORDER_FAIL, payload: "error raised! (completed orders)"});
         });
 } 
@@ -93,11 +93,11 @@ export const pendingReviewsAction = (token) => async(dispatch)=> {
     axios.request(configObject)
         .then(res => {
             dispatch({type:ADMIN_PENDING_REVIEW_SUCCES, payload:res.data});
-            console.log("SUCCESS, pendingReviewsAction: ", res.data);
+            //console.log("SUCCESS, pendingReviewsAction: ", res.data);
             // TODO: save data to localstorage!
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            //console.log("error reaised: ", e);
             dispatch({type: ADMIN_PENDING_REVIEW_FAIL, payload: "error raised! (pendingReviewsAction)"});
         });
 } 
@@ -124,11 +124,11 @@ export const reviewsAction = (token) => async(dispatch)=> {
     axios.request(configObject)
         .then(res => {
             dispatch({type:ADMIN_REVIEW_SUCCES, payload:res.data});
-            console.log("SUCCESS, reviewsAction: ", res.data);
+            //console.log("SUCCESS, reviewsAction: ", res.data);
             // TODO: save data to localstorage!
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            //console.log("error reaised: ", e);
             dispatch({type: ADMIN_REVIEW_FAIL, payload: "error raised! (reviewsAction)"});
         });
 } 
@@ -154,11 +154,11 @@ export const allUsersAction = (token) => async(dispatch)=> {
     axios.request(configObject)
         .then(res => {
             dispatch({type:ADMIN_ALL_USERS_SUCCES, payload:res.data});
-            console.log("SUCCESS, allUsersAction: ", res.data);
+            //console.log("SUCCESS, allUsersAction: ", res.data);
             // TODO: save data to localstorage!
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            //console.log("error reaised: ", e);
             dispatch({type: ADMIN_ALL_USERS_FAIL, payload: "error raised! (allUsersAction)"});
         });
 } 
@@ -180,11 +180,11 @@ export const findUserAction = (token,searchWord) => async(dispatch)=> {
     axios.request(configObject)
         .then(res => {
             dispatch({type:ADMIN_FIND_USER_SUCCES, payload:res.data});
-            console.log("SUCCESS, findUserAction: ", res.data);
+            //console.log("SUCCESS, findUserAction: ", res.data);
             // TODO: save data to localstorage!
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            //console.log("error reaised: ", e);
             dispatch({type: ADMIN_FIND_USER_FAIL, payload: "error raised! (findUserAction)"});
         });
 } 
@@ -207,11 +207,11 @@ export const findManagerUserAction = (token) => async(dispatch)=> {
     axios.request(configObject)
         .then(res => {
             dispatch({type:ADMIN_FIND_USER_SUCCES, payload:res.data});
-            console.log("SUCCESS, findManagerUserAction: ", res.data);
+            //console.log("SUCCESS, findManagerUserAction: ", res.data);
             // TODO: save data to localstorage!
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            //console.log("error reaised: ", e);
             dispatch({type: ADMIN_FIND_USER_FAIL, payload: "error raised! (findManagerUserAction)"});
         });
 } 
@@ -238,11 +238,11 @@ export const adminLandingPageAction = (token) => async(dispatch)=> {
     axios.request(configObject)
         .then(res => {
             dispatch({type:ADMIN_LANDING_PAGE_SUCCES, payload:res.data});
-            console.log("SUCCESS, adminLandingPageAction: ", res.data);
+            //console.log("SUCCESS, adminLandingPageAction: ", res.data);
             // TODO: save data to localstorage!
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            //console.log("error reaised: ", e);
             dispatch({type: ADMIN_LANDING_PAGE_FAIL, payload: "error raised! (adminLandingPageAction)"});
         });
 } 
@@ -265,10 +265,10 @@ export const deleteReview = (token,reviewID) => async(dispatch)=> {
     axios.request(configObject)
         .then(res => {
             dispatch({type:ADMIN_DELETE_PENDING_REVIEW, payload:reviewID});
-            console.log("SUCCESS, deleteReview: ",reviewID," + ", res.data);
+            //console.log("SUCCESS, deleteReview: ",reviewID," + ", res.data);
         })
         .catch(e => {
-            console.log("error reaised: deleteReview -> ", e);
+            //console.log("error reaised: deleteReview -> ", e);
             //dispatch({type: ADMIN_REVIEW_FAIL, payload: "error raised! (reviewsAction)"});
         });
 } 

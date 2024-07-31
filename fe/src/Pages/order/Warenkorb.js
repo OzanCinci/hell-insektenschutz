@@ -334,8 +334,8 @@ function Warenkorb() {
 
 
     useEffect(()=>{
-        console.log("cart: ", cart);
-        //console.log("CART İÇİNDEKİ USEEFFECT ÇALIŞTITTTTTIIII!!!")
+        ////console.log("cart: ", cart);
+        ////console.log("CART İÇİNDEKİ USEEFFECT ÇALIŞTITTTTTIIII!!!")
         handleShippingPriceChange();
     },[]);
 
@@ -352,7 +352,7 @@ function Warenkorb() {
         const widths = cart.items.map(item=>item.shippingWidth).filter(item=>item);
         const maxWidth = Math.max(...widths);
 
-        console.log("maxWidth: ",maxWidth);
+        //console.log("maxWidth: ",maxWidth);
         let shippingCost;
         if (maxWidth===-Infinity)
             shippingCost = 3.90;

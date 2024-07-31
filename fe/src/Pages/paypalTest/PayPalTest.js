@@ -12,7 +12,7 @@ function PayPalTest() {
   const [amount, setAmount] = useState('1.00');
 
   const handlePaymentSuccess = (details) => {
-    console.log('Payment successful:', details);
+    //console.log('Payment successful:', details);
     // Send payment details to the backend
     /*
     fetch('/api/paypal/transaction-complete', {

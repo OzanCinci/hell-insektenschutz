@@ -146,7 +146,7 @@ function ProfileReview({ token}) {
     const { data, loading, error } = useFetch(url, config, page);
 
     useEffect(()=>{
-        console.log("data reviews: ",data);
+        //console.log("data reviews: ",data);
     },[data])
 
     const handleLoadMore = (e) => {

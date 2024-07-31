@@ -7,7 +7,6 @@ import Lamellenvorhang from '../images/mainPageGalery/lamellenvorhang2.jpg';
 import Jal1 from '../images/mainPageGalery/jalousie1.jpg';
 
 const Container = styled.div`
-    border: 0px solid red;
     margin-top: 120px;
 
     @media only screen and (max-width: 1200px) {
@@ -34,6 +33,7 @@ const ImageWrapper = styled.div`
     width: auto;
     height: 75vh;
     border-radius: 10px;
+    border-radius: 0px 0px 10px 10px;
     overflow: clip;
 
     @media only screen and (max-width: 900px) {
@@ -98,14 +98,20 @@ const ImageSlideWrapper = styled.div`
 
 const InfoTitle = styled.div`
     color: rgb(82, 82, 102);
+    color: white;
+    /*color: rgb(255, 125, 14);*/
     font-weight: bold;
-    font-size: 30px;
-    margin-bottom: 15px;
-    margin-top: 5px;
+    font-size: 25px;
+    margin-bottom: 0px;
+    margin-top: -10px;
+    padding: 10px 20px;
+    padding-bottom: 10px;
+    background: linear-gradient(143deg, rgb(255, 171, 100) -1.15%, rgb(255, 125, 14) 100%);
 
     @media only screen and (max-width: 470px) {
-        font-size: 25px;
-        padding: 0px 20px;
+        font-size: 22px;
+        padding: 10px 20px;
+        margin-top: -18px;
     }
 `;
 
@@ -127,7 +133,10 @@ function ImageGalery() {
     return (
         <Container data-aos="fade-up">
             <Wrapper>
-                <InfoTitle>Insekten- und Sonnenschutz nach Maß!</InfoTitle>
+                <InfoTitle>
+                    <div>30 % Rabatt auf alle Sonnenschutzsysteme! </div>
+                    <div>30.Juli - 11.August</div>
+                </InfoTitle>
                 <ImageSlideWrapper>
                     <div style={{ height: "100% !important" }} id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
 

@@ -9,7 +9,6 @@ import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Badge from '@mui/material/Badge';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import SearchIcon from '@mui/icons-material/Search';
 
 const NavbarWrapper = styled.div`
   display: flex;

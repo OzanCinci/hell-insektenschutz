@@ -115,9 +115,8 @@ const ModeDetailInnerPage = styled.div`
 const BottomInfoWrapper = styled.div`
     display: flex;
     flex-direction: row;
-    justify-content: flex-start;
+    justify-content: space-between;
     padding-left: 10%;
-    gap: 40%;
     align-items: center;
     margin-top: 10px;
     margin-bottom: 20px;
@@ -150,6 +149,15 @@ const PriceTag = styled.div`
     font-size: 20px;
     font-weight: bold;
     color: rgb(82, 82, 102);
+
+    @media (max-width: 650px) {
+        text-align: right;
+        
+        .price-tag {
+            display: block;
+        }
+    }
+    
 `;
 
 const CustomButton = styled(Button)`
@@ -278,6 +286,7 @@ const LeftCol = styled.div`
     @media (max-width: 800px) {
         text-align: right;
         align-items: flex-end;
+        padding-right: 10px;
     }
 `;
 
@@ -513,7 +522,13 @@ const Grid = ({ loading, data, link, productInfoUrl }) => {
                                                     {item.ternaryImage !== null && <img height='35px' width='35px' src={item.ternaryImage}/>}
                                                 </div>
                                                 <PriceTag>
-                                                    {`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}
+                                                    <span className='price-tag' style={{textDecoration: "line-through", fontSize: "15px"}}>{`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}</span>
+                                                    <span className='price-tag' style={{color: "red", marginLeft: "10px"}}>
+                                                        {`${(item.properties.MinPrice * 2.5 * 0.7).toFixed(2)}€`}
+                                                    </span>
+                                                    <div style={{ fontSize: "17px"}}>
+                                                        30% Rabatt
+                                                    </div>
                                                 </PriceTag>
                                             </BottomInfoWrapper>
                                             <div>

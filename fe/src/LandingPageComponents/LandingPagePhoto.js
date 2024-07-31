@@ -2,7 +2,6 @@ import React from 'react'
 import {SingleSection} from '../CustomComponents/Components'
 import styled from 'styled-components'
 import coverPhoto from '../images/landingPage/cover_photo.jpg' // Import the image
-import mosqPhoto from '../images/landingPage/no_mosq.jpg';
 
 const Wrapper = styled(SingleSection)`
   flex-direction: column;
@@ -159,7 +158,6 @@ function LandingPagePhoto() {
           </Subtitle>
         </div>
         <div>
-          <SubImg src={mosqPhoto}></SubImg>
         </div>
       </SubtextWrapper>
     </Wrapper>

@@ -30,7 +30,7 @@ export const catalogData = {
                 ],
                 links: [
                     {
-                        text: "siehe Optionen",
+                        text: "Jetzt konfigurieren",
                         url: "/geschaft/plissees/basic-plissee-optionen",
                     }
                 ]
@@ -47,7 +47,7 @@ export const catalogData = {
                 ],
                 links: [
                     {
-                        text: "siehe Optionen",
+                        text: "Jetzt konfigurieren",
                         url: "/geschaft/plissees/premium-plissee-optionen",
                     }
                 ]
@@ -63,7 +63,7 @@ export const catalogData = {
                 ],
                 links: [
                     {
-                        text: "siehe Optionen",
+                        text: "Jetzt konfigurieren",
                         url: "/geschaft/plissees/wintergarten-plissee-optionen",
                     }
                 ]
@@ -87,7 +87,7 @@ export const catalogData = {
                 ],
                 links: [
                     {
-                        text: "siehe Optionen",
+                        text: "Jetzt konfigurieren",
                         url: "/geschaft/jalousie/basic-jalousie-optionen",
                     }
                 ]
@@ -104,7 +104,7 @@ export const catalogData = {
                 ],
                 links: [
                     {
-                        text: "siehe Optionen",
+                        text: "Jetzt konfigurieren",
                         url: "/geschaft/jalousie/premium-jalousie-optionen",
                     }
                 ]
@@ -121,7 +121,7 @@ export const catalogData = {
                 ],
                 links: [
                     {
-                        text: "siehe Optionen",
+                        text: "Jetzt konfigurieren",
                         url: "/geschaft/jalousie/holzjalousie-optionen",
                     }
                 ]
@@ -145,7 +145,7 @@ export const catalogData = {
                 ],
                 links: [
                     {
-                        text: "siehe Optionen",
+                        text: "Jetzt konfigurieren",
                         url: "/geschaft/rollo/basic-rollo-optionen",
                     }
                 ]
@@ -162,7 +162,7 @@ export const catalogData = {
                 ],
                 links: [
                     {
-                        text: "siehe Optionen",
+                        text: "Jetzt konfigurieren",
                         url: "/geschaft/rollo/premium-rollo-optionen",
                     }
                 ]
@@ -178,7 +178,7 @@ export const catalogData = {
                 ],                
                 links: [
                     {
-                        text: "siehe Optionen",
+                        text: "Jetzt konfigurieren",
                         url: "/geschaft/rollo/doppel-rollo-optionen",
                     }
                 ]
@@ -202,7 +202,7 @@ export const catalogData = {
                 ],                
                 links: [
                     {
-                        text: "siehe Optionen",
+                        text: "Jetzt konfigurieren",
                         url: "/geschaft/lamellenvorhang/basic-lamellenvorhang-optionen",
                     }
                 ]
@@ -218,7 +218,7 @@ export const catalogData = {
                 ],                
                 links: [
                     {
-                        text: "siehe Optionen",
+                        text: "Jetzt konfigurieren",
                         url: "/geschaft/lamellenvorhang/premium-lamellenvorhang-optionen",
                     }
                 ]

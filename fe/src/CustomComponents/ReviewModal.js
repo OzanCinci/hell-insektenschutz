@@ -155,7 +155,7 @@ function ReviewModal({currentProduct, productImage, token, itemName, secondaryNa
             })
             .catch(e => {
                 const reviewMessage = _.get(e, 'response.data.errors[0].detail', 'Default message if not found');
-                console.log("reviewMessage: ",reviewMessage);
+                //console.log("reviewMessage: ",reviewMessage);
                 if (reviewMessage==="You have already made a review on this product.")
                     setError("Sie haben bereits eine Bewertung für dieses Produkt abgegeben.")
                 else 

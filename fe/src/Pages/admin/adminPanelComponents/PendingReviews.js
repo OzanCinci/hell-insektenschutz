@@ -183,7 +183,7 @@ function PendingReviews() {
         }
   });
   const {data, loading, error} = useFetch(url,config, pageNumber, true);
-  console.log("reviews: ",reviews);
+  //console.log("reviews: ",reviews);
   useEffect(()=>{
     if (data!==null)
       setReviews(data.content);

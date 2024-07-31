@@ -6,7 +6,7 @@ import ArrowCircleLeftIcon from '@mui/icons-material/ArrowCircleLeft';
 import IconButton from '@mui/material/IconButton';
 import Button from '@mui/material/Button';
 import { Box } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import TextField from '@mui/material/TextField';
 import Alert from '@mui/material/Alert';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
@@ -17,6 +17,7 @@ import { useNavigate } from 'react-router-dom';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import PayPalButton from '../paypalTest/PayPalButton';
+import { REMOVE_ALL_CART } from '../../constants/user';
 
 
 const Container = styled.div`
@@ -343,6 +344,7 @@ function CreateOrder() {
     const [progress, setProgress] = useState(0);
     const [formError,setFormError] = useState(null)
     const nav = useNavigate();
+    const dispatch = useDispatch();
 
     /*
     Straße und Hausnummer (Sokak ve Kapı Numarası): Kullanıcının yaşadığı sokak adı ve ev numarası.
@@ -439,11 +441,11 @@ function CreateOrder() {
     
         return await axios.request(configObject)
             .then(res => {
-                console.log("request result: ", res.data);
+                //console.log("request result: ", res.data);
                 return res.data?.traceCode;
             })
             .catch(e => {
-                console.log("error reaised: ", e);
+                //console.log("error reaised: ", e);
                 return false;
             });
     }
@@ -482,11 +484,11 @@ function CreateOrder() {
     
         return await axios.request(configObject)
             .then(res => {
-                console.log("handleCreateOrderVisitor request result: ", res.data);
+                //console.log("handleCreateOrderVisitor request result: ", res.data);
                 return res.data?.traceCode;
             })
             .catch(e => {
-                console.log("error reaised: ", e);
+                //console.log("error reaised: ", e);
                 return false;
             });
     }
@@ -510,11 +512,11 @@ function CreateOrder() {
     
         return await axios.request(configObject)
             .then(res => {
-                console.log("request result: ", res.data);
+                //console.log("request result: ", res.data);
                 return res.data?.id;
             })
             .catch(e => {
-                console.log("error reaised: ", e);
+                //console.log("error reaised: ", e);
                 return null;
             });
         
@@ -535,7 +537,7 @@ function CreateOrder() {
         const transactionID = await handleCreateTransactionRecord(email, amount);
 
         if (!transactionID) {
-            console.log("Failed to create transaction.");
+            //console.log("Failed to create transaction.");
             return;
         }
 
@@ -552,11 +554,12 @@ function CreateOrder() {
         }, 1000);
 
         if (traceCode) {
+            dispatch({type:REMOVE_ALL_CART});
             const redirectLink = `/order-success?traceCode=${traceCode}&init=true`;   
             nav(redirectLink);
             return;
         } else {
-            console.log("something went wrong");
+            //console.log("something went wrong");
             setFormError("Etwas ist schiefgelaufen.")
             return;
         }
@@ -565,7 +568,7 @@ function CreateOrder() {
     const handleClickArrowButton = async (e,direction) => {
         e.preventDefault();
 
-        //console.log("CHECKPOINT: 1");
+        ////console.log("CHECKPOINT: 1");
         const change = direction==="left" 
             ? (progress === 0 ? progress : progress - 33.3) 
             : (progress > 99 ? progress : progress + 33.3);
@@ -586,7 +589,7 @@ function CreateOrder() {
         }
         
 
-        //console.log("CHECKPOINT: 2");
+        ////console.log("CHECKPOINT: 2");
         if (progress > 99 && direction==="right"){
             setBackdrop(true);
 
@@ -603,12 +606,13 @@ function CreateOrder() {
             }, 1500);
 
             if (traceCode) {
+                dispatch({type:REMOVE_ALL_CART});
                 const redirectLink = `/order-success?traceCode=${traceCode}&init=false&pending=true`;   
                 // redirect to success screen
                 nav(redirectLink);
                 return;
             } else {
-                console.log("something went wrong");
+                //console.log("something went wrong");
                 setFormError("Etwas ist schiefgelaufen.")
                 return;
             }
@@ -849,7 +853,7 @@ function CreateOrder() {
                                 <Shipping>
                                     <LastPageTitle>Lieferadresse:</LastPageTitle>
                                     <div>
-                                        {address.street} {address.doorNumber}, {address.city} / {address.state} ({address.postalCode})
+                                        {address.street} {address.doorNumber}, {address.city} / {address.state} ({address.postalCode}) -- {address.country}
                                     </div>
                                 </Shipping>
                                 <br></br>

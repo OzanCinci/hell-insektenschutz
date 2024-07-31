@@ -53,7 +53,7 @@ function OptionComponent({category, model}) {
     const [result, filterLoading, handleFilterClick, selection, clearAllFilters, handleSearchChange] = useFilter(filterValues, colors);
 
     useEffect(() => {
-        console.log("model: ",model);
+        //console.log("model: ",model);
         if (data !== null) {
             let upgradedColors;
             if (["basic-lamellenvorhang-optionen", "premium-lamellenvorhang-optionen"].includes(model)) {

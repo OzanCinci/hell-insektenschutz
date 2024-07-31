@@ -122,7 +122,7 @@ function Insek() {
         if (!url)
             return;
 
-        console.log(url);
+        //console.log(url);
         nav(url);
     }
 
@@ -139,7 +139,7 @@ function Insek() {
                             </ImageWrapper>
                             <div>
                                 <Desc>{item.desc}</Desc>
-                                <div style={{color: "black",fontWeight:"bold", marginBottom: "10px"}}>Unsere Produkte:</div>
+                                <div style={{color: "black",fontWeight:"bold", marginBottom: "10px"}}>Unsere Produkte (Bald verfügbar):</div>
                                 <div>
                                     {
                                         item.links.map((link)=>{

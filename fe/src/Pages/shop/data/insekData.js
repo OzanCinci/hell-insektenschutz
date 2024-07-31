@@ -72,7 +72,7 @@ export const data = [
         links: [
             {
                 text: "Lichtsschachtabdeckung",
-                url: "/produkt/1",
+                url: null,
             },
             {
                 text: "GitterSafe",

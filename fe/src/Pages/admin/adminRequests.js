@@ -14,11 +14,11 @@ export const handleReviewApprove = async (reviewID, token) => {
 
     return await axios.request(configObject)
         .then(res => {
-            console.log("Approved review.");
+            //console.log("Approved review.");
             return true;
         })
         .catch(e => {
-            console.log("Failed to approve review.");
+            //console.log("Failed to approve review.");
             return false;
         });
 };
@@ -36,11 +36,11 @@ export const handleReviewDelete = async (reviewID, token) => {
 
     return await axios.request(configObject)
         .then(res => {
-            console.log("Approved deleted.");
+            //console.log("Approved deleted.");
             return true;
         })
         .catch(e => {
-            console.log("Failed to delete review.");
+            //console.log("Failed to delete review.");
             return false;
         });
 };
@@ -61,11 +61,11 @@ export const handleOrderUpdate = async (id, cargoInfo, orderStatus, token) => {
 
     return await axios.request(configObject)
         .then(res => {
-            console.log("Order status updated.");
+            //console.log("Order status updated.");
             return true;
         })
         .catch(e => {
-            console.log("Failed to update order status");
+            //console.log("Failed to update order status");
             return false;
         });
 };
@@ -83,14 +83,14 @@ export const handleLoadContent = async (code, token) => {
 
     return await axios.request(configObject)
         .then(res => {
-            console.log("Loaded order");
+            //console.log("Loaded order");
             return {
                 status: true,
                 data: res.data
             };
         })
         .catch(e => {
-            console.log("Failed to lad order");
+            //console.log("Failed to lad order");
             return {
                 status: false
             };
@@ -110,14 +110,14 @@ export const handleManagerSearch = async (token) => {
 
     return await axios.request(configObject)
         .then(res => {
-            console.log("Loaded admins");
+            //console.log("Loaded admins");
             return {
                 status: true,
                 data: res.data
             };
         })
         .catch(e => {
-            console.log("Failed to load admins");
+            //console.log("Failed to load admins");
             return {
                 status: false
             };
@@ -137,14 +137,14 @@ export const handleRoleChange = async (id, newRole, token) => {
 
     return await axios.request(configObject)
         .then(res => {
-            console.log("Changed role");
+            //console.log("Changed role");
             return {
                 status: true,
                 data: res.data
             };
         })
         .catch(e => {
-            console.log("Failed to change role");
+            //console.log("Failed to change role");
             return {
                 status: false
             };
@@ -164,14 +164,14 @@ export const handleUserSearchByEmail = async (q,token) => {
 
     return await axios.request(configObject)
         .then(res => {
-            console.log("Loaded user by email");
+            //console.log("Loaded user by email");
             return {
                 status: true,
                 data: res.data
             };
         })
         .catch(e => {
-            console.log("Failed to load user by email");
+            //console.log("Failed to load user by email");
             return {
                 status: false
             };

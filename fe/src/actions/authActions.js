@@ -37,19 +37,19 @@ export const loginAction = (loginInfo) => async(dispatch)=> {
             };
 
             dispatch({type:LOGIN_SUCCES, payload:res.data});
-            console.log("SUCCESS, LOGIN DATA: ", res.data);
+            ////console.log("SUCCESS, LOGIN DATA: ", res.data);
             // TODO: save data to localstorage!
             localStorage.setItem("userInfo", JSON.stringify(res.data));
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            ////console.log("error reaised: ", e);
             dispatch({type: LOGIN_FAIL, payload: "falsche Email oder Passwort"});
         });
 } 
 
 export const logoutAction = (token) => async(dispatch)=> {
     if (!token){
-        console.log("NULL TOKEN ERROR");
+        ////console.log("NULL TOKEN ERROR");
         return;
     }
 
@@ -66,12 +66,12 @@ export const logoutAction = (token) => async(dispatch)=> {
     axios.request(configObject)
         .then(res => {
             dispatch({type:LOGOUT, payload:res.data});
-            console.log("SUCCESS, LOG OUT: ", res.data);
+            ////console.log("SUCCESS, LOG OUT: ", res.data);
             // TODO: delete data from localstorage!
             localStorage.removeItem("userInfo");
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            ////console.log("error reaised: ", e);
             localStorage.removeItem("userInfo");
             //dispatch({type: LOGIN_FAIL, payload: "error raised!"});
         });
@@ -83,7 +83,7 @@ export const registerAction = (obj) => async(dispatch)=> {
     dispatch({type: LOGIN_REQUEST});
 
     const url = `${URL}/api/auth/register`;
-    console.log("url: ", url);
+    ////console.log("url: ", url);
     const configObject = {
         "url": url,
         "method": "post",
@@ -115,14 +115,14 @@ export const registerAction = (obj) => async(dispatch)=> {
             };
             
             dispatch({ type: REGISTER_SUCCES, payload: res.data });
-            console.log("SUCCESS, register DATA: ", res.data);
+            ////console.log("SUCCESS, register DATA: ", res.data);
             dispatch({ type: LOGIN_SUCCES, payload: res.data });
             
             // TODO: save data to localstorage!
             localStorage.setItem("userInfo", JSON.stringify(res.data));            
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            ////console.log("error reaised: ", e);
             dispatch({type: REGISTER_FAIL, payload: e?.response?.data?.message});
             dispatch({type: LOGIN_FAIL, payload: e?.response?.data?.message});
         });
@@ -161,11 +161,11 @@ export const refreshAction = (token) => async(dispatch)=> {
             };
             dispatch({type:REFRESH_SUCCES, payload:res.data});
             dispatch({type:LOGIN_SUCCES, payload:res.data});
-            console.log("SUCCESS, refresh DATA: ", res.data);
+            ////console.log("SUCCESS, refresh DATA: ", res.data);
             localStorage.setItem("userInfo", JSON.stringify(res.data));
         })
         .catch(e => {
-            console.log("error reaised: ", e);
+            ////console.log("error reaised: ", e);
             dispatch({type: REFRESH_FAIL, payload: "error raised! (REFRESH)"});
         });
 } 
@@ -189,10 +189,10 @@ export const userProfileDetailAction = (token,userID) => async(dispatch)=> {
     axios.request(configObject)
         .then(res => {
             dispatch({type:USER_PROFILE_DETAIL_SUCCESS, payload:res.data});
-            console.log("SUCCESS, userProfileDetailAction: ", res.data);
+            ////console.log("SUCCESS, userProfileDetailAction: ", res.data);
         })
         .catch(e => {
-            console.log("error reaised: (userProfileDetailAction) ", e);
+            ////console.log("error reaised: (userProfileDetailAction) ", e);
             dispatch({type: USER_PROFILE_DETAIL_FAIL, payload: e});
         });
 } 

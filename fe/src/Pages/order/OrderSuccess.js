@@ -189,11 +189,11 @@ function OrderSuccess() {
     const { data, loading, error } = useFetch(url, config, 0);
 
     useEffect(()=>{
-        console.log("AAAAA: ", traceCode, init, data?.orderStatus);
+        //console.log("AAAAA: ", traceCode, init, data?.orderStatus);
     },[traceCode,init]);
 
     useEffect(()=>{
-        console.log("data: ", data);
+        //console.log("data: ", data);
     },[data]);
 
   return (

@@ -5,7 +5,7 @@ import {
 } from "../constants/auth";
 
 export const loginReducer = (state={userInfo:null, loading: false, error:null},action) => {
-    console.log("loginReducer: action ->", action)
+    //console.log("loginReducer: action ->", action)
     switch(action.type){
         case LOGIN_REQUEST:
             return {...state,loading:true,error:null}
@@ -27,7 +27,7 @@ export const registerReducer = (state={registerInfo:null,loading:false,error:nul
         case REGISTER_SUCCES:
             return {...state,loading:false,error:null,registerInfo:action.payload}
         case REGISTER_FAIL:
-            console.log("REGISTER FAILED: ", action.payload);
+            //console.log("REGISTER FAILED: ", action.payload);
             return {...state,loading:false,error:action.payload,registerInfo:null}
         default:
             return state

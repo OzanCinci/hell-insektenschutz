@@ -263,7 +263,7 @@ function RegularCatalog() {
     const nav = useNavigate();
     const location = useLocation()?.pathname.split("/").at(-1);
     const {data, measurement, assembly} = catalogData[location];
-    console.log("location: ", data);
+    //console.log("location: ", data);
 
     const handleNavigate = (e, path) => {
         e.preventDefault();

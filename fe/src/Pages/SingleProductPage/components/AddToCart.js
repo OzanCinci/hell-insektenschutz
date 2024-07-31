@@ -108,7 +108,7 @@ const moreDetailObj = {
     ]
 };
 
-function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart, handleAddFreeSamplingIntoCard}) {
+function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart, handleAddFreeSamplingIntoCard,validPrice}) {
     const [quantity,setQuantity] = useState(1);
 
     const handleSetMoreInfoClick = (e) => {
@@ -129,7 +129,7 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart,
         <Container>
             <Wrapper>
                 <QuantityWrapper>
-                <div style={{width: "fit-content", fontSize: "17px"}}> {itemPrice ?`${itemPrice.toFixed(2)}€ pro Produkt`: ""}</div>
+                <div style={{width: "fit-content", fontSize: "17px"}}> {itemPrice ?`${(itemPrice-validPrice + validPrice * 0.7).toFixed(2)}€ pro Produkt`: ""}</div>
                 <ButtonGroupWrapper>
                     <ButtonGroup
                         disableElevation
@@ -152,7 +152,12 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart,
                 </QuantityWrapper>
                 <TotalPrice>
                 <div>Gesamt:</div>
-                <b>{canAddCart && `${(itemPrice*quantity).toFixed(2)}€`}</b>
+                {
+                    canAddCart && <div>
+                        <div style={{textDecoration: "line-through", fontSize: "18px"}}>{`${(itemPrice*quantity).toFixed(2)}€`}</div>
+                        <div style={{color: "red", fontWeight: "bold",fontSize: "24px"}}>{`${((itemPrice-validPrice + validPrice * 0.7)*quantity).toFixed(2)}€`}</div>
+                    </div>
+                }
                 {
                     !canAddCart &&
                     <div style={{fontSize: "21px", textAlign: "center", color: "#f59f4c"}}>Wir können die Produkte in diesen Maßen nicht anbieten.</div>
@@ -160,7 +165,7 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart,
                 </TotalPrice>
             </Wrapper>
             <BottomButtonWrapper>
-                <Button disabled={canAddCart===false} onClick={e=>handleAddIntoCard(e,quantity,itemPrice)} style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>
+                <Button disabled={canAddCart===false} onClick={e=>handleAddIntoCard(e,quantity,(itemPrice-validPrice + validPrice * 0.7))} style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>
                 <CustomButton onClick={(e)=>handleAddFreeSamplingIntoCard(e)} variant='outlined' color='warning'> <AddShoppingCartIcon className='mx-2'/> Gratis Muster  </CustomButton>
             </BottomButtonWrapper>
 

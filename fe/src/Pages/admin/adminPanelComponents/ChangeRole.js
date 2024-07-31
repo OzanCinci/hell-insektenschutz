@@ -167,7 +167,7 @@ function ChangeRole() {
     setLoading(false);
 
     if (status) {
-      console.log("data: ", data);
+      //console.log("data: ", data);
       setUserData(data.content);
     } else {
       setError("error");
@@ -185,7 +185,7 @@ function ChangeRole() {
     setLoading(false);
 
     if (status) {
-      console.log("data: ", data);
+      //console.log("data: ", data);
       setUserData(data.content);
     } else {
       setError("error");

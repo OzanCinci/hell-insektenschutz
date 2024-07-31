@@ -274,6 +274,7 @@ export const uniqueProductData = {
             name: "Basic Plissee",
             link: "/montageanleitung/plissee"
         },
+        cartName: "Basic Plissee",
     },
     "PremiumPlissee": {
         defaultImages : [
@@ -626,6 +627,7 @@ export const uniqueProductData = {
             name: "Premium Plissee",
             link: "/montageanleitung/plissee"
         },
+        cartName: "Premium Plissee",
     },
     "BasicJalousie25mm": {
         defaultImages: [
@@ -1001,6 +1003,7 @@ export const uniqueProductData = {
             name: "Basic Alu Jalousien 25mm",
             link: "/montageanleitung/jalousie"
         },
+        cartName: "Basic Alu Jalousien 25mm",
     },
     "BasicJalousie16mm": {
         defaultImages: [
@@ -1349,6 +1352,7 @@ export const uniqueProductData = {
             name: "Basic Alu Jalousien 16mm",
             link: "/montageanleitung/jalousie"
         },
+        cartName: "Basic Alu Jalousien 16mm",
     },
     "BasicJalousie50mm": {
         defaultImages: [
@@ -1494,6 +1498,7 @@ export const uniqueProductData = {
             name: "Basic Alu Jalousien 50mm",
             link: "/montageanleitung/jalousie"
         },
+        cartName: "Basic Alu Jalousien 50mm",
     },
     "BasicLamellenvorhang": {
         defaultImages: [
@@ -1702,6 +1707,7 @@ export const uniqueProductData = {
             name: "Basic Lamellenvorhang",
             link: "/montageanleitung/lamellenvorhang"
         },
+        cartName: "Basic Lamellenvorhang"
     },
     "PremiumLamellenvorhang": {
         defaultImages: [
@@ -1940,6 +1946,7 @@ export const uniqueProductData = {
             name: "Premium Lamellenvorhang",
             link: "/montageanleitung/lamellenvorhang"
         },
+        cartName: "Premium Lamellenvorhang"
     },
     "PremiumRollo": {
         defaultImages: [
@@ -2525,6 +2532,7 @@ export const uniqueProductData = {
             name: "Premium Rollo",
             link: "/montageanleitung/rollo"
         },
+        cartName: "Premium Rollo"
     },
     "Doppelrollo": {
         defaultImages: [
@@ -3056,7 +3064,7 @@ export const uniqueProductData = {
                 ]
             },
         ],
-        saleMultiplier: 10 / 4,
+        saleMultiplier: 12 / 4,
         subcategoryTitle: "",
         blendcolorTitle: "Träger-/Kassettenfarbe",
         productDetailUrl: "/api/product/Rollo/Doppel Rollo",
@@ -3070,6 +3078,7 @@ export const uniqueProductData = {
             name: "Premium Doppelrollo",
             link: "/montageanleitung/rollo"
         },
+        cartName: "Premium Doppelrollo"
     },
     "BasicRollo": {
         defaultImages: [
@@ -3254,6 +3263,7 @@ export const uniqueProductData = {
             name: "Basic Rollo",
             link: "/montageanleitung/rollo"
         },
+        cartName: "Basic Rollo"
     },
     "WintergartenPlissee": {
         defaultImages: [
@@ -3433,6 +3443,7 @@ export const uniqueProductData = {
             name: "Wintergarten Plissee",
             link: "/montageanleitung/plissee"
         },
+        cartName: "Premium Plissee für Wintergarten",
     },
     "PremiumJalousie25mm": {
         defaultImages: [
@@ -3937,6 +3948,7 @@ export const uniqueProductData = {
             name: "Premium Alu Jalousien 25mm",
             link: "/montageanleitung/jalousie"
         },
+        cartName: "Premium Alu Jalousien 25mm",
     },
     "PremiumJalousie16mm": {
         defaultImages: [
@@ -4421,6 +4433,7 @@ export const uniqueProductData = {
             name: "Premium Alu Jalousien 16mm",
             link: "/montageanleitung/jalousie"
         },
+        cartName: "Premium Alu Jalousien 16mm",
     },
     "PremiumJalousie50mm": {
         defaultImages: [
@@ -4548,6 +4561,7 @@ export const uniqueProductData = {
             name: "Premium Alu Jalousien 50mm",
             link: "/montageanleitung/jalousie"
         },
+        cartName: "Premium Alu Jalousien 50mm",
     },
     "Holzjalousie25mm": {
         defaultImages: [
@@ -4826,6 +4840,7 @@ export const uniqueProductData = {
             name: "Holz Jalousien 25mm",
             link: "/montageanleitung/jalousie"
         },
+        cartName: "Basic Holzjalousien 25mm"
     },
     "Holzjalousie50mm": {
         defaultImages: [
@@ -4963,5 +4978,6 @@ export const uniqueProductData = {
             name: "Holz Jalousien 50mm",
             link: "/montageanleitung/jalousie"
         },
+        cartName: "Basic Holzjalousien 50mm"
     }
 };
