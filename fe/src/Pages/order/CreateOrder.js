@@ -407,14 +407,13 @@ function CreateOrder() {
     }
 
     const handleCreateOrder = async (token, address, cart, transactionID, orderStatus) => {
-
         const requestBody = {
             transactionID: transactionID,
             orderStatus: orderStatus,
             address: {...address},
             cart: {
                 numberOfItems: cart.numberOfItems,
-                price: cart.price,
+                price: cart.discount ? cart.discountedPrice : cart.price,
                 shippingPrice: cart.shippingPrice,
                 items: cart.items.map(item=>({
                     attributes: JSON.stringify(item.attributes),
@@ -422,7 +421,7 @@ function CreateOrder() {
                     cartImage: item.cartImage,
                     itemName: item.itemName,
                     secondaryName: item.secondaryName,
-                    price: item.price,
+                    price: cart.discount ? (item.price/cart.price)  * cart.discountedPrice : item.price,
                     quantity: item.quantity
                 }))
             }
@@ -457,7 +456,7 @@ function CreateOrder() {
             address: {...address},
             cart: {
                 numberOfItems: cart.numberOfItems,
-                price: cart.price,
+                price: cart.discount ? cart.discountedPrice : cart.price,
                 shippingPrice: cart.shippingPrice,
                 items: cart.items.map(item=>({
                     attributes: JSON.stringify(item.attributes),
@@ -465,7 +464,7 @@ function CreateOrder() {
                     cartImage: item.cartImage,
                     itemName: item.itemName,
                     secondaryName: item.secondaryName,
-                    price: item.price,
+                    price: cart.discount ? (item.price/cart.price) * cart.discountedPrice: item.price,
                     quantity: item.quantity
                 }))
             },
@@ -896,7 +895,7 @@ function CreateOrder() {
                                                             <div
                                                                 style={{marginTop: "20px", fontSize: "18px", fontWeight: "bold", color: "#696984"}}
                                                             >
-                                                                {item.quantity} x {item.price.toFixed(2)}€
+                                                                {item.quantity} x {cart.discount ? ((item.price/cart.price) * cart.discountedPrice).toFixed(2) :item.price.toFixed(2)}€
                                                             </div>
                                                         </div>
                                                     </ItemDetailWrapper>
@@ -928,19 +927,43 @@ function CreateOrder() {
                                                 {cart.shippingPrice.toFixed(2)} €
                                             </span>
                                         </li>
-                                        <div className="list-group-item d-flex justify-content-space-around">
-                                            <div style={{marginRight: "auto", marginLeft: "0"}}>
-                                                Gesamt:
-                                            </div>
-                                            <div>
-                                                {(cart.shippingPrice + cart.price).toFixed(2)} €
-                                            </div>
-                                        </div>
+                                        {
+                                            cart?.discount && <>
+                                                <div className="list-group-item d-flex justify-content-space-around">
+                                                    <div style={{marginRight: "auto", marginLeft: "0"}}>
+                                                        Rabatt:
+                                                    </div>
+                                                    <div>
+                                                        {(cart.price - cart.discountedPrice).toFixed(2)} €
+                                                    </div>
+                                                </div>
+                                                <div className="list-group-item d-flex justify-content-space-around">
+                                                    <div style={{marginRight: "auto", marginLeft: "0"}}>
+                                                        Gesamt:
+                                                    </div>
+                                                    <div>
+                                                        {(cart.shippingPrice + cart.discountedPrice).toFixed(2)} €
+                                                    </div>
+                                                </div>
+                                            </>
+                                        }
+                                        {
+                                            !cart?.discount && <>
+                                                <div className="list-group-item d-flex justify-content-space-around">
+                                                    <div style={{marginRight: "auto", marginLeft: "0"}}>
+                                                        Gesamt:
+                                                    </div>
+                                                    <div>
+                                                        {(cart.shippingPrice + cart.price).toFixed(2)} €
+                                                    </div>
+                                                </div>
+                                            </>
+                                        }
                                     </ul>
                                     {
                                         paymentChoice!== "Banküberweisung" &&
                                         <div style={{marginTop: "15px"}}>
-                                            <PayPalButton amount={(cart.shippingPrice + cart.price).toFixed(2)} onSuccess={()=>handlePayPalPaymentSuccess()}/>
+                                            <PayPalButton amount={cart.discount ? (cart.shippingPrice + cart.discountedPrice).toFixed(2) :(cart.shippingPrice + cart.price).toFixed(2)} onSuccess={()=>handlePayPalPaymentSuccess()}/>
                                         </div>
                                     }
                                     {

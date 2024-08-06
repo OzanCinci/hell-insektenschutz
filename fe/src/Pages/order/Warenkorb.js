@@ -327,8 +327,14 @@ const moreDetailObj = {
     ]
 };
 
+const discount40percentList = [
+    "premium.insektenschutz@gmail.com",
+    "mkinsektenschutz@outlook.de",
+    "insektenschutz.k@gmail.com",
+]
 function Warenkorb() {
     const cart = useSelector(state=>state.cart);
+    const {userInfo} = useSelector(state=>state.login);
     const nav = useNavigate();
     const dispatch = useDispatch();
 
@@ -353,7 +359,7 @@ function Warenkorb() {
         const maxWidth = Math.max(...widths);
 
         //console.log("maxWidth: ",maxWidth);
-        let shippingCost;
+        let shippingCost = 0.0;
         if (maxWidth===-Infinity)
             shippingCost = 3.90;
         else if (maxWidth<=1800)
@@ -365,8 +371,24 @@ function Warenkorb() {
         else if (maxWidth<=5000)
             shippingCost = 99.90;
 
-        dispatch({type:CHANGE_SHIPPING_COST,payload:shippingCost});            
+
+        let payload = {
+            shippingCost: shippingCost,
+            discount: false,
+            discountedPrice: null
+        };
+
+        if (userInfo && userInfo.email && discount40percentList.includes(userInfo.email)) {
+            payload.discount = true;
+            payload.discountedPrice = cart.price * (10/7) * 0.6;
+        }
+        dispatch({type:CHANGE_SHIPPING_COST,payload:payload});            
     }
+    
+    useEffect(()=>{
+        handleShippingPriceChange();
+        //console.log("useEffect içi cart: ", cart);
+    },[userInfo])
 
     const handleButtonClick = (e,type,uniqueCode) => {
         e.preventDefault();
@@ -422,12 +444,10 @@ function Warenkorb() {
                                         index={index} 
                                         url={item.cartImage}
                                         quantity={item.quantity} 
-                                        price={item.price} 
-                                        
+                                        price={cart.discount ? (item.price/cart.price)  * cart.discountedPrice : item.price} 
                                         itemName={item.itemName} 
                                         secondaryName={item.secondaryName}
                                         attributes={item.attributes}
-                                        
                                         handleButtonClick={handleButtonClick}
                                         uniqueCode={item.uniqueCode}
                                         removeFromCart={removeFromCart}
@@ -438,7 +458,7 @@ function Warenkorb() {
                             })
                         }
                     </div>
-                    <TotalAmount><TotalAmountDesc>Zwischensumme ({cart.numberOfItems}) Artikel: </TotalAmountDesc>{cart.price.toFixed(2)} €</TotalAmount>
+                    <TotalAmount><TotalAmountDesc>Zwischensumme ({cart.numberOfItems}) Artikel: </TotalAmountDesc>{cart.discount? cart.discountedPrice.toFixed(2) : cart.price.toFixed(2)} €</TotalAmount>
                 </Items>
                 <Summary>
                     <div class="card" style={{width: "18rem"}}>
@@ -459,17 +479,41 @@ function Warenkorb() {
                                     Versand:
                                 </span>
                                 <span>
-                                    {cart.shippingPrice.toFixed(2)} €
+                                    {cart?.shippingPrice?.toFixed(2)} €
                                 </span>
                             </li>
-                            <div className="list-group-item d-flex justify-content-space-around">
-                                <div style={{marginRight: "auto", marginLeft: "0"}}>
-                                    Gesamt:
-                                </div>
-                                <div>
-                                    {(cart.shippingPrice + cart.price).toFixed(2)} €
-                                </div>
-                            </div>
+                            {
+                                cart?.discount && <>
+                                    <div className="list-group-item d-flex justify-content-space-around">
+                                        <div style={{marginRight: "auto", marginLeft: "0"}}>
+                                            Rabatt:
+                                        </div>
+                                        <div>
+                                            {(cart.price - cart.discountedPrice).toFixed(2)} €
+                                        </div>
+                                    </div>
+                                    <div className="list-group-item d-flex justify-content-space-around">
+                                        <div style={{marginRight: "auto", marginLeft: "0"}}>
+                                            Gesamt:
+                                        </div>
+                                        <div>
+                                            {(cart.shippingPrice + cart.discountedPrice).toFixed(2)} €
+                                        </div>
+                                    </div>
+                                </>
+                            }
+                            {
+                                !cart?.discount && <>
+                                    <div className="list-group-item d-flex justify-content-space-around">
+                                        <div style={{marginRight: "auto", marginLeft: "0"}}>
+                                            Gesamt:
+                                        </div>
+                                        <div>
+                                            {(cart.shippingPrice + cart.price).toFixed(2)} €
+                                        </div>
+                                    </div>
+                                </>
+                            }
                             <HelpTextWrapper>
                                 <div>
                                     Über die Versandgebühr

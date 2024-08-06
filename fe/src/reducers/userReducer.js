@@ -20,9 +20,10 @@ export const cartReducer = (state=emptyCart,action) => {
     let updatedState,uniqueCode,removedItem,selectedItem;
     switch(action.type){
         case CHANGE_SHIPPING_COST:
-            const shippingCost = action.payload;
             updatedState = {...state};
-            updatedState.shippingPrice = shippingCost;
+            updatedState.shippingPrice = action.payload.shippingCost;
+            updatedState.discount = action.payload.discount;
+            updatedState.discountedPrice = action.payload.discountedPrice;
             localStorage.setItem('localCartInfo', JSON.stringify({...updatedState}));
             return {...updatedState};
         case ADD_TO_CART:
