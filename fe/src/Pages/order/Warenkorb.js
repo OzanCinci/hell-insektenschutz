@@ -331,6 +331,7 @@ const discount40percentList = [
     "premium.insektenschutz@gmail.com",
     "mkinsektenschutz@outlook.de",
     "insektenschutz.k@gmail.com",
+    "Weher@laemmermann.de",
 ]
 function Warenkorb() {
     const cart = useSelector(state=>state.cart);
