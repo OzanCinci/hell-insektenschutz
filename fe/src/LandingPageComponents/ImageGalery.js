@@ -135,7 +135,7 @@ function ImageGalery() {
             <Wrapper>
                 <InfoTitle>
                     <div>30 % Rabatt auf alle Sonnenschutzsysteme! </div>
-                    <div>30.Juli - 11.August</div>
+                    <div>11.August - 25.August</div>
                 </InfoTitle>
                 <ImageSlideWrapper>
                     <div style={{ height: "100% !important" }} id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
