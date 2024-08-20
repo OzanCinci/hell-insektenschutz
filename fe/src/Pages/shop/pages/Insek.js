@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import {data} from '../data/insekData';
 import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { useNavigate } from 'react-router-dom';
+import PersonalisierteImg from '../../../images/product/p5.jpg';
+import MaterialImg from '../../../images/product/p7.jpg';
 
 const ProductsContainer = styled.div`
     margin-bottom: 20px;
@@ -19,6 +21,26 @@ const ProductsContainer = styled.div`
 
     @media only screen and (max-width: 470px) {
         padding: 0px;
+    }
+`;
+
+const BottomListContainer = styled.div`
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-width: 1800px;
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 20px;
+
+    @media only screen and (max-width: 1200px) {
+        flex-wrap: no-wrap;
+    }
+
+    @media only screen and (max-width: 470px) {
+        padding: 0px;
+        padding-top: 20px;
     }
 `;
 
@@ -115,6 +137,62 @@ const ProductLink = styled.span`
     }
 `;
 
+const Splitter = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 90%;
+    margin: auto;
+    margin-top: 70px;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+`;
+
+const Line = styled.div`
+    border-bottom: 1px solid #696984;
+    flex-grow: 1;
+`;
+
+const LineText = styled.div`
+    color: #696984;
+    font-size: 19px;
+    width: fit-content;
+    
+    @media only screen and (max-width: 450px) {
+        font-size: 25px;
+    }   
+`;
+
+const aboutProductData = [
+    {
+        title: "Personalisierte",
+        image: PersonalisierteImg,
+        desc: "Sonderformen bieten individuelle Gestaltungsfreiheit. Mit präziser CAD-Technik fertigen wir auch komplexe Rahmenformen millimetergenau. Egal ob Rund- oder Segmentbögen, wir setzen Ihre Ideen in exakte Formen um.",
+        links: [
+            {
+                text: "Sonderformen",
+                url: "/sonderformen",
+            },
+            {
+                text: "Zusatzprodukte",
+                url: "/zusatzprodukte",
+            },
+        ]
+    },
+    {
+        title: "Die Materialien",
+        image: MaterialImg,
+        desc: "Für uns bedeutet Weiterdenken: Ein gutes Produkt wird durch Details perfektioniert. Wir optimieren unsere Varianten kontinuierlich und legen mit präziser Produktion und optimalen Montagevoraussetzungen den Grundstein für das Premium-Insektenschutz-Erlebnis.",
+        links: [
+            {
+                text: "Gewebearten",
+                url: "/gewebearten",
+            },
+        ]
+    }
+]
+
 function Insek() {
     const nav = useNavigate();
 
@@ -122,45 +200,88 @@ function Insek() {
         if (!url)
             return;
 
-        //console.log(url);
         nav(url);
     }
 
   return (
-    <ProductsContainer>
-        {
-            data.map((item,index)=>{
-                return (
-                    <SingleProduct key={index}>
-                        <Title>{item.title}</Title>
-                        <SingleProductBody>
-                            <ImageWrapper>
-                                <CustomImg src={item.image}></CustomImg>
-                            </ImageWrapper>
-                            <div>
-                                <Desc>{item.desc}</Desc>
-                                <div style={{color: "black",fontWeight:"bold", marginBottom: "10px"}}>Unsere Produkte (Bald verfügbar):</div>
+    <>
+        <ProductsContainer>
+            {
+                data.map((item,index)=>{
+                    return (
+                        <SingleProduct key={index}>
+                            <Title>{item.title}</Title>
+                            <SingleProductBody>
+                                <ImageWrapper>
+                                    <CustomImg src={item.image}></CustomImg>
+                                </ImageWrapper>
                                 <div>
-                                    {
-                                        item.links.map((link)=>{
-                                            return (
-                                                <div onClick={()=>handleClick(link.url)} style={{marginBottom: "1px"}} key={link.text}>
-                                                    <ArrowRightIcon style={{ color: "#696984" }}/>
-                                                    <ProductLink>
-                                                        {link.text}
-                                                    </ProductLink>
-                                                </div>
-                                            )
-                                        })
-                                    }
+                                    <Desc>{item.desc}</Desc>
+                                    <div style={{color: "black",fontWeight:"bold", marginBottom: "10px"}}>Unsere Produkte:</div>
+                                    <div>
+                                        {
+                                            item.links.map((link)=>{
+                                                return (
+                                                    <div onClick={()=>handleClick(link.url)} style={{marginBottom: "1px"}} key={link.text}>
+                                                        <ArrowRightIcon style={{ color: "#696984" }}/>
+                                                        <ProductLink>
+                                                            {link.text}
+                                                        </ProductLink>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
                                 </div>
-                            </div>
-                        </SingleProductBody>
-                    </SingleProduct>
-                );
-            })
-        }
-    </ProductsContainer>
+                            </SingleProductBody>
+                        </SingleProduct>
+                    );
+                })
+            }
+        </ProductsContainer>
+
+
+        <Splitter>
+            <Line></Line>
+            <LineText>Über unsere Produkte</LineText>
+            <Line></Line>
+        </Splitter>
+
+        <BottomListContainer>
+            {
+                aboutProductData.map((item,index)=>{
+                    return (
+                        <SingleProduct key={`about-products-${index}`}>
+                            <Title>{item.title}</Title>
+                            <SingleProductBody>
+                                <ImageWrapper>
+                                    <CustomImg src={item.image}></CustomImg>
+                                </ImageWrapper>
+                                <div>
+                                    <Desc>{item.desc}</Desc>
+                                    <div style={{color: "black",fontWeight:"bold", marginBottom: "10px"}}>Unsere Produkte:</div>
+                                    <div>
+                                        {
+                                            item.links.map((link)=>{
+                                                return (
+                                                    <div onClick={()=>handleClick(link.url)} style={{marginBottom: "1px"}} key={link.text}>
+                                                        <ArrowRightIcon style={{ color: "#696984" }}/>
+                                                        <ProductLink>
+                                                            {link.text}
+                                                        </ProductLink>
+                                                    </div>
+                                                )
+                                            })
+                                        }
+                                    </div>
+                                </div>
+                            </SingleProductBody>
+                        </SingleProduct>
+                    );
+                })
+            }
+        </BottomListContainer>
+    </> 
   )
 }
 

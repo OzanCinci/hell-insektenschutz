@@ -242,11 +242,11 @@ function Reviews({noAnimation}) {
     (<ReviewContainer>
       <GoogleReviewContainer >
         <div  className='d-flex flex-column justify-content-center'>
-          <Font data-aos={noAnimation?"":"fade-left"}>Google Bewertungen</Font>
-          <CommentCount data-aos={noAnimation?"":"fade-right"} className='d-flex flex-row justify-content-around'>
+          <Font data-aos={noAnimation?"":"fade-up"}>Google Bewertungen</Font>
+          <CommentCount data-aos={noAnimation?"":"fade-up"} className='d-flex flex-row justify-content-around'>
             120+ Rezension   
           </CommentCount>
-          <div data-aos={noAnimation?"":"fade-left"}>
+          <div data-aos={noAnimation?"":"fade-up"}>
             <img alt='star-img'  height='20px' src={StarImg}/>
             <img alt='star-img' height='20px' src={StarImg}/>
             <img alt='star-img' height='20px' src={StarImg}/>
@@ -257,7 +257,7 @@ function Reviews({noAnimation}) {
         </div>
 
       </GoogleReviewContainer>
-      <ReviewsWrapper data-aos={noAnimation?"":"zoom-in"}  data-aos-offset={noAnimation?"":"200"} data-aos-delay={noAnimation?"":"100"}>
+      <ReviewsWrapper data-aos={noAnimation?"":"fade-up"}  data-aos-offset={noAnimation?"":"200"} data-aos-delay={noAnimation?"":"100"}>
         <Title> Zufriedene Kunden </Title>
         <Slider {...settings}>
             {

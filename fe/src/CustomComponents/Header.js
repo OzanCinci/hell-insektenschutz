@@ -3,12 +3,13 @@ import styled from 'styled-components';
 
 const Container = styled.div`
     margin-top: 0px;
-    margin-bottom: 90px;
+    margin-bottom: 0px;
     background-image: linear-gradient(to right, #db5424, #debe40);
     position: relative;
-    height: 500px;
+    height: fit-content;
     color: white;
     padding-top : 100px;
+    padding-bottom: 85px;
 
     .custom-shape-divider-bottom-1692191223 {
         position: absolute;

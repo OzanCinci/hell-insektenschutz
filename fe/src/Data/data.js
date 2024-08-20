@@ -29,7 +29,7 @@ const data = {
             img: P3,
             text: "Unsere Rollo-Systeme bieten Insektenschutz für nahezu jedes Dachflächenfenster. Egal ob Sie unsere Rollos ausgezogen haben, oder ob es in der Kassette auf Benutzung wartet – sie werden in Sachen Durchblick fast keinen Unterschied merken. Versprochen.",
             def: true,
-            title: "Rollo"
+            title: "Rollo",
         },
         {
             url: "plissee",

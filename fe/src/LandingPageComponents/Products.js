@@ -10,8 +10,10 @@ import P7 from '../images/product/p7.jpg'
 import { useNavigate } from 'react-router-dom';
 
 export const Row = styled(({img, title, text, def, showNav , func})=>{ 
+  // TODO: commented out version for later decision:
+  // <Wrapper data-aos={def?"fade-right":"fade-left"} def={def}>
   return (
-    <Wrapper data-aos={def?"fade-right":"fade-left"} def={def}>
+    <Wrapper def={def}>
         <ServiceImg src={img}/>
         <div  style={{textAlign:"left"}}>
           {title && <RowTitle>{title}</RowTitle>}

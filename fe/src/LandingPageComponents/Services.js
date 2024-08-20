@@ -153,7 +153,7 @@ const ServiceText = styled.div`
 
 const ServiceElement = styled(({img, title, text, def, noAnimation})=>{ 
   return (
-    <Wrapper data-aos={noAnimation?"":(def?"fade-right":"fade-left")} def={def}>
+    <Wrapper data-aos={noAnimation?"":(def?"fade-up":"fade-up")} def={def}>
         <ServiceImg src={img}/>
         <div  style={{textAlign:"left"}}>
           {title && <div>{title}</div>}
@@ -273,19 +273,19 @@ function Services({noAnimation}) {
     <ServiceContainer>
       <LiContainer>
         {
-          liMap.map((item,index) => <LiElement key={index} noAnimation={noAnimation} anim={item.anim} text={item.text} title={item.title}/>)
+          liMap.map((item,index) => <LiElement key={index} noAnimation={noAnimation} anim={"fade-up"} text={item.text} title={item.title}/>)
         }
       </LiContainer>
-      <SubTitle data-aos={noAnimation?"":"zoom-in-down"}>Mehr über uns </SubTitle>
+      <SubTitle data-aos={noAnimation?"":"fade-up"}>Mehr über uns </SubTitle>
       <ServiceWrapper>
         <ServiceElement img={service1} noAnimation={noAnimation} text={serviceMap[0].text} def={true}/>
         <ServiceElement img={service2} noAnimation={noAnimation} text={serviceMap[1].text} def={false}/>
       </ServiceWrapper>
 
       <div style={{overflow:"hidden"}}>
-        <AccordionImg data-aos={noAnimation?"":"zoom-in-up"}  src={service1}/>
+        <AccordionImg data-aos={noAnimation?"":"fade-up"}  src={service1}/>
       </div>
-      <AccordionWrapper data-aos={noAnimation?"":"zoom-out"}>
+      <AccordionWrapper data-aos={noAnimation?"":"fade-up"}>
         <div class="accordion" id="accordionExample">
           
           <div class="accordion-item">

@@ -10,20 +10,24 @@ export const data = [
         desc: "Drehtüren sind die 1. Wahl, wenn Sie ein Fliegengitter zum Öffnen für Balkon oder Terrasse suchen. Durch die Vielzahl an Varianten bieten wir Ihnen die optimale Lösung für Ihren Anwendungsfall.",
         links: [
             {
+                id: "turen-drehtur",
                 text: "Drehtür",
-                url: null,
+                url: "/einzelheiten/turen/drehtür",
             },
             {
+                id: "turen-pendeltur",
                 text: "Pendeltür",
-                url: null,
+                url: "/einzelheiten/turen/pendeltür",
             },
             {
+                id: "turen-schiebetur",
                 text: "Schiebetür",
-                url: null,
+                url: "/einzelheiten/turen/schiebetür",
             },
             {
+                id: "turen-plissee",
                 text: "Plissee",
-                url: null,
+                url: "/einzelheiten/turen/plissee",
             },
         ]
     },
@@ -33,20 +37,24 @@ export const data = [
         desc: "Unsere Spannrahmen sind die beliebte Lösung für Fenster, die nur zum Lüften geöffnet oder gekippt werden. Unser Einhängesystem ermöglicht eine Montage ohne zu Bohren.",
         links: [
             {
+                id: "fenster-spannrahmen",
                 text: "Spannrahmen",
-                url: null,
+                url: "/einzelheiten/fenster/spannrahmen",
             },
             {
+                id: "fenster-drehfenster",
                 text: "Drehfenster",
-                url: null,
+                url: "/einzelheiten/fenster/drehfenster",
             },
             {
+                id: "fenster-rollo",
                 text: "Rollo",
-                url: null,
+                url: "/einzelheiten/fenster/rollo",
             },
             {
+                id: "fenster-plissee",
                 text: "Plissee",
-                url: null,
+                url: "/einzelheiten/fenster/plissee",
             },
         ]
     },
@@ -56,12 +64,14 @@ export const data = [
         desc: "Unsere Rollo-Systeme bieten effektiven Insektenschutz für fast jedes Dachflächenfenster. Ob ausgezogen oder in der Kassette – kaum ein Unterschied im Durchblick. Versprochen.",
         links: [
             {
+                id: "dachfenster-rollo",
                 text: "Rollo",
-                url: null,
+                url: "/einzelheiten/dachfenster/rollo",
             },
             {
+                id: "dachfenster-plissee",
                 text: "Plissee",
-                url: null,
+                url: "/einzelheiten/dachfenster/plissee",
             },
         ]
     },
@@ -71,12 +81,14 @@ export const data = [
         desc: "Viele Möglichkeiten ein Ziel: Sauberkeit in Ihren Lichtschächten. Ob als clevere Nachrüstlösung oder als tragfähiges Gesamtelement.",
         links: [
             {
+                id: "lichtschachte-lichtsschachtabdeckung",
                 text: "Lichtsschachtabdeckung",
-                url: null,
+                url: "/einzelheiten/lichtschachte/lichtsschachtabdeckung",
             },
             {
+                id: "lichtschachte-gittersafe",
                 text: "GitterSafe",
-                url: null,
+                url: "/einzelheiten/lichtschachte/gitterSafe",
             },
         ]
     }

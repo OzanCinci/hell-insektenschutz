@@ -31,4 +31,4 @@ function Dachfenster() {
   )
 }
 
-export default Dachfenster
+export default Dachfenster;
