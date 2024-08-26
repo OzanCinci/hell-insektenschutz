@@ -337,6 +337,7 @@ const config = {
     }
 };
 
+const discount = false;
 const Grid = ({ loading, data, link, productInfoUrl }) => {
     const nav = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
@@ -521,15 +522,27 @@ const Grid = ({ loading, data, link, productInfoUrl }) => {
                                                 <div style={{minWidth: "35px"}}>
                                                     {item.ternaryImage !== null && <img height='35px' width='35px' src={item.ternaryImage}/>}
                                                 </div>
-                                                <PriceTag>
-                                                    <span className='price-tag' style={{textDecoration: "line-through", fontSize: "15px"}}>{`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}</span>
-                                                    <span className='price-tag' style={{color: "red", marginLeft: "10px"}}>
-                                                        {`${(item.properties.MinPrice * 2.5 * 0.7).toFixed(2)}€`}
-                                                    </span>
-                                                    <div style={{ fontSize: "17px"}}>
-                                                        30% Rabatt
-                                                    </div>
-                                                </PriceTag>
+                                                {
+                                                    discount===true &&
+                                                    <PriceTag>
+                                                        <span className='price-tag' style={{textDecoration: "line-through", fontSize: "15px"}}>{`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}</span>
+                                                        <span className='price-tag' style={{color: "red", marginLeft: "10px"}}>
+                                                            {`${(item.properties.MinPrice * 2.5 * 0.7).toFixed(2)}€`}
+                                                        </span>
+                                                        <div style={{ fontSize: "17px"}}>
+                                                            30% Rabatt
+                                                        </div>
+                                                    </PriceTag>
+                                                }
+                                                {
+                                                    discount===false &&
+                                                    <PriceTag>
+                                                        <span className='price-tag' style={{marginLeft: "10px"}}>
+                                                            {`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}
+                                                        </span>
+                                                    </PriceTag>
+                                                }
+                                                
                                             </BottomInfoWrapper>
                                             <div>
                                                 <CustomButton onClick={(e)=>{

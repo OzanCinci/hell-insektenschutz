@@ -5,6 +5,7 @@ import Rollo1 from '../images/mainPageGalery/rollo1.jpg';
 import HolzJal2 from '../images/mainPageGalery/holzjalousie2.jpg';
 import Lamellenvorhang from '../images/mainPageGalery/lamellenvorhang2.jpg';
 import Jal1 from '../images/mainPageGalery/jalousie1.jpg';
+import InsekPhoto from '../images/landingPage/test_cover.jpg';
 
 const Container = styled.div`
     margin-top: 120px;
@@ -115,28 +116,52 @@ const InfoTitle = styled.div`
     }
 `;
 
+const NoDiscountconstInfoTitle = styled.div`
+    color: rgb(82, 82, 102);
+    /*color: rgb(255, 125, 14);*/
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 0px;
+    margin-top: -10px;
+    padding: 10px 20px;
+    padding-bottom: 10px;
+
+    @media only screen and (max-width: 470px) {
+        font-size: 22px;
+        padding: 10px 20px;
+        margin-top: -18px;
+    }
+`;
+
 const CarouselInner = styled.div`
     height: 75vh;
 `;
 
 const images = [
     { src: Plissee1, text: "Individuell für Sie angefertigte Plissees. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
+    { src: InsekPhoto, text: "Individuell für Sie angefertigter Insektenschutz. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
     { src: Rollo1, text: "Individuell für Sie angefertigte Rollos. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
     { src: HolzJal2, text: "Individuell für Sie angefertigte Holzjalousien. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
     { src: Lamellenvorhang, text: "Individuell für Sie angefertigte Lamellenvorhänge. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
     { src: Jal1, text: "Individuell für Sie angefertigte Jalousien. Sie können auch ein kostenloses Muster zur Absicherung erhalten." }
 ];
 
+const discount = false;
 function ImageGalery() {
     const [i, setI] = useState(0);
+    
 
     return (
         <Container data-aos="fade-up">
             <Wrapper>
-                <InfoTitle>
-                    <div>30 % Rabatt auf alle Sonnenschutzsysteme! </div>
-                    <div>11.August - 25.August</div>
-                </InfoTitle>
+                {discount===false && <NoDiscountconstInfoTitle>Insekten & Sonnenschutz nach Maß!</NoDiscountconstInfoTitle>}
+                {
+                    discount===true &&
+                        <InfoTitle>
+                            <div>30 % Rabatt auf alle Sonnenschutzsysteme! </div>
+                            <div>11.August - 25.August</div>
+                        </InfoTitle>
+                }
                 <ImageSlideWrapper>
                     <div style={{ height: "100% !important" }} id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
 

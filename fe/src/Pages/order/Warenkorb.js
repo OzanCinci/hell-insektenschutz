@@ -332,7 +332,10 @@ const discount40percentList = [
     "mkinsektenschutz@outlook.de",
     "insektenschutz.k@gmail.com",
     "Weher@laemmermann.de",
+    "ozan_cinci2001@hotmail.com",
 ]
+
+const discount = false;
 function Warenkorb() {
     const cart = useSelector(state=>state.cart);
     const {userInfo} = useSelector(state=>state.login);
@@ -381,7 +384,7 @@ function Warenkorb() {
 
         if (userInfo && userInfo.email && discount40percentList.includes(userInfo.email)) {
             payload.discount = true;
-            payload.discountedPrice = cart.price * (10/7) * 0.6;
+            payload.discountedPrice = cart.price * 0.6;
         }
         dispatch({type:CHANGE_SHIPPING_COST,payload:payload});            
     }
