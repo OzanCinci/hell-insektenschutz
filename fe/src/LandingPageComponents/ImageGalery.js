@@ -128,7 +128,7 @@ const NoDiscountconstInfoTitle = styled.div`
 
     @media only screen and (max-width: 470px) {
         font-size: 22px;
-        padding: 10px 20px;
+        padding: 10px 50px;
         margin-top: -18px;
     }
 `;
@@ -137,9 +137,21 @@ const CarouselInner = styled.div`
     height: 75vh;
 `;
 
+const MobileComponent = styled.div`
+    @media only screen and (min-width: 470px) {
+        display: none;
+    }
+`;
+
+const DesktopComponent = styled.div`
+    @media only screen and (max-width: 470px) {
+        display: none;
+    }
+`;
+
 const images = [
     { src: Plissee1, text: "Individuell für Sie angefertigte Plissees. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
-    { src: InsekPhoto, text: "Individuell für Sie angefertigter Insektenschutz. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
+    { src: InsekPhoto, text: "Individuell für Sie angefertigter Insektenschutz." },
     { src: Rollo1, text: "Individuell für Sie angefertigte Rollos. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
     { src: HolzJal2, text: "Individuell für Sie angefertigte Holzjalousien. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
     { src: Lamellenvorhang, text: "Individuell für Sie angefertigte Lamellenvorhänge. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
@@ -154,7 +166,17 @@ function ImageGalery() {
     return (
         <Container data-aos="fade-up">
             <Wrapper>
-                {discount===false && <NoDiscountconstInfoTitle>Insekten & Sonnenschutz nach Maß!</NoDiscountconstInfoTitle>}
+                {discount===false && 
+                    <DesktopComponent>
+                        <NoDiscountconstInfoTitle>Insekten & Sonnenschutz nach Maß!</NoDiscountconstInfoTitle>
+                    </DesktopComponent>
+                }
+                    {discount===false && 
+                    <MobileComponent>
+                        <NoDiscountconstInfoTitle>Insekten & Sonnenschutz</NoDiscountconstInfoTitle>
+                        <NoDiscountconstInfoTitle>nach Maß!</NoDiscountconstInfoTitle>
+                    </MobileComponent>
+                }
                 {
                     discount===true &&
                         <InfoTitle>
