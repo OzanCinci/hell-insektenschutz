@@ -635,6 +635,23 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                                 </span>
                             </HowtoMeasureWrapper>
                         <MeasurementWrapper>
+                          <FormControlContainer>
+                                <div>{`Breite (${dimensions.width/10}cm)`}</div>
+                                <FormControl sx={{ width: "60%", marginTop: "5px" }} variant="outlined">
+                                    <OutlinedInput
+                                        type="text"
+                                        color="warning"
+                                        placeholder="Breite (mm)"
+                                        value={dimensions.width} 
+                                        onChange={(e)=>setDimensions((prev)=>({...prev, width: e.target.value}))}
+                                        endAdornment={
+                                            <InputAdornment position="end">
+                                                mm
+                                            </InputAdornment>
+                                        }
+                                    />
+                                </FormControl>
+                            </FormControlContainer>
                             <FormControlContainer>
                                 <div>{`Höhe (${dimensions.height/10}cm)`}</div>
                                 
@@ -645,23 +662,6 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                                         placeholder="Höhe (mm)"
                                         value={dimensions.height} 
                                         onChange={(e)=>setDimensions((prev)=>({...prev, height: e.target.value}))}
-                                        endAdornment={
-                                            <InputAdornment position="end">
-                                                mm
-                                            </InputAdornment>
-                                        }
-                                    />
-                                </FormControl>
-                            </FormControlContainer>
-                            <FormControlContainer>
-                                <div>{`Breite (${dimensions.width/10}cm)`}</div>
-                                <FormControl sx={{ width: "60%", marginTop: "5px" }} variant="outlined">
-                                    <OutlinedInput
-                                        type="text"
-                                        color="warning"
-                                        placeholder="Breite (mm)"
-                                        value={dimensions.width} 
-                                        onChange={(e)=>setDimensions((prev)=>({...prev, width: e.target.value}))}
                                         endAdornment={
                                             <InputAdornment position="end">
                                                 mm
