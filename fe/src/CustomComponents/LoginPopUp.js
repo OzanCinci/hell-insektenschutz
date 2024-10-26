@@ -34,7 +34,7 @@ const NoAccountComponent = styled.div`
     cursor: pointer;
     text-align: left;
     margin-top: 10px;
-    margin-bottom: 20px;
+    margin-bottom: 5px;
 `;
 
 const ModifiedAlert = styled(Alert)`
@@ -75,6 +75,15 @@ function LoginPopUp() {
     const changeFormType = (arg) => {
         setLoginType(arg);
         setFormError(null);
+    }
+
+    const handlePasswordResetClick = (arg) => {
+        setFormError(null);
+        const btn = document.getElementById("close-pop-up-btn");
+        if (btn)
+            btn.click();
+        // forget the password redirection
+        nav("/passwort-vergessen")
     }
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -183,6 +192,7 @@ function LoginPopUp() {
                             </InputAdornment>
                             }
                             />
+                        <NoAccountComponent onClick={()=>handlePasswordResetClick(false)}>Klicken Sie hier, wenn Sie Ihr Passwort vergessen haben.</NoAccountComponent>
                         <NoAccountComponent onClick={()=>changeFormType(false)}>Klicken Sie hier, wenn Sie kein Konto haben</NoAccountComponent>
                     </FormControl>
                     

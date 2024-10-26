@@ -3,8 +3,13 @@ import { LOGIN_FAIL, LOGIN_REQUEST, LOGIN_SUCCES, LOGOUT, REFRESH_FAIL, REFRESH_
 
 
 const URL = process.env.REACT_APP_BE_API;
+const DEFAULT_CALLBACK_FUNCTION = () => {};
 
-export const loginAction = (loginInfo) => async(dispatch)=> {
+export const loginAction = (
+    loginInfo, 
+    successCallBackFunction = DEFAULT_CALLBACK_FUNCTION, 
+    failCallBackFunction = DEFAULT_CALLBACK_FUNCTION
+) => async(dispatch)=> {
 
     dispatch({type: LOGIN_REQUEST});
 
@@ -40,6 +45,8 @@ export const loginAction = (loginInfo) => async(dispatch)=> {
             ////console.log("SUCCESS, LOGIN DATA: ", res.data);
             // TODO: save data to localstorage!
             localStorage.setItem("userInfo", JSON.stringify(res.data));
+            
+            successCallBackFunction();
         })
         .catch(e => {
             ////console.log("error reaised: ", e);

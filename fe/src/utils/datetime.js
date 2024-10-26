@@ -38,3 +38,23 @@ export function convertDateWitDetail(date){
         return date;
     }
 };
+
+export function convertDateForWishlist(date){
+    if (!date) return;
+
+    try {
+        const parsedDate = new Date(date);
+        const options = {
+            timeZone: 'Europe/Berlin',
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric',
+            hour: 'numeric',
+            minute: 'numeric',
+        };
+        const formattedDate = new Intl.DateTimeFormat('de-DE', options).format(parsedDate);
+        return formattedDate;
+    } catch(e){
+        return date;
+    }
+};

@@ -8,7 +8,7 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import { loginReducer, refreshReducer, registerReducer, userProfileDetailReducer } from './reducers/authReducer';
 import { activeOrdersReducer, adminLandingPageReducer, allUsersReducer, completedOrdersReducer, findUserReducer, pendingReviewsReducer, reviewsReducer, selectAdminDataReducer } from './reducers/adminReducer';
-import { cartReducer, createReviewDataReducer } from './reducers/userReducer';
+import { cartReducer, createReviewDataReducer, wishlistCartReducer } from './reducers/userReducer';
 
 
 // COMBINE REDUCERS
@@ -27,8 +27,8 @@ const reducer = combineReducers({
     userProfileDetail: userProfileDetailReducer,
     createReviewData: createReviewDataReducer,
     cart: cartReducer,
+    wishlistCart: wishlistCartReducer,
 })
-
 
 
 // SAMPLE CART DATA EXAMPLE
@@ -47,6 +47,7 @@ const getTotalCost = localStorage.getItem("TotalCost")?JSON.parse(localStorage.g
 */
 const userInfo = localStorage.getItem("userInfo")?JSON.parse(localStorage.getItem("userInfo")):null;
 const localCartInfo = localStorage.getItem("localCartInfo")?JSON.parse(localStorage.getItem("localCartInfo")):emptyCart;
+const localWishlistInfo = localStorage.getItem("localWishlistInfo")?JSON.parse(localStorage.getItem("localWishlistInfo")):[];
 
 // INITIATE STATE
 const initialState = {
@@ -64,6 +65,7 @@ const initialState = {
     userProfileDetail: {userDetail:null,loading:false,error:null},
     createReviewData: null,
     cart: localCartInfo,
+    wishlistCart: localWishlistInfo
 }
 
 /*

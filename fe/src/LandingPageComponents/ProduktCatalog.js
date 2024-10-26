@@ -68,8 +68,9 @@ const LineText = styled.div`
 `;
 
 function ProduktCatalog() {
+    // data-aos="fade-up"
   return (
-    <Container data-aos="fade-up">
+    <Container>
         <Splitter>
             <Line></Line>
             <LineText>Unser Produktkatalog</LineText>

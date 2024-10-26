@@ -70,6 +70,27 @@ export const handleOrderUpdate = async (id, cargoInfo, orderStatus, token) => {
         });
 };
 
+export const handleOrderInvoiceRequest = async (id, token) => {
+    const url = `${URL}/api/management/orders/${id}/invoice`;
+    const configObject = {
+        "url": url,
+        "method": "post",
+        "headers": {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    };
+
+    return await axios.request(configObject)
+        .then(res => {
+            return true;
+        })
+        .catch(e => {
+            return false;
+        });
+};
+
+
 export const handleLoadContent = async (code, token) => {
     const url = `${URL}/api/orders/${code}`;
     const configObject = {

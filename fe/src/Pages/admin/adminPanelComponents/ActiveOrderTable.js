@@ -21,9 +21,11 @@ import { useSelector } from 'react-redux';
 import Paginate from '../../../CustomComponents/Paginate';
 import useFetch from '../../../hooks/useFetch';
 import { useLocation, useParams } from 'react-router-dom';
-import { handleOrderUpdate } from '../adminRequests';
+import {handleOrderInvoiceRequest, handleOrderUpdate} from '../adminRequests';
 import PositiveNotification from '../../../CustomComponents/Notifications/PositiveNotification';
 import NegativeNotification from '../../../CustomComponents/Notifications/NegativeNotification';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
+import AddIcon from '@mui/icons-material/Add';
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -49,10 +51,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function Row({ row, handleButtonClick}) {
+function Row({ row, handleButtonClick, handleGenerateInvoiceRequest, byPassIds}) {
   const [open, setOpen] = React.useState(false);
   const [cargoInfo, setCargoInfo] = useState(row.cargoCode);
   const [orderStatus, setOrderStatus] = useState(row.orderStatus);
+
+  const beatuifyTraceCode = (row) => `${row.traceCode.slice(0,3)}-${row.traceCode.slice(3,6)}-${row.traceCode.slice(6,9)}`;
 
   return (
     <React.Fragment>
@@ -66,7 +70,22 @@ function Row({ row, handleButtonClick}) {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </StyledTableCell>
-        <StyledTableCell align="left">{`${row.traceCode.slice(0,3)}-${row.traceCode.slice(3,6)}-${row.traceCode.slice(6,9)}`}</StyledTableCell>
+        <StyledTableCell align="left">{beatuifyTraceCode(row)}</StyledTableCell>
+        <StyledTableCell align="left">{
+          row.isInvoiceGenerated
+            ? <a
+                  style={{color: "green"}}
+                  target="_blank" href={"https://hell-insekten-sonnenschutz-invoices-pdf.s3.eu-central-1.amazonaws.com/" + beatuifyTraceCode(row) + ".pdf"}>
+                <PictureAsPdfIcon style={{fontSize: "35px", cursor: "pointer"}}/>
+            </a>
+            : (
+                  byPassIds.includes(row.id)
+                    ? <div>-</div>
+                    :<div onClick={()=>handleGenerateInvoiceRequest(row.id)}>
+                      <AddIcon style={{fontSize: "30px", cursor: "pointer"}}/>
+                    </div>
+              )
+        }</StyledTableCell>
         <StyledTableCell align="left">
           <select
             value={orderStatus}
@@ -163,6 +182,7 @@ const ModifiedAlert = styled(Alert)`
 `;
 
 function ActiveOrderTable() {
+  const [byPassIds, setByPassIds] = useState([]);
   const [pageNumber, setPageNumber] = useState(0);
   const {status} = useParams();
   const url = `/api/management/orders?orderStatus=${status}`;
@@ -177,7 +197,22 @@ function ActiveOrderTable() {
   const { data, loading, error } = useFetch(url, config, pageNumber, true);
   const orderData = data !== null ? data.content : null;
 
-  const handleButtonClick = async (rowId, cargoInfo, orderStatus ) => {
+  const handleGenerateInvoiceRequest = async (rowId) => {
+    const result = await handleOrderInvoiceRequest(rowId, userInfo?.access_token);
+
+    if (result) {
+      setByPassIds(prev=>[...prev,rowId]);
+      const btn = document.getElementById("order-admin-panel-success-button");
+      if (btn)
+        setTimeout(()=>btn.click(),0);
+    } else {
+      const btn = document.getElementById("order-admin-panel-fail-button");
+      if (btn)
+        setTimeout(()=>btn.click(),0);
+    }
+  }
+
+  const handleButtonClick = async (rowId, cargoInfo, orderStatus) => {
     const result = await handleOrderUpdate(rowId, cargoInfo, orderStatus, userInfo?.access_token);
 
     if (result) {
@@ -209,6 +244,7 @@ function ActiveOrderTable() {
               <StyledTableRow>
                 <StyledTableCell />
                 <StyledTableCell>Bestellnummer</StyledTableCell>
+                <StyledTableCell>RECHNUNG</StyledTableCell>
                 <StyledTableCell>Bestellstatus</StyledTableCell>
                 <StyledTableCell>Sendungscode</StyledTableCell>
                 <StyledTableCell></StyledTableCell>
@@ -229,6 +265,8 @@ function ActiveOrderTable() {
                   key={row.id}
                   row={row}
                   handleButtonClick={handleButtonClick}
+                  handleGenerateInvoiceRequest={handleGenerateInvoiceRequest}
+                  byPassIds={byPassIds}
                 />
               ))}
             </TableBody>

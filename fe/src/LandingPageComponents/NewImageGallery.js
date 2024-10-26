@@ -5,14 +5,9 @@ import Rollo1 from '../images/mainPageGalery/rollo1.jpg';
 import HolzJal2 from '../images/mainPageGalery/holzjalousie2.jpg';
 import Lamellenvorhang from '../images/mainPageGalery/lamellenvorhang2.jpg';
 import Jal1 from '../images/mainPageGalery/jalousie1.jpg';
-import InsekPhoto from '../images/landingPage/test_cover.jpg';
 
 const Container = styled.div`
-    margin-top: 120px;
-
-    @media only screen and (max-width: 1200px) {
-        margin-top: 100px;
-    }
+    max-width: 100%;
 `;
 
 const Wrapper = styled.div``;
@@ -41,21 +36,21 @@ const ImageWrapper = styled.div`
         height: fit-content;
         border-radius: 0px;
     }
-    
 `;
 
 const CustomImageMobile = styled.img`
     width: 95vw;
     height: auto;
-    display: block;
 
     @media only screen and (max-width: 1200px) {
         width: 110vw;
+        display: block;
     }
 
     @media only screen and (max-width: 900px) {
         height: 70vh;
         width: auto;
+        display: block;
     }
 `;
 
@@ -84,10 +79,13 @@ const PseudoElement = styled.div`
     }
 `;
 
+
+// margin: auto; sildin aşağıdan
+// width: 95vw;
 const ImageSlideWrapper = styled.div`
-    width: 95vw;
+    width: 100%;
     max-width: 1400px;
-    margin: auto;
+    
     border: 0px solid black;
     height: 100%;
     position: relative;
@@ -151,7 +149,7 @@ const DesktopComponent = styled.div`
 
 const images = [
     { src: Plissee1, text: "Individuell für Sie angefertigte Plissees. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
-    { src: InsekPhoto, text: "Individuell für Sie angefertigter Insektenschutz." },
+    //{ src: InsekPhoto, text: "Individuell für Sie angefertigter Insektenschutz." },
     { src: Rollo1, text: "Individuell für Sie angefertigte Rollos. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
     { src: HolzJal2, text: "Individuell für Sie angefertigte Holzjalousien. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
     { src: Lamellenvorhang, text: "Individuell für Sie angefertigte Lamellenvorhänge. Sie können auch ein kostenloses Muster zur Absicherung erhalten." },
@@ -159,33 +157,15 @@ const images = [
 ];
 
 const discount = false;
-function ImageGalery() {
+function NewImageGallery() {
     const [i, setI] = useState(0);
     
-
+    //<Container data-aos="fade-up">
     return (
-        <Container data-aos="fade-up">
+        <Container>
             <Wrapper>
-                {discount===false && 
-                    <DesktopComponent>
-                        <NoDiscountconstInfoTitle>Insekten & Sonnenschutz nach Maß!</NoDiscountconstInfoTitle>
-                    </DesktopComponent>
-                }
-                    {discount===false && 
-                    <MobileComponent>
-                        <NoDiscountconstInfoTitle>Insekten & Sonnenschutz</NoDiscountconstInfoTitle>
-                        <NoDiscountconstInfoTitle>nach Maß!</NoDiscountconstInfoTitle>
-                    </MobileComponent>
-                }
-                {
-                    discount===true &&
-                        <InfoTitle>
-                            <div>30 % Rabatt auf alle Sonnenschutzsysteme! </div>
-                            <div>11.August - 25.August</div>
-                        </InfoTitle>
-                }
                 <ImageSlideWrapper>
-                    <div style={{ height: "100% !important" }} id="carouselExampleDarkMobile" className="carousel carousel-dark slide" data-bs-ride="carousel">
+                    <div style={{ height: "100% !important" }} id="carouselExampleDark" className="carousel carousel-dark slide" data-bs-ride="carousel">
 
                         <div style={{ background: "white", opacity: "0.5", borderRadius: "10px", transform: "scaleY(1.25)", width: "fit-content", margin: "10px auto", padding: "0px 20px", zIndex: 95 }} className="carousel-indicators">
                             {
@@ -194,14 +174,14 @@ function ImageGalery() {
                                         <button
                                             style={{ transform: "scaleY(2.25)" }}
                                             type="button"
-                                            data-bs-target="#carouselExampleDarkMobile"
+                                            data-bs-target="#carouselExampleDark"
                                             data-bs-slide-to={index}
                                             aria-label={`Slide ${index}`}
                                             className={index === i ? "active" : ""}
                                             onClick={() => {
                                                 //console.log(index);
                                                 let diff = i - index ;
-                                                const id = diff > 0 ? "left-button-mobile-main-page" : "right-button-mobile-main-page"; 
+                                                const id = diff > 0 ? "left-button-desktop-main-page" : "right-button-desktop-main-page"; 
                                                 const btn = document.getElementById(id);
                                                 if (btn) {
                                                     diff = Math.abs(diff);
@@ -211,7 +191,6 @@ function ImageGalery() {
                                                     }
                                                 }
                                                 //setI(index);
-                                                
                                             }}
                                         ></button>
                                     );
@@ -239,12 +218,12 @@ function ImageGalery() {
                                 })
                             }
                         </CarouselInner>
-                        <button id='left-button-mobile-main-page' className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDarkMobile" data-bs-slide="prev">
+                        <button id='left-button-desktop-main-page' className="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
                             <CarouselNavigationWrapper>
                                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
                             </CarouselNavigationWrapper>
                         </button>
-                        <button id='right-button-mobile-main-page' className="carousel-control-next" type="button" data-bs-target="#carouselExampleDarkMobile" data-bs-slide="next">
+                        <button id='left-button-desktop-main-page' className="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
                             <CarouselNavigationWrapper>
                                 <span className="carousel-control-next-icon" aria-hidden="true"></span>
                             </CarouselNavigationWrapper>
@@ -256,4 +235,4 @@ function ImageGalery() {
     )
 }
 
-export default ImageGalery;
+export default NewImageGallery;

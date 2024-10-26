@@ -1,12 +1,25 @@
 import React, { useLayoutEffect } from 'react'
+import styled from 'styled-components'
 // COMPONENTS
-import LandingPagePhoto from '../LandingPageComponents/LandingPagePhoto'
 import Services from '../LandingPageComponents/Services'
 import Reviews from '../LandingPageComponents/Reviews'
 import Products from '../LandingPageComponents/Products'
 import Map from '../LandingPageComponents/Map'
 import ImageGalery from '../LandingPageComponents/ImageGalery'
 import ProduktCatalog from '../LandingPageComponents/ProduktCatalog'
+import MainPageBanner from '../LandingPageComponents/MainPageBanner'
+
+const DesktopOnly = styled.div`
+  @media only screen and (max-width: 900px) {
+      display: none;
+  }
+`;
+
+const MobileOnly = styled.div`
+  @media only screen and (min-width: 900px) {
+      display: none;
+  }
+`;
 
 function HomePage() {
 
@@ -16,9 +29,15 @@ function HomePage() {
 
 
   return (
-    <div>
-      {/*<LandingPagePhoto/> */}
-      <ImageGalery/>
+    <div>      
+      <DesktopOnly>
+        <MainPageBanner/>
+      </DesktopOnly>
+      
+      <MobileOnly>
+          <ImageGalery/>
+      </MobileOnly>
+      
       <ProduktCatalog/>
       <Services/>
       <Reviews/>

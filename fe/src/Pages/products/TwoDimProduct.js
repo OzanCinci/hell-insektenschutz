@@ -318,9 +318,6 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
 
             options.forEach(singleOption=> {
                 if (singleOption.defaultSelected === true) {
-                    // TODO: you assume default ones add 0€ cost!
-                    // if not change the code here!
-                    //const tmp = {[singleOption.title]:0};
                     let tmp;
                     if (typeof singleOption.price === 'object') {
                       const selectedOption = Object.keys(singleOption.price)[0];

@@ -3,7 +3,7 @@ import './App.css';
 // ROUTER
 import { Route, Routes, BrowserRouter } from 'react-router-dom'
 // PAGES
-import { useEffect, Suspense, lazy } from 'react';
+import { useEffect, Suspense, lazy, useState } from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Navbar from './LandingPageComponents/Navbar';
@@ -12,6 +12,8 @@ import LoginPopUp from './CustomComponents/LoginPopUp';
 import ReviewModal from './CustomComponents/ReviewModal';
 import ScrollToTop from './LandingPageComponents/ScrollToTop';
 import CircularProgress from '@mui/material/CircularProgress';
+import styled from 'styled-components';
+import ArrowCircleUpSharpIcon from '@mui/icons-material/ArrowCircleUpSharp';
 
 // Lazy load the components
 const HomePage = lazy(() => import('./Pages/HomePage'));
@@ -56,8 +58,38 @@ const OrderSearch = lazy(() => import('./Pages/admin/adminPanelComponents/OrderS
 const PayPalTest = lazy(() => import('./Pages/paypalTest/PayPalTest'));
 const AllTransactions = lazy(() => import('./Pages/admin/adminPanelComponents/AllTransactions'));
 const NumberOfVisitors = lazy(() => import('./Pages/admin/adminPanelComponents/analytic/NumberOfVisitors'));
+const PasswordResetMailSender = lazy(() => import('./Pages/passwordReset/PasswordResetMailSender'));
+const CreateNewPassword = lazy(() => import('./Pages/passwordReset/CreateNewPassword'));
+
+// Styled component for the scroll-to-top button
+const ScrollTopButton = styled.button`
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 100;
+  background-color: #ff7d0e; /* Button color */
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background-color: #ffab64; /* Button hover color */
+    transform: translateY(-5px); /* Slight lift on hover */
+  }
+`;
+
 
 function App() {
+  /*
   useEffect(() => {
     AOS.init({
       // Global settings:
@@ -76,6 +108,41 @@ function App() {
 
     });
   }, [])
+  */
+
+  const [showScroll, setShowScroll] = useState(false);
+
+  // Scroll to top button visibility logic
+  useEffect(() => {
+      const handleScroll = () => {
+        if (window.pageYOffset > 300) {
+          setShowScroll(true);
+        } else {
+          setShowScroll(false);
+        }
+      };
+
+      window.addEventListener('scroll', handleScroll);
+      return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Function to scroll to the top
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    };
+
+    useEffect(() => {
+      AOS.init({
+        offset: 135,
+        duration: 600,
+        easing: 'ease',
+      });
+    }, []);
+
+
 
   // OVERFLOW CLIP YAPTIN HABERIN OLSUN SİLMEYİ UNUTMA
   return (
@@ -148,12 +215,23 @@ function App() {
               <Route path='/produkts/:produkt/:id' element={<Wrapper />} />
               <Route path='/messanleitung/:category' element={<Measurement />} />
               <Route path='/montageanleitung/:category' element={<HowToInstall />} />
+              
+              <Route path='/passwort-vergessen' element={<PasswordResetMailSender/>}/>
+              <Route path='/passwort-reset' element={<CreateNewPassword/>}/>
+
               <Route default path='/*' element={<PageNotFound />} />
             </Routes>
           </Suspense>
         </div>
         <Footer />
       </BrowserRouter>
+
+      {/* Scroll to top button */}
+      {showScroll && (
+        <ScrollTopButton onClick={scrollToTop}>
+          <ArrowCircleUpSharpIcon fontSize='large'/>
+        </ScrollTopButton>
+      )}
     </div>
   );
 }

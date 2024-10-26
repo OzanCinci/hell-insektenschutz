@@ -238,34 +238,38 @@ function Reviews({noAnimation}) {
 
 
   return (
-    data!==null ? 
-    (<ReviewContainer>
-      <GoogleReviewContainer >
-        <div  className='d-flex flex-column justify-content-center'>
-          <Font data-aos={noAnimation?"":"fade-up"}>Google Bewertungen</Font>
-          <CommentCount data-aos={noAnimation?"":"fade-up"} className='d-flex flex-row justify-content-around'>
-            120+ Rezension   
-          </CommentCount>
-          <div data-aos={noAnimation?"":"fade-up"}>
-            <img alt='star-img'  height='20px' src={StarImg}/>
-            <img alt='star-img' height='20px' src={StarImg}/>
-            <img alt='star-img' height='20px' src={StarImg}/>
-            <img alt='star-img' height='20px' src={StarImg}/>
-            <img alt='star-img' height='20px' src={StarImg}/>
-            (4.9)
-          </div>
-        </div>
+    <div id='google-comments-live'>
+      {
+        data!==null ? 
+        (<ReviewContainer>
+          <GoogleReviewContainer >
+            <div  className='d-flex flex-column justify-content-center'>
+              <Font data-aos={noAnimation?"":"fade-up"}>Google Bewertungen</Font>
+              <CommentCount data-aos={noAnimation?"":"fade-up"} className='d-flex flex-row justify-content-around'>
+                120+ Rezension   
+              </CommentCount>
+              <div data-aos={noAnimation?"":"fade-up"}>
+                <img alt='star-img'  height='20px' src={StarImg}/>
+                <img alt='star-img' height='20px' src={StarImg}/>
+                <img alt='star-img' height='20px' src={StarImg}/>
+                <img alt='star-img' height='20px' src={StarImg}/>
+                <img alt='star-img' height='20px' src={StarImg}/>
+                (4.9)
+              </div>
+            </div>
 
-      </GoogleReviewContainer>
-      <ReviewsWrapper data-aos={noAnimation?"":"fade-up"}  data-aos-offset={noAnimation?"":"200"} data-aos-delay={noAnimation?"":"100"}>
-        <Title> Zufriedene Kunden </Title>
-        <Slider {...settings}>
-            {
-              data.map((item,index) => <SingleReview key={index} name={item.name} date={item.date} rating={item.rating} description={item.description} />)
-            }
-        </Slider>
-      </ReviewsWrapper>
-    </ReviewContainer>) : <div><CircularProgress color='warning'/></div>
+          </GoogleReviewContainer>
+          <ReviewsWrapper data-aos={noAnimation?"":"fade-up"}  data-aos-offset={noAnimation?"":"200"} data-aos-delay={noAnimation?"":"100"}>
+            <Title> Zufriedene Kunden </Title>
+            <Slider {...settings}>
+                {
+                  data.map((item,index) => <SingleReview key={index} name={item.name} date={item.date} rating={item.rating} description={item.description} />)
+                }
+            </Slider>
+          </ReviewsWrapper>
+        </ReviewContainer>) : <div><CircularProgress color='warning'/></div>
+      }
+    </div>
   )
 }
 

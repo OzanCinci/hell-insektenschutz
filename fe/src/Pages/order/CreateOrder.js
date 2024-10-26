@@ -421,7 +421,7 @@ function CreateOrder() {
                     cartImage: item.cartImage,
                     itemName: item.itemName,
                     secondaryName: item.secondaryName,
-                    price: cart.discount ? (item.price/cart.price)  * cart.discountedPrice : item.price,
+                    price: cart.discount ? ((item.price/cart.price)  * cart.discountedPrice || 0) : item.price,
                     quantity: item.quantity
                 }))
             }
@@ -464,7 +464,7 @@ function CreateOrder() {
                     cartImage: item.cartImage,
                     itemName: item.itemName,
                     secondaryName: item.secondaryName,
-                    price: cart.discount ? (item.price/cart.price) * cart.discountedPrice: item.price,
+                    price: cart.discount ? ((item.price/cart.price) * cart.discountedPrice || 0): item.price,
                     quantity: item.quantity
                 }))
             },
@@ -525,7 +525,7 @@ function CreateOrder() {
         let traceCode;
         setBackdrop(true);
         // initiate transaction record
-        const amount = cart.shippingPrice + cart.price;
+        const amount = cart.discount ? (cart.shippingPrice + cart.discountedPrice) : (cart.shippingPrice + cart.price);
         let email;
         if (userInfo) {
             email = userInfo.email;
@@ -895,7 +895,7 @@ function CreateOrder() {
                                                             <div
                                                                 style={{marginTop: "20px", fontSize: "18px", fontWeight: "bold", color: "#696984"}}
                                                             >
-                                                                {item.quantity} x {cart.discount ? ((item.price/cart.price) * cart.discountedPrice).toFixed(2) :item.price.toFixed(2)}€
+                                                                {item.quantity} x {cart.discount ? ((item.price/cart.price) * cart.discountedPrice || 0).toFixed(2) :item.price.toFixed(2)}€
                                                             </div>
                                                         </div>
                                                     </ItemDetailWrapper>
@@ -963,7 +963,10 @@ function CreateOrder() {
                                     {
                                         paymentChoice!== "Banküberweisung" &&
                                         <div style={{marginTop: "15px"}}>
-                                            <PayPalButton amount={cart.discount ? (cart.shippingPrice + cart.discountedPrice).toFixed(2) :(cart.shippingPrice + cart.price).toFixed(2)} onSuccess={()=>handlePayPalPaymentSuccess()}/>
+                                            <PayPalButton
+                                                amount={cart.discount ? (cart.shippingPrice + cart.discountedPrice).toFixed(2) :(cart.shippingPrice + cart.price).toFixed(2)}
+                                                onSuccess={()=>handlePayPalPaymentSuccess()}
+                                            />
                                         </div>
                                     }
                                     {

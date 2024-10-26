@@ -21,7 +21,7 @@ const Container = styled.div`
     background: #eaeded;
     padding-top: 140px;
 
-     @media only screen and (max-width: 1200px) {
+    @media only screen and (max-width: 1200px) {
         padding-top: 110px;
     }    
    
