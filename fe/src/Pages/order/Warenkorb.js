@@ -586,6 +586,11 @@ function Warenkorb() {
         setTotalDiscount({...totals});
     }, [cart]);
 
+
+    useEffect(() => {
+        handleShippingPriceChange();
+    }, [cart.numberOfItems]);
+
     useEffect(()=>{
         handleShippingPriceChange();
 
@@ -644,6 +649,7 @@ function Warenkorb() {
             return wishlist;
         });
         dispatch({type:CHANGE_ALL_WISHLIST, payload: tmpWishlistCart});
+        handleShippingPriceChange()
     },[]);
 
     const handleAddNewWishlist = (wishlistName, setWishlistName) => {
@@ -701,7 +707,7 @@ function Warenkorb() {
         const maxWidth = Math.max(...widths);
 
         let shippingCost = 0.0;
-        if (widths.length === 0)
+        if (cart.items.length === 0)
             shippingCost = 0.0;
         else if (maxWidth===-Infinity)
             shippingCost = 3.90;
@@ -721,10 +727,6 @@ function Warenkorb() {
             discountedPrice: null
         };
 
-        if (userInfo && userInfo.email && discount40percentList.includes(userInfo.email)) {
-            payload.discount = true;
-            payload.discountedPrice = cart.price * 0.6;
-        }
         dispatch({type:CHANGE_SHIPPING_COST,payload:payload});            
     }
     
