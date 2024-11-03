@@ -342,6 +342,39 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
 
                 if (counter===itemsAllows.dependecies.length)
                     tempAvailableList.push(item);
+            } else if (itemsAllows.type==="anyTuple") {
+                let shouldInclude = false;
+                // assuming all the dependencies in the list are needed at the same time!
+                for (let i=0; i<itemsAllows.dependecies.length ; i++) {
+                    const subDependencyList = itemsAllows.dependecies[i];
+                    let counter = 0;
+                    for (let j=0; j<subDependencyList.length; j++) {
+                        const currentObj = subDependencyList[j];
+                        const key = Object.keys(currentObj)[0];
+                        const value = Object.values(currentObj)[0];
+
+                        const currentSelectedDependency = itemConfiguration[key];
+                        if (!currentSelectedDependency || currentSelectedDependency.length===0)
+                            break; // mismatch found stop processing
+
+                        for (let k=0; k<currentSelectedDependency.length;k++) {
+                            const currentObj = currentSelectedDependency[k];
+                            const currentObjKey = Object.keys(currentObj)[0];
+
+                            if (currentObjKey===value || currentObjKey.includes(value + " ")) {
+                                counter +=1;
+                            }
+                        }
+                    }
+                    if (counter===subDependencyList.length) {
+                        shouldInclude = true;
+                        break;
+                    }
+                }
+
+                if (shouldInclude===true) {
+                    tempAvailableList.push(item);
+                }
             }
 
         });
@@ -779,7 +812,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
             :
                 (optionList.checkAllowList!==true || availableList.length!==0) &&
              (
-                (optionList.title !== "Schienenfarbe" && optionList.title !== "Oberkastenfarbe" && optionList.title !== "Träger-/Kassettenfarbe")?
+                (optionList.title !== "Schienenfarbe" && optionList.title !== "Oberkastenfarbe" && optionList.title !== "Träger-/Kassettenfarbe" && optionList.title !== "Farbe Ober- u. Unterschiene")?
                 <div>
                     {
                         (optionList.checkAllowList!==true || availableList.length!==0) &&

@@ -53,11 +53,11 @@ function OptionComponent({category, model}) {
     const [result, filterLoading, handleFilterClick, selection, clearAllFilters, handleSearchChange] = useFilter(filterValues, colors);
 
     useEffect(() => {
-        //console.log("model: ",model);
         if (data !== null) {
             let upgradedColors;
-            if (["basic-lamellenvorhang-optionen", "premium-lamellenvorhang-optionen"].includes(model)) {
+            if (["basic-lamellenvorhang-optionen", "premium-lamellenvorhang-optionen", "schrag-lamellenvorhang-optionen"].includes(model)) {
                 let temp = [];
+                const existsSet = new Set();
 
                 data.colors.forEach(item=>{
                     for (let x=0; x<item.properties.LamellaWidth.length; x++) {
@@ -68,9 +68,16 @@ function OptionComponent({category, model}) {
                         let tmpItemObj = {...item, mainImage, secondaryImage, ternaryImage, properties: {...item.properties}};
                         tmpItemObj.properties.LamellaWidth = [];
                         tmpItemObj.properties.LamellaWidth.push(currentWidth);
-                        if (currentWidth==="89 mm")
-                            tmpItemObj.properties.MinPrice *= 2.29166666667;
+                        if (currentWidth==="89 mm") {
+                            tmpItemObj.properties.MinPrice = Math.round(tmpItemObj.properties.MinPrice * 2.29166666667)
+                        }
                         tmpItemObj.q = currentWidth;
+
+                        const uniqueCode = item.id + "-" + currentWidth;
+                        if (existsSet.has(uniqueCode))
+                            continue;
+
+                        existsSet.add(uniqueCode);
                         temp.push(tmpItemObj);
                     }
                 });

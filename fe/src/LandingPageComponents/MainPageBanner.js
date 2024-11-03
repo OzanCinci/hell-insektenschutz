@@ -4,6 +4,7 @@ import InsekPhoto from '../images/landingPage/test_cover.jpg';
 import MainBannerImg2 from '../images/Services/service1.jpg';
 import NewImageGallery from './NewImageGallery';
 import { useNavigate } from 'react-router-dom';
+import CONFIGURATION from "../config/config";
 
 
 const Wrapper = styled.div`
@@ -109,6 +110,29 @@ const NoDiscountconstInfoTitle = styled.div`
     }
 `;
 
+const InfoTitle = styled.div`
+    color: rgb(82, 82, 102);
+    color: white;
+    /*color: rgb(255, 125, 14);*/
+    font-weight: bold;
+    font-size: 25px;
+    margin-bottom: 0px;
+    margin-top: 110px;
+    margin-bottom: 5px;
+    padding: 10px 20px;
+    padding-bottom: 10px;
+    background: linear-gradient(143deg, rgb(255, 171, 100) -1.15%, rgb(255, 125, 14) 100%);
+
+    @media only screen and (max-width: 470px) {
+        font-size: 22px;
+        padding: 10px 20px;
+        margin-top: -18px;
+    }
+`;
+
+
+
+const {enableDiscount, text, percentage} = CONFIGURATION.discount;
 function MainPageBanner() {
     const nav = useNavigate();
 
@@ -128,7 +152,19 @@ function MainPageBanner() {
 
   return (
     <>
-        <NoDiscountconstInfoTitle>Insekten & Sonnenschutz nach Maß!</NoDiscountconstInfoTitle>
+        {
+            !enableDiscount && <NoDiscountconstInfoTitle>Insekten & Sonnenschutz nach Maß!</NoDiscountconstInfoTitle>
+        }
+        {
+            enableDiscount &&
+            <>
+                <InfoTitle>
+                    <div>{percentage*100}% Rabatt auf alle Sonnenschutzsysteme! </div>
+                    <div>{text}</div>
+                </InfoTitle>
+            </>
+
+        }
         <Wrapper>
             <NewImageGalleryWrapper>
                 <NewImageGallery/>

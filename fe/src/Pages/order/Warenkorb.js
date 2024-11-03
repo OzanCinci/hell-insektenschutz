@@ -15,7 +15,11 @@ import {
     DELETE_WISHLIST_ITEM,
     ADD_SUBITEM_WISHLIST,
     DELETE_SUBITEM_WISHLIST,
-    INCREMENT_SUBITEM_WISHLIST, DECREMENT_SUBITEM_WISHLIST, CHANGE_ALL_BASKET, DELETE_ITEM_WISHLIST,
+    INCREMENT_SUBITEM_WISHLIST,
+    DECREMENT_SUBITEM_WISHLIST,
+    CHANGE_ALL_BASKET,
+    DELETE_ITEM_WISHLIST,
+    CHANGE_ALL_WISHLIST,
 } from '../../constants/user';
 import NoOrderImg from '../../images/account/sepet.jpeg';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -28,6 +32,7 @@ import Accordion from "@mui/material/Accordion";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Checkbox from "@mui/material/Checkbox";
 import {convertDateForWishlist} from "../../utils/datetime";
+import CONFIGURATION from "../../config/config";
 
 const Container = styled.div`
     min-height: 100vh;
@@ -102,6 +107,10 @@ const SubDesc = styled.div`
 const TotalAmount = styled.div`
     text-align: right;
     font-size: 18px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: baseline;
+    gap: 10px;
 `;
 
 const TotalAmountDesc = styled.div`
@@ -220,7 +229,7 @@ const CustomTextField = styled.div`
     align-items: center;
 `;
 
-const SingleItem = styled(({url,index,attributes,secondaryName, quantity, price, itemName, handleButtonClick,uniqueCode,removeFromCart, handleWishlistClick, isWishlistUsage = false})=>{
+const SingleItem = styled(({url,index,attributes,secondaryName, quantity, price, itemName, handleButtonClick,uniqueCode,removeFromCart, handleWishlistClick, self, isWishlistUsage = false})=>{
     return (
         <SingItemContainer>
             <LeftPart>
@@ -240,7 +249,20 @@ const SingleItem = styled(({url,index,attributes,secondaryName, quantity, price,
                         </div>
                         
                     </div>
-                    <AntiPreis>{`${price.toFixed(2)}€`}</AntiPreis>
+                    <AntiPreis>
+                        {
+                            (self?.enableDiscount && self?.discountPercentage)
+                                ? <div>
+                                    <div style={{textDecoration: "line-through", fontSize: "18px"}}>{price.toFixed(2)} €</div>
+                                    <div
+                                        style={{color: "red", fontWeight: "bold",fontSize: "24px"}}
+                                    >
+                                        {(self.price * (1-self?.discountPercentage)).toFixed(2)}€
+                                    </div>
+                                </div>
+                                : <div>{(self.price).toFixed(2)}€</div>
+                        }
+                    </AntiPreis>
                     <ButtonGroupWrapper isWishlistUsage={isWishlistUsage}>
                         <ButtonGroup
                             disableElevation
@@ -266,7 +288,18 @@ const SingleItem = styled(({url,index,attributes,secondaryName, quantity, price,
                 </ItemInfo>
             </LeftPart>
             <Preis>
-                  {price.toFixed(2)} €
+                {
+                    (self.enableDiscount && self.discountPercentage)
+                        ? <div>
+                            <div style={{textDecoration: "line-through", fontSize: "18px"}}>{price.toFixed(2)} €</div>
+                            <div
+                                style={{color: "red", fontWeight: "bold",fontSize: "24px"}}
+                            >
+                                {(self.price * (1-self?.discountPercentage)).toFixed(2)}€
+                            </div>
+                        </div>
+                        : <div>{(self.price).toFixed(2)}€</div>
+                }
             </Preis>
         </SingItemContainer>
     );
@@ -454,7 +487,14 @@ const NoProductWrapper = styled.div`
 
     @media only screen and (max-width: 800px) {
         margin: auto;
+        width: 70vw;
+        margin-top: 100px;
+    }
+
+    @media only screen and (max-width: 500px) {
+        margin: auto;
         width: 100vw;
+        transform: translateX(-15%);
         margin-top: 100px;
     }
 `;
@@ -508,10 +548,11 @@ const discount40percentList = [
     "insektenschutz.k@gmail.com",
     "Weher@laemmermann.de",
     "inso.insektenschutz@gmail.com",
-    "ozan_cinci2001@hotmail.com",
+    //"ozan_cinci2001@hotmail.com",
+    //"test@gmail.com",
 ]
 
-const discount = false;
+const {enableDiscount, percentage , validUntil, dealerPercentage} = CONFIGURATION.discount;
 function Warenkorb() {
     const cart = useSelector(state=>state.cart);
     const {userInfo} = useSelector(state=>state.login);
@@ -520,9 +561,89 @@ function Warenkorb() {
     const dispatch = useDispatch();
     const [selectedItem, setSelectedItem] = useState(null);
 
+    const [totalDiscount, setTotalDiscount] = useState({
+        discount : false,
+        amount: 0,
+        discountAmount: 0,
+    });
+
+
+    useEffect(() => {
+        const totals = cart.items.reduce(
+            (accumulator, item) => {
+                if (item.enableDiscount) {
+                    accumulator.amount += item.price * item.quantity;
+                    accumulator.discountAmount += item.price * item.quantity * item.discountPercentage;
+                    if (!accumulator.discount) accumulator.discount = true;
+                    return accumulator;
+                } else {
+                    accumulator.amount += item.price * item.quantity;
+                    return accumulator;
+                }
+            },
+            {discount: false, amount: 0, discountAmount: 0}
+        )
+        setTotalDiscount({...totals});
+    }, [cart]);
 
     useEffect(()=>{
         handleShippingPriceChange();
+
+        // validate discounts
+        let tmpCart = {...cart};
+        tmpCart.items = tmpCart.items.map(item => {
+            // partner discount
+            if (userInfo && userInfo.email && discount40percentList.includes(userInfo.email)) {
+                item.enableDiscount = true;
+                item.discountPercentage = dealerPercentage;
+                item.discountValidUntil = null;
+                return item;
+            }
+
+            // apply new discounts
+            if (!enableDiscount) {
+                item.enableDiscount = false;
+                item.discountPercentage = 0;
+                item.discountValidUntil = null;
+            } else {
+                item.enableDiscount = true;
+                item.discountPercentage = percentage;
+                item.discountValidUntil = validUntil;
+            }
+
+            return item;
+        })
+
+        dispatch({type:CHANGE_ALL_BASKET,payload: tmpCart});
+
+
+        let tmpWishlistCart = wishlistCart.map(wishlist=>{
+            wishlist.items = wishlist.items.map(singleItem=>{
+                // partner discount
+                if (userInfo && userInfo.email && discount40percentList.includes(userInfo.email)) {
+                    singleItem.enableDiscount = true;
+                    singleItem.discountPercentage = dealerPercentage;
+                    singleItem.discountValidUntil = null;
+                    return singleItem;
+                }
+
+                // apply new discounts
+                if (!enableDiscount) {
+                    singleItem.enableDiscount = false;
+                    singleItem.discountPercentage = 0;
+                    singleItem.discountValidUntil = null;
+                } else {
+                    singleItem.enableDiscount = true;
+                    singleItem.discountPercentage = percentage;
+                    singleItem.discountValidUntil = validUntil;
+                }
+
+                return singleItem;
+            });
+
+            return wishlist;
+        });
+        dispatch({type:CHANGE_ALL_WISHLIST, payload: tmpWishlistCart});
     },[]);
 
     const handleAddNewWishlist = (wishlistName, setWishlistName) => {
@@ -647,7 +768,6 @@ function Warenkorb() {
         saveAllFromBasketIntoWishlist();
         dispatch({type:CHANGE_ALL_BASKET,payload:wishlistCart});
         dispatch({type:DELETE_ITEM_WISHLIST,payload:wishlistCart});
-        //handleShippingPriceChange();
     }
 
 
@@ -710,7 +830,7 @@ function Warenkorb() {
                                                       index={`original-cart-indexed-${index}-key`}
                                                       url={item.cartImage}
                                                       quantity={item.quantity}
-                                                      price={cart.discount ? ((item.price / cart.price) * cart.discountedPrice || 0) : item.price}
+                                                      price={item.price}
                                                       itemName={item.itemName}
                                                       secondaryName={item.secondaryName}
                                                       attributes={item.attributes}
@@ -718,6 +838,7 @@ function Warenkorb() {
                                                       uniqueCode={item.uniqueCode}
                                                       removeFromCart={removeFromCart}
                                                       handleWishlistClick={handleWishlistClick}
+                                                      self={item}
                                                   />
                                                   <hr></hr>
                                               </>
@@ -725,8 +846,25 @@ function Warenkorb() {
                                       })
                                   }
                               </div>
-                              <TotalAmount><TotalAmountDesc>Zwischensumme ({cart.numberOfItems})
-                                  Artikel: </TotalAmountDesc>{cart.discount ? cart.discountedPrice.toFixed(2) : cart.price.toFixed(2)} €</TotalAmount>
+                              <TotalAmount>
+                                  <TotalAmountDesc>Zwischensumme ({cart.numberOfItems}) Artikel: </TotalAmountDesc>
+                                  {
+                                      totalDiscount?.discount
+                                      ? <div>
+                                          <div>
+                                              <div style={{textDecoration: "line-through", fontSize: "18px"}}>{totalDiscount.amount.toFixed(2)} €</div>
+                                              <div
+                                                  style={{color: "red", fontWeight: "bold",fontSize: "24px"}}
+                                              >
+                                                  {(totalDiscount.amount-totalDiscount.discountAmount).toFixed(2)}€
+                                              </div>
+                                          </div>
+                                      </div>
+                                      : <div>
+                                              {totalDiscount.amount.toFixed(2)}€
+                                          </div>
+                                  }
+                              </TotalAmount>
                           </Items>
                           <Desc style={{textAlign: "left"}}>Deine Wunschliste</Desc>
                           <hr></hr>
@@ -765,13 +903,13 @@ function Warenkorb() {
                                 </span>
                                   </li>
                                   {
-                                      cart?.discount && <>
+                                      totalDiscount?.discount && <>
                                           <div className="list-group-item d-flex justify-content-space-around">
                                               <div style={{marginRight: "auto", marginLeft: "0"}}>
                                                   Rabatt:
                                               </div>
-                                              <div>
-                                                  {(cart.price - cart.discountedPrice).toFixed(2)} €
+                                              <div style={{color: "red", fontWeight: "bold",fontSize: "16px"}}>
+                                                  {(totalDiscount.discountAmount).toFixed(2)} €
                                               </div>
                                           </div>
                                           <div className="list-group-item d-flex justify-content-space-around">
@@ -779,13 +917,13 @@ function Warenkorb() {
                                                   Gesamt:
                                               </div>
                                               <div>
-                                                  {(cart.shippingPrice + cart.discountedPrice).toFixed(2)} €
+                                                  {(totalDiscount.amount - totalDiscount.discountAmount + cart.shippingPrice).toFixed(2)} €
                                               </div>
                                           </div>
                                       </>
                                   }
                                   {
-                                      !cart?.discount && <>
+                                      !totalDiscount?.discount && <>
                                           <div className="list-group-item d-flex justify-content-space-around">
                                               <div style={{marginRight: "auto", marginLeft: "0"}}>
                                                   Gesamt:
@@ -839,6 +977,29 @@ const WishlistButtonContainer = styled.div`
 const SingleWishlistCartComponent = ({item, restoreFromWishlist}) => {
     const [newName, setNewName] = useState(item.name);
     const dispatch = useDispatch();
+    const [totalDiscount, setTotalDiscount] = useState({
+        discount : false,
+        amount: 0,
+        discountAmount: 0,
+    });
+
+    useEffect(() => {
+        const totals = item.items.reduce(
+            (accumulator, item) => {
+                if (item.enableDiscount) {
+                    accumulator.amount += item.price * item.quantity;
+                    accumulator.discountAmount += item.price * item.quantity * item.discountPercentage;
+                    if (!accumulator.discount) accumulator.discount = true;
+                    return accumulator;
+                } else {
+                    accumulator.amount += item.price * item.quantity;
+                    return accumulator;
+                }
+            },
+            {discount: false, amount: 0, discountAmount: 0}
+        )
+        setTotalDiscount({...totals});
+    }, [item.items]);
 
     const handleWishlistNameChange = (newName, currentItem) => {
         const payload = {newName, currentItem}
@@ -869,7 +1030,23 @@ const SingleWishlistCartComponent = ({item, restoreFromWishlist}) => {
                     expandIcon={<CustomExpandMoreIcon />}
                     id={`panel${item.name}-${item.createdAt}-header`}
                 >
-                    {item.name || item.createdAt} - {(item.discountedPrice || item.price).toFixed(2)}€
+                    {
+                        totalDiscount.discount
+                        ? <div>{item.name || item.createdAt} -
+                                <span
+                                    className='mx-2'
+                                    style={{textDecoration: "line-through", fontSize: "16px", fontWeight: "bold"}}
+                                >
+                                    {(totalDiscount.amount).toFixed(2)}€
+                                </span>
+                                <span
+                                    style={{color: "red", fontWeight: "bold",fontSize: "18px"}}
+                                >
+                                    {(totalDiscount.amount-totalDiscount.discountAmount).toFixed(2)}€
+                                </span>
+                        </div>
+                        : <div>{item.name || item.createdAt} - {(totalDiscount.amount).toFixed(2)}€</div>
+                    }
                 </CustomAccordionSummary>
                 <CustomAccordionDetails>
                     <WishlistButtonContainer>
@@ -898,7 +1075,8 @@ const SingleWishlistCartComponent = ({item, restoreFromWishlist}) => {
                                           index={subItem.uniqueCode + "-" + item.name + "-" + item.createdAt + "wishlist"}
                                           url={subItem.cartImage}
                                           quantity={subItem.quantity}
-                                          price={item.discount ? ((subItem.price / item.price) * item.discountedPrice || 0) : subItem.price}
+                                          price={subItem.price}
+                                          self={subItem}
                                           itemName={subItem.itemName}
                                           secondaryName={subItem.secondaryName}
                                           attributes={subItem.attributes}

@@ -89,7 +89,6 @@ const SlideContainer = styled.div`
     }
 `;
 
-
 const SingleSlide = styled.div`
     min-height: 200px;
     width: 100%;
@@ -260,7 +259,6 @@ const Products = styled.div`
 const Summary = styled.div`
 `;
 
-
 const Shipping = styled.div`
     text-align: left;
     padding-left: 30px;
@@ -337,42 +335,19 @@ const PaymentSelectionContainer = styled.div`
 
 const URL = process.env.REACT_APP_BE_API;
 function CreateOrder() {
-    // backdrop code
     const [backdrop, setBackdrop] = useState(false);
-    // backdrop code
     const [buttonContent, setButtonContent] = useState("Weiter");
     const [progress, setProgress] = useState(0);
     const [formError,setFormError] = useState(null)
     const nav = useNavigate();
     const dispatch = useDispatch();
-
-    /*
-    Straße und Hausnummer (Sokak ve Kapı Numarası): Kullanıcının yaşadığı sokak adı ve ev numarası.
-    Postleitzahl (Posta Kodu): Kullanıcının yaşadığı bölgenin posta kodu.
-    Ort (Şehir): Kullanıcının yaşadığı şehir.
-    Bundesland (Eyalet): Almanya gibi ülkelerde, kullanıcının yaşadığı eyalet.
-    Land (Ülke): Kullanıcının yaşadığı ülke.
-    Örnek bir adres formu şu şekilde olabilir:
-
-    Straße und Hausnummer: [ ]
-    Postleitzahl: [ ]
-    Ort: [ ]
-    Bundesland: [ ]
-    Land: [ ]
-    */
-
     const [paymentChoice, setPaymentChoice] = useState("Debit- oder Kreditkarte");
-    const handlePaymentChoice = (event) => {
-        setPaymentChoice(event.target.value);
-    };
-
     const [accountlessInfo,setAccountlessInfo] = useState({
         email: "",
         firstName: "",
         lastName: "",
         telephone: ""
     });
-
     const [address,setAddress] = useState({
         street: "",
         doorNumber: "",
@@ -381,14 +356,13 @@ function CreateOrder() {
         state: "",
         country: "Deutschland",
     })
-    const [creditCardInfo,setCreditCardInfo] = useState({
-        name: "",
-        number: "",
-        expiration: "",
-        cvv: null
-    });
     const {userInfo} = useSelector(state=>state.login);
     const cart = useSelector(state=>state.cart);
+    const [totalDiscount, setTotalDiscount] = useState({
+        discount : false,
+        amount: 0,
+        discountAmount: 0,
+    });
 
     const validateLoginInfo = () => {
         if (userInfo) return true;
@@ -413,7 +387,7 @@ function CreateOrder() {
             address: {...address},
             cart: {
                 numberOfItems: cart.numberOfItems,
-                price: cart.discount ? cart.discountedPrice : cart.price,
+                price: totalDiscount.amount - totalDiscount.discountAmount,
                 shippingPrice: cart.shippingPrice,
                 items: cart.items.map(item=>({
                     attributes: JSON.stringify(item.attributes),
@@ -421,7 +395,7 @@ function CreateOrder() {
                     cartImage: item.cartImage,
                     itemName: item.itemName,
                     secondaryName: item.secondaryName,
-                    price: cart.discount ? ((item.price/cart.price)  * cart.discountedPrice || 0) : item.price,
+                    price: item.enableDiscount ? item.price * (1-item.discountPercentage) : item.price,
                     quantity: item.quantity
                 }))
             }
@@ -440,11 +414,9 @@ function CreateOrder() {
     
         return await axios.request(configObject)
             .then(res => {
-                //console.log("request result: ", res.data);
                 return res.data?.traceCode;
             })
             .catch(e => {
-                //console.log("error reaised: ", e);
                 return false;
             });
     }
@@ -456,7 +428,7 @@ function CreateOrder() {
             address: {...address},
             cart: {
                 numberOfItems: cart.numberOfItems,
-                price: cart.discount ? cart.discountedPrice : cart.price,
+                price: totalDiscount.amount - totalDiscount.discountAmount,
                 shippingPrice: cart.shippingPrice,
                 items: cart.items.map(item=>({
                     attributes: JSON.stringify(item.attributes),
@@ -464,7 +436,7 @@ function CreateOrder() {
                     cartImage: item.cartImage,
                     itemName: item.itemName,
                     secondaryName: item.secondaryName,
-                    price: cart.discount ? ((item.price/cart.price) * cart.discountedPrice || 0): item.price,
+                    price: item.enableDiscount ? item.price * (1-item.discountPercentage) : item.price,
                     quantity: item.quantity
                 }))
             },
@@ -483,11 +455,9 @@ function CreateOrder() {
     
         return await axios.request(configObject)
             .then(res => {
-                //console.log("handleCreateOrderVisitor request result: ", res.data);
                 return res.data?.traceCode;
             })
             .catch(e => {
-                //console.log("error reaised: ", e);
                 return false;
             });
     }
@@ -511,11 +481,9 @@ function CreateOrder() {
     
         return await axios.request(configObject)
             .then(res => {
-                //console.log("request result: ", res.data);
                 return res.data?.id;
             })
             .catch(e => {
-                //console.log("error reaised: ", e);
                 return null;
             });
         
@@ -524,8 +492,9 @@ function CreateOrder() {
     const handlePayPalPaymentSuccess = async () => {
         let traceCode;
         setBackdrop(true);
+
         // initiate transaction record
-        const amount = cart.discount ? (cart.shippingPrice + cart.discountedPrice) : (cart.shippingPrice + cart.price);
+        const amount =  totalDiscount.amount - totalDiscount.discountAmount + cart.shippingPrice;
         let email;
         if (userInfo) {
             email = userInfo.email;
@@ -619,17 +588,7 @@ function CreateOrder() {
 
         setProgress(change);
         setFormError(null);
-    } 
-
-    const handleExpirationChange = (event) => {
-        const input = event.target.value.replace(/\D/g, ''); // Remove non-numeric characters
-        const formattedInput = input
-          .replace(/(\d{2})(?=\d)/g, ' $1 / ') // Add a '/' after the first two digits
-          .trim()
-          .substring(0, 7); // Limit the input to 'MM/YY'
-    
-        setCreditCardInfo({...creditCardInfo, expiration: formattedInput})
-      };
+    }
 
     function handleAuth(e) {
         e.preventDefault();
@@ -638,19 +597,6 @@ function CreateOrder() {
         if (button)
             button.click();
     }
-
-    const handleCardNumberChange = (event) => {
-        const input = event.target.value.replace(/\D/g, '');
-        const formattedInput = input
-          .slice(0, 16) // Limit the input to 16 characters
-          .match(/.{1,4}/g)
-          ?.join(' ')
-          .replace(/_/g, ' ');
-    
-        // Update the state with the formatted input
-        setCreditCardInfo({...creditCardInfo, number: formattedInput});
-      };
-
 
     useEffect(()=>{
         if (userInfo!==null && progress===0)
@@ -663,6 +609,24 @@ function CreateOrder() {
         else if (progress<99 && buttonContent!=="Weiter")
             setButtonContent("Weiter");
     },[progress]);
+
+    useEffect(() => {
+        const totals = cart.items.reduce(
+            (accumulator, item) => {
+                if (item.enableDiscount) {
+                    accumulator.amount += item.price * item.quantity;
+                    accumulator.discountAmount += item.price * item.quantity * item.discountPercentage;
+                    if (!accumulator.discount) accumulator.discount = true;
+                    return accumulator;
+                } else {
+                    accumulator.amount += item.price * item.quantity;
+                    return accumulator;
+                }
+            },
+            {discount: false, amount: 0, discountAmount: 0}
+        )
+        setTotalDiscount({...totals});
+    }, [cart]);
 
   return (
     <>    
@@ -857,19 +821,6 @@ function CreateOrder() {
                                 </Shipping>
                                 <br></br>
                                 <hr></hr>
-                                {
-                                    false && 
-                                    <>
-                                        <Payment>
-                                            <LastPageTitle>Zahlung:</LastPageTitle>
-                                            <div>
-                                                {paymentChoice}
-                                            </div>
-                                        </Payment>
-                                        <br></br>
-                                        <hr></hr>
-                                        </>
-                                }
                                 <Payment>
                                     <LastPageTitle>Artikel:</LastPageTitle>
                                     <div>
@@ -892,11 +843,43 @@ function CreateOrder() {
                                                             }
                                                         </div>
                                                         <div>
-                                                            <div
-                                                                style={{marginTop: "20px", fontSize: "18px", fontWeight: "bold", color: "#696984"}}
-                                                            >
-                                                                {item.quantity} x {cart.discount ? ((item.price/cart.price) * cart.discountedPrice || 0).toFixed(2) :item.price.toFixed(2)}€
-                                                            </div>
+                                                            {
+                                                                item.enableDiscount
+                                                                    ? <div>
+                                                                        <div
+                                                                            style={{
+                                                                                marginTop: "20px",
+                                                                                fontSize: "18px",
+                                                                                fontWeight: "bold",
+                                                                                color: "#696984"
+                                                                            }}
+                                                                        >
+                                                                            {item.quantity} x <span style={{textDecoration: "line-through"}}>{item.price.toFixed(2)}€</span>
+                                                                        </div>
+                                                                        <div
+                                                                            style={{
+                                                                                fontSize: "18px",
+                                                                                fontWeight: "bold",
+                                                                                color: "red"
+                                                                            }}
+                                                                        >
+                                                                            {item.quantity} x <span>{(item.price * (1 - item.discountPercentage)).toFixed(2)}€</span>
+
+                                                                        </div>
+
+                                                                    </div>
+                                                                    : <div
+                                                                        style={{
+                                                                            marginTop: "20px",
+                                                                            fontSize: "18px",
+                                                                            fontWeight: "bold",
+                                                                            color: "#696984"
+                                                                        }}
+                                                                    >
+                                                                        {item.quantity} x {item.price}€
+                                                                    </div>
+                                                            }
+
                                                         </div>
                                                     </ItemDetailWrapper>
                                                 </OrderItemContainer>;
@@ -916,7 +899,7 @@ function CreateOrder() {
                                                 Artikel: 
                                             </span>
                                             <span>
-                                                {cart.price.toFixed(2)} €
+                                                {totalDiscount.amount.toFixed(2)} €
                                             </span>
                                         </li>
                                         <li className="list-group-item d-flex justify-content-space-around">
@@ -928,13 +911,17 @@ function CreateOrder() {
                                             </span>
                                         </li>
                                         {
-                                            cart?.discount && <>
+                                            totalDiscount.discount && <>
                                                 <div className="list-group-item d-flex justify-content-space-around">
-                                                    <div style={{marginRight: "auto", marginLeft: "0"}}>
+                                                    <div
+                                                        style={{marginRight: "auto", marginLeft: "0", color: "red", fontWeight: "bold",fontSize: "16px"}}
+                                                    >
                                                         Rabatt:
                                                     </div>
-                                                    <div>
-                                                        {(cart.price - cart.discountedPrice).toFixed(2)} €
+                                                    <div
+                                                        style={{color: "red", fontWeight: "bold", fontSize: "16px"}}
+                                                    >
+                                                        {(totalDiscount.discountAmount).toFixed(2)} €
                                                     </div>
                                                 </div>
                                                 <div className="list-group-item d-flex justify-content-space-around">
@@ -942,19 +929,19 @@ function CreateOrder() {
                                                         Gesamt:
                                                     </div>
                                                     <div>
-                                                        {(cart.shippingPrice + cart.discountedPrice).toFixed(2)} €
+                                                        {(cart.shippingPrice + totalDiscount.amount - totalDiscount.discountAmount).toFixed(2)} €
                                                     </div>
                                                 </div>
                                             </>
                                         }
                                         {
-                                            !cart?.discount && <>
+                                            !totalDiscount.discount && <>
                                                 <div className="list-group-item d-flex justify-content-space-around">
                                                     <div style={{marginRight: "auto", marginLeft: "0"}}>
                                                         Gesamt:
                                                     </div>
                                                     <div>
-                                                        {(cart.shippingPrice + cart.price).toFixed(2)} €
+                                                        {(cart.shippingPrice + totalDiscount.amount - totalDiscount.discountAmount).toFixed(2)} €
                                                     </div>
                                                 </div>
                                             </>
@@ -964,7 +951,7 @@ function CreateOrder() {
                                         paymentChoice!== "Banküberweisung" &&
                                         <div style={{marginTop: "15px"}}>
                                             <PayPalButton
-                                                amount={cart.discount ? (cart.shippingPrice + cart.discountedPrice).toFixed(2) :(cart.shippingPrice + cart.price).toFixed(2)}
+                                                amount={(cart.shippingPrice + totalDiscount.amount - totalDiscount.discountAmount).toFixed(2)}
                                                 onSuccess={()=>handlePayPalPaymentSuccess()}
                                             />
                                         </div>

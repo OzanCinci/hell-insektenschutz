@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import { uniqueProductData } from './data';
+import {uniqueNDimProductsData} from "./nDimProductsData";
 import { useParams } from 'react-router-dom';
 import TwoDimProduct from './TwoDimProduct';
+import NDimProduct from "./NDimProduct";
 
 const twoDimensionalProducts = [
     "BasicPlissee",
@@ -20,6 +22,14 @@ const twoDimensionalProducts = [
     "PremiumRollo",
     "Doppelrollo",
     "BasicRollo",
+    "SmartAkkuPlissee",
+    "FreihangendPlissee",
+];
+
+const nDimensionalProducts = [
+    "DachfensterPlissee",
+    "SonderformenPlissee",
+    "LamellenvorhangSchrag",
 ];
 
 const extraCartInfo = {
@@ -33,17 +43,27 @@ const extraCartInfo = {
   "Holzjalousie50mm": ["Lamellenbreite: 50 mm"],
 }
 
+function ProductFactory(productName, id){
+    if (twoDimensionalProducts.includes(productName)){
+        const dataFromJSON = uniqueProductData[productName];
+        const extraCartInfoArray = extraCartInfo[productName];
+        return <TwoDimProduct dataFromJSON={dataFromJSON} id={id} extraCartInfoArray={extraCartInfoArray}/>;
+    } else if (nDimensionalProducts.includes(productName)) {
+        const dataFromJSON = uniqueNDimProductsData[productName];
+        const extraCartInfoArray = null;
+        return <NDimProduct dataFromJSON={dataFromJSON} id={id} extraCartInfoArray={extraCartInfoArray}/>;
+    } else {
+        return <div>Something went wrong.</div>
+    }
+}
+
 function Wrapper() {
     const {produkt, id} = useParams();
-    const dataFromJSON = uniqueProductData[produkt];
-    const extraCartInfoArray = extraCartInfo[produkt];
+    const Component = useMemo(() => ProductFactory(produkt, id), [produkt, id]);
 
   return (
     <div>
-        {
-            twoDimensionalProducts.includes(produkt) && <TwoDimProduct dataFromJSON={dataFromJSON} id={id} extraCartInfoArray={extraCartInfoArray}/>
-        }
-
+        {Component}
     </div>
   )
 }

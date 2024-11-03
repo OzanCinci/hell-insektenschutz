@@ -629,6 +629,822 @@ export const uniqueProductData = {
         },
         cartName: "Premium Plissee",
     },
+    "SmartAkkuPlissee": {
+        defaultImages : [
+            'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4586_1688031027_1000x1000.webp',
+            'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4587_1688031051_1000x1000.webp',
+            'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4585_1688031004_1000x1000.webp',
+            'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4588_1688031079_1000x1000.webp',
+        ],
+        selectionData: [
+            {
+                title: "Montageposition",
+                multichoice: false,
+                options: [
+                    {
+                        title: "Glasfalz",
+                        note: "meist gewählt",
+                        defaultSelected: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_5_1666613448_450x450.webp",
+                        explanation: {
+                            title: "Glasfalz",
+                            text: [
+                                "Bei dieser beliebten Montageart verschrauben Sie die Plissees standardmäßig, mit den im Lieferumfang enthaltenen Abspannschuhen, im Glasfalz - dieser kann auch leicht schräg zur Glasscheibe hin abfallen.",
+                                "Optional auswählbare Befestigungsarten sind die Montage mit Klebeleisten oder Gelenkklebeplatten (Modell VS2).",
+                                "Die Mindest-Glasleistentiefe beträgt 18 mm. Dies ist die Tiefe von der Rahmenvorderkante zum Glas (bei der Klebeleiste wird keine Mindesttiefe benötigt).",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_85_1678865265_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "Fensterflügel",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_33_1666613279_450x450.webp",
+                        explanation: {
+                            title: "Fensterflügel",
+                            text: [
+                                "Hier schrauben Sie die im Lieferumfang enthaltenen Winkelträger an den Fensterflügel (Schrauben inkl.).",
+                                "Optional kann die Montage ohne zu schrauben mit Klemmträgern gewählt werden.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_86_1683704113_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "Wand",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_11_1666613476_450x450.webp",
+                        explanation: {
+                            title: "Wand",
+                            text: [
+                                "Bei dieser Montageart schrauben Sie die im Lieferumfang enthaltenen Winkelträger an die Wand (Schrauben inkl.).",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_88_1683704125_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "Decke/Nische",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_12_1666613467_450x450.webp",
+                        explanation: {
+                            title: "Decke oder Nische",
+                            text: [
+                                "Bei dieser Montageart erhalten Sie, je nach bestelltem Plisseemodell, Abspannschuhe oder Deckenträger, die nach oben in die Decke oder Nische verschraubt werden (Schrauben inkl.).",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_12_1666613467_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                ]
+            },
+            {
+                title: "Plisseemodell",
+                multichoice: false,
+                options: [
+                    {
+                        title: "FE",
+                        defaultSelected: true,
+                        cancallable: false,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_7060_1713422190_450x450.webp",
+                        explanation: {
+                            title: "Smart Akku Plissee",
+                            text: [
+                                "Das Akkuplissee wird komfortabel über App (kein weiteres Zubehör nötig) oder Fernbedienung gesteuert.",
+                                "Die Oberschiene wird fest montiert. Die Unterschiene bewegt sich von oben nach unten.",
+                            ]
+                        },
+                        explanationImg: null,
+                        forbids: [],
+                        price: 0
+                    },
+                ]
+            },
+            {
+                title: "Befestigungsart",
+                multichoice: false,
+                checkAllowList: true,
+                options: [
+                    {
+                        title: "Deckenträger",
+                        note: "meist gewählt",
+                        defaultSelected: false, // you are not sure yet ?!
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_182_1666613484_450x450.webp",
+                        explanation: {
+                            title: "Deckenträger",
+                            text: [
+                                "Die Deckenträger werden bei der Montage im Glasfalz nach oben in die Glasleiste verschraubt - diese kann auch leicht schräg zur Glasscheibe hin abfallen.",
+                                "Bei der Deckenmontage werden die Träger in die Decke oder Nische verschraubt (Schrauben stets inkl.)."
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_182_1666613484_450x450.webp",
+                        forbids: [],
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Montageposition":"Glasfalz"},
+                                {"Montageposition":"Decke/Nische"},
+                            ]
+                        },
+                        price: 0
+                    },
+                    {
+                        title: "Winkelträger",
+                        defaultSelected: false,
+                        note: "meist gewählt",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_29_1666613422_450x450.webp",
+                        explanation: {
+                            title: "Winkelträger: Wand.- Fensterflügelmontage",
+                            text: [
+                                "Mit dem Winkelträger kann das Plissee an der Wand oder am Fensterflügel verspannt werden. Winkelträger werden von vorne an den Fensterrahmen geschraubt (Schrauben inkl.).",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_9_1726652409_450x450.webp",
+                        forbids: [],
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Montageposition":"Fensterflügel"},
+                                {"Montageposition":"Wand"},
+                            ]
+                        },
+                        price: 0
+                    },
+                    {
+                        title: "Klemmträger",
+                        note: "sehr beliebt",
+                        defaultSelected: false,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_4_1666613291_450x450.webp",
+                        explanation: {
+                            title: "Klemmträger: Fensterflügelmontage",
+                            text: [
+                                "Bohrerlose Montageart auf den Fensterflügel. Der hochwertige Klemmträger aus Metall mit Kunststoffgehäuse benötigt oberhalb bzw. unterhalb des Fensterflügels 10 mm Platz.",
+                                "Achten Sie insb. bei Holzfenstern darauf, dass die Träger am Fensterflügel montiert werden können (umlaufende Dichtung).",
+                                "Die Klemmbreite beträgt 5-25 mm.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_10_1726645576_450x450.webp",
+                        forbids: [],
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Montageposition":"Fensterflügel"},
+                            ]
+                        },
+                        price: 35.80
+                    },
+                ]
+            },
+            {
+                title: "Bedienart",
+                multichoice: false,
+                options: [
+                    {
+                        title: "Akku-Motor",
+                        defaultSelected: true,
+                        cancallable: false,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_218_1709801125_450x450.webp",
+                        explanation: {
+                            title: "Akku-Motor",
+                            text: [
+                                'Alle Akku-Plissees können über die eigene "Motion-App" gesteuert werden, oder mittels Fernbedienung.',
+                                "Li-Ion-Akku",
+                                "USB wiederaufladbar",
+                                "Lieblingsposition programmierbar"
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_218_1709801125_450x450.webp",
+                        price: 0,
+                    },
+                ]
+            },
+            {
+                title: "Optionales Motor Zubehör",
+                multichoice: true,
+                doNoDefaultSelection: true,
+                options: [
+                    {
+                        title: "Ladekabel USB C",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_97_1706781114_450x450.webp",
+                        explanation: {
+                            title: "Ladekabel ohne Netzteil",
+                            text: [
+                                "Es handelt sich um ein handelsübliches USB C Ladekabel (3 m Länge) ohne Netzteil. Das Plissee wird in der Regel zweimal jährlich geladen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_97_1706781114_450x450.webp",
+                        price: 13,
+                    },
+                    {
+                        title: "1 Kanal Fernbedienung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_112_1707894379_450x450.webp",
+                        explanation: {
+                            title: "1 Kanal Fernbedienung",
+                            text: [
+                                "Sie koppeln ihr Plissee sehr einfach per Knopfdruck mit der Fernbedienung und können diese unmittelbar bequem bedienen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_112_1707894379_450x450.webp",
+                        price: 48.60,
+                    },
+                    {
+                        title: "5 Kanal Fernbedienung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_98_1706781125_450x450.webp",
+                        explanation: {
+                            title: "5 Kanal Fernbedienung",
+                            text: [
+                                "Sie koppeln ihre Rollos sehr einfach per Knopfdruck mit der Fernbedienung und können diese unmittelbar bequem bedienen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_98_1706781125_450x450.webp",
+                        price: 64.80,
+                    },
+                    {
+                        title: "15 Kanal Fernbedienung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_114_1707894385_450x450.webp",
+                        explanation: {
+                            title: "15 Kanal Fernbedienung",
+                            text: [
+                                "Sie koppeln ihre Rollos sehr einfach per Knopfdruck mit der Fernbedienung und können diese unmittelbar bequem bedienen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_114_1707894385_450x450.webp",
+                        price: 87.40,
+                    },
+                ]
+            },
+            {
+                title: "Optionales Smart Zubehör",
+                multichoice: true,
+                doNoDefaultSelection: true,
+                options: [
+                    {
+                        title: "Wi-Fi Mini Bridge",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_101_1706781162_450x450.webp",
+                        explanation: {
+                            title: "USB WiFi Bridge",
+                            text: [
+                                "Erhöht die Reichweite auf 20 Meter - das Plissee kann somit außerhalb der Bluetooth-Umgebung gesteuert werden und in Ihr Smart-Home integriert werden (Amazon Alexa, Google Assistant, IFTTT). Pro Etage wird eine Mini Bridge benötigt.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_101_1706781162_450x450.webp",
+                        price: 220.40,
+                    },
+                    {
+                        title: "Wi-Fi Bridge",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_102_1706781171_450x450.webp",
+                        explanation: {
+                            title: "WiFi Bridge",
+                            text: [
+                                "Erhöht die Reichweite - das Plissee kann somit außerhalb der Bluetooth-Umgebung gesteuert werden und in Ihr Smart-Home integriert werden (Amazon Alexa, Google Assistant, IFTTT). Pro Haushalt ist eine WiFi Bridge ausreichend.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_102_1706781171_450x450.webp",
+                        price: 388.80,
+                    },
+                ]
+            },
+            {
+                title: "Zubehör",
+                multichoice: true,
+                checkAllowList: true,
+                doNoDefaultSelection: true,
+                options: [
+                    {
+                        title: "Seitenführung",
+                        note: "meist gewählt",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_30_1666613357_450x450.webp",
+                        explanation: {
+                            title: "Pendelsicherung",
+                            text: [
+                                "Die seitliche Führung verhindert das unkontrollierte Auspendeln des Plissees. Diese ist besonders empfehlenswert bei beweglichen Fenstern und Türen oder auch bei Luftzug. Es kommt je nach Montageart entweder ein Spann-Winkel (Wand, Decke), Spann-Schuh (in der Fensternische) oder ein Klemmträger zum Einsatz.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_30_1666613357_450x450.webp",
+                        price: 22.20,
+                    },
+                ]
+            },
+            {
+                title: "Schienenfarbe",
+                multichoice: false,
+                options: [
+                    {
+                        title: "Weiß",
+                        defaultSelected: true,
+                        image: "rgb(243, 246, 246)",
+                        price: 0
+                    },
+                    {
+                        title: "Silber",
+                        image: "linear-gradient(58.82deg, rgb(233, 233, 233) 2.73%, rgb(196, 196, 196) 50.11%, rgb(221, 221, 221) 67.69%, rgb(233, 233, 233) 78.93%, rgb(224, 224, 224) 96.51%)",
+                        price: 0
+                    },
+                    {
+                        title: "Schwarzbraun",
+                        image: "rgb(30, 26, 26)",
+                        price: 0
+                    },
+                    {
+                        title: "Anthrazit",
+                        image: "rgb(90, 90, 90)",
+                        price: 0
+                    },
+                ]
+            },
+        ],
+        subcategoryTitle: "Plisseemodell",
+        blendcolorTitle: "Schienenfarbe",
+        requestCategory: "AkkuPlissee",
+        saleMultiplier: 10 / 4,
+        measurementUrl: "/messanleitung/plissee",
+        productDetailUrl: "/api/product/Plissee/Smart Akku Plissee",
+        EXTERNAL_URL: "/api/external-products/colors/AkkuPlissee/",
+        defaultHeight: 700,
+        defaultWidth: 800,
+        freeSamplingTitle: "Stoffmuster Premium Plissee",
+        assemblyInfo: {
+            name: "Smart Akku Plissee",
+            link: "/montageanleitung/plissee"
+        },
+        cartName: "Smart Akku Plissee",
+    },
+    "FreihangendPlissee": {
+        defaultImages : [
+            'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4586_1688031027_1000x1000.webp',
+            'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4587_1688031051_1000x1000.webp',
+            'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4585_1688031004_1000x1000.webp',
+            'https://api.configurator.vendeco.com/data/configurations/200000/files/204_Image_4588_1688031079_1000x1000.webp',
+        ],
+        selectionData: [
+            {
+                title: "Montageposition",
+                multichoice: false,
+                options: [
+                    {
+                        title: "Glasfalz",
+                        note: "meist gewählt",
+                        defaultSelected: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_5_1666613448_450x450.webp",
+                        explanation: {
+                            title: "Glasfalz",
+                            text: [
+                                "Bei dieser beliebten Montageart verschrauben Sie die Plissees standardmäßig, mit den im Lieferumfang enthaltenen Abspannschuhen, im Glasfalz - dieser kann auch leicht schräg zur Glasscheibe hin abfallen.",
+                                "Optional auswählbare Befestigungsarten sind die Montage mit Klebeleisten oder Gelenkklebeplatten (Modell VS2).",
+                                "Die Mindest-Glasleistentiefe beträgt 18 mm. Dies ist die Tiefe von der Rahmenvorderkante zum Glas (bei der Klebeleiste wird keine Mindesttiefe benötigt).",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_85_1678865265_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "Fensterflügel",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_33_1666613279_450x450.webp",
+                        explanation: {
+                            title: "Fensterflügel",
+                            text: [
+                                "Hier schrauben Sie die im Lieferumfang enthaltenen Winkelträger an den Fensterflügel (Schrauben inkl.).",
+                                "Optional kann die Montage ohne zu schrauben mit Klemmträgern gewählt werden.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_86_1683704113_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "Wand",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_11_1666613476_450x450.webp",
+                        explanation: {
+                            title: "Wand",
+                            text: [
+                                "Bei dieser Montageart schrauben Sie die im Lieferumfang enthaltenen Winkelträger an die Wand (Schrauben inkl.).",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_88_1683704125_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "Decke/Nische",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_12_1666613467_450x450.webp",
+                        explanation: {
+                            title: "Decke oder Nische",
+                            text: [
+                                "Bei dieser Montageart erhalten Sie, je nach bestelltem Plisseemodell, Abspannschuhe oder Deckenträger, die nach oben in die Decke oder Nische verschraubt werden (Schrauben inkl.).",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_12_1666613467_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                ]
+            },
+            {
+                title: "Plisseemodell",
+                multichoice: false,
+                options: [
+                    {
+                        title: "F 1",
+                        defaultSelected: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_16_1624866759_450x450.webp",
+                        explanation: {
+                            title: "Modell Zugschnur F1 freihängend",
+                            text: [
+                                "Die Oberschiene ist fest montiert. Die Unterschiene kann mit einer Zugschnur (Schnurbremse) nach oben und unten bewegt werden.",
+                                "Maximale Breite bis 230 cm (abhängig von Stoffbreite)",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_ImageAnimated_5_1624866904.gif",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "F 2",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_17_1624866758_450x450.webp",
+                        explanation: {
+                            title: "Modell Zugschnur F2 freihängend",
+                            text: [
+                                "Sowohl die Oberschiene als auch die Unterschiene kann mit Zugschnüren (Schnurbremse) nach oben und unten bewegt werden.",
+                                "Maximale Breite 200 cm",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_ImageAnimated_6_1624866906.gif",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "F4",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_101_1624866772_450x450.webp",
+                        explanation: {
+                            title: "Modell Endloskette F4 freihängend",
+                            text: [
+                                "Mit Endloskette gesteuertes Plissee. Die Oberschiene wird fest montiert. Die Unterschiene kann nach oben und unten bewegt werden.",
+                                "Maximale Breite bis 230 cm (abhängig von Stoffbreite)",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_ImageAnimated_7_1624866905.gif",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "FE",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_7060_1713422190_450x450.webp",
+                        explanation: {
+                            title: "Smart Akku Plissee",
+                            text: [
+                                "Das Akkuplissee wird komfortabel über App (kein weiteres Zubehör nötig) oder Fernbedienung gesteuert.",
+                                "Die Oberschiene wird fest montiert. Die Unterschiene bewegt sich von oben nach unten.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/196_Property_Icon_7060_1713422190_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                ]
+            },
+            {
+                title: "Befestigungsart",
+                multichoice: false,
+                checkAllowList: true,
+                options: [
+                    {
+                        title: "Deckenträger",
+                        note: "meist gewählt",
+                        defaultSelected: false, // you are not sure yet ?!
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_182_1666613484_450x450.webp",
+                        explanation: {
+                            title: "Deckenträger",
+                            text: [
+                                "Die Deckenträger werden bei der Montage im Glasfalz nach oben in die Glasleiste verschraubt - diese kann auch leicht schräg zur Glasscheibe hin abfallen.",
+                                "Bei der Deckenmontage werden die Träger in die Decke oder Nische verschraubt (Schrauben stets inkl.)."
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_182_1666613484_450x450.webp",
+                        forbids: [],
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Montageposition":"Glasfalz"},
+                                {"Montageposition":"Decke/Nische"},
+                            ]
+                        },
+                        price: 0
+                    },
+                    {
+                        title: "Winkelträger",
+                        defaultSelected: false,
+                        note: "meist gewählt",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_29_1666613422_450x450.webp",
+                        explanation: {
+                            title: "Winkelträger: Wand.- Fensterflügelmontage",
+                            text: [
+                                "Mit dem Winkelträger kann das Plissee an der Wand oder am Fensterflügel verspannt werden. Winkelträger werden von vorne an den Fensterrahmen geschraubt (Schrauben inkl.).",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_9_1726652409_450x450.webp",
+                        forbids: [],
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Montageposition":"Fensterflügel"},
+                                {"Montageposition":"Wand"},
+                            ]
+                        },
+                        price: 0
+                    },
+                    {
+                        title: "Klemmträger",
+                        note: "sehr beliebt",
+                        defaultSelected: false,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_4_1666613291_450x450.webp",
+                        explanation: {
+                            title: "Klemmträger: Fensterflügelmontage",
+                            text: [
+                                "Bohrerlose Montageart auf den Fensterflügel. Der hochwertige Klemmträger aus Metall mit Kunststoffgehäuse benötigt oberhalb bzw. unterhalb des Fensterflügels 10 mm Platz.",
+                                "Achten Sie insb. bei Holzfenstern darauf, dass die Träger am Fensterflügel montiert werden können (umlaufende Dichtung).",
+                                "Die Klemmbreite beträgt 5-25 mm.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_Image_10_1726645576_450x450.webp",
+                        forbids: [],
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Montageposition":"Fensterflügel"},
+                            ]
+                        },
+                        price: 35.80
+                    },
+                ]
+            },
+            {
+                title: "Bedienart",
+                checkAllowList: true,
+                options: [
+                    {
+                        title: "Akku-Motor",
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_218_1709801125_450x450.webp",
+                        explanation: {
+                            title: "Akku-Motor",
+                            text: [
+                                'Alle Akku-Plissees können über die eigene "Motion-App" gesteuert werden, oder mittels Fernbedienung.',
+                                "Li-Ion-Akku",
+                                "USB wiederaufladbar",
+                                "Lieblingsposition programmierbar"
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_218_1709801125_450x450.webp",
+                        price: 0,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Plisseemodell": "FE"},
+                            ]
+                        },
+                    },
+                ]
+            },
+            {
+                title: "Optionales Motor Zubehör",
+                multichoice: true,
+                doNoDefaultSelection: true,
+                checkAllowList: true,
+                options: [
+                    {
+                        title: "Ladekabel USB C",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_97_1706781114_450x450.webp",
+                        explanation: {
+                            title: "Ladekabel ohne Netzteil",
+                            text: [
+                                "Es handelt sich um ein handelsübliches USB C Ladekabel (3 m Länge) ohne Netzteil. Das Plissee wird in der Regel zweimal jährlich geladen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_97_1706781114_450x450.webp",
+                        price: 13,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart": "Akku-Motor"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "1 Kanal Fernbedienung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_112_1707894379_450x450.webp",
+                        explanation: {
+                            title: "1 Kanal Fernbedienung",
+                            text: [
+                                "Sie koppeln ihr Plissee sehr einfach per Knopfdruck mit der Fernbedienung und können diese unmittelbar bequem bedienen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_112_1707894379_450x450.webp",
+                        price: 48.60,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart": "Akku-Motor"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "5 Kanal Fernbedienung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_98_1706781125_450x450.webp",
+                        explanation: {
+                            title: "5 Kanal Fernbedienung",
+                            text: [
+                                "Sie koppeln ihre Rollos sehr einfach per Knopfdruck mit der Fernbedienung und können diese unmittelbar bequem bedienen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_98_1706781125_450x450.webp",
+                        price: 64.80,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart": "Akku-Motor"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "15 Kanal Fernbedienung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_114_1707894385_450x450.webp",
+                        explanation: {
+                            title: "15 Kanal Fernbedienung",
+                            text: [
+                                "Sie koppeln ihre Rollos sehr einfach per Knopfdruck mit der Fernbedienung und können diese unmittelbar bequem bedienen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_114_1707894385_450x450.webp",
+                        price: 87.40,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart": "Akku-Motor"},
+                            ]
+                        },
+                    },
+                ]
+            },
+            {
+                title: "Optionales Smart Zubehör",
+                multichoice: true,
+                doNoDefaultSelection: true,
+                checkAllowList: true,
+                options: [
+                    {
+                        title: "Wi-Fi Mini Bridge",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_101_1706781162_450x450.webp",
+                        explanation: {
+                            title: "USB WiFi Bridge",
+                            text: [
+                                "Erhöht die Reichweite auf 20 Meter - das Plissee kann somit außerhalb der Bluetooth-Umgebung gesteuert werden und in Ihr Smart-Home integriert werden (Amazon Alexa, Google Assistant, IFTTT). Pro Etage wird eine Mini Bridge benötigt.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/195_Icon_101_1706781162_450x450.webp",
+                        price: 220.40,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart": "Akku-Motor"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "Wi-Fi Bridge",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_102_1706781171_450x450.webp",
+                        explanation: {
+                            title: "WiFi Bridge",
+                            text: [
+                                "Erhöht die Reichweite - das Plissee kann somit außerhalb der Bluetooth-Umgebung gesteuert werden und in Ihr Smart-Home integriert werden (Amazon Alexa, Google Assistant, IFTTT). Pro Haushalt ist eine WiFi Bridge ausreichend.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_102_1706781171_450x450.webp",
+                        price: 388.80,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart": "Akku-Motor"},
+                            ]
+                        },
+                    },
+                ]
+            },
+            {
+                title: "Bedienseite",
+                multichoice: false,
+                checkAllowList: true,
+                options: [
+                    {
+                        title: "Links",
+                        defaultSelected: true,
+                        image: "https://wumbo.net/symbols/left-arrow/feature.png",
+                        price: 0,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Plisseemodell": "F 1"},
+                                {"Plisseemodell": "F4"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "Rechts",
+                        image: "https://wumbo.net/symbols/right-arrow/feature.png",
+                        price: 0,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Plisseemodell": "F 1"},
+                                {"Plisseemodell": "F4"},
+                            ]
+                        },
+                    },
+                ]
+            },
+            {
+                title: "Zubehör",
+                multichoice: false,
+                doNoDefaultSelection: true,
+                options: [
+                    {
+                        title: "Seitenführung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_30_1666613357_450x450.webp",
+                        explanation: {
+                            title: "Pendelsicherung",
+                            text: [
+                                "Die seitliche Führung verhindert das unkontrollierte Auspendeln des Plissees. Diese ist besonders empfehlenswert bei beweglichen Fenstern und Türen oder auch bei Luftzug. Es kommt je nach Montageart entweder ein Spann-Winkel (Wand, Decke), Spann-Schuh (in der Fensternische) oder ein Klemmträger zum Einsatz.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/210_Icon_30_1666613357_450x450.webp",
+                        price: 22.20
+                    },
+                ]
+            },
+            {
+                title: "Schienenfarbe",
+                multichoice: false,
+                options: [
+                    {
+                        title: "Weiß",
+                        defaultSelected: true,
+                        image: "rgb(243, 246, 246)",
+                        price: 0
+                    },
+                    {
+                        title: "Silber",
+                        image: "linear-gradient(58.82deg, rgb(233, 233, 233) 2.73%, rgb(196, 196, 196) 50.11%, rgb(221, 221, 221) 67.69%, rgb(233, 233, 233) 78.93%, rgb(224, 224, 224) 96.51%)",
+                        price: 0
+                    },
+                    {
+                        title: "Anthrazit",
+                        image: "rgb(90, 90, 90)",
+                        price: 0
+                    },
+                    {
+                        title: "Bronze",
+                        image: "rgb(138, 130, 113)",
+                        price: 0
+                    },
+                    {
+                        title: "Schwarzbraun",
+                        image: "rgb(30, 26, 26)",
+                        price: 0
+                    },
+                ]
+            },
+        ],
+        subcategoryTitle: "Plisseemodell",
+        blendcolorTitle: "Schienenfarbe",
+        requestCategory: "PlisseeFreihaengend",
+        saleMultiplier: 10 / 4,
+        measurementUrl: "/messanleitung/plissee",
+        productDetailUrl: "/api/product/Plissee/Freihängend Plissee",
+        EXTERNAL_URL: "/api/external-products/colors/PlisseeFreihaengend/",
+        defaultHeight: 500,
+        defaultWidth: 300,
+        freeSamplingTitle: "Stoffmuster Premium Plissee",
+        assemblyInfo: {
+            name: "Freihängend Plissee",
+            link: "/montageanleitung/plissee"
+        },
+        cartName: "Plissee Freihängend",
+    },
     "BasicJalousie25mm": {
         defaultImages: [
             'https://api.configurator.vendeco.com/data/configurations/100000/files/204_Image_4539_1688029222_1000x1000.webp',
@@ -1882,7 +2698,7 @@ export const uniqueProductData = {
                             ]
                         },
                         explanationImg: "https://api.configurator.vendeco.com/data/configurations/400000/files/200_Image_55_1678873356_450x450.webp",
-                        price: 50,
+                        price: 40,
                         allows: {
                             type: "single",
                             dependecies: [
@@ -1901,7 +2717,7 @@ export const uniqueProductData = {
                             ]
                         },
                         explanationImg: "https://api.configurator.vendeco.com/data/configurations/400000/files/200_Image_56_1678873366_450x450.webp",
-                        price: 65,
+                        price: 50,
                         allows: {
                             type: "single",
                             dependecies: [
@@ -1927,7 +2743,7 @@ export const uniqueProductData = {
                             ]
                         },
                         explanationImg: "https://api.configurator.vendeco.com/data/configurations/400000/files/195_Icon_115_1709802650_450x450.webp",
-                        price: 50
+                        price: 35
                     },
                 ]
             }

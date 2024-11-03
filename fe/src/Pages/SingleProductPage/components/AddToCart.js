@@ -6,6 +6,7 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import Notification from './Notification';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShippingPriceTable from '../../../images/shop/shippingprices.webp';
+import CONFIGURATION from "../../../config/config";
 
 
 const CustomButton = styled(Button)`
@@ -108,7 +109,7 @@ const moreDetailObj = {
     ]
 };
 
-const discount = false;
+const {percentage, enableDiscount} = CONFIGURATION.discount;
 function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart, handleAddFreeSamplingIntoCard,validPrice}) {
     const [quantity,setQuantity] = useState(1);
 
@@ -131,9 +132,9 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart,
             <Wrapper>
                 <QuantityWrapper>
                 {
-                    discount===true ? 
+                    enableDiscount===true ?
                     <>
-                        <div style={{width: "fit-content", fontSize: "17px"}}> {itemPrice ?`${(itemPrice-validPrice + validPrice * 0.7).toFixed(2)}€ pro Produkt`: ""}</div>
+                        <div style={{width: "fit-content", fontSize: "17px"}}> {itemPrice ?`${(itemPrice-validPrice + validPrice * (1-percentage)).toFixed(2)}€ pro Produkt`: ""}</div>
                     </>
                     : <>
                         <div style={{width: "fit-content", fontSize: "17px"}}> {itemPrice ?`${(itemPrice-validPrice + validPrice).toFixed(2)}€ pro Produkt`: ""}</div>
@@ -163,10 +164,10 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart,
                 <div>Gesamt:</div>
                 {
                     canAddCart && (
-                        discount===true ? <>
+                        enableDiscount===true ? <>
                             <div>
                                 <div style={{textDecoration: "line-through", fontSize: "18px"}}>{`${(itemPrice*quantity).toFixed(2)}€`}</div>
-                                <div style={{color: "red", fontWeight: "bold",fontSize: "24px"}}>{`${((itemPrice-validPrice + validPrice * 0.7)*quantity).toFixed(2)}€`}</div>
+                                <div style={{color: "red", fontWeight: "bold",fontSize: "24px"}}>{`${((itemPrice-validPrice + validPrice * (1-percentage))*quantity).toFixed(2)}€`}</div>
                             </div>
                         </>:
                         <>
@@ -182,9 +183,9 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart,
             </Wrapper>
             <BottomButtonWrapper>
                 {
-                    discount===true ?
+                    enableDiscount===true ?
                     <>
-                        <Button disabled={canAddCart===false} onClick={e=>handleAddIntoCard(e,quantity,(itemPrice-validPrice + validPrice * 0.7))} style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>
+                        <Button disabled={canAddCart===false} onClick={e=>handleAddIntoCard(e,quantity,(itemPrice-validPrice + validPrice))} style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>
                     </>
                     : <>
                         <Button disabled={canAddCart===false} onClick={e=>handleAddIntoCard(e,quantity,(itemPrice-validPrice + validPrice))} style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>

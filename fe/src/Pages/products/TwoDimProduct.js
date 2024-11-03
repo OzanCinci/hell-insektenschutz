@@ -21,6 +21,7 @@ import AddToCart from '../SingleProductPage/components/AddToCart';
 import Button from '@mui/material/Button';
 import ReviewModal from '../../CustomComponents/ReviewModal';
 import HowToAssemble from '../ProductComponents/HowToAssemble';
+import CONFIGURATION from "../../config/config";
 
 const CustomButton = styled(Button)`
     margin-top: 5px !important;
@@ -228,6 +229,8 @@ const config = {
     },
 };
 
+
+const {enableDiscount, percentage , validUntil} = CONFIGURATION.discount;
 function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     /////// PARSE DATA IMMEDIATELY ///////
     const defaultImages = dataFromJSON.defaultImages;
@@ -283,7 +286,7 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
   useEffect(() => {
     if (data !== null) {
       setItemData(data);
-      //console.log("SINGLE COLOR DATA:" ,data);
+
       const mainImage = data.color.previewImage;
       const secondaryImage = data.color.tileImage;
       let tmp;
@@ -334,7 +337,6 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
         });
 
         setItemConfiguration(tempItemConfiguration);
-        //console.log("tempItemConfiguration: ",tempItemConfiguration);
     } else {
         // calculate price logic
         const tempConfigPrice = sumValues(itemConfiguration);
@@ -383,8 +385,7 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
             }
           }
         }
-        
-        //console.log("Object.keys(itemConfiguration[blendcolorTitle][0]): ",Object.keys(itemConfiguration[blendcolorTitle][0]));
+
         const blendCol = Object.keys(itemConfiguration[blendcolorTitle][0])[0];
         for (let i=0;i<sampleBlendColors.length;i++) {
             current = sampleBlendColors[i];
@@ -400,12 +401,8 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
         request.height = Math.floor(dimensions.height / 10);
         request.category = requestCategory;
 
-        //console.log("AAAAAAAAAAAA!!!!!");
-        //console.log("PRICE REQUEST ATACAK");
-        //console.log("REQUESTTT: ",request);
+
         debouncedGetPriceFromBackend(request);
-        //console.log("PRICE REQUEST ATTI");
-        
     }
   },[itemConfiguration, dimensions,itemData]);
 
@@ -417,18 +414,13 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
             'Content-Type': 'application/json'
           }
         });
-        //console.log('Response:', response.data);
         const salePriceStr = get(response.data, 'data.price.salePrice');
         const parsedSalePrice = parseFloat(salePriceStr.replace(',', '.'));
-        //console.log("parsedSalePrice: ",parsedSalePrice);
         const tmpValidPrice = parsedSalePrice * saleMultiplier;
-        //console.log("validPrice: ", tmpValidPrice); 
         setValidPrice(tmpValidPrice);
         setCanAddCart(true);
-        //console.log("PRICE REQUEST SON");
       } catch (error) {
         setCanAddCart(false);
-        //console.log("PRICE REQUEST HATA");
       }
   }
 
@@ -451,7 +443,6 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
 
 
     if (itemName.includes("Plissee")) {
-      //console.log("itemData: ",itemData);
       const material = itemData?.color?.properties.MaterialType;
       if (material && material==="Wabenplissee") {
         itemName = itemName.replace("Plissee","Wabenplissee");
@@ -483,9 +474,13 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
         itemName: itemName,
         secondaryName: secondaryName,
         productID: currentProduct?.id,
+
+        // discount related data below
+        enableDiscount: enableDiscount,
+        discountPercentage: percentage,
+        discountValidUntil: validUntil
     };
 
-    //console.log("CART ITEM: ", item);
 
     dispatch({type:ADD_TO_CART,payload:item});
 
@@ -548,7 +543,6 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
 
   const handleClickReview = (e) => {
     e.preventDefault();
-    //console.log("userInfo: ",userInfo);
 
     if (userInfo===null) {
         const button = document.getElementById("loginPopup");
@@ -561,11 +555,6 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     }
   }
   /////// DO REVIEW LOGIC ///////
-
-
-  useEffect(()=>{
-    console.log("currentProduct: ",currentProduct);
-  },[currentProduct])
 
   if (loading) {
     return <CircularProgress color="warning" />;
@@ -622,7 +611,6 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                             })
                         }
 
-                        {/*<button onClick={()=>console.log("ITEM CONFIGURATION: ", itemConfiguration)}>printf item configuration</button> */}
                         
                         <Title>Abmessungen</Title>
                             <HowtoMeasureWrapper>

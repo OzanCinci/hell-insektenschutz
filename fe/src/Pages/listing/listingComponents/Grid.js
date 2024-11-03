@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import CircularProgress from '@mui/material/CircularProgress';
+import CONFIGURATION from '../../../config/config';
 import styled from 'styled-components';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import TaskAltIcon from '@mui/icons-material/TaskAlt';
@@ -337,7 +338,7 @@ const config = {
     }
 };
 
-const discount = false;
+const {enableDiscount, percentage} = CONFIGURATION.discount;
 const Grid = ({ loading, data, link, productInfoUrl }) => {
     const nav = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
@@ -523,19 +524,19 @@ const Grid = ({ loading, data, link, productInfoUrl }) => {
                                                     {item.ternaryImage !== null && <img height='35px' width='35px' src={item.ternaryImage}/>}
                                                 </div>
                                                 {
-                                                    discount===true &&
+                                                    enableDiscount===true &&
                                                     <PriceTag>
                                                         <span className='price-tag' style={{textDecoration: "line-through", fontSize: "15px"}}>{`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}</span>
                                                         <span className='price-tag' style={{color: "red", marginLeft: "10px"}}>
-                                                            {`${(item.properties.MinPrice * 2.5 * 0.7).toFixed(2)}€`}
+                                                            {`${(item.properties.MinPrice * 2.5 * (1-percentage)).toFixed(2)}€`}
                                                         </span>
                                                         <div style={{ fontSize: "17px"}}>
-                                                            30% Rabatt
+                                                            {percentage*100}% Rabatt
                                                         </div>
                                                     </PriceTag>
                                                 }
                                                 {
-                                                    discount===false &&
+                                                    enableDiscount===false &&
                                                     <PriceTag>
                                                         <span className='price-tag' style={{marginLeft: "10px"}}>
                                                             {`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}

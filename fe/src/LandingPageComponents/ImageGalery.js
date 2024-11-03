@@ -6,6 +6,7 @@ import HolzJal2 from '../images/mainPageGalery/holzjalousie2.jpg';
 import Lamellenvorhang from '../images/mainPageGalery/lamellenvorhang2.jpg';
 import Jal1 from '../images/mainPageGalery/jalousie1.jpg';
 import InsekPhoto from '../images/landingPage/test_cover.jpg';
+import CONFIGURATION from "../config/config";
 
 const Container = styled.div`
     margin-top: 120px;
@@ -158,7 +159,8 @@ const images = [
     { src: Jal1, text: "Individuell für Sie angefertigte Jalousien. Sie können auch ein kostenloses Muster zur Absicherung erhalten." }
 ];
 
-const discount = false;
+
+const {enableDiscount, text, percentage} = CONFIGURATION.discount;
 function ImageGalery() {
     const [i, setI] = useState(0);
     
@@ -166,22 +168,22 @@ function ImageGalery() {
     return (
         <Container data-aos="fade-up">
             <Wrapper>
-                {discount===false && 
+                {enableDiscount===false &&
                     <DesktopComponent>
                         <NoDiscountconstInfoTitle>Insekten & Sonnenschutz nach Maß!</NoDiscountconstInfoTitle>
                     </DesktopComponent>
                 }
-                    {discount===false && 
+                    {enableDiscount===false &&
                     <MobileComponent>
                         <NoDiscountconstInfoTitle>Insekten & Sonnenschutz</NoDiscountconstInfoTitle>
                         <NoDiscountconstInfoTitle>nach Maß!</NoDiscountconstInfoTitle>
                     </MobileComponent>
                 }
                 {
-                    discount===true &&
+                    enableDiscount===true &&
                         <InfoTitle>
-                            <div>30 % Rabatt auf alle Sonnenschutzsysteme! </div>
-                            <div>11.August - 25.August</div>
+                            <div>{percentage*100}% Rabatt auf alle Sonnenschutzsysteme! </div>
+                            <div>{text}</div>
                         </InfoTitle>
                 }
                 <ImageSlideWrapper>

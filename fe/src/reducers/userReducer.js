@@ -11,7 +11,11 @@ import {
     DELETE_WISHLIST_ITEM,
     ADD_SUBITEM_WISHLIST,
     DELETE_SUBITEM_WISHLIST,
-    INCREMENT_SUBITEM_WISHLIST, DECREMENT_SUBITEM_WISHLIST, CHANGE_ALL_BASKET, DELETE_ITEM_WISHLIST,
+    INCREMENT_SUBITEM_WISHLIST,
+    DECREMENT_SUBITEM_WISHLIST,
+    CHANGE_ALL_BASKET,
+    DELETE_ITEM_WISHLIST,
+    CHANGE_ALL_WISHLIST,
 } from "../constants/user"
 import {convertDateForWishlist} from "../utils/datetime";
 // SAMPLE CART DATA EXAMPLE
@@ -169,6 +173,10 @@ export const wishlistCartReducer = (state = [], action) => {
         case DELETE_ITEM_WISHLIST:
             wishlistItem = action.payload;
             updatedState = state.filter(currentWishlistItem => !(currentWishlistItem.name===wishlistItem.name && currentWishlistItem.createdAt===wishlistItem.createdAt));
+            localStorage.setItem('localWishlistInfo', JSON.stringify([...updatedState]));
+            return updatedState;
+        case CHANGE_ALL_WISHLIST:
+            updatedState = [...action.payload];
             localStorage.setItem('localWishlistInfo', JSON.stringify([...updatedState]));
             return updatedState;
         default:

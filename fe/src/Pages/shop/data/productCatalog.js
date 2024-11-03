@@ -1,6 +1,10 @@
 import BasicPlisseImg from '../../../images/shopCategories/basicplisse.webp';
 import PremPlisseImg from '../../../images/shopCategories/premplisse.webp';
 import Wintergardenplissee from '../../../images/shopCategories/wintergardenplissee.webp';
+import Dachfensterplissee from '../../../images/shopCategories/dachfenster.webp';
+import Sonderformplissee from '../../../images/shopCategories/sonderformplissee.webp';
+import Akkuplissee from '../../../images/shopCategories/akkuplissee.webp';
+import PlisseeFreihaengend from '../../../images/shopCategories/PlisseeFreihaengend.webp';
 
 import BasicJalousieImg from '../../../images/shopCategories/basicjalousie.webp';
 import PremJalousieImg from '../../../images/shopCategories/premjalousie.webp';
@@ -65,6 +69,73 @@ export const catalogData = {
                     {
                         text: "Jetzt konfigurieren",
                         url: "/geschaft/plissees/wintergarten-plissee-optionen",
+                    }
+                ]
+            },
+            {
+                title: "Dachfenster Plissee",
+                image: Dachfensterplissee,
+                desc: [
+                    "Schöner, eleganter Sonnen- und Hitzeschutz",
+                    "über 400 Stoffe",
+                    "Plissee- oder Wabenplissee-Optionen",
+                    "Farb- und Designvielfalt",
+                    "Inklusive Montagematerial"
+                ],
+                links: [
+                    {
+                        text: "Jetzt konfigurieren",
+                        url: "/geschaft/plissees/dachfenster-plissee-optionen",
+                    }
+                ]
+            },
+            {
+                title: "Sonderformen Plissee",
+                image: Sonderformplissee,
+                desc: [
+                    "Sonnen-, Blend- und Hitzeschutz",
+                    "Bedienstab oder Griffbedienung",
+                    "Große Stoffauswahl",
+                    "Plissee- oder Wabenplissee-Optionen",
+                    "Einfärbig, mehrfärbig und gemustert",
+                ],
+                links: [
+                    {
+                        text: "Jetzt konfigurieren",
+                        url: "/geschaft/plissees/sonderformen-plissee-optionen",
+                    }
+                ]
+            },
+            {
+                title: "Akku Plissee",
+                image: Akkuplissee,
+                desc: [
+                    "Bedienung über das Smartphone",
+                    "optional Montage zum Klemmen",
+                    "lange Akku-Laufzeit",
+                    "Über 400 Stoffe",
+                    "Plissee- oder Wabenplissee-Optionen",
+                ],
+                links: [
+                    {
+                        text: "Jetzt konfigurieren",
+                        url: "/geschaft/plissees/akku-plissee-optionen",
+                    }
+                ]
+            },
+            {
+                title: "Freihaengend Plissee",
+                image: PlisseeFreihaengend,
+                desc: [
+                    "Sonnen-, Blend- und Hitzeschutz",
+                    "Plissee- oder Wabenplissee-Optionen",
+                    "Über 500 Stoffe",
+                    "Trendige Designs"
+                ],
+                links: [
+                    {
+                        text: "Jetzt konfigurieren",
+                        url: "/geschaft/plissees/freihaengend-plissee-optionen",
                     }
                 ]
             },
@@ -191,6 +262,38 @@ export const catalogData = {
     "lamellenvorhang": {
         data: [
             {
+                title: "Premium Lamellenvorhang",
+                image: PremLamellenvorhangImg,
+                desc: [
+                    "über 350 Stoffe",
+                    "89 mm, 127 mm Lamellen",
+                    "bis 500 cm Breite",
+                    "optional eingeschweißte Gewichte"
+                ],
+                links: [
+                    {
+                        text: "Jetzt konfigurieren",
+                        url: "/geschaft/lamellenvorhang/premium-lamellenvorhang-optionen",
+                    }
+                ]
+            },
+            {
+                title: "Lamellenvorhang schräg",
+                image: PremLamellenvorhangImg,
+                desc: [
+                    "schräg",
+                    "über 300 Stoffe",
+                    "89 mm, 127 mm Lamellen",
+                    "optional eingeschweißte Gewichte"
+                ],
+                links: [
+                    {
+                        text: "Jetzt konfigurieren",
+                        url: "/geschaft/lamellenvorhang/schrag-lamellenvorhang-optionen",
+                    }
+                ]
+            },
+            {
                 title: "Basic Lamellenvorhang",
                 image: BasicLamellenvorhangImg,
                 desc: [
@@ -204,22 +307,6 @@ export const catalogData = {
                     {
                         text: "Jetzt konfigurieren",
                         url: "/geschaft/lamellenvorhang/basic-lamellenvorhang-optionen",
-                    }
-                ]
-            },
-            {
-                title: "Premium Lamellenvorhang",
-                image: PremLamellenvorhangImg,
-                desc: [
-                    "über 350 Stoffe",
-                    "89 mm, 127 mm Lamellen",
-                    "bis 500 cm Breite",
-                    "optional eingeschweißte Gewichte"
-                ],                
-                links: [
-                    {
-                        text: "Jetzt konfigurieren",
-                        url: "/geschaft/lamellenvorhang/premium-lamellenvorhang-optionen",
                     }
                 ]
             },

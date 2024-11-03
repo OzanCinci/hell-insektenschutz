@@ -143,8 +143,6 @@ function App() {
     }, []);
 
 
-
-  // OVERFLOW CLIP YAPTIN HABERIN OLSUN SİLMEYİ UNUTMA
   return (
     <div className="App" style={{ overflowX: "clip", minHeight: "1200px" }}>
       
