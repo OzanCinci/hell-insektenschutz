@@ -548,8 +548,8 @@ const discount40percentList = [
     "insektenschutz.k@gmail.com",
     "Weher@laemmermann.de",
     "inso.insektenschutz@gmail.com",
+    "info@sliakas-wohndesign.de",
     //"ozan_cinci2001@hotmail.com",
-    //"test@gmail.com",
 ]
 
 const {enableDiscount, percentage , validUntil, dealerPercentage} = CONFIGURATION.discount;
