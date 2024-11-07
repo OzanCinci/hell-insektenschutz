@@ -12,6 +12,7 @@ import useFetch from '../../../hooks/useFetch';
 import Alert from '@mui/material/Alert';
 import Rating from '@mui/material/Rating';
 import { extractProperties } from '../../../CustomComponents/extractProperties';
+import {useSelector} from "react-redux";
 
 const ModifiedAlert = styled(Alert)`
     width: fit-content;
@@ -338,8 +339,10 @@ const config = {
     }
 };
 
-const {enableDiscount, percentage} = CONFIGURATION.discount;
 const Grid = ({ loading, data, link, productInfoUrl }) => {
+    const {discountOptionMap} = useSelector(state=>state.config);
+    const enableDiscount = discountOptionMap["PUBLIC"];
+    const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0.0;
     const nav = useNavigate();
     const [currentPage, setCurrentPage] = useState(1);
     const [currentData, setCurrentData] = useState([]);
@@ -524,7 +527,7 @@ const Grid = ({ loading, data, link, productInfoUrl }) => {
                                                     {item.ternaryImage !== null && <img height='35px' width='35px' src={item.ternaryImage}/>}
                                                 </div>
                                                 {
-                                                    enableDiscount===true &&
+                                                    enableDiscount &&
                                                     <PriceTag>
                                                         <span className='price-tag' style={{textDecoration: "line-through", fontSize: "15px"}}>{`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}</span>
                                                         <span className='price-tag' style={{color: "red", marginLeft: "10px"}}>
@@ -536,7 +539,7 @@ const Grid = ({ loading, data, link, productInfoUrl }) => {
                                                     </PriceTag>
                                                 }
                                                 {
-                                                    enableDiscount===false &&
+                                                    !enableDiscount &&
                                                     <PriceTag>
                                                         <span className='price-tag' style={{marginLeft: "10px"}}>
                                                             {`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}

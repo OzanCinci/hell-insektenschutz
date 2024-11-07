@@ -7,6 +7,7 @@ import Notification from './Notification';
 import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import ShippingPriceTable from '../../../images/shop/shippingprices.webp';
 import CONFIGURATION from "../../../config/config";
+import {useSelector} from "react-redux";
 
 
 const CustomButton = styled(Button)`
@@ -109,9 +110,11 @@ const moreDetailObj = {
     ]
 };
 
-const {percentage, enableDiscount} = CONFIGURATION.discount;
 function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart, handleAddFreeSamplingIntoCard,validPrice}) {
     const [quantity,setQuantity] = useState(1);
+    const {discountOptionMap} = useSelector(state=>state.config);
+    const enableDiscount = discountOptionMap["PUBLIC"] != null;
+    const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0.0;
 
     const handleSetMoreInfoClick = (e) => {
         e.preventDefault();

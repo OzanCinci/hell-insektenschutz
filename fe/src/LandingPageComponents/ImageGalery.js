@@ -7,6 +7,7 @@ import Lamellenvorhang from '../images/mainPageGalery/lamellenvorhang2.jpg';
 import Jal1 from '../images/mainPageGalery/jalousie1.jpg';
 import InsekPhoto from '../images/landingPage/test_cover.jpg';
 import CONFIGURATION from "../config/config";
+import {useSelector} from "react-redux";
 
 const Container = styled.div`
     margin-top: 120px;
@@ -160,27 +161,30 @@ const images = [
 ];
 
 
-const {enableDiscount, text, percentage} = CONFIGURATION.discount;
 function ImageGalery() {
     const [i, setI] = useState(0);
+    const {discountOptionMap} = useSelector(state=>state.config);
+    const enableDiscount = discountOptionMap["PUBLIC"];
+    const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0.0;
+    const text = discountOptionMap["PUBLIC"]?.text ?? "";
     
 
     return (
         <Container data-aos="fade-up">
             <Wrapper>
-                {enableDiscount===false &&
+                {!enableDiscount &&
                     <DesktopComponent>
                         <NoDiscountconstInfoTitle>Insekten & Sonnenschutz nach Maß!</NoDiscountconstInfoTitle>
                     </DesktopComponent>
                 }
-                    {enableDiscount===false &&
+                    {!enableDiscount &&
                     <MobileComponent>
                         <NoDiscountconstInfoTitle>Insekten & Sonnenschutz</NoDiscountconstInfoTitle>
                         <NoDiscountconstInfoTitle>nach Maß!</NoDiscountconstInfoTitle>
                     </MobileComponent>
                 }
                 {
-                    enableDiscount===true &&
+                    enableDiscount &&
                         <InfoTitle>
                             <div>{percentage*100}% Rabatt auf alle Sonnenschutzsysteme! </div>
                             <div>{text}</div>

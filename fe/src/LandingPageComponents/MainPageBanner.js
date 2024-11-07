@@ -5,6 +5,7 @@ import MainBannerImg2 from '../images/Services/service1.jpg';
 import NewImageGallery from './NewImageGallery';
 import { useNavigate } from 'react-router-dom';
 import CONFIGURATION from "../config/config";
+import {useSelector} from "react-redux";
 
 
 const Wrapper = styled.div`
@@ -131,9 +132,12 @@ const InfoTitle = styled.div`
 `;
 
 
-
-const {enableDiscount, text, percentage} = CONFIGURATION.discount;
 function MainPageBanner() {
+    const {discountOptionMap} = useSelector(state=>state.config);
+    const enableDiscount = discountOptionMap["PUBLIC"];
+    const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0.0;
+    const text = discountOptionMap["PUBLIC"]?.text ?? "";
+
     const nav = useNavigate();
 
     const handleNavToAboutUs = () => {
@@ -151,35 +155,36 @@ function MainPageBanner() {
     }
 
   return (
-    <>
-        {
-            !enableDiscount && <NoDiscountconstInfoTitle>Insekten & Sonnenschutz nach Maß!</NoDiscountconstInfoTitle>
-        }
-        {
-            enableDiscount &&
-            <>
-                <InfoTitle>
-                    <div>{percentage*100}% Rabatt auf alle Sonnenschutzsysteme! </div>
-                    <div>{text}</div>
-                </InfoTitle>
-            </>
+      <>
+          {
+              !enableDiscount && <NoDiscountconstInfoTitle>Insekten & Sonnenschutz nach Maß!</NoDiscountconstInfoTitle>
+          }
+          {
+              enableDiscount &&
+              <>
+                  <InfoTitle>
+                      <div>{percentage * 100}% Rabatt auf alle Sonnenschutzsysteme!</div>
+                      <div>{text}</div>
+                  </InfoTitle>
+              </>
 
-        }
-        <Wrapper>
-            <NewImageGalleryWrapper>
-                <NewImageGallery/>
-            </NewImageGalleryWrapper>
-            <RightColumWrapper>
-                <RightColumnElement text="Erfahren Sie mehr über Insektenschutz." onClick={()=>nav("/geschaft/insektenschutz")}>
-                    <ZoomImage alt='Hell-insektenschutz & sonnenschutz homepage image 1' src={InsekPhoto}/>
-                </RightColumnElement>
-                <RightColumnElement text="Zufriedene Kunden" onClick={()=>handleNavToAboutUs()}>
-                    <ZoomImage alt='Hell-insektenschutz & sonnenschutz homepage image 2' src={MainBannerImg2}/>
-                </RightColumnElement>
-            </RightColumWrapper>
+          }
+          <Wrapper>
+              <NewImageGalleryWrapper>
+                  <NewImageGallery/>
+              </NewImageGalleryWrapper>
+              <RightColumWrapper>
+                  <RightColumnElement text="Erfahren Sie mehr über Insektenschutz."
+                                      onClick={() => nav("/geschaft/insektenschutz")}>
+                      <ZoomImage alt='Hell-insektenschutz & sonnenschutz homepage image 1' src={InsekPhoto}/>
+                  </RightColumnElement>
+                  <RightColumnElement text="Zufriedene Kunden" onClick={() => handleNavToAboutUs()}>
+                      <ZoomImage alt='Hell-insektenschutz & sonnenschutz homepage image 2' src={MainBannerImg2}/>
+                  </RightColumnElement>
+              </RightColumWrapper>
 
-        </Wrapper>
-    </>
+          </Wrapper>
+      </>
   )
 }
 

@@ -198,3 +198,21 @@ export const handleUserSearchByEmail = async (q,token) => {
             };
         });
 }
+
+
+export const handleAdminDiscountChange = async (token, id, body) => {
+    const url = `${URL}/api/management/discounts/${id}`;
+    const configObject = {
+        "url": url,
+        "method": "put",
+        "headers": {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        "data": body
+    };
+
+    return await axios.request(configObject)
+        .then(res => res.data)
+        .catch(e => false);
+}

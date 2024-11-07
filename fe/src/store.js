@@ -9,6 +9,7 @@ import thunk from 'redux-thunk'
 import { loginReducer, refreshReducer, registerReducer, userProfileDetailReducer } from './reducers/authReducer';
 import { activeOrdersReducer, adminLandingPageReducer, allUsersReducer, completedOrdersReducer, findUserReducer, pendingReviewsReducer, reviewsReducer, selectAdminDataReducer } from './reducers/adminReducer';
 import { cartReducer, createReviewDataReducer, wishlistCartReducer } from './reducers/userReducer';
+import {configReducer} from "./reducers/configReducer";
 
 
 // COMBINE REDUCERS
@@ -28,6 +29,7 @@ const reducer = combineReducers({
     createReviewData: createReviewDataReducer,
     cart: cartReducer,
     wishlistCart: wishlistCartReducer,
+    config: configReducer,
 })
 
 
@@ -65,20 +67,9 @@ const initialState = {
     userProfileDetail: {userDetail:null,loading:false,error:null},
     createReviewData: null,
     cart: localCartInfo,
-    wishlistCart: localWishlistInfo
+    wishlistCart: localWishlistInfo,
+    config: null,
 }
-
-/*
-    # number of users
-    # number of visits
-    # number of warekorb
-    # earned money
-    # number of reviews
-    # number of pending reviews
-    # number of completed orders
-    # number of shipped orders
-    # number of completed order
-*/
 
 // EXPORT STORE
 const middleware = [thunk]

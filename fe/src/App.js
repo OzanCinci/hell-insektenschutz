@@ -1,9 +1,12 @@
 // STYLE
 import './App.css';
+import '@lottiefiles/lottie-player';
+import Logo from './images/landingPage/logo.png';
+
 // ROUTER
-import { Route, Routes, BrowserRouter } from 'react-router-dom'
+import { Route, Routes, BrowserRouter } from 'react-router-dom';
 // PAGES
-import { useEffect, Suspense, lazy, useState } from 'react';
+import React, {useEffect, Suspense, lazy, useState, useRef} from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Navbar from './LandingPageComponents/Navbar';
@@ -14,6 +17,10 @@ import ScrollToTop from './LandingPageComponents/ScrollToTop';
 import CircularProgress from '@mui/material/CircularProgress';
 import styled from 'styled-components';
 import ArrowCircleUpSharpIcon from '@mui/icons-material/ArrowCircleUpSharp';
+import DiscountManagement from "./Pages/admin/adminPanelComponents/discount/DiscountManagement";
+import {handleLoadDiscountConfig} from "./config/configRequests";
+import {useDispatch} from "react-redux";
+import {SET_CONFIG} from "./constants/config";
 
 // Lazy load the components
 const HomePage = lazy(() => import('./Pages/HomePage'));
@@ -89,6 +96,8 @@ const ScrollTopButton = styled.button`
 
 
 function App() {
+  const [loadingApp, setLoadingApp] = useState(true);
+  const dispatch = useDispatch();
   /*
   useEffect(() => {
     AOS.init({
@@ -142,96 +151,125 @@ function App() {
       });
     }, []);
 
+  useEffect(() => {
+    const fetchDiscountConfig = async () => {
+      const discountOptionMap = await handleLoadDiscountConfig();
+      if (discountOptionMap) {
+          const payload = {...discountOptionMap};
+          dispatch({type: SET_CONFIG, payload: payload});
+      }
+      setTimeout(() => setLoadingApp(false), 1000);
+    };
+
+    fetchDiscountConfig();
+  }, []);
+
+  if (loadingApp) {
+    return (
+        <div className="App" style={{ overflowX: "clip", minHeight: "100vh", background: "rgb(239, 241, 248)" }}>
+          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '50vh', flexDirection: "column" }}>
+            <lottie-player
+                src="https://lottie.host/936d109d-ff07-4287-8aca-7c297c58185c/dKoAdsfrph.json" // Direct URL
+                autoplay
+                loop
+                style={{width: '200px', height: '200px'}}
+            ></lottie-player>
+            <img style={{borderRadius: "10px", marginTop: "-50px"}} src={Logo} width="300px" height="auto"></img>
+          </div>
+        </div>
+    );
+  }
 
   return (
-    <div className="App" style={{ overflowX: "clip", minHeight: "1200px" }}>
-      
-      <ReviewModal />
-      <BrowserRouter>
-        <LoginPopUp />
-        <Navbar />
-        <ScrollToTop />
-        <div style={{ minHeight: "100vh" }}>
-          <Suspense fallback={<div><CircularProgress color='warning'/></div>}>
-            <Routes>
-              <Route exact path='/' element={<HomePage />} />
-              
-              <Route exact path='/turen' element={<Türen />} />
-              <Route exact path='/fenster' element={<Fenster />} />
-              <Route exact path='/dachfenster' element={<Dachfenster />} />
-              <Route exact path='/lich' element={<Lichtschachte />} />
-              <Route exact path='/sonderformen' element={<Sonderformen />} />
-              <Route exact path='/zusatzprodukte' element={<Zusatsprodukte />} />
-              <Route exact path='/gewebearten' element={<Gewebearten />} />
-              
-              <Route exact path='/impressum' element={<Impressum />} />
-              <Route exact path='/widerrufsbelehrung' element={<Widerrufsbelehrung />} />
-              <Route exact path='/datenschutz' element={<Datenschutz />} />
-              <Route exact path='/kontakt' element={<Kontakt />} />
-              
-              <Route exact path='/pforzheim' element={<RaumPforzheim />} />
-              <Route exact path='/karlsruhe' element={<RaumKarlsruhe />} />
-              <Route exact path='/baden-baden' element={<RaumBaden />} />
-              
-              <Route exact path='/einzelheiten/:category/:detailName' element={<Detail />} />
-              
-              <Route exact path='/profile' element={<Profile />} />
-              <Route exact path='/test' element={<PayPalTest />} />
+      <div className="App" style={{overflowX: "clip", minHeight: "1200px"}}>
 
-              <Route path='admin-panel' element={<AdminPanel />}>
-                <Route path='pending-reviews' element={<PendingReviews />} />
-                <Route path='approved-reviews' element={<ApprovedReviews />} />
-                <Route path='orders/:status' element={<ActiveOrderTable />} />
-                <Route path='bestellnummber' element={<OrderSearch />} />
-                <Route path='change-role' element={<ChangeRole />} />
-                <Route path='transactions' element={<AllTransactions />} />
-                <Route path='number-of-visits' element={<NumberOfVisitors />} />
-                
-                <Route path='all-users' element={<AllUsers />} />
-              </Route>
+        <ReviewModal/>
+        <BrowserRouter>
+        <LoginPopUp/>
+          <Navbar/>
+          <ScrollToTop/>
+          <div style={{minHeight: "100vh"}}>
+            <Suspense fallback={<div><CircularProgress color='warning'/></div>}>
+              <Routes>
+                <Route exact path='/' element={<HomePage/>}/>
 
-              <Route path='/test-produkt/:productID' element={<SingleProduct />} />
-              
-              <Route path='order-create' element={<CreateOrder />} />
-              <Route path='order-success' element={<OrderSuccess />} />
-              
-              <Route path='bestellung' element={<SearchOrder />} />
-              
-              <Route path='warenkorb' element={<Warenkorb />} />
-              
-              <Route path='geschaft' element={<ShopLanding />} />
-              
-              <Route path='geschaft' element={<ShopDetail />}>
-                <Route path='plissees' element={<RegularCatalog />} />
-                <Route path='jalousien' element={<RegularCatalog />} />
-                <Route path='rollos' element={<RegularCatalog />} />
-                <Route path='lamellenvorhang' element={<RegularCatalog />} />
-                <Route path='insektenschutz' element={<Insek />} />
-              </Route>
+                <Route exact path='/turen' element={<Türen/>}/>
+                <Route exact path='/fenster' element={<Fenster/>}/>
+                <Route exact path='/dachfenster' element={<Dachfenster/>}/>
+                <Route exact path='/lich' element={<Lichtschachte/>}/>
+                <Route exact path='/sonderformen' element={<Sonderformen/>}/>
+                <Route exact path='/zusatzprodukte' element={<Zusatsprodukte/>}/>
+                <Route exact path='/gewebearten' element={<Gewebearten/>}/>
 
-              <Route path='/geschaft/:category/:model' element={<OptionsPage />} />
-              <Route path='/produkts/:produkt/:id' element={<Wrapper />} />
-              <Route path='/messanleitung/:category' element={<Measurement />} />
-              <Route path='/montageanleitung/:category' element={<HowToInstall />} />
-              
-              <Route path='/passwort-vergessen' element={<PasswordResetMailSender/>}/>
-              <Route path='/passwort-reset' element={<CreateNewPassword/>}/>
+                <Route exact path='/impressum' element={<Impressum/>}/>
+                <Route exact path='/widerrufsbelehrung' element={<Widerrufsbelehrung/>}/>
+                <Route exact path='/datenschutz' element={<Datenschutz/>}/>
+                <Route exact path='/kontakt' element={<Kontakt/>}/>
 
-              <Route default path='/*' element={<PageNotFound />} />
-            </Routes>
-          </Suspense>
-        </div>
-        <Footer />
-      </BrowserRouter>
+                <Route exact path='/pforzheim' element={<RaumPforzheim/>}/>
+                <Route exact path='/karlsruhe' element={<RaumKarlsruhe/>}/>
+                <Route exact path='/baden-baden' element={<RaumBaden/>}/>
 
-      {/* Scroll to top button */}
-      {showScroll && (
-        <ScrollTopButton onClick={scrollToTop}>
-          <ArrowCircleUpSharpIcon fontSize='large'/>
-        </ScrollTopButton>
-      )}
-    </div>
-  );
-}
+                <Route exact path='/einzelheiten/:category/:detailName' element={<Detail/>}/>
 
-export default App;
+                <Route exact path='/profile' element={<Profile/>}/>
+                <Route exact path='/test' element={<PayPalTest/>}/>
+
+                <Route path='admin-panel' element={<AdminPanel/>}>
+                  <Route path='pending-reviews' element={<PendingReviews/>}/>
+                  <Route path='approved-reviews' element={<ApprovedReviews/>}/>
+                  <Route path='orders/:status' element={<ActiveOrderTable/>}/>
+                  <Route path='bestellnummber' element={<OrderSearch/>}/>
+                  <Route path='change-role' element={<ChangeRole/>}/>
+                  <Route path='transactions' element={<AllTransactions/>}/>
+                  <Route path='number-of-visits' element={<NumberOfVisitors/>}/>
+                  <Route path='discount-management' element={<DiscountManagement/>}/>
+
+                  <Route path='all-users' element={<AllUsers/>}/>
+                </Route>
+
+                <Route path='/test-produkt/:productID' element={<SingleProduct/>}/>
+
+                <Route path='order-create' element={<CreateOrder/>}/>
+                <Route path='order-success' element={<OrderSuccess/>}/>
+
+                <Route path='bestellung' element={<SearchOrder/>}/>
+
+                <Route path='warenkorb' element={<Warenkorb/>}/>
+
+                <Route path='geschaft' element={<ShopLanding/>}/>
+
+                <Route path='geschaft' element={<ShopDetail/>}>
+                  <Route path='plissees' element={<RegularCatalog/>}/>
+                  <Route path='jalousien' element={<RegularCatalog/>}/>
+                  <Route path='rollos' element={<RegularCatalog/>}/>
+                  <Route path='lamellenvorhang' element={<RegularCatalog/>}/>
+                  <Route path='insektenschutz' element={<Insek/>}/>
+                </Route>
+
+                <Route path='/geschaft/:category/:model' element={<OptionsPage/>}/>
+                <Route path='/produkts/:produkt/:id' element={<Wrapper/>}/>
+                <Route path='/messanleitung/:category' element={<Measurement/>}/>
+                <Route path='/montageanleitung/:category' element={<HowToInstall/>}/>
+
+                <Route path='/passwort-vergessen' element={<PasswordResetMailSender/>}/>
+                <Route path='/passwort-reset' element={<CreateNewPassword/>}/>
+
+                <Route default path='/*' element={<PageNotFound/>}/>
+              </Routes>
+            </Suspense>
+          </div>
+          <Footer/>
+        </BrowserRouter>
+
+        {/* Scroll to top button */}
+        {showScroll && (
+            <ScrollTopButton onClick={scrollToTop}>
+              <ArrowCircleUpSharpIcon fontSize='large'/>
+            </ScrollTopButton>
+        )}
+      </div>
+      );
+      }
+
+      export default App;

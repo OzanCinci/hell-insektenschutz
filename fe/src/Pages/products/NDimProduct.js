@@ -229,7 +229,6 @@ const config = {
     },
 };
 
-const {enableDiscount, percentage , validUntil} = CONFIGURATION.discount;
 function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     /////// PARSE DATA IMMEDIATELY ///////
     const defaultImages = dataFromJSON.defaultImages;
@@ -254,6 +253,10 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     const nav = useNavigate();
     const [moreDetailInfo, setMoreDetailInfo] = useState(null);
     const {userInfo} = useSelector(state=>state.login);
+
+    const {discountOptionMap} = useSelector(state=>state.config);
+    const enableDiscount = discountOptionMap["PUBLIC"] != null;
+    const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0.0;
 
     /////////// QUERY PARAMS ///////////
     const [queryParam, setQueryParam] = useState('');
@@ -534,7 +537,6 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
             // discount related data below
             enableDiscount: enableDiscount,
             discountPercentage: percentage,
-            discountValidUntil: validUntil
         };
 
 

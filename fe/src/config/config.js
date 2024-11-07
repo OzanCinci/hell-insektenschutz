@@ -1,3 +1,4 @@
+/*
 // Create the date in UTC for the last day of November 2024 at 22:59 UTC
 // to match 23:59 in German time (CET), Month is 0-based, so 10 = November
 const date = new Date(Date.UTC(2024, 10, 30, 22, 59));
@@ -21,3 +22,5 @@ const CONFIGURATION = {
 }
 
 export default CONFIGURATION;
+
+ */

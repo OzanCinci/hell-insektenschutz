@@ -542,6 +542,7 @@ const moreDetailObj = {
     ]
 };
 
+/*
 const discount40percentList = [
     "premium.insektenschutz@gmail.com",
     "mkinsektenschutz@outlook.de",
@@ -551,8 +552,8 @@ const discount40percentList = [
     "info@sliakas-wohndesign.de",
     //"ozan_cinci2001@hotmail.com",
 ]
+ */
 
-const {enableDiscount, percentage , validUntil, dealerPercentage} = CONFIGURATION.discount;
 function Warenkorb() {
     const cart = useSelector(state=>state.cart);
     const {userInfo} = useSelector(state=>state.login);
@@ -560,6 +561,10 @@ function Warenkorb() {
     const nav = useNavigate();
     const dispatch = useDispatch();
     const [selectedItem, setSelectedItem] = useState(null);
+    const {discountOptionMap} = useSelector(state=>state.config);
+    const enableDiscount = discountOptionMap["PUBLIC"] != null;
+    const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0.0;
+    const dealerArray = Object.keys(discountOptionMap);
 
     const [totalDiscount, setTotalDiscount] = useState({
         discount : false,
@@ -598,10 +603,9 @@ function Warenkorb() {
         let tmpCart = {...cart};
         tmpCart.items = tmpCart.items.map(item => {
             // partner discount
-            if (userInfo && userInfo.email && discount40percentList.includes(userInfo.email)) {
+            if (userInfo && userInfo.email && dealerArray.includes(userInfo.email)) {
                 item.enableDiscount = true;
-                item.discountPercentage = dealerPercentage;
-                item.discountValidUntil = null;
+                item.discountPercentage = discountOptionMap[userInfo.email].percentage;
                 return item;
             }
 
@@ -609,11 +613,9 @@ function Warenkorb() {
             if (!enableDiscount) {
                 item.enableDiscount = false;
                 item.discountPercentage = 0;
-                item.discountValidUntil = null;
             } else {
                 item.enableDiscount = true;
                 item.discountPercentage = percentage;
-                item.discountValidUntil = validUntil;
             }
 
             return item;
@@ -625,10 +627,9 @@ function Warenkorb() {
         let tmpWishlistCart = wishlistCart.map(wishlist=>{
             wishlist.items = wishlist.items.map(singleItem=>{
                 // partner discount
-                if (userInfo && userInfo.email && discount40percentList.includes(userInfo.email)) {
+                if (userInfo && userInfo.email && dealerArray.includes(userInfo.email)) {
                     singleItem.enableDiscount = true;
-                    singleItem.discountPercentage = dealerPercentage;
-                    singleItem.discountValidUntil = null;
+                    singleItem.discountPercentage = discountOptionMap[userInfo.email].percentage;
                     return singleItem;
                 }
 
@@ -636,11 +637,9 @@ function Warenkorb() {
                 if (!enableDiscount) {
                     singleItem.enableDiscount = false;
                     singleItem.discountPercentage = 0;
-                    singleItem.discountValidUntil = null;
                 } else {
                     singleItem.enableDiscount = true;
                     singleItem.discountPercentage = percentage;
-                    singleItem.discountValidUntil = validUntil;
                 }
 
                 return singleItem;
@@ -660,11 +659,6 @@ function Warenkorb() {
             price : 0.0,
             items : [],
         };
-
-        if (userInfo && userInfo.email && discount40percentList.includes(userInfo.email)) {
-            emptyWishlistCart.discount = true;
-            emptyWishlistCart.discountedPrice = cart.price * 0.6;
-        }
 
         dispatch({type:CREATE_NEW_WISHLIST,payload:emptyWishlistCart});
         setWishlistName("");

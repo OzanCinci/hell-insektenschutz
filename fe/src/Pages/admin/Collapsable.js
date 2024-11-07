@@ -144,96 +144,130 @@ function Collapsable() {
         </ImageContainer>
 
 
-        <div class="accordion" id="accordionPanelsStayOpenExample">
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-headingZero">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseZero" aria-expanded="false" aria-controls="panelsStayOpen-collapseZero">
-                <div>Analytisch</div>
-                </button>
+        <div className="accordion" id="accordionPanelsStayOpenExample">
+            <div className="accordion-item">
+                <h2 className="accordion-header" id="panelsStayOpen-headingZero">
+                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseZero" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseZero">
+                        <div>Analytisch</div>
+                    </button>
                 </h2>
-                <div id="panelsStayOpen-collapseZero" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingZero">
-                <div class="accordion-body">
-                    <div>
-                    <SingleItem onClick={()=>handlePanelChange('number-of-visits')}>Anzahl der Besucher</SingleItem>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                    <div>Bestellungen</div>
-                </button>
-                </h2>
-                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show" aria-labelledby="panelsStayOpen-headingOne">
-                <div class="accordion-body">
-                    <div>
-                        <SingleItem onClick={()=>handlePanelChange('bestellnummber')}>Suche mit Bestellnummer</SingleItem>
-                        <SingleItem onClick={()=>handlePanelChange('orders/PENDING_PAYMENT')}>ausstehende Zahlung Bestellungen</SingleItem>
-                        <SingleItem onClick={()=>handlePanelChange('orders/ACTIVE')}>aktive Bestellungen</SingleItem>
-                        <SingleItem onClick={()=>handlePanelChange('orders/IN_SHIPPING')}>in Versand Bestellungen</SingleItem>
-                        <SingleItem onClick={()=>handlePanelChange('orders/DELIVERED')}>vollendet Bestellungen</SingleItem>
-                    </div>
-                </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                    <div>Rezension</div>
-                </button>
-                </h2>
-                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingTwo">
-                <div class="accordion-body">
+                <div id="panelsStayOpen-collapseZero" className="accordion-collapse collapse"
+                     aria-labelledby="panelsStayOpen-headingZero">
+                    <div className="accordion-body">
                         <div>
-                            <SingleItem onClick={()=>handlePanelChange('pending-reviews')}>ausstehend Rezension</SingleItem>
-                            <SingleItem onClick={()=>handlePanelChange('approved-reviews')}>genehmigt Rezension</SingleItem>
+                            <SingleItem onClick={() => handlePanelChange('number-of-visits')}>Anzahl der
+                                Besucher</SingleItem>
                         </div>
-                </div>
-                </div>
-            </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                    <div>Nutzer</div>
-                </button>
-                </h2>
-                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingThree">
-                <div class="accordion-body">
-                    <div>
-                        <SingleItem onClick={()=>handlePanelChange('change-role')}>Rolle ändern</SingleItem>
                     </div>
                 </div>
-                </div>
             </div>
-            <div class="accordion-item">
-                <h2 class="accordion-header" id="panelsStayOpen-headingFour">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false" aria-controls="panelsStayOpen-collapseFour">
-                    <div>Transaktion</div>
-                </button>
+
+
+            <div className="accordion-item">
+                <h2 className="accordion-header" id="panelsStayOpen-headingDiscount">
+                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseRabatt" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseRabatt">
+                        <div>Rabatt</div>
+                    </button>
                 </h2>
-                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse" aria-labelledby="panelsStayOpen-headingFour">
-                <div class="accordion-body">
-                    <div>
-                        <SingleItem onClick={()=>handlePanelChange('transactions')}>Alle Transaktionen</SingleItem>
+                <div id="panelsStayOpen-collapseRabatt" className="accordion-collapse collapse"
+                     aria-labelledby="panelsStayOpen-headingDiscount">
+                    <div className="accordion-body">
+                        <div>
+                            <SingleItem onClick={() => handlePanelChange('discount-management')}>
+                                Rabatt-Management-Center
+                            </SingleItem>
+                        </div>
                     </div>
                 </div>
+            </div>
+
+
+            <div className="accordion-item">
+                <h2 className="accordion-header" id="panelsStayOpen-headingOne">
+                    <button className="accordion-button" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true"
+                            aria-controls="panelsStayOpen-collapseOne">
+                        <div>Bestellungen</div>
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse show"
+                     aria-labelledby="panelsStayOpen-headingOne">
+                    <div className="accordion-body">
+                        <div>
+                            <SingleItem onClick={() => handlePanelChange('bestellnummber')}>Suche mit
+                                Bestellnummer</SingleItem>
+                            <SingleItem onClick={() => handlePanelChange('orders/PENDING_PAYMENT')}>ausstehende Zahlung
+                                Bestellungen</SingleItem>
+                            <SingleItem onClick={() => handlePanelChange('orders/ACTIVE')}>aktive
+                                Bestellungen</SingleItem>
+                            <SingleItem onClick={() => handlePanelChange('orders/IN_SHIPPING')}>in Versand
+                                Bestellungen</SingleItem>
+                            <SingleItem onClick={() => handlePanelChange('orders/DELIVERED')}>vollendet
+                                Bestellungen</SingleItem>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="accordion-item">
+                <h2 className="accordion-header" id="panelsStayOpen-headingTwo">
+                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseTwo">
+                        <div>Rezension</div>
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse"
+                     aria-labelledby="panelsStayOpen-headingTwo">
+                    <div className="accordion-body">
+                        <div>
+                            <SingleItem onClick={() => handlePanelChange('pending-reviews')}>ausstehend
+                                Rezension</SingleItem>
+                            <SingleItem onClick={() => handlePanelChange('approved-reviews')}>genehmigt
+                                Rezension</SingleItem>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="accordion-item">
+                <h2 className="accordion-header" id="panelsStayOpen-headingThree">
+                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseThree">
+                        <div>Nutzer</div>
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse"
+                     aria-labelledby="panelsStayOpen-headingThree">
+                    <div className="accordion-body">
+                        <div>
+                            <SingleItem onClick={() => handlePanelChange('change-role')}>Rolle ändern</SingleItem>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="accordion-item">
+                <h2 className="accordion-header" id="panelsStayOpen-headingFour">
+                    <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            data-bs-target="#panelsStayOpen-collapseFour" aria-expanded="false"
+                            aria-controls="panelsStayOpen-collapseFour">
+                        <div>Transaktion</div>
+                    </button>
+                </h2>
+                <div id="panelsStayOpen-collapseFour" className="accordion-collapse collapse"
+                     aria-labelledby="panelsStayOpen-headingFour">
+                    <div className="accordion-body">
+                        <div>
+                            <SingleItem onClick={() => handlePanelChange('transactions')}>Alle
+                                Transaktionen</SingleItem>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-        
-
-
-
 
 
     </Container>
