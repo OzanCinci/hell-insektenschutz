@@ -245,6 +245,7 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     const cartName = dataFromJSON.cartName;
 
     const dimensionSelector = dataFromJSON.dimensionSelector;
+    const secondDimensionSelector = dataFromJSON.secondDimensionSelector;
     const dimensionCalculators = dataFromJSON.dimensionCalculators;
     /////// PARSE DATA IMMEDIATELY ///////
 
@@ -347,7 +348,6 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
 
     /////////// DYNAMIC CALCULATOR COMPONENT ///////////
     const [calculatorComponent, setCalculatorComponent] = useState(null);
-    //const [prevCalculatorComponent, setPrevCalculatorComponent] = useState(null);
     useEffect(() => {
         const tmp = findDimensionSelection();
         if (tmp)
@@ -358,13 +358,20 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
         if (!itemConfiguration || calculatorComponent===dimensionCalculators["default"]) return null;
         if (dimensionCalculators["default"]) return dimensionCalculators["default"].component;
 
-        //const selection = Object.keys(itemConfiguration[dimensionSelector][0])[0];
-        const selection = Object.keys(itemConfiguration?.[dimensionSelector]?.[0] || {})[0];
+        let selection = Object.keys(itemConfiguration?.[dimensionSelector]?.[0] || {})[0];
+        if (secondDimensionSelector)
+            selection = selection + " " + Object.keys(itemConfiguration?.[secondDimensionSelector]?.[0] || {})[0];
+
+
+        console.log("SELECTIONNNN: ", selection);
         if (
             selection
             && dimensionCalculators[selection]?.component
             && dimensionCalculators[selection]?.component!==calculatorComponent){
             return dimensionCalculators[selection].component
+        } else {
+            console.log("dimensionCalculators[selection]?.component: ", dimensionCalculators[selection]?.component);
+            console.log("dimensionCalculators[selection]?.component!==calculatorComponent: ", dimensionCalculators[selection]?.component!==calculatorComponent);
         }
 
         return null;

@@ -31,12 +31,12 @@ function Sonderform2DRightDimensionCalculator({measurementUrl, dimensions, setDi
             <Title>Abmessungen</Title>
             <HowToMeasureComponent measurementUrl={measurementUrl}/>
             <div>
-                <CenterImage style={{ margin: "auto"}} src={Sonderform2dImage} alt={"sonderform sample image for dimensions"}/>
+                <CenterImage style={{transform: "scaleX(-1)", margin: "auto"}} src={Sonderform2dImage} alt={"sonderform sample image for dimensions"}/>
                 <FlexBoxWrapper>
                     <SingleMeasurementInput
                         title={`Höhe (${dimensions.height/10}cm)`}
-                        inputWidth={90}
                         placeholder="Höhe (mm)"
+                        inputWidth={90}
                         value={dimensions.height}
                         setter={(e)=>setDimensions((prev)=>({...prev, height: e.target.value}))}
                     />

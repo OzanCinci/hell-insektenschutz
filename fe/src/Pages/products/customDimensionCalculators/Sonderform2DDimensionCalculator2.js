@@ -7,7 +7,7 @@ import {
     SingleMeasurementInput,
     Title
 } from "./common";
-import Sonderform2dImage from "../../../images/dimensionCalculators/sonderform2d.webp";
+import SonderformImage from "../../../images/dimensionCalculators/sonderform.webp";
 
 const defaultDimensions = {
     "width" : 500,
@@ -15,7 +15,7 @@ const defaultDimensions = {
     "kasondaExtendedPriceBuildType": "SONDERFORM_2D_PRICE_OBJ",
 }
 
-function Sonderform2DRightDimensionCalculator({measurementUrl, dimensions, setDimensions}) {
+function Sonderform2DDimensionCalculator2({measurementUrl, dimensions, setDimensions}) {
     useEffect(() => {
         if (!areObjectsEqual(dimensions, defaultDimensions)) {
             setDimensions({...defaultDimensions});
@@ -31,7 +31,7 @@ function Sonderform2DRightDimensionCalculator({measurementUrl, dimensions, setDi
             <Title>Abmessungen</Title>
             <HowToMeasureComponent measurementUrl={measurementUrl}/>
             <div>
-                <CenterImage style={{ margin: "auto"}} src={Sonderform2dImage} alt={"sonderform sample image for dimensions"}/>
+                <CenterImage style={{transform: "scaleX(-1)", margin: "auto"}} src={SonderformImage} alt={"sonderform sample image for dimensions"}/>
                 <FlexBoxWrapper>
                     <SingleMeasurementInput
                         title={`Höhe (${dimensions.height/10}cm)`}
@@ -54,4 +54,4 @@ function Sonderform2DRightDimensionCalculator({measurementUrl, dimensions, setDi
 
 }
 
-export default Sonderform2DRightDimensionCalculator;
+export default Sonderform2DDimensionCalculator2;

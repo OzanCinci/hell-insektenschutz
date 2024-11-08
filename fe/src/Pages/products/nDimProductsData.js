@@ -6,6 +6,11 @@ import Lamellenvorhang3DLeftDimensionCalculator
     from "./customDimensionCalculators/Lamellenvorhang3DLeftDimensionCalculator";
 import Lamellenvorhang3DRightDimensionCalculator
     from "./customDimensionCalculators/Lamellenvorhang3DRightDimensionCalculator";
+import Sonderform3DRightDimensionCalculator from "./customDimensionCalculators/Sonderform3DRightDimensionCalculator";
+import Sonderform4DRightDimensionCalculator from "./customDimensionCalculators/Sonderform4DRightDimensionCalculator";
+import Sonderform2DRightDimensionCalculator from "./customDimensionCalculators/Sonderform2DRightDimensionCalculator";
+import Sonderform2DRightDimensionCalculator2 from "./customDimensionCalculators/Sonderform2DRightDimensionCalculator2";
+import Sonderform2DDimensionCalculator2 from "./customDimensionCalculators/Sonderform2DDimensionCalculator2";
 
 export const uniqueNDimProductsData = {
     "DachfensterPlissee": {
@@ -460,25 +465,50 @@ export const uniqueNDimProductsData = {
             link: "/montageanleitung/plissee"
         },
         dimensionSelector: "Plisseemodell",
+        secondDimensionSelector: "Skizze Spiegeln",
         dimensionCalculators: {
-            "VS 4 Slope": {
+            "VS 4 Slope Links": {
                 component: Sonderform3DDimensionCalculator,
                 type: "SONDERFORM_3D_PRICE_OBJ",
             },
-            "F Slope 2": {
+            "VS 4 Slope Rechts": {
+                component: Sonderform3DRightDimensionCalculator,
+                type: "SONDERFORM_3D_PRICE_OBJ",
+            },
+            "F Slope 2 Links": {
                 component: Sonderform3DDimensionCalculator,
                 type: "SONDERFORM_3D_PRICE_OBJ",
             },
-            "VS 5 ": {
+            "F Slope 2 Rechts": {
+                component: Sonderform3DRightDimensionCalculator,
+                type: "SONDERFORM_3D_PRICE_OBJ",
+            },
+            "VS 5  Links": {
                 component: Sonderform4DDimensionCalculator,
                 type: "SONDERFORM_4D_PRICE_OBJ",
             },
-            "FD Slope 3": {
+            "VS 5  Rechts": {
+                component: Sonderform4DRightDimensionCalculator,
+                type: "SONDERFORM_4D_PRICE_OBJ",
+            },
+
+
+            "FD Slope 3 Links": {
+                component: Sonderform2DDimensionCalculator2,
+                type: "SONDERFORM_2D_PRICE_OBJ",
+            },
+            "FD Slope 3 Rechts": {
+                component: Sonderform2DRightDimensionCalculator2,
+                type: "SONDERFORM_2D_PRICE_OBJ",
+            },
+
+
+            "VS 10 D Links": {
                 component: Sonderform2DDimensionCalculator,
                 type: "SONDERFORM_2D_PRICE_OBJ",
             },
-            "VS 10 D": {
-                component: Sonderform2DDimensionCalculator,
+            "VS 10 D Rechts": {
+                component: Sonderform2DRightDimensionCalculator,
                 type: "SONDERFORM_2D_PRICE_OBJ",
             }
         },
