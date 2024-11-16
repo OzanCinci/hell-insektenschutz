@@ -49,7 +49,7 @@ export const uniqueNDimProductsData = {
                                 "Das Plissee wird mit Bedienschienen ohne Griffen gefertigt. Das Plissee ist mit den Seitenschienen verbunden und wird an diesen komfortabel geführt, was eine sehr angenehme und stabile Bedienung gewährleistet. Geeignet für den Einsatz in Dachfenstern mit schrägem oder geradem Falz. Die Montage ist ausschließlich im Fensterfalz möglich!",
                             ]
                         },
-                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_ImageAnimated_17_1624866907.gif",
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/200000/files/200_ImageAnimated_19_1624866905.gif",
                         forbids: [],
                         price: 0
                     },

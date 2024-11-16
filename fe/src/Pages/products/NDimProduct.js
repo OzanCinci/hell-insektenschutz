@@ -304,12 +304,6 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     const [canAddCart,setCanAddCart] = useState(true);
     const [itemConfiguration,setItemConfiguration] = useState(null);
     const [configPrice,setConfigPrice] = useState(0);
-    /*
-    const [dimensions,setDimensions] = useState({
-        height: defaultHeight,
-        width: defaultWidth,
-    });
-     */
     const [dimensions, setDimensions] = useState(null);
 
     useEffect(()=>{
@@ -362,16 +356,11 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
         if (secondDimensionSelector)
             selection = selection + " " + Object.keys(itemConfiguration?.[secondDimensionSelector]?.[0] || {})[0];
 
-
-        console.log("SELECTIONNNN: ", selection);
         if (
             selection
             && dimensionCalculators[selection]?.component
             && dimensionCalculators[selection]?.component!==calculatorComponent){
             return dimensionCalculators[selection].component
-        } else {
-            console.log("dimensionCalculators[selection]?.component: ", dimensionCalculators[selection]?.component);
-            console.log("dimensionCalculators[selection]?.component!==calculatorComponent: ", dimensionCalculators[selection]?.component!==calculatorComponent);
         }
 
         return null;
@@ -466,6 +455,12 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
         let result = [...attributes];
         let tmp = []
 
+        if (dimensions.Fenstertyp) {
+            tmp.push(dimensions.Fenstertyp);
+            tmp.push(dimensions["B x H:"]);
+            return [...tmp, ...result];
+        }
+
         if (dimensions.height && dimensions.height > 0) {
             tmp.push(`Höhe: ${dimensions.height}mm`);
         }
@@ -479,7 +474,7 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
             tmp.push(`Breite 2: ${dimensions.width2}mm`);
         }
         if (dimensions.depth && dimensions.depth > 0) {
-            tmp.push(`Tiefe 2: ${dimensions.depth}mm`);
+            tmp.push(`Tiefe: ${dimensions.depth}mm`);
         }
         if (dimensions.heightleft && dimensions.heightleft > 0) {
             tmp.push(`Höhe links: ${dimensions.heightleft}mm`);

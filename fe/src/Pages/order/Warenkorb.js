@@ -494,7 +494,7 @@ const NoProductWrapper = styled.div`
     @media only screen and (max-width: 500px) {
         margin: auto;
         width: 100vw;
-        transform: translateX(-15%);
+        transform: ${props=> !props.translateX ? "translateX(-15%)" : "translateX(0%)"};
         margin-top: 100px;
     }
 `;
@@ -781,10 +781,12 @@ function Warenkorb() {
           {
               (cart?.items?.length === 0 && wishlistCart.length === 0)
                   ? (<div>
-                      <NoProductWrapper>
-                          <NoOrderMessage>Derzeit befinden sich keine Artikel in Ihrem Einkaufswagen. Stöbern Sie durch
+                      <NoProductWrapper translateX={wishlistCart.length === 0}>
+                          <NoOrderMessage>
+                              Derzeit befinden sich keine Artikel in Ihrem Einkaufswagen. Stöbern Sie durch
                               unser vielfältiges Angebot und entdecken Sie Produkte, die perfekt zu Ihnen passen. Besuchen
-                              Sie unsere Produktseiten, um Ihre Lieblingsartikel zu finden!</NoOrderMessage>
+                              Sie unsere Produktseiten, um Ihre Lieblingsartikel zu finden!
+                          </NoOrderMessage>
                           <CustomMobileSingleItemImg src={NoOrderImg}/>
                           <CustomButton onClick={(e) => nav("/geschaft")} size='large' variant="outlined" color="warning">Sehen
                               Sie unsere Produkte</CustomButton>

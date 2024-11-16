@@ -69,11 +69,12 @@ export const HowToMeasureComponent = ({measurementUrl}) => {
     );
 };
 
-export const SingleMeasurementInput = ({title, placeholder, value, setter = ()=>{}, inputWidth = 60}) => {
+export const SingleMeasurementInput = ({title, placeholder, value, setter = ()=>{}, inputWidth = 60, customBackground = ""}) => {
     return <FormControlContainer>
         <div>{title}</div>
         <FormControl sx={{ width: `${inputWidth}%`, marginTop: "5px" }} variant="outlined">
             <OutlinedInput
+                style={{background: `${customBackground}`}}
                 type="text"
                 color="warning"
                 placeholder={placeholder}
