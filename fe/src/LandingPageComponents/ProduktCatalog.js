@@ -9,6 +9,7 @@ import InsekImg from '../images/shop/insek.webp';
 import DoppelRoolo from '../images/shop/doppelrollo.webp';
 import Wintergarten from '../images/shop/wintergarten.webp';
 import HolzHalousie from '../images/shop/jalousie_holz.webp';
+import AkuRollo from '../images/shop/rollo_aku.webp';
 import SingleProduct from './SingleProduct';
 
 const Container = styled.div`
@@ -31,11 +32,11 @@ const Wrapper = styled.div`
 
 const data = [
     {title: "Plissee", image: PlisseImg, link: "/geschaft/plissees"},
-    {title: "Jalousie", image: JalousienImg, link: "/geschaft/jalousien"},
-    {title: "Rollo", image: RollosImg, link: "/geschaft/rollos"},
+    {title: "Akku Rollo", image: AkuRollo, link: "/geschaft/rollo/akku-rollo-optionen"},
     {title: "Lamellenvorhang", image: LamellenvorhangImg, link: "/geschaft/lamellenvorhang"},
+    {title: "Jalousie", image: JalousienImg, link: "/geschaft/jalousien"},
     {title: "Doppelrollo", image: DoppelRoolo, link: "/geschaft/rollo/doppel-rollo-optionen"},
-    {title: "Wintergarten Plissee", image: Wintergarten, link: "/geschaft/plissees/wintergarten-plissee-optionen"},
+    {title: "Rollo", image: RollosImg, link: "/geschaft/rollos"},
     {title: "Holzjalousie", image: HolzHalousie, link: "/geschaft/jalousie/holzjalousie-optionen"},
     {title: "Insektenschutz", image: InsekImg, link: "/geschaft/insektenschutz"},
 ];

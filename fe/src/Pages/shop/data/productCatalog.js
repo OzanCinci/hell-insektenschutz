@@ -12,6 +12,7 @@ import Holzjalousie from '../../../images/shopCategories/holzjalousie.webp';
 
 import BasicRolloImg from '../../../images/shopCategories/basicrollo.webp';
 import PremRolloImg from '../../../images/shopCategories/premrollo.webp';
+import AkuRolloImg from '../../../images/shopCategories/akurollo.webp';
 import DoppelRolloImg from '../../../images/shopCategories/doppelrollo.webp';
 
 import BasicLamellenvorhangImg from '../../../images/shopCategories/basiclamellenvorhang.webp';
@@ -205,23 +206,6 @@ export const catalogData = {
     "rollos": {
         data: [
             {
-                title: "Basic Rollo",
-                image: BasicRolloImg,
-                desc: [
-                    "über 90 Stoffe",
-                    "bis 180 cm Breite",
-                    "wartungsfreie Technik",
-                    "Montage ohne bohren ",
-                    "millimetergenau gefertigt"
-                ],
-                links: [
-                    {
-                        text: "Jetzt konfigurieren",
-                        url: "/geschaft/rollo/basic-rollo-optionen",
-                    }
-                ]
-            },
-            {
                 title: "Premium Rollo",
                 image: PremRolloImg,
                 desc: [
@@ -235,6 +219,42 @@ export const catalogData = {
                     {
                         text: "Jetzt konfigurieren",
                         url: "/geschaft/rollo/premium-rollo-optionen",
+                    }
+                ]
+            },
+            {
+                title: "Smart Aku Rollo",
+                image: AkuRolloImg,
+                desc: [
+                    "Smart Aku",
+                    "App-Bedienung als Standard",
+                    "optional Fernbedieung",
+                    "optional Smart-Home",
+                    "beliebig programmierbar",
+                    "USB wiederaufladbar",
+                    "millimetergenau gefertigt"
+                ],
+                links: [
+                    {
+                        text: "Jetzt konfigurieren",
+                        url: "/geschaft/rollo/akku-rollo-optionen",
+                    }
+                ]
+            },
+            {
+                title: "Basic Rollo",
+                image: BasicRolloImg,
+                desc: [
+                    "über 90 Stoffe",
+                    "bis 180 cm Breite",
+                    "wartungsfreie Technik",
+                    "Montage ohne bohren ",
+                    "millimetergenau gefertigt"
+                ],
+                links: [
+                    {
+                        text: "Jetzt konfigurieren",
+                        url: "/geschaft/rollo/basic-rollo-optionen",
                     }
                 ]
             },

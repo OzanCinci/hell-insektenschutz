@@ -44,12 +44,6 @@ const Wrapper = styled.div`
 `
 
 function Datenschutz() {
-    useLayoutEffect(()=>{
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      },[])
-    
-
-
   return (
     <Wrapper>
         <PhotoComponent/>
@@ -104,8 +98,6 @@ function Datenschutz() {
 
             <br></br>
             <br></br>
-
-
             <h4>Server-Log-Files</h4>
             <div>
                 Der Provider der Seiten erhebt und speichert automatisch
@@ -887,4 +879,4 @@ function Datenschutz() {
   )
 }
 
-export default Datenschutz
+export default Datenschutz;

@@ -45,7 +45,7 @@ const ModifiedAlert = styled(Alert)`
 `;
 
 const ColumnContainer = styled.div`
-  margin-top: 120px;
+  margin-top: 165px;
   min-height: fit-content;
   display: flex;
   width: 100%;
@@ -69,6 +69,7 @@ const ColumnContainer = styled.div`
 
     @media only screen and (max-width: 500px) {
         width: 100vw;
+        margin-top: 115px;
     }    
 `;
 

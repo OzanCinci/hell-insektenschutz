@@ -13,7 +13,6 @@ const useFetch = (url, _config, pageNumber, alreadyParamed=false) => {
         const abortController = new AbortController();
 
         const fetchData = async () => {
-            //console.log("pageNumber: ",pageNumber)
             let req_url;
             if (pageNumber===0){
                 req_url = `${BASE_URL}${url}`;
@@ -33,13 +32,11 @@ const useFetch = (url, _config, pageNumber, alreadyParamed=false) => {
                     setError(res.data.detail);
                     setLoading(false);
                     setData(null);
-                    //console.log(`NOT 200: ${req.url} -> ${res.data.detail}`);
                 }
                 else {   
                     setError(null);
                     setLoading(false);
                     setData(res.data);
-                    //console.log(`SUCCESS: ${req.url} -> ${res.data}`);
                 }
             })
             .catch(e => {
@@ -49,7 +46,6 @@ const useFetch = (url, _config, pageNumber, alreadyParamed=false) => {
                     setError("Bitte aktualisieren Sie die Seite oder versuchen Sie es später erneut");
                     setLoading(false);
                     setData(null);
-                    //console.log(`ERROR: ${req.url} ->`,e);
                 }
             });
         }

@@ -33,6 +33,7 @@ const Sonderformen = lazy(() => import('./Pages/detailPages/Sonderformen'));
 const Zusatsprodukte = lazy(() => import('./Pages/detailPages/Zusatsprodukte'));
 const Gewebearten = lazy(() => import('./Pages/detailPages/Gewebearten'));
 const Impressum = lazy(() => import('./LegalPages/Impressum'));
+const Agb = lazy(()=>import('./LegalPages/Agb'));
 const Widerrufsbelehrung = lazy(() => import('./LegalPages/Widerrufsbelehrung'));
 const Datenschutz = lazy(() => import('./LegalPages/Datenschutz'));
 const Kontakt = lazy(() => import('./LegalPages/Kontakt'));
@@ -51,7 +52,6 @@ const ChangeRole = lazy(() => import('./Pages/admin/adminPanelComponents/ChangeR
 const CreateOrder = lazy(() => import('./Pages/order/CreateOrder'));
 const OrderSuccess = lazy(() => import('./Pages/order/OrderSuccess'));
 const Warenkorb = lazy(() => import('./Pages/order/Warenkorb'));
-const SingleProduct = lazy(() => import('./Pages/SingleProductPage/SingleProduct'));
 const ShopLanding = lazy(() => import('./Pages/shop/ShopLanding'));
 const Insek = lazy(() => import('./Pages/shop/pages/Insek'));
 const ShopDetail = lazy(() => import('./Pages/shop/ShopDetail'));
@@ -73,7 +73,7 @@ const ScrollTopButton = styled.button`
   position: fixed;
   bottom: 30px;
   right: 30px;
-  z-index: 100;
+  z-index: 98;
   background-color: #ff7d0e; /* Button color */
   color: white;
   border: none;
@@ -202,6 +202,7 @@ function App() {
                 <Route exact path='/gewebearten' element={<Gewebearten/>}/>
 
                 <Route exact path='/impressum' element={<Impressum/>}/>
+                <Route exact path='/agb' element={<Agb/>}/>
                 <Route exact path='/widerrufsbelehrung' element={<Widerrufsbelehrung/>}/>
                 <Route exact path='/datenschutz' element={<Datenschutz/>}/>
                 <Route exact path='/kontakt' element={<Kontakt/>}/>
@@ -228,7 +229,6 @@ function App() {
                   <Route path='all-users' element={<AllUsers/>}/>
                 </Route>
 
-                <Route path='/test-produkt/:productID' element={<SingleProduct/>}/>
 
                 <Route path='order-create' element={<CreateOrder/>}/>
                 <Route path='order-success' element={<OrderSuccess/>}/>

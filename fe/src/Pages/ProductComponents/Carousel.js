@@ -102,7 +102,7 @@ const StickyDiv = styled.div`
   position: -webkit-sticky; /* For Safari */
   position: sticky;
     
-  top: 130px;
+  top: 160px;
   left: 50px;
   width: 700px;
   background-color: #f8f9fa;

@@ -22,7 +22,7 @@ const ModifiedAlert = styled(Alert)`
 `;
 
 const Container = styled.div`
-    margin-top: 110px;
+    margin-top: 155px;
     min-height: 60vh;
     display: flex;
     flex-direction: row;
@@ -41,7 +41,7 @@ const Container = styled.div`
     @media only screen and (max-width: 900px) {
         flex-direction: column;
         align-items: center;
-        margin-top: 55px;
+        margin-top: 58px;
     }
 
 `;

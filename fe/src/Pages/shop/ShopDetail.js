@@ -5,7 +5,6 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import HandymanIcon from '@mui/icons-material/Handyman';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { catalogData } from './data/productCatalog';
-import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import Services from '../../LandingPageComponents/Services';
 import Reviews from '../../LandingPageComponents/Reviews';
 import {  Outlet, useLocation } from "react-router-dom";
@@ -13,7 +12,7 @@ import {  Outlet, useLocation } from "react-router-dom";
 const Container = styled.div`
     max-width: 1700px;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 130px;
 
     @media only screen and (max-width: 650px) {
         margin-top: 80px;

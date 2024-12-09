@@ -58,8 +58,9 @@ const Container = styled.div`
     position: fixed;
     z-index: 90;
     left: ${props => props.collapse + "px"};
-    top: 90px;
+    top: 130px;
     transition: all 0.4s ease-in-out;
+    min-width: 350px;
 
     -webkit-box-shadow: 0px 9px 23px -14px rgba(0,0,0,0.75);
     -moz-box-shadow: 0px 9px 23px -14px rgba(0,0,0,0.75);

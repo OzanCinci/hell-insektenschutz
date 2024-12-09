@@ -131,6 +131,17 @@ function OptionComponent({category, model}) {
                     }
                     return {mainImage, secondaryImage, ternaryImage, detailedLink, ...item};
                 });
+            } else if (["akku-rollo-optionen"].includes(model)) {
+                upgradedColors = data.colors.map(item=> {
+                    const mainImage = item.previewImage;
+                    const secondaryImage = item.tileImage;
+                    const ternaryImage = ternaryImageFunction(item);
+                    // BUSINESS LOGIC DECIDED BY OWNER OF COMPANY! DO NOT DELETE
+                    item.properties.MinPrice = String(Number(item.properties.MinPrice) + 74);
+                    // BUSINESS LOGIC DECIDED BY OWNER OF COMPANY! DO NOT DELETE
+                    return {mainImage, secondaryImage, ternaryImage, ...item};
+                });
+                console.log("upgradedColors: ", upgradedColors);
             } else {
                 upgradedColors = data.colors.map(item=> {
                     const mainImage = item.previewImage;

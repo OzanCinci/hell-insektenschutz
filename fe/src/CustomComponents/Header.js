@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 
 const Container = styled.div`
-    margin-top: 0px;
+    margin-top: 55px;
     margin-bottom: 0px;
     background-image: linear-gradient(to right, #db5424, #debe40);
     position: relative;
@@ -112,4 +112,4 @@ function Header() {
   )
 }
 
-export default Header
+export default Header;

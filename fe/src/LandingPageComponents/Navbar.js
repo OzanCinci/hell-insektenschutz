@@ -2,28 +2,51 @@ import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import Logo from '../images/landingPage/logo.png';
 import MobileLogo from '../images/landingPage/mobile_logo.png';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { useNavigate} from 'react-router-dom';
 import BurgerIcon from './BurgerIcon';
 import { useSelector } from 'react-redux';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import ShoppingBasketIcon from '@mui/icons-material/ShoppingBasket';
 import Badge from '@mui/material/Badge';
-import StorefrontIcon from '@mui/icons-material/Storefront';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import PhoneIcon from '@mui/icons-material/Phone';
+import PolicyIcon from '@mui/icons-material/Policy';
+
+// images
+import PlisseeImg from '../images/shop/plissee.webp';
+import JalousienImg from '../images/shop/jalousien.webp';
+import HolzJalousienImg from '../images/shop/jalousie_holz.webp';
+import RolloImg from '../images/shop/smartrollo.webp';
+import DopelRolloImg from '../images/shop/doppelrollo.webp';
+import LamellenImg from '../images/shop/lamellenvorhang.webp';
+import InsekImg from '../images/shop/insek.webp';
+
+// images for mobile menu
+import PlisseeImgMobile from '../images/navbar/plissee.webp';
+import JalousienImgMobile from '../images/navbar/jalousie.webp';
+import RolloImgMobile from '../images/navbar/rollo.webp';
+import LamellenImgMobile from '../images/navbar/lamellen.webp';
+import InsekmgMobile from '../images/navbar/insektenschutz.webp';
+import QuestionImg  from '../images/navbar/question.webp';
+
 
 const NavbarWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 10px 40px;
-  padding-left: 10px;
-  width: 100%;
-  align-items: center;
-
-  overflow: ${props => props.toggle ? "visible" : "hidden"};
-
+  background-color: white;
+  z-index: auto;
+  position: relative;
+  
   @media only screen and (max-width: 1200px) {
     flex-direction: column;
     padding: 10px 0px;
+    width: 100vw;
+    -webkit-box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
+    box-shadow: 0px 8px 24px -19px rgba(0,0,0,0.75);
+  }
+
+  @media only screen and (max-width: 780px) {
+    z-index: 99;
   }
 `;
 
@@ -32,12 +55,11 @@ const NavbarContainer = styled.div`
   top: 0;
   left: 0;
   width: 100%;
-  height: 110px;
-  z-index: 99;
+  z-index: 100;
   /*
-  overflow-y: ${props => props.toggle ? "visible" : "hidden"};
+  overflow-y: ${props => props.toggle ? "visible" : "clip"};
   */
-  background-color: white;
+  //background-color: white;
   padding: 0px;
   padding-bottom: 8px;
 
@@ -52,41 +74,25 @@ const NavbarContainer = styled.div`
 
   @media only screen and (max-width: 1200px) {
     flex-direction: column;
-    height: 82px;
-  }
-`
-
-const LinkContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-
-  @media only screen and (max-width: 1200px) {
-    flex-direction: column;
-    width: 100vw;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 0px 0px 60px 0px;
-    gap: 20px;
     height: fit-content;
-    background-color: white;
-    z-index: 99;
-    transform: ${props => props.toggle ? "scaleY(1)": "scaleY(0.1)"};
-    opacity: ${props => props.toggle ? "1": "0"};
-    transition: transform 350ms ease-in, opacity 150ms ease-in 200ms;
-    transform-origin: top;
-    margin-top: 6px;
-    border-top: ${props => props.toggle ? "2px solid #f59f4c" : "none"};
-    -webkit-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
-    box-shadow: 0px 13px 32px -19px rgba(0,0,0,0.75);
   }
 
+  @media only screen and (min-width: 780px) {
+    background-color: white;
+  }
+
+  @media only screen and (max-width: 780px) {
+    padding-bottom: 0px;
+    overflow-y: ${props => props.toggle ? "visible" : "hidden"};
+    height: ${props => !props.toggle ? props.overflowHeight : "100vh"};
+    transition-property: all;
+    transition-duration: 0s;
+    transition-delay: ${props => (props.toggle ? "0s" : "0.3s")};
+  }
 `;
 
 const LogoImg = styled.img`
-  height: 70px;
+  height: 75px;
   transform: translateY(7.5%);
 
   @media only screen and (max-width: 1200px) {
@@ -95,99 +101,23 @@ const LogoImg = styled.img`
   }
 
   @media only screen and (max-width: 500px) {
-    display: none;
-    margin-right: 0px;
+    //display: none;
+    height: 60px;
+    margin-left: 5px;
+    margin-right: 5px;
   }
 
   &:hover {
     cursor: pointer;
   }
-`;
-
-const LogoImgMobile = styled.img`
-  height: 45px;
-  margin-right: 20px;
-  margin-left: 20px;
-
-  @media only screen and (min-width: 500px) {
-    display: none;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const LinkButton = styled.div`
-  border: 2px solid #f59f4c;
-  
-  -webkit-border-top-left-radius: 10px;
-  -webkit-border-bottom-right-radius: 20px;
-  -moz-border-radius-topleft: 10px;
-  -moz-border-radius-bottomright: 20px;
-  border-top-left-radius: 10px;
-  border-bottom-right-radius: 20px;
-
-
-  margin: 0px 5px;
-  padding: 3px 8px;
-  color: #f59f4c;
-  color: rgb(82, 82, 102);;
-  font-size: 16px;
-  position: relative;
-
-  &:hover {
-    cursor: pointer;
-
-    &::after {
-      transform: scaleX(1);
-      transform-origin: left;
-    }
-  }
-
-  &::after {
-    z-index: -1;
-    content: "";
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    background-color: #f59f4c;
-    transform: scaleX(0);
-    transform-origin: right;
-    border: 1px solid #f59f4c;
-
-    transition: transform 250ms ease-in;
-    -webkit-border-top-left-radius: 6px;
-    -webkit-border-bottom-right-radius: 16px;
-    -moz-border-radius-topleft: 6px;
-    -moz-border-radius-bottomright: 16px;
-    border-top-left-radius: 6px;
-    border-bottom-right-radius: 16px;
-  }
-
-  @media only screen and (max-width: 1200px) {
-    margin-left: 20px;
-  }
-
-  @media only screen and (max-width: 490px) {
-    font-size: 18px;
-  }
-
 `;
 
 const NavbarButtonWrapper = styled.div`
   display: none;
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width: 780px) {
     display: block;
-    position: absolute;
-    top: 10px;
-    right: -40px;
-    height: 50px;
-    width: 150px;
-    display: flex;
-    justify-content: center;
+    transform: scale(1.2);
+    margin-left: 7px;
   }
 `;
 
@@ -206,44 +136,30 @@ const Legal = styled.div`
   padding-top: 1px;
   padding-bottom: 1px;
 
-  @media only screen and (max-width: 1200px) {
+  @media only screen and (max-width: 780px) {
     display: none;
   }
 `;
 
 const LegalText = styled.div`
-  &: hover {
+  &:hover {
     cursor: pointer;
     color: #f59f4c;
-  }
-`;
-
-const MobileLegal = styled(Legal)`
-  display: flex;
-  flex-direction: row;
-  background: #f3f2f2;
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: flex-end;
-  gap: 35px;
-  padding-right: 40px;
-  font-size: 14px;
-  color: #333;
-  padding-top: 1px;
-  padding-bottom: 1px;
-  padding-right: 15px;
-
-  @media only screen and (min-width: 1200px) {
-    display: none;
   }
 `;
 
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: flex-end;
   cursor: pointer;
-  gap: 12px;
+  gap: 14px;
+
+  @media only screen and (max-width: 780px) {
+    margin-left: auto;
+    margin-right: 10px;
+    gap: 10px;
+  }
 `;
 
 const LogoContainer = styled.div`
@@ -255,18 +171,32 @@ const LogoContainer = styled.div`
   gap: 2px;
   font-size: 22px;
 
+  width: 95vw;
+  max-width: 1300px;
+  justify-content: space-between;
+  margin: 0px auto;
+
   @media only screen and (min-width: 1200px) {
-    width: fit-content; 
-    gap: 40px;
+    
   }
+
+  @media only screen and (max-width: 780px) {
+    z-index: 100;
+    position: relative;
+  }
+
+  
 `;
 
 
 const LogoText = styled.div`
   font-size: 16px;
+  &:hover {
+    text-decoration: underline;
+  }
 
   @media only screen and (min-width: 800px) {
-    font-size: 20px;
+    font-size: 17px;
   }
 `;
 
@@ -280,109 +210,967 @@ const SingleLoginComponent = styled.div`
   transform: translateY(10%);
 `;
 
-const CustomSingleLoginComponent = styled(SingleLoginComponent)`
-  @media only screen and (max-width: 450px) {
+const MobileSingleLoginComponent = styled(SingleLoginComponent)`
+  @media only screen and (min-width: 780px) {
+    display: none;
+  }
+`;
+
+const DesktopSingleLoginComponent = styled(SingleLoginComponent)`
+  @media only screen and (max-width: 780px) {
+    display: none;
+  }
+`;
+
+const BottomPart = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 1300px;
+
+  @media only screen and (max-width: 780px) {
+    display: none;
+  }
+`;
+
+const SingleBottomDivWrapper = styled.div`
+  position: relative; /* Required for the absolute positioning of the dropdown */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+`;
+
+const SingleBottomDiv = styled.div`
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0px 10px;
+  padding-bottom: 5px;
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%; /* Start from the center */
+    width: 0; /* Initially no width */
+    height: 3px; /* Thickness of the underline */
+    background-color: #ff7d0e; /* Match the underline color */
+    transform: translateX(-50%); /* Center the line at the start */
+    transition: width 0.3s ease; /* Smooth animation for the width */
+  }
+
+  &:hover::after {
+    width: 100%; /* Full width on hover */
+    left: 50%;
+    transform: translateX(-50%);
+  }
+`;
+
+const DropdownMenu = styled.div`
+  position: fixed; /* Fixed position for absolute alignment */
+  top: ${props=>props.calcHeight};
+  left: 50%; /* Horizontally center relative to the viewport */
+  transform: translateX(-50%); /* Adjust for perfect centering */
+  width: 100vw; /* Fixed width */
+  background-color: white;
+  box-shadow: 0px 8px 24px rgba(0, 0, 0, 0.2);
+  border: 1px solid #ddd;
+  padding: 20px;
+  opacity: 0; /* Initially hidden */
+  visibility: hidden; /* Initially hidden */
+  transition: all 0.3s ease;
+  z-index: 100;
+
+  ${SingleBottomDivWrapper}:hover & {
+    opacity: 1;
+    visibility: visible;
+    visibility: ${props=>props.closedForNavigation ? "hidden" : "visible"};
+  }
+`;
+
+const DropdownMenuInside = styled.div`
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-start;
+`;
+
+const SingleColumn = styled.div`
+    text-align: left;
+`;
+
+const ColTitle = styled.div`
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 10px;
+
+  @media only screen and (max-width: 1200px) {
+    font-size: 16px;
+  }
+`;
+
+const ColEntry = styled.div`
+    margin-bottom: 5px;
+    font-size: 17px;
+  
+    &:hover {
+      text-decoration: underline;
+    }
+
+  @media only screen and (max-width: 1200px) {
+    font-size: 15px;
+  }
+`;
+
+const ExtendedSingleBottomDivWrapper = styled(SingleBottomDivWrapper)`
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -10%;
+    width: 1.5px; 
+    height: 80%; 
+    background-color: #cfcaca;
+
+    @media only screen and (max-width: 1200px) {
+      left: -5%;
+    }
+
+    @media only screen and (max-width: 800px) {
+      left: -2%;
+    }
+  }
+`;
+
+const CustomDropdownImg = styled.img`
+    height: 350px;
+    width: auto;
+    margin-left: ${props=> props.marginLeft ? props.marginLeft : "10%"};
+
+  @media only screen and (max-width: 1200px) {
+    height: 250px;
+    margin-left: ${props=> props.marginLeft ? props.marginLeft : "3%"};
+  }
+`;
+
+const MobileBurgerMenuContainer = styled.div`
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: fit-content;
+    transform: ${props=>"translateX(" + props.move + ");"};
+    transition: all 0.2s ease-in-out;
+    background-color: white;
+    position: relative;
+    z-index: ${props=> !props.toggle ? "99": "-1"};
+  
+  @media only screen and (min-width: 780px) {
     display: none;
   }
 `;
 
 
-function Navbar() {
+const MobileBurgerMenuColumn = styled.div`
+    width: 100vw !important;
+    height: 100%;
+`;
+
+const MobileBurgerMenuLeftColumn = styled(MobileBurgerMenuColumn)`
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+`;
+
+const MobileBurgerMenuRightColumn = styled(MobileBurgerMenuColumn)`
+`;
+
+const WrapperForCategories = styled.div`
+    
+`;
+
+const WrapperForFooter = styled.div`
+    background-color: rgb(229 231 235);
+    padding-bottom: 3vh;
+    padding-top: 1vh;
+    border-radius: 14px 14px 0px 0px;
+`;
+
+const LeftColumnComponent = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 5px 0px;
+  padding: 12px 20px;
+
+  .left-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .text-title {
+    font-size: 22px;
+  }
+`;
+
+const LeftColumnSingleOption = ({ icon, imageUrl, text, key, options, setterFunc, moverFunc , optionalOnclickHandler}) => {
+  const handleOnclick = () => {
+      if (optionalOnclickHandler) {
+          optionalOnclickHandler();
+          return;
+      }
+
+      setterFunc(options);
+      moverFunc();
+  };
+
+  return (
+      <LeftColumnComponent onClick={handleOnclick}>
+        <div className="left-wrapper">
+          {imageUrl && <img src={imageUrl} height="30px" width="auto" alt={`icon for ${key} category`}/>}
+          {icon!==null && icon}
+          <div className="text-title">{text}</div>
+        </div>
+        <div>
+          <ArrowForwardIosIcon/>
+        </div>
+      </LeftColumnComponent>
+  );
+};
+
+
+
+
+const optionsForLeftColumn = [
+  {
+    key: "Plissee",
+    imageUrl: PlisseeImgMobile,
+    text: "Plissee",
+    options: [
+      {
+        title: "Plissee nach Maß",
+        data: [
+          {
+            key: "Plissees",
+            value: "/geschaft/plissees"
+          },
+          {
+            key: "Premium Plissee",
+            value: "/geschaft/plissees/premium-plissee-optionen"
+          },
+          {
+            key: "Basic Plissee",
+            value: "/geschaft/plissees/basic-plissee-optionen"
+          },
+          {
+            key: "Waben Plissee",
+            value: "/geschaft/plissees/premium-plissee-optionen"
+          },
+          {
+            key: "Wintergarten Plissee",
+            value: "/geschaft/plissees/wintergarten-plissee-optionen"
+          },
+          {
+            key: "Dachfenster Plissee",
+            value: "/geschaft/plissees/dachfenster-plissee-optionen"
+          },
+          {
+            key: "Sonderformen Plissee",
+            value: "/geschaft/plissees/sonderformen-plissee-optionen"
+          },
+          {
+            key: "Akku Plissee",
+            value: "/geschaft/plissees/akku-plissee-optionen"
+          },
+          {
+            key: "Freihaengend Plissee",
+            value: "/geschaft/plissees/freihaengend-plissee-optionen"
+          }
+        ]
+      },
+      {
+        title: "Plissee-Ratgeber",
+        data : [
+          {
+            key: "Gratis Muster",
+            value: "/geschaft/plissees"
+          },
+          {
+            key: "Richtige Messung",
+            value: "/messanleitung/plissee"
+          },
+          {
+            key: "Richtige Installation",
+            value: "/montageanleitung/plissee"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    key: "Jalousien",
+    imageUrl: JalousienImgMobile,
+    text: "Jalousien",
+    options: [
+      {
+        title: "Jalousie nach Maß",
+        data: [
+          {
+            key: "Jalousien",
+            value: "/geschaft/jalousien"
+          },
+          {
+            key: "Premium Jalousie",
+            value: "/geschaft/jalousie/premium-jalousie-optionen"
+          },
+          {
+            key: "Basic Jalousie",
+            value: "/geschaft/jalousie/basic-jalousie-optionen"
+          },
+          {
+            key: "Holzjalousie",
+            value: "/geschaft/jalousie/holzjalousie-optionen"
+          },
+          {
+            key: "Smart Akku Jalousie",
+            value: "/geschaft/jalousie/premium-jalousie-optionen"
+          }
+        ]
+      },
+      {
+        title: "Jalousien-Ratgeber",
+        data : [
+          {
+            key: "Gratis Muster",
+            value: "/geschaft/jalousien"
+          },
+          {
+            key: "Richtige Messung",
+            value: "/messanleitung/jalousie"
+          },
+          {
+            key: "Richtige Installation",
+            value: "/montageanleitung/jalousie"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    key: "Rollos",
+    imageUrl: RolloImgMobile,
+    text: "Rollos",
+    options: [
+      {
+        title: "Rollo nach Maß",
+        data: [
+          {
+            key: "Rollos",
+            value: "/geschaft/rollos"
+          },
+          {
+            key: "Premium Rollo",
+            value: "/geschaft/rollo/premium-rollo-optionen"
+          },
+          {
+            key: "Basic Rollo",
+            value: "/geschaft/rollo/basic-rollo-optionen"
+          },
+          {
+            key: "Doppelrollo",
+            value: "/geschaft/rollo/doppel-rollo-optionen"
+          },
+          {
+            key: "Smart Aku Rollo",
+            value: "/geschaft/rollo/akku-rollo-optionen"
+          }
+        ]
+      },
+      {
+        title: "Rollo-Ratgeber",
+        data : [
+          {
+            key: "Gratis Muster",
+            value: "/geschaft/rollos"
+          },
+          {
+            key: "Richtige Messung",
+            value: "/messanleitung/rollo"
+          },
+          {
+            key: "Richtige Installation",
+            value: "/montageanleitung/rollo"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    key: "Lamellenvorhang",
+    imageUrl: LamellenImgMobile,
+    text: "Lamellenvorhang",
+    options: [
+      {
+        title: "Lamellenvorhang nach Maß",
+        data: [
+          {
+            key: "Lamellenvorhang",
+            value: "/geschaft/lamellenvorhang"
+          },
+          {
+            key: "Premium Lamellenvorhang",
+            value: "/geschaft/lamellenvorhang/premium-lamellenvorhang-optionen"
+          },
+          {
+            key: "Basic Lamellenvorhang",
+            value: "/geschaft/lamellenvorhang/basic-lamellenvorhang-optionen"
+          },
+          {
+            key: "Lamellenvorhang schräg",
+            value: "/geschaft/lamellenvorhang/schrag-lamellenvorhang-optionen"
+          },
+        ]
+      },
+      {
+        title: "Lamellenvorhang-Ratgeber",
+        data : [
+          {
+            key: "Gratis Muster",
+            value: "/geschaft/lamellenvorhang"
+          },
+          {
+            key: "Richtige Messung",
+            value: "/messanleitung/lamellenvorhang"
+          },
+          {
+            key: "Richtige Installation",
+            value: "/montageanleitung/lamellenvorhang"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    key: "Insektenschutz",
+    imageUrl: InsekmgMobile,
+    text: "Insektenschutz",
+    options: [
+      {
+        title: "Für Türen",
+        data: [
+          {
+            key: "Für Türen",
+            value: "/turen"
+          },
+          {
+            key: "Drehtür",
+            value: "/einzelheiten/turen/drehtür"
+          },
+          {
+            key: "Pendeltür",
+            value: "/einzelheiten/turen/pendeltür"
+          },
+          {
+            key: "Schiebetür",
+            value: "/einzelheiten/turen/schiebetür"
+          },
+          {
+            key: "Plissee",
+            value: "/einzelheiten/turen/plissee"
+          }
+        ]
+      },
+      {
+        title: "Für Fenster",
+        data: [
+          {
+            key: "Fenster",
+            value: "/fenster"
+          },
+          {
+            key: "Spannrahmen",
+            value: "/einzelheiten/fenster/spannrahmen"
+          },
+          {
+            key: "Drehfenster",
+            value: "/einzelheiten/fenster/drehfenster"
+          },
+          {
+            key: "Rollo",
+            value: "/einzelheiten/fenster/rollo"
+          },
+          {
+            key: "Plissee",
+            value: "/einzelheiten/fenster/plissee"
+          },
+        ]
+      },
+      {
+        title: "Für Dachfenster",
+        data: [
+          {
+            key: "Dachfenster",
+            value: "/dachfenster"
+          },
+          {
+            key: "Rollo",
+            value: "/einzelheiten/dachfenster/rollo"
+          },
+          {
+            key: "Plissee",
+            value: "/einzelheiten/dachfenster/plissee"
+          },
+        ]
+      },
+      {
+        title: "Für Lichtschächte",
+        data: [
+          {
+            key: "Lichtschächte",
+            value: "/lich"
+          },
+          {
+            key: "Lichtsschachtabdeckung",
+            value: "/einzelheiten/lichtschachte/lichtsschachtabdeckung"
+          },
+          {
+            key: "GitterSafe",
+            value: "/einzelheiten/lichtschachte/gitterSafe"
+          },
+        ]
+      }
+    ]
+  },
+  {
+    key: "Bestellung Suchen",
+    imageUrl: QuestionImg,
+    text: "Bestellung Suchen",
+    options: [],
+  },
+];
+
+const optionsForFooter = [
+  {
+    key: "Mein Konto",
+    icon: <AccountCircleIcon/>,
+    text: "Mein Konto",
+    options: [],
+  },
+  {
+    key: "Kontakt",
+    icon: <PhoneIcon/>,
+    text: "Kontakt",
+    options: [],
+  },
+  {
+    key: "Rechtliches",
+    icon: <PolicyIcon/>,
+    text: "Rechtliches",
+    options: [
+      {
+        title: "Rechtliches",
+        data: [
+          {
+            key: "AGB",
+            value: "/agb",
+          },
+          {
+            key: "Impressum",
+            value: "/impressum",
+          },
+          {
+            key: "Widerrufsbelehrung",
+            value: "/widerrufsbelehrung",
+          },
+          {
+            key: "Datenschutz",
+            value: "/datenschutz",
+          }
+        ]
+      }
+    ],
+  }
+]
+
+
+function Navbar(){
   const [toggle, setToggle] = useState(false);
   const [navbarName,setNavbarName] = useState(null);
+  const [calcHeight, setCalcHeight] = useState("0px");
+  const [calcHeightWrapper, setCalcHeightWrapper] = useState("0px");
+  const [closedForNavigation, setClosedForNavigation] = useState(false);
+  const [move, setMove] = useState("75%");
+  const [rightColumnContent, setRightColumnContent] = useState(optionsForLeftColumn[0].options);
   const navigate = useNavigate();
   const {userInfo} = useSelector(state=>state.login);
   const cart = useSelector(state=>state.cart);
   const numberOfItems = cart.numberOfItems;
 
   function toggleFunction(nav){
+    setClosedForNavigation(true);
     navigate(nav);
     setToggle(false);
   }
 
   function handleAccountClick(){
+    setMove("75%");
     if (!userInfo) {
       const button = document.getElementById("loginPopup");
         if (button)
       button.click();
+        setToggle(false);
     } else {
       // redirect to account page!!!
       toggleFunction("/profile");
     }
   }
 
+  const onclickMap = {
+    "Bestellung Suchen": () => {
+      toggleFunction("/bestellung");
+      setMove("75%");
+    },
+    "Mein Konto": () => {
+      handleAccountClick();
+      setToggle(false);
+    },
+    "Kontakt": () => {
+      toggleFunction("/kontakt");
+      setMove("75%");
+    }
+  }
+
   useEffect(()=>{
     if (!userInfo){
       setNavbarName(null);
-    } else { 
-      let name = userInfo?.firstName?.split(" ");
-      if (name[0].length>=10)
-        name = name[0].substring(0,9) + "..." 
-      setNavbarName(name);
+    } else {
+      setNavbarName(userInfo.firstName + " " + userInfo.lastName);
     }
   },[userInfo])
 
+  useEffect(() => {
+    const calculateHeight = () => {
+      const container = document.getElementById("navbar-container-container-component");
+      if (container) {
+        const calculationOfHeight = container.getBoundingClientRect().height - 9 + "px";
+        setCalcHeight(calculationOfHeight);
+      }
+
+      const wrapper = document.getElementById("navbar-wrapper-component");
+      if (wrapper) {
+        const calculationOfHeightWrapper = wrapper.getBoundingClientRect().height  + "px";
+        setCalcHeightWrapper(calculationOfHeightWrapper);
+      }
+    };
+
+    calculateHeight();
+    window.addEventListener("resize", calculateHeight);
+    return () => {
+      window.removeEventListener("resize", calculateHeight);
+    };
+  }, []);
+
+
   return (
-    <NavbarContainer toggle={toggle}>
+    <NavbarContainer toggle={toggle} id={"navbar-container-container-component"} overflowHeight={calcHeightWrapper}>
       <Legal>
+          <LegalText onClick={ () => toggleFunction("/agb")} >AGB</LegalText>
           <LegalText onClick={ () => toggleFunction("/impressum")} >Impressum</LegalText>
           <LegalText onClick={ () => toggleFunction("/widerrufsbelehrung")}>Widerrufsbelehrung</LegalText>
           <LegalText onClick={ () => toggleFunction("/datenschutz")}>Datenschutz</LegalText>
       </Legal>
 
-      <NavbarWrapper toggle={toggle}>
+      <NavbarWrapper id={"navbar-wrapper-component"} toggle={toggle}>
         <LogoContainer>
-          <LogoImg onClick={ () => toggleFunction("/")} src={Logo}/>
-          <LogoImgMobile onClick={ () => toggleFunction("/")} src={MobileLogo}/>
+          <LogoImg onClick={ () => {toggleFunction("/"); setMove("75%");}} src={Logo}/>
           <LoginContainer>
-                <SingleLoginComponent onClick={()=>handleAccountClick()}>
-                    <AccountCircleIcon fontSize='large'/>
-                    <LogoText>{navbarName || "Konto"}</LogoText>
-                </SingleLoginComponent>
-                
-              <SingleLoginComponent onClick={ () => toggleFunction("/warenkorb")}>
-                <Badge badgeContent={numberOfItems} color="warning">
-                  <ShoppingCartIcon fontSize='large' />
-                </Badge>
-                <LogoText>Warenkorb</LogoText>
-              </SingleLoginComponent>
-
-              <SingleLoginComponent onClick={ () => toggleFunction("/geschaft")}>
-                <StorefrontIcon fontSize='large' />
-                <LogoText>Geschäft</LogoText>
-              </SingleLoginComponent>
+            {
+              <MobileSingleLoginComponent className="mx-1" onClick={()=>handleAccountClick()}>
+                <AccountCircleIcon fontSize='large'/>
+              </MobileSingleLoginComponent>
+            }
+            {
+                navbarName &&
+                <DesktopSingleLoginComponent className="mx-1" onClick={()=>handleAccountClick()}>
+                  <LogoText>{navbarName}</LogoText>
+                </DesktopSingleLoginComponent>
+            }
+            {
+              !navbarName &&
+                <>
+                  <DesktopSingleLoginComponent onClick={()=>handleAccountClick()}>
+                    <LogoText>{navbarName || "Einlogen" }</LogoText>
+                  </DesktopSingleLoginComponent>
+                  <DesktopSingleLoginComponent>
+                    <LogoText>/</LogoText>
+                  </DesktopSingleLoginComponent>
+                  <DesktopSingleLoginComponent style={{marginRight: "10px"}} onClick={()=>handleAccountClick()}>
+                    <LogoText>{navbarName || "Register"}</LogoText>
+                  </DesktopSingleLoginComponent>
+                </>
+            }
+            <SingleLoginComponent className="mx-2" onClick={ () => {
+                toggleFunction("/warenkorb");
+                setMove("75%");
+              }
+            }>
+              <Badge badgeContent={numberOfItems} color="warning">
+                <ShoppingBasketIcon fontSize='large' />
+              </Badge>
+            </SingleLoginComponent>
+            <NavbarButtonWrapper onClick={()=>setMove(toggle ? "75%" : "25%")}>
+              <BurgerIcon toggle={toggle} setToggle={setToggle}/>
+            </NavbarButtonWrapper>
           </LoginContainer>
-          <NavbarButtonWrapper>
-            <BurgerIcon toggle={toggle} setToggle={setToggle}/>
-          </NavbarButtonWrapper>
         </LogoContainer>
-          
-        <LinkContainer toggle={toggle} >
-          <MobileLegal>
-            <LegalText onClick={ () => toggleFunction("/impressum")} >Impressum</LegalText>
-            <LegalText onClick={ () => toggleFunction("/widerrufsbelehrung")}>Widerrufsbelehrung</LegalText>
-            <LegalText onClick={ () => toggleFunction("/datenschutz")}>Datenschutz</LegalText>
-          </MobileLegal>
-          <LinkButton onClick={ () => toggleFunction("/bestellung")}>
-            Bestellung suchen
-          </LinkButton>
-          <LinkButton onClick={ () => toggleFunction("/geschaft/plissees")}>
-            Plissees
-          </LinkButton>
-          <LinkButton onClick={ () => toggleFunction("/geschaft/jalousien")}>
-            Jalousien
-          </LinkButton>
-          <LinkButton onClick={ () => toggleFunction("/geschaft/rollos")}>
-            Rollos
-          </LinkButton>
-          <LinkButton onClick={ () => toggleFunction("/geschaft/lamellenvorhang")}>
-            Lamellenvorhang
-          </LinkButton>
-          <LinkButton onClick={ () => toggleFunction("/geschaft/insektenschutz")}>
-            Insektenschutz
-          </LinkButton>
-        </LinkContainer>
+        <BottomPart>
+          <SingleBottomDivWrapper>
+            <SingleBottomDiv onMouseEnter={()=>setClosedForNavigation(false)}>Plissees</SingleBottomDiv>
+            <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
+              <DropdownMenuInside>
+                <SingleColumn>
+                  <ColTitle>Plissee nach Maß</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees")} >Plissees</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/premium-plissee-optionen")} >Premium Plissee</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/basic-plissee-optionen")}>Basic Plissee</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/premium-plissee-optionen")}>Waben Plissee</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <ColTitle>Plissee nach Maß</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/wintergarten-plissee-optionen")}>Wintergarten Plissee</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/dachfenster-plissee-optionen")}>Dachfenster Plissee</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/sonderformen-plissee-optionen")}>Sonderformen Plissee</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/akku-plissee-optionen")}>Akku Plissee</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/freihaengend-plissee-optionen")}>Freihaengend Plissee</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <ColTitle>Plissee-Ratgeber</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees")}>Gratis Muster</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/messanleitung/plissee")}>Richtige Messung</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/montageanleitung/plissee")}>Richtige Installation</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <CustomDropdownImg src={PlisseeImg} alt="image of plissee representing whole category"/>
+                </SingleColumn>
+
+              </DropdownMenuInside>
+            </DropdownMenu>
+          </SingleBottomDivWrapper>
+
+          <SingleBottomDivWrapper>
+            <SingleBottomDiv onMouseEnter={()=>setClosedForNavigation(false)}>Jalousien</SingleBottomDiv>
+            <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
+              <DropdownMenuInside>
+                <SingleColumn>
+                  <ColTitle>Jalousie nach Maß</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousien")} >Jalousien</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousie/premium-jalousie-optionen")} >Premium Jalousie</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousie/basic-jalousie-optionen")} >Basic Jalousie</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousie/holzjalousie-optionen")} >Holzjalousie</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousie/premium-jalousie-optionen")} >Smart Akku Jalousie</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <ColTitle>Jalousien-Ratgeber</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousien")}>Gratis Muster</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/messanleitung/jalousie")}>Richtige Messung</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/montageanleitung/jalousie")}>Richtige Installation</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <CustomDropdownImg src={JalousienImg} alt="image of plissee representing whole category"/>
+                </SingleColumn>
+                <SingleColumn>
+                  <CustomDropdownImg marginLeft={"-5%"} src={HolzJalousienImg} alt="image of plissee representing whole category"/>
+                </SingleColumn>
+              </DropdownMenuInside>
+            </DropdownMenu>
+          </SingleBottomDivWrapper>
+
+          <SingleBottomDivWrapper>
+            <SingleBottomDiv onMouseEnter={()=>setClosedForNavigation(false)}>Rollos</SingleBottomDiv>
+            <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
+              <DropdownMenuInside>
+                <SingleColumn>
+                  <ColTitle>Rollo nach Maß</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/rollos")} >Rollos</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/rollo/premium-rollo-optionen")}> Premium Rollo</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/rollo/basic-rollo-optionen")}> Basic Rollo</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/rollo/doppel-rollo-optionen")}> Doppelrollo</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/rollo/akku-rollo-optionen")}> Smart Aku Rollo</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <ColTitle>Rollo-Ratgeber</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/rollos")}>Gratis Muster</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/messanleitung/rollo")}>Richtige Messung</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/montageanleitung/rollo")}>Richtige Installation</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <CustomDropdownImg src={RolloImg} alt="image of plissee representing whole category"/>
+                </SingleColumn>
+                <SingleColumn>
+                  <CustomDropdownImg marginLeft={"-5%"} src={DopelRolloImg} alt="image of plissee representing whole category"/>
+                </SingleColumn>
+              </DropdownMenuInside>
+            </DropdownMenu>
+          </SingleBottomDivWrapper>
+
+          <SingleBottomDivWrapper>
+            <SingleBottomDiv onMouseEnter={()=>setClosedForNavigation(false)}>Lamellenvorhang</SingleBottomDiv>
+            <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
+              <DropdownMenuInside>
+                <SingleColumn>
+                  <ColTitle>Lamellenvorhang nach Maß</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/lamellenvorhang")} >Lamellenvorhang</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/lamellenvorhang/premium-lamellenvorhang-optionen")}> Premium Lamellenvorhang</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/lamellenvorhang/basic-lamellenvorhang-optionen")}> Basic Lamellenvorhang</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/lamellenvorhang/schrag-lamellenvorhang-optionen")}> Lamellenvorhang schräg</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <ColTitle>Lamellenvorhang-Ratgeber</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/lamellenvorhang")}>Gratis Muster</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/messanleitung/lamellenvorhang")}>Richtige Messung</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/montageanleitung/lamellenvorhang")}>Richtige Installation</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <CustomDropdownImg src={LamellenImg} alt="image of primary Lamellenvorhang representing whole category"/>
+                </SingleColumn>
+              </DropdownMenuInside>
+            </DropdownMenu>
+          </SingleBottomDivWrapper>
+
+          <SingleBottomDivWrapper>
+            <SingleBottomDiv onMouseEnter={()=>setClosedForNavigation(false)}>Insektenschutz</SingleBottomDiv>
+            <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
+              <DropdownMenuInside>
+                <SingleColumn>
+                  <ColTitle>Für Türen</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/turen")} >Für Türen</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/turen/drehtür")} >Drehtür</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/turen/pendeltür")} >Pendeltür</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/turen/schiebetür")} >Schiebetür</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/turen/plissee")} >Plissee</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <ColTitle>Für Fenster</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/fenster")} >Fenster</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/fenster/spannrahmen")} >Spannrahmen</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/fenster/drehfenster")} >Drehfenster</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/fenster/rollo")} >Rollo</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/fenster/plissee")} >Plissee</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <ColTitle>Für Dachfenster</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/dachfenster")} >Dachfenster</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/dachfenster/rollo")} >Rollo</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/dachfenster/plissee")} >Plissee</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <ColTitle>Für Lichtschächte</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/lich")} >Lichtschächte</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/lichtschachte/lichtsschachtabdeckung")} >Lichtsschachtabdeckung</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/einzelheiten/lichtschachte/gitterSafe")} >GitterSafe</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <CustomDropdownImg src={InsekImg} alt="image of plissee representing whole category"/>
+                </SingleColumn>
+
+              </DropdownMenuInside>
+            </DropdownMenu>
+          </SingleBottomDivWrapper>
+
+          <ExtendedSingleBottomDivWrapper>
+            <SingleBottomDiv onClick={()=>toggleFunction("/bestellung")} onMouseEnter={()=>setClosedForNavigation(false)}>Bestellung Suchen</SingleBottomDiv>
+          </ExtendedSingleBottomDivWrapper>
+        </BottomPart>
       </NavbarWrapper>
+
+      <MobileBurgerMenuContainer move={move} toggle={toggle}>
+        <MobileBurgerMenuLeftColumn toggle={toggle}>
+          <WrapperForCategories>
+            {
+              optionsForLeftColumn.map((item)=> {
+                return (
+                    <LeftColumnSingleOption
+                        key={item.key}
+                        imageUrl={item.imageUrl}
+                        text={item.text}
+                        options={item.options}
+                        setterFunc={(arg)=>setRightColumnContent(arg)}
+                        moverFunc={()=>setMove("-25%")}
+                        optionalOnclickHandler={onclickMap[item.key]}
+                    />
+                )
+              })
+            }
+          </WrapperForCategories>
+          <WrapperForFooter toggle={toggle}>
+            {
+              optionsForFooter.map((item)=> {
+                return (
+                    <LeftColumnSingleOption
+                        key={item.key}
+                        imageUrl={item.imageUrl}
+                        text={item.text}
+                        options={item.options}
+                        setterFunc={(arg)=>setRightColumnContent(arg)}
+                        moverFunc={()=>setMove("-25%")}
+                        optionalOnclickHandler={onclickMap[item.key]}
+                        icon={item.icon}
+                    />
+                )
+              })
+            }
+          </WrapperForFooter>
+        </MobileBurgerMenuLeftColumn>
+        <MobileBurgerMenuRightColumn style={{maxHeight: `calc(100vh - ${calcHeightWrapper})`, overflowY: "scroll"}} toggle={toggle}>
+          <div onClick={() => setMove("25%")}
+            style={{ width: "25%", marginTop: "10px"}}
+          >
+            <ArrowBackIosIcon color="warning" fontSize="large"/>
+          </div>
+          <div>
+            {
+              rightColumnContent!==null && rightColumnContent.map(item => {
+                  return (
+                      <div key={item.title}>
+                        <div style={{textAlign: "left", paddingLeft: "7.5%", marginTop: "14px", fontSize: "20px", fontWeight: "bold"}}>
+                          {item.title}</div>
+                        <div>
+                          {
+                            item?.data.map(singleData => {
+                                return (
+                                  <div
+                                    className="d-flex flex-row justify-content-between align-items-center"
+                                    style={{width: "85%", margin: "10px auto", fontSize: "18px"}}
+                                    onClick={()=>{
+                                      toggleFunction(singleData.value);
+                                      setMove("75%");
+                                    }}
+                                  >
+                                      <div>{singleData.key}</div>
+                                      <ArrowForwardIosIcon/>
+                                  </div>
+                                );
+                            })
+                          }
+                        </div>
+                      </div>
+                  );
+                })
+            }
+          </div>
+
+        </MobileBurgerMenuRightColumn>
+      </MobileBurgerMenuContainer>
     </NavbarContainer>
   )
 }

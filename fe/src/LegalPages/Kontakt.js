@@ -154,6 +154,7 @@ const Container = styled.div`
   min-height: fit-content;
   width: 103%;
   transform: translateX(-1.5%);
+  margin-top: 20px;
 `;
 
 function Kontakt() {

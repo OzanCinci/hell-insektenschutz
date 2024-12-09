@@ -246,15 +246,15 @@ function Reviews({noAnimation}) {
             <div  className='d-flex flex-column justify-content-center'>
               <Font data-aos={noAnimation?"":"fade-up"}>Google Bewertungen</Font>
               <CommentCount data-aos={noAnimation?"":"fade-up"} className='d-flex flex-row justify-content-around'>
-                120+ Rezension   
+                135+ Rezension
               </CommentCount>
-              <div data-aos={noAnimation?"":"fade-up"}>
+              <div data-aos={noAnimation?"":"fade-up"} style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "2px"}}>
                 <img alt='star-img'  height='20px' src={StarImg}/>
                 <img alt='star-img' height='20px' src={StarImg}/>
                 <img alt='star-img' height='20px' src={StarImg}/>
                 <img alt='star-img' height='20px' src={StarImg}/>
-                <img alt='star-img' height='20px' src={StarImg}/>
-                (4.9)
+                <img alt='star-img' height='20px' src={StarImg} style={{marginRight: "5px"}}/>
+                (5.0)
               </div>
             </div>
 

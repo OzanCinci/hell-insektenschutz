@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import OptionComponent from './OptionComponent';
 
 const Container = styled.div`
-    margin-top: 150px;
+    margin-top: 175px;
 
     @media (max-width: 850px) {
       margin-top: 95px;

@@ -24,6 +24,7 @@ const twoDimensionalProducts = [
     "BasicRollo",
     "SmartAkkuPlissee",
     "FreihangendPlissee",
+    "AkkuRollo",
 ];
 
 const nDimensionalProducts = [

@@ -16,7 +16,11 @@ const CustomButton = styled(Button)`
 const Container = styled.div`
   max-width: 1200px;
   margin: auto;
-  margin-top: 120px;
+  margin-top: 165px;
+
+  @media only screen and (max-width: 800px) {
+    margin-top: 125px;
+  }
 `;
 
 const Wrapper = styled.div`

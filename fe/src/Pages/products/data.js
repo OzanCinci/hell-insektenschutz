@@ -2963,7 +2963,7 @@ export const uniqueProductData = {
                             ]
                         },
                         explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_116_1682414573_450x450.webp",
-                        price: 300,
+                        price: 200,
                     },
                 ]
             },
@@ -3349,6 +3349,453 @@ export const uniqueProductData = {
             link: "/montageanleitung/rollo"
         },
         cartName: "Premium Rollo"
+    },
+    "AkkuRollo": {
+        defaultImages: [
+            "https://api.configurator.vendeco.com/data/configurations/300000/files/204_Image_4622_1688032123_1000x1000.webp",
+            "https://api.configurator.vendeco.com/data/configurations/300000/files/204_Image_4623_1688032155_1000x1000.webp",
+            "https://api.configurator.vendeco.com/data/configurations/300000/files/204_Image_4624_1688032182_1000x1000.webp",
+            "https://api.configurator.vendeco.com/data/configurations/300000/files/204_Image_4625_1688032212_1000x1000.webp",
+            "https://api.configurator.vendeco.com/data/configurations/300000/files/204_Image_4626_1688032264_1000x1000.webp",
+            "https://api.configurator.vendeco.com/data/configurations/300000/files/204_Image_4627_1688032295_1000x1000.webp",
+            "https://api.configurator.vendeco.com/data/configurations/300000/files/204_Image_4628_1688032387_1000x1000.webp",
+            "https://api.configurator.vendeco.com/data/configurations/300000/files/204_Image_4629_1688032418_1000x1000.webp",
+        ],
+        selectionData: [
+            {
+                title: "Montageposition",
+                multichoice: false,
+                options: [
+                    {
+                        title: "Wand",
+                        note: "meist gewählt",
+                        defaultSelected: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_117_1677058979_450x450.webp",
+                        explanation: {
+                            title: "Wandmontage z.B. vor der Fensternische",
+                            text: [
+                                "Berechnen Sie hier einen Überstand des Rollos über die Fensternische ein, um seitlichen Lichteinfall zu minimieren - je nach Geschmack mind. 5-10 cm. Die im Lieferumfang enthaltenen Träger werden an die Wand geschraubt.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/200_Image_71_1678873497_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "Decke/Nische",
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_124_1677058988_450x450.webp",
+                        explanation: {
+                            title: "Deckenmontage z.B. in der Fensterlaibung",
+                            text: [
+                                "Beachten Sie bei der Montage in der Fensternische die Höhe des aufgerollten Rollos, sodass sich das Fenster nach erfolgter Montage noch öffnen lässt! Darüber hinaus können Rollos als Raumteiler an der Decke montiert werden. Die im Lieferumfang enthaltenen Träger werden an die Decke geschraubt.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/200_Image_72_1683633209_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "Fensterflügel",
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_138_1677059003_450x450.webp",
+                        explanation: {
+                            title: "Montageart Fensterflügel",
+                            text: [
+                                "Die im Lieferumfang enthaltenen Träger werden an den Fensterflügel geschraubt. Berechnen Sie hier einen Überstand des Rollos über die Glasfläche ein, um seitlichen Lichteinfall zu minimieren. Achten Sie bitte beim gewünschten Überstand auf vorstehende Beschläge.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/200_Image_74_1683633209_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                    {
+                        title: "Klemmträger",
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_181_1677059012_450x450.webp",
+                        explanation: {
+                            title: "Klemmträgermontage auf dem Fensterflügel",
+                            text: [
+                                "Mit den Klemmträgern aus Metall mit Kunststoffgehäuse, können Sie das Rollo kinderleicht ohne zu bohren auf dem Fensterflügel befestigen.",
+                                "Klemmbereich: 6-26 mm. Oberhalb bzw. unterhalb des Fensterflügels werden ca. 11 mm Platz benötigt."
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/200_Image_73_1678869105_450x450.webp",
+                        forbids: [],
+                        price: 0
+                    },
+                ]
+            },
+            {
+                title: "Kassettenart",
+                multichoice: false,
+                checkAllowList: true,
+                options: [
+                    {
+                        title: "Ohne Kassette",
+                        note: "meist gewählt",
+                        defaultSelected: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_200_1682414578_450x450.webp",
+                        explanation: {
+                            title: 'Träger "Magna"',
+                            text: [
+                                "Sie erhalten zwei hochwertige und stabile Träger aus Aluminium mit Abdeckkappen aus Kunststoff, in welche das Rollo einfach eingehängt wird.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_200_1682414578_450x450.webp",
+                        price: 0
+                    },
+                    {
+                        title: "Halbkassette",
+                        note: "sehr beliebt",
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_120_1677058983_450x450.webp",
+                        explanation: {
+                            title: 'Halbkassette "Coda""',
+                            text: [
+                                "Dieses Modell besticht durch die formschöne Kassette aus Aluminium. Die Kassette ist auch nach oben geschlossen und verhindert somit ein Verstauben des Rollos.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/200_Image_91_1646387352_450x450.webp",
+                        price: 29
+                    },
+                    {
+                        title: "Kassette",
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_100_1666613354_450x450.webp",
+                        explanation: {
+                            title: 'Kassette "Brutus"',
+                            text: [
+                                "Dieses Modell mit der klassischen, eckigen Kassette ist bis zu einer Breite von 440 cm erhältlich. Die Kassette ist auch nach oben geschlossen und verhindert somit ein Verstauben des Rollos.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_100_1666613354_450x450.webp",
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Montageposition":"Wand"},
+                                {"Montageposition":"Decke/Nische"},
+                            ]
+                        },
+                        price: 39
+                    },
+                ]
+            },
+            {
+                title: "Bedienart",
+                multichoice: false,
+                checkAllowList: false,
+                hardcodedSelected: true,
+                doNoDefaultSelection: false,
+                options: [
+                    {
+                        title: "Akku-Motor",
+                        defaultSelected: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_116_1682414573_450x450.webp",
+                        explanation: {
+                            title: "Akku-Motor",
+                            text: [
+                                'Alle Akku-Rollos können über die eigene "Motion-App" gesteuert werden (ausgenommen "Kassette Brutus L") - es ist kein Zubehör nötig. Auch mit einem kurzen Ziehen an einer Zugschnur fährt das Rollo nach unten, bzw. wieder nach oben. Das Rollo kann auch beliebig positioniert werden. Detaillierte technische Details finden Sie über das Menü "Rollo"-"Montageanleitungen".',
+                                "Li-Ion-Akku",
+                                "USB wiederaufladbar",
+                                "Lieblingsposition programmierbar"
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_116_1682414573_450x450.webp",
+                        price: 200,
+                    },
+                ]
+            },
+            {
+                title: "Bedienseite",
+                multichoice: false,
+                checkAllowList: false,
+                doNoDefaultSelection: false,
+                options: [
+                    {
+                        title: "Links",
+                        defaultSelected: true,
+                        conditionalSelected: true,
+                        image: "https://wumbo.net/symbols/left-arrow/feature.png",
+                        price: 0,
+                        allows: {},
+                    },
+                    {
+                        title: "Rechts",
+                        image: "https://wumbo.net/symbols/right-arrow/feature.png",
+                        price: 0,
+                        allows: {},
+                    },
+                ]
+            },
+            {
+                title: "Optionales Motor Zubehör",
+                multichoice: true,
+                checkAllowList: false,
+                doNoDefaultSelection: true,
+                options: [
+                    {
+                        title: "Ladekabel USB C",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_97_1706781114_450x450.webp",
+                        explanation: {
+                            title: "Ladekabel ohne Netzteil",
+                            text: [
+                                "Es handelt sich um ein handelsübliches USB C Ladekabel (3 m Länge) ohne Netzteil. Das Rollo wird in der Regel zweimal jährlich geladen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_97_1706781114_450x450.webp",
+                        price: 10,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart":"Akku-Motor"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "1 Kanal Fernbedienung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_112_1707894379_450x450.webp",
+                        explanation: {
+                            title: "1 Kanal Fernbedienung",
+                            text: [
+                                "Sie koppeln ihr Rollo sehr einfach per Knopfdruck mit der Fernbedienung und können dieses unmittelbar bequem bedienen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_112_1707894379_450x450.webp",
+                        price: 19.70,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart":"Akku-Motor"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "5 Kanal Fernbedienung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_98_1706781125_450x450.webp",
+                        explanation: {
+                            title: "5 Kanal Fernbedienung",
+                            text: [
+                                "Sie koppeln ihre Rollos sehr einfach per Knopfdruck mit der Fernbedienung und können diese unmittelbar bequem bedienen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_98_1706781125_450x450.webp",
+                        price: 49.80,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart":"Akku-Motor"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "15 Kanal Fernbedienung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_114_1707894385_450x450.webp",
+                        explanation: {
+                            title: "15 Kanal Fernbedienung",
+                            text: [
+                                "Sie koppeln ihre Rollos sehr einfach per Knopfdruck mit der Fernbedienung und können diese unmittelbar bequem bedienen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_114_1707894385_450x450.webp",
+                        price: 69.80,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart":"Akku-Motor"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "Wand Fernbedienung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_99_1706781139_450x450.webp",
+                        explanation: {
+                            title: "4 Kanal Wandfernbedienung",
+                            text: [
+                                "Sie koppeln ihre Rollos sehr einfach per Knopfdruck mit der Fernbedienung und können diese unmittelbar bequem bedienen.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_99_1706781139_450x450.webp",
+                        price: 173.70,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart":"Akku-Motor"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "Tisch Fernbedienung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_100_1706781148_450x450.webp",
+                        explanation: {
+                            title: "4 Kanal Tisch-Fernbedienung",
+                            text: [
+                                "Mit dem Tischsender bedienen sIe Ihre Rollos ganz bequem vom Ess- oder Schreibtisch.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_100_1706781148_450x450.webp",
+                        price: 103.40,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart":"Akku-Motor"},
+                            ]
+                        },
+                    },
+                ]
+            },
+            {
+                title: "Optionales Smart Zubehör",
+                multichoice: true,
+                checkAllowList: false,
+                doNoDefaultSelection: true,
+                options: [
+                    {
+                        title: "Wi-Fi Mini Bridge",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_101_1706781162_450x450.webp",
+                        explanation: {
+                            title: "USB WiFi Bridge",
+                            text: [
+                                "Erhöht die Reichweite auf 20 Meter - das Rollo kann somit außerhalb der Bluetooth-Umgebung gesteuert werden und in Ihr Smart-Home integriert werden (Amazon Alexa, Google Assistant, IFTTT). Pro Etage wird eine Mini Bridge benötigt.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_101_1706781162_450x450.webp",
+                        price: 166.20,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart":"Akku-Motor"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "Wi-Fi Bridge",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_102_1706781171_450x450.webp",
+                        explanation: {
+                            title: "WiFi Bridge",
+                            text: [
+                                "Erhöht die Reichweite - das Rollo kann somit außerhalb der Bluetooth-Umgebung gesteuert werden und in Ihr Smart-Home integriert werden (Amazon Alexa, Google Assistant, IFTTT). Pro Haushalt ist eine WiFi Bridge ausreichend.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_102_1706781171_450x450.webp",
+                        price: 309.10,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart":"Akku-Motor"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "Domotica Box",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_104_1706781207_450x450.webp",
+                        explanation: {
+                            title: "Domotica Box",
+                            text: [
+                                "Erhöht die Reichweite - das Rollo kann somit außerhalb der Bluetooth-Umgebung gesteuert werden und in Ihr Smart-Home integriert werden.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/195_Icon_104_1706781207_450x450.webp",
+                        price: 325.20,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Bedienart":"Akku-Motor"},
+                            ]
+                        },
+                    },
+                ]
+            },
+            {
+                title: "Zubehör",
+                multichoice: true,
+                checkAllowList: true,
+                doNoDefaultSelection: true,
+                options: [
+                    {
+                        title: "Montageschiene",
+                        cancallable: true,
+                        note: "meist gewählt",
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_99_1666613457_450x450.webp",
+                        explanation: {
+                            title: "Montageschiene",
+                            text: [
+                                "Die Montageschiene ermöglicht eine sehr einfache Montage - weniger bohren und einfacher positionieren! Es werden lediglich zwei Halterungen montiert, in welche das Montageprofil eingeclippt wird.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_99_1666613457_450x450.webp",
+                        price: 35,
+                        allows: {
+                            type: "single",
+                            dependecies: [
+                                {"Kassettenart":"Ohne Kassette"},
+                            ]
+                        },
+                    },
+                    {
+                        title: "Seitenführung",
+                        cancallable: true,
+                        image: "https://api.configurator.vendeco.com/data/configurations/300000/files/210_Icon_204_1682414582_450x450.webp",
+                        explanation: {
+                            title: "Seitenführung",
+                            text: [
+                                "...oder auch Pendelsicherung genannt, verhindert das unkontrollierte Auspendeln des Rollos. Diese ist besonders empfehlenswert bei beweglichen Fenstern und Türen oder auch bei Luftzug. Es kommt je nach Montageart entweder ein Spann-Winkel (Wand, Decke), Spann-Schuh (in der Fensternische) oder ein Klemmträger zum Einsatz.",
+                            ]
+                        },
+                        explanationImg: "https://api.configurator.vendeco.com/data/configurations/300000/files/200_Image_76_1718714696_450x450.webp",
+                        price: 24,
+                    },
+                ]
+            },
+            {
+                title: "Träger-/Kassettenfarbe",
+                multichoice: false,
+                options: [
+                    {
+                        title: "Weiß",
+                        defaultSelected: true,
+                        image: "rgb(243, 246, 246)",
+                        price: 0
+                    },
+                    {
+                        title: "Grau",
+                        image: "rgb(161, 161, 160)",
+                        price: 0
+                    },
+                    {
+                        title: "Anthrazit",
+                        image: "rgb(90, 90, 90)",
+                        price: 0
+                    },
+                    {
+                        title: "Schwarz",
+                        image: "rgb(10, 10, 10)",
+                        price: 0
+                    },
+                ]
+            },
+
+        ],
+        saleMultiplier: 10 / 4,
+        defaultHeight: 700,
+        defaultWidth: 400,
+
+        productDetailUrl: "/api/product/Rollo/Smart Akku Rollo",
+        requestCategory: "PremiumRollo",
+        measurementUrl: "/messanleitung/rollo",
+        EXTERNAL_URL: "/api/external-products/colors/PremiumRollo/",
+        subcategoryTitle: "",
+        blendcolorTitle: "Träger-/Kassettenfarbe",
+        freeSamplingTitle: "Stoffmuster Premium Rollo",
+        assemblyInfo: {
+            name: "Premium Akku Rollo",
+            link: "/montageanleitung/rollo"
+        },
+        cartName: "Premium Akku Rollo"
     },
     "Doppelrollo": {
         defaultImages: [

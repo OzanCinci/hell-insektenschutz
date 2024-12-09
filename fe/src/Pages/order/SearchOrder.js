@@ -19,7 +19,7 @@ const Container = styled.div`
     margin-top: 0px;
     min-height: 120vh;
     background: #eaeded;
-    padding-top: 140px;
+    padding-top: 170px;
 
     @media only screen and (max-width: 1200px) {
         padding-top: 110px;

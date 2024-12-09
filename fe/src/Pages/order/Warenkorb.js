@@ -32,12 +32,11 @@ import Accordion from "@mui/material/Accordion";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Checkbox from "@mui/material/Checkbox";
 import {convertDateForWishlist} from "../../utils/datetime";
-import CONFIGURATION from "../../config/config";
 
 const Container = styled.div`
     min-height: 100vh;
     margin: auto;
-    padding-top: 140px;
+    padding-top: 165px;
     padding-bottom: 50px;
     max-width: 100vw;
     background-color: #eaeded;

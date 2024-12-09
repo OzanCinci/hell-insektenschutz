@@ -21,7 +21,6 @@ import AddToCart from '../SingleProductPage/components/AddToCart';
 import Button from '@mui/material/Button';
 import ReviewModal from '../../CustomComponents/ReviewModal';
 import HowToAssemble from '../ProductComponents/HowToAssemble';
-import CONFIGURATION from "../../config/config";
 
 const CustomButton = styled(Button)`
     margin-top: 5px !important;
@@ -45,7 +44,7 @@ const ModifiedAlert = styled(Alert)`
 `;
 
 const ColumnContainer = styled.div`
-  margin-top: 120px;
+  margin-top: 150px;
   min-height: fit-content;
   display: flex;
   width: 100%;
@@ -69,6 +68,7 @@ const ColumnContainer = styled.div`
 
     @media only screen and (max-width: 500px) {
         width: 100vw;
+        margin-top: 115px;
     }    
 `;
 

@@ -9,11 +9,12 @@ const Container = styled.div`
     flex-direction: row;
     padding-top: 110px;
     padding-left: 60px;
+    margin-top: 20px;
 `;
 
 const CollapsableContainer = styled.div`
     height: 100vh;
-    width: fit-content; 
+    width: fit-content;
 `;
 
 const BodyModal = styled.div`
@@ -23,19 +24,6 @@ const BodyModal = styled.div`
     padding-top: 40px;
     width: 94vw;
 `;
-
-/*
-orders:
-    - active orders
-    - non-active orders
-reviews:
-    - pending reviews
-    - approved reviews
-users:
-    - all user list
-sales:
-    - TODO: sales için liste ekle
-*/
 
 
 function AdminPanel() {

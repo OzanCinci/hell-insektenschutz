@@ -13,7 +13,7 @@ import _ from 'lodash';
 import { useNavigate } from 'react-router-dom';
 
 const Container = styled.div`
-  margin: 150px auto;
+  margin: 165px auto;
   display: flex;
   max-width: 600px;
   flex-direction: column;

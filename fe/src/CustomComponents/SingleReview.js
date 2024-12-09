@@ -76,7 +76,7 @@ const SingleReview = styled(({ name, date, rating, description }) => {
           </div>
           <DateWrapper>
             <Rating className='mx-2' name="read-only" value={rating} precision={0.5} readOnly />
-            <ReviewDate>( {convertDate(date)} )</ReviewDate>
+            {/*<ReviewDate>( {convertDate(date)} )</ReviewDate>*/}
           </DateWrapper>
         </ReviewTopWrapper>
       </TopPart>

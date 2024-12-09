@@ -10,7 +10,11 @@ import DownloadButton from '../../CustomComponents/DownloadButton';
 const Container = styled.div`
   max-width: 1200px;
   margin: auto;
-  margin-top: 120px;
+  margin-top: 170px;
+
+  @media only screen and (max-width: 600px) {
+    margin-top: 100px;
+  }
 `;
 
 const Wrapper = styled.div`
