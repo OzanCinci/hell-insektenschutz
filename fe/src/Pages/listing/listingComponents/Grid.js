@@ -531,7 +531,7 @@ const Grid = ({ loading, data, link, productInfoUrl }) => {
                                                     <PriceTag>
                                                         <span className='price-tag' style={{textDecoration: "line-through", fontSize: "15px"}}>{`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}</span>
                                                         <span className='price-tag' style={{color: "red", marginLeft: "10px"}}>
-                                                            {`${(item.properties.MinPrice * 2.5 * (1-percentage)).toFixed(2)}€`}
+                                                            {`${(item.properties.MinPrice * 2 * (1-percentage)).toFixed(2)}€`}
                                                         </span>
                                                         <div style={{ fontSize: "17px"}}>
                                                             {percentage*100}% Rabatt
@@ -542,7 +542,7 @@ const Grid = ({ loading, data, link, productInfoUrl }) => {
                                                     !enableDiscount &&
                                                     <PriceTag>
                                                         <span className='price-tag' style={{marginLeft: "10px"}}>
-                                                            {`${(item.properties.MinPrice * 2.5).toFixed(2)}€`}
+                                                            {`${(item.properties.MinPrice * 2).toFixed(2)}€`}
                                                         </span>
                                                     </PriceTag>
                                                 }

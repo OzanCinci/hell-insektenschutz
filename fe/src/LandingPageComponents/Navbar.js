@@ -21,6 +21,7 @@ import RolloImg from '../images/shop/smartrollo.webp';
 import DopelRolloImg from '../images/shop/doppelrollo.webp';
 import LamellenImg from '../images/shop/lamellenvorhang.webp';
 import InsekImg from '../images/shop/insek.webp';
+import MadeInGermanyIcon from '../images/navbar/made-in-germany-icon.png';
 
 // images for mobile menu
 import PlisseeImgMobile from '../images/navbar/plissee.webp';
@@ -188,13 +189,11 @@ const LogoContainer = styled.div`
   
 `;
 
-
 const LogoText = styled.div`
   font-size: 16px;
   &:hover {
     text-decoration: underline;
   }
-
   @media only screen and (min-width: 800px) {
     font-size: 17px;
   }
@@ -207,7 +206,11 @@ const SingleLoginComponent = styled.div`
     justify-content: center;
     align-items: center;
   }
-  transform: translateY(10%);
+  transform: translateY(-20%);
+
+  @media only screen and (max-width: 780px) {
+    transform: translateY(10%);
+  }
 `;
 
 const MobileSingleLoginComponent = styled(SingleLoginComponent)`
@@ -378,7 +381,6 @@ const MobileBurgerMenuContainer = styled.div`
   }
 `;
 
-
 const MobileBurgerMenuColumn = styled.div`
     width: 100vw !important;
     height: 100%;
@@ -390,18 +392,23 @@ const MobileBurgerMenuLeftColumn = styled(MobileBurgerMenuColumn)`
     justify-content: space-between;
 `;
 
-const MobileBurgerMenuRightColumn = styled(MobileBurgerMenuColumn)`
-`;
+const MobileBurgerMenuRightColumn = styled(MobileBurgerMenuColumn)``;
 
-const WrapperForCategories = styled.div`
-    
-`;
+const WrapperForCategories = styled.div``;
 
 const WrapperForFooter = styled.div`
     background-color: rgb(229 231 235);
     padding-bottom: 3vh;
     padding-top: 1vh;
     border-radius: 14px 14px 0px 0px;
+`;
+
+const MadeInGermanyLogo = styled.div`
+  margin-left: 2vw;
+  margin-right: -3vw;
+  @media only screen and (max-width: 780px) {
+    display: none;
+  }
 `;
 
 const LeftColumnComponent = styled.div`
@@ -447,9 +454,6 @@ const LeftColumnSingleOption = ({ icon, imageUrl, text, key, options, setterFunc
       </LeftColumnComponent>
   );
 };
-
-
-
 
 const optionsForLeftColumn = [
   {
@@ -666,89 +670,47 @@ const optionsForLeftColumn = [
     text: "Insektenschutz",
     options: [
       {
-        title: "Für Türen",
+        title: "Insektenschutz nach Maß",
+        data: [
+          {
+            key: "Insektenschutz",
+            value: "/geschaft/insektenschutz"
+          },
+          {
+            key: "Insektenschutz für Fenster - Spannrahmen",
+            value: "/produkts/InsektenschutzFensterSpannrahmen/1"
+          },
+          {
+            key: "Insektenschutz - Plisseetür",
+            value: "/produkts/InsektenschutzPlisseetür/1"
+          },
+          {
+            key: "Insektenschutz - Pendeltür",
+            value: "/produkts/InsektenschutzPendeltür/1"
+          },
+        ]
+      },
+      {
+        title: "Erfahren Sie mehr über unsere Produkte",
         data: [
           {
             key: "Für Türen",
             value: "/turen"
           },
           {
-            key: "Drehtür",
-            value: "/einzelheiten/turen/drehtür"
-          },
-          {
-            key: "Pendeltür",
-            value: "/einzelheiten/turen/pendeltür"
-          },
-          {
-            key: "Schiebetür",
-            value: "/einzelheiten/turen/schiebetür"
-          },
-          {
-            key: "Plissee",
-            value: "/einzelheiten/turen/plissee"
-          }
-        ]
-      },
-      {
-        title: "Für Fenster",
-        data: [
-          {
-            key: "Fenster",
+            key: "Für Fenster",
             value: "/fenster"
           },
           {
-            key: "Spannrahmen",
-            value: "/einzelheiten/fenster/spannrahmen"
-          },
-          {
-            key: "Drehfenster",
-            value: "/einzelheiten/fenster/drehfenster"
-          },
-          {
-            key: "Rollo",
-            value: "/einzelheiten/fenster/rollo"
-          },
-          {
-            key: "Plissee",
-            value: "/einzelheiten/fenster/plissee"
-          },
-        ]
-      },
-      {
-        title: "Für Dachfenster",
-        data: [
-          {
-            key: "Dachfenster",
+            key: "Für Dachfenster",
             value: "/dachfenster"
           },
           {
-            key: "Rollo",
-            value: "/einzelheiten/dachfenster/rollo"
-          },
-          {
-            key: "Plissee",
-            value: "/einzelheiten/dachfenster/plissee"
+            key: "Für Lichtschächte",
+            value: "/lich"
           },
         ]
       },
-      {
-        title: "Für Lichtschächte",
-        data: [
-          {
-            key: "Lichtschächte",
-            value: "/lich"
-          },
-          {
-            key: "Lichtsschachtabdeckung",
-            value: "/einzelheiten/lichtschachte/lichtsschachtabdeckung"
-          },
-          {
-            key: "GitterSafe",
-            value: "/einzelheiten/lichtschachte/gitterSafe"
-          },
-        ]
-      }
     ]
   },
   {
@@ -894,48 +856,52 @@ function Navbar(){
         <LogoContainer>
           <LogoImg onClick={ () => {toggleFunction("/"); setMove("75%");}} src={Logo}/>
           <LoginContainer>
+
             {
-              <MobileSingleLoginComponent className="mx-1" onClick={()=>handleAccountClick()}>
+              <MobileSingleLoginComponent className="mx-1" onClick={() => handleAccountClick()}>
                 <AccountCircleIcon fontSize='large'/>
               </MobileSingleLoginComponent>
             }
             {
                 navbarName &&
-                <DesktopSingleLoginComponent className="mx-1" onClick={()=>handleAccountClick()}>
+                <DesktopSingleLoginComponent className="mx-1" onClick={() => handleAccountClick()}>
                   <LogoText>{navbarName}</LogoText>
                 </DesktopSingleLoginComponent>
             }
             {
-              !navbarName &&
+                !navbarName &&
                 <>
-                  <DesktopSingleLoginComponent onClick={()=>handleAccountClick()}>
-                    <LogoText>{navbarName || "Einlogen" }</LogoText>
+                  <DesktopSingleLoginComponent onClick={() => handleAccountClick()}>
+                    <LogoText>{navbarName || "Einlogen"}</LogoText>
                   </DesktopSingleLoginComponent>
                   <DesktopSingleLoginComponent>
                     <LogoText>/</LogoText>
                   </DesktopSingleLoginComponent>
-                  <DesktopSingleLoginComponent style={{marginRight: "10px"}} onClick={()=>handleAccountClick()}>
+                  <DesktopSingleLoginComponent style={{marginRight: "10px"}} onClick={() => handleAccountClick()}>
                     <LogoText>{navbarName || "Register"}</LogoText>
                   </DesktopSingleLoginComponent>
                 </>
             }
-            <SingleLoginComponent className="mx-2" onClick={ () => {
-                toggleFunction("/warenkorb");
-                setMove("75%");
-              }
+            <SingleLoginComponent className="mx-2" onClick={() => {
+              toggleFunction("/warenkorb");
+              setMove("75%");
+            }
             }>
               <Badge badgeContent={numberOfItems} color="warning">
-                <ShoppingBasketIcon fontSize='large' />
+                <ShoppingBasketIcon fontSize='large'/>
               </Badge>
             </SingleLoginComponent>
-            <NavbarButtonWrapper onClick={()=>setMove(toggle ? "75%" : "25%")}>
+            <NavbarButtonWrapper onClick={() => setMove(toggle ? "75%" : "25%")}>
               <BurgerIcon toggle={toggle} setToggle={setToggle}/>
             </NavbarButtonWrapper>
+            <MadeInGermanyLogo>
+              <img height={"55px"} src={MadeInGermanyIcon}></img>
+            </MadeInGermanyLogo>
           </LoginContainer>
         </LogoContainer>
         <BottomPart>
           <SingleBottomDivWrapper>
-            <SingleBottomDiv onMouseEnter={()=>setClosedForNavigation(false)}>Plissees</SingleBottomDiv>
+            <SingleBottomDiv onMouseEnter={() => setClosedForNavigation(false)}>Plissees</SingleBottomDiv>
             <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
               <DropdownMenuInside>
                 <SingleColumn>
@@ -1048,36 +1014,22 @@ function Navbar(){
           </SingleBottomDivWrapper>
 
           <SingleBottomDivWrapper>
-            <SingleBottomDiv onMouseEnter={()=>setClosedForNavigation(false)}>Insektenschutz</SingleBottomDiv>
+            <SingleBottomDiv onClick={() => toggleFunction("/geschaft/insektenschutz")} onMouseEnter={()=>setClosedForNavigation(false)}>Insektenschutz</SingleBottomDiv>
             <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
               <DropdownMenuInside>
                 <SingleColumn>
-                  <ColTitle>Für Türen</ColTitle>
+                  <ColTitle>Insektenschutz nach Maß</ColTitle>
+                  <ColEntry onClick={() => toggleFunction("/geschaft/insektenschutz")} >Insektenschutz</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/produkts/InsektenschutzFensterSpannrahmen/1")} >Insektenschutz für Fenster - Spannrahmen</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/produkts/InsektenschutzPlisseetür/1")} >Insektenschutz - Plisseetür</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/produkts/InsektenschutzPendeltür/1")} >Insektenschutz - Pendeltür</ColEntry>
+                </SingleColumn>
+                <SingleColumn>
+                  <ColTitle>Erfahren Sie mehr über unsere Produkte</ColTitle>
                   <ColEntry onClick={() => toggleFunction("/turen")} >Für Türen</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/turen/drehtür")} >Drehtür</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/turen/pendeltür")} >Pendeltür</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/turen/schiebetür")} >Schiebetür</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/turen/plissee")} >Plissee</ColEntry>
-                </SingleColumn>
-                <SingleColumn>
-                  <ColTitle>Für Fenster</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/fenster")} >Fenster</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/fenster/spannrahmen")} >Spannrahmen</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/fenster/drehfenster")} >Drehfenster</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/fenster/rollo")} >Rollo</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/fenster/plissee")} >Plissee</ColEntry>
-                </SingleColumn>
-                <SingleColumn>
-                  <ColTitle>Für Dachfenster</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/dachfenster")} >Dachfenster</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/dachfenster/rollo")} >Rollo</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/dachfenster/plissee")} >Plissee</ColEntry>
-                </SingleColumn>
-                <SingleColumn>
-                  <ColTitle>Für Lichtschächte</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/lich")} >Lichtschächte</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/lichtschachte/lichtsschachtabdeckung")} >Lichtsschachtabdeckung</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/einzelheiten/lichtschachte/gitterSafe")} >GitterSafe</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/fenster")} >Für Fenster</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/dachfenster")} >Für Dachfenster</ColEntry>
+                  <ColEntry onClick={() => toggleFunction("/lich")} >Für Lichtschächte</ColEntry>
                 </SingleColumn>
                 <SingleColumn>
                   <CustomDropdownImg src={InsekImg} alt="image of plissee representing whole category"/>
@@ -1156,7 +1108,7 @@ function Navbar(){
                                       setMove("75%");
                                     }}
                                   >
-                                      <div>{singleData.key}</div>
+                                      <div style={{textAlign: "left"}}>{singleData.key}</div>
                                       <ArrowForwardIosIcon/>
                                   </div>
                                 );

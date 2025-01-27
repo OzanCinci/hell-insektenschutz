@@ -58,7 +58,13 @@ const Wrapper = styled.div`
 
 function HowToAssemble({assemblyInfo}) {
     const nav = useNavigate();
-    
+
+    if (assemblyInfo===null) {
+        return (
+            <></>
+        );
+    }
+
   return (
     <Container>
         <Splitter>

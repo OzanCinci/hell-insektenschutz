@@ -263,7 +263,7 @@ export const uniqueProductData = {
         subcategoryTitle: "Plisseemodell",
         blendcolorTitle: "Schienenfarbe",
         requestCategory: "BasicPlissee",
-        saleMultiplier: 10 / 4,
+        saleMultiplier: 7.5 / 4,
         measurementUrl: "/messanleitung/plissee",
         productDetailUrl: "/api/product/Plissee/Basic Plissee",
         EXTERNAL_URL: "/api/external-products/colors/BasicPlissee/",

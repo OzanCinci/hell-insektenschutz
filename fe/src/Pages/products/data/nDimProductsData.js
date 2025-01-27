@@ -1,16 +1,16 @@
-import DachfensterPlisseeDimensionCalculator from "./customDimensionCalculators/DachfensterPlisseeDimensionCalculator";
-import Sonderform3DDimensionCalculator from "./customDimensionCalculators/Sonderform3DDimensionCalculator";
-import Sonderform4DDimensionCalculator from "./customDimensionCalculators/Sonderform4DDimensionCalculator";
-import Sonderform2DDimensionCalculator from "./customDimensionCalculators/Sonderform2DDimensionCalculator";
+import DachfensterPlisseeDimensionCalculator from "../customDimensionCalculators/DachfensterPlisseeDimensionCalculator";
+import Sonderform3DDimensionCalculator from "../customDimensionCalculators/Sonderform3DDimensionCalculator";
+import Sonderform4DDimensionCalculator from "../customDimensionCalculators/Sonderform4DDimensionCalculator";
+import Sonderform2DDimensionCalculator from "../customDimensionCalculators/Sonderform2DDimensionCalculator";
 import Lamellenvorhang3DLeftDimensionCalculator
-    from "./customDimensionCalculators/Lamellenvorhang3DLeftDimensionCalculator";
+    from "../customDimensionCalculators/Lamellenvorhang3DLeftDimensionCalculator";
 import Lamellenvorhang3DRightDimensionCalculator
-    from "./customDimensionCalculators/Lamellenvorhang3DRightDimensionCalculator";
-import Sonderform3DRightDimensionCalculator from "./customDimensionCalculators/Sonderform3DRightDimensionCalculator";
-import Sonderform4DRightDimensionCalculator from "./customDimensionCalculators/Sonderform4DRightDimensionCalculator";
-import Sonderform2DRightDimensionCalculator from "./customDimensionCalculators/Sonderform2DRightDimensionCalculator";
-import Sonderform2DRightDimensionCalculator2 from "./customDimensionCalculators/Sonderform2DRightDimensionCalculator2";
-import Sonderform2DDimensionCalculator2 from "./customDimensionCalculators/Sonderform2DDimensionCalculator2";
+    from "../customDimensionCalculators/Lamellenvorhang3DRightDimensionCalculator";
+import Sonderform3DRightDimensionCalculator from "../customDimensionCalculators/Sonderform3DRightDimensionCalculator";
+import Sonderform4DRightDimensionCalculator from "../customDimensionCalculators/Sonderform4DRightDimensionCalculator";
+import Sonderform2DRightDimensionCalculator from "../customDimensionCalculators/Sonderform2DRightDimensionCalculator";
+import Sonderform2DRightDimensionCalculator2 from "../customDimensionCalculators/Sonderform2DRightDimensionCalculator2";
+import Sonderform2DDimensionCalculator2 from "../customDimensionCalculators/Sonderform2DDimensionCalculator2";
 
 export const uniqueNDimProductsData = {
     "DachfensterPlissee": {

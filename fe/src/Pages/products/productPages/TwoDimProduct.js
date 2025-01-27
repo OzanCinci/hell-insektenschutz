@@ -1,26 +1,26 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import useFetch from '../../hooks/useFetch';
+import useFetch from '../../../hooks/useFetch';
 import axios from 'axios';
-import { ADD_TO_CART } from '../../constants/user';
+import { ADD_TO_CART } from '../../../constants/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounce, get } from 'lodash';
-import { extractProperties } from '../../CustomComponents/extractProperties';
+import { extractProperties } from '../../../CustomComponents/extractProperties';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
-import Carousel from '../ProductComponents/Carousel';
-import ProductDetails from '../ProductComponents/ProductDetails';
-import Selection from '../ProductComponents/Selection';
-import Installation from '../ProductComponents/Installation';
-import Reviews from '../../LandingPageComponents/Reviews';
+import Carousel from '../../ProductComponents/Carousel';
+import ProductDetails from '../../ProductComponents/ProductDetails';
+import Selection from '../../ProductComponents/Selection';
+import Installation from '../../ProductComponents/Installation';
+import Reviews from '../../../LandingPageComponents/Reviews';
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
-import AddToCart from '../SingleProductPage/components/AddToCart';
+import AddToCart from '../../SingleProductPage/components/AddToCart';
 import Button from '@mui/material/Button';
-import ReviewModal from '../../CustomComponents/ReviewModal';
-import HowToAssemble from '../ProductComponents/HowToAssemble';
+import ReviewModal from '../../../CustomComponents/ReviewModal';
+import HowToAssemble from '../../ProductComponents/HowToAssemble';
 
 const CustomButton = styled(Button)`
     margin-top: 5px !important;

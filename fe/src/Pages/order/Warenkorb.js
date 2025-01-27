@@ -32,6 +32,7 @@ import Accordion from "@mui/material/Accordion";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Checkbox from "@mui/material/Checkbox";
 import {convertDateForWishlist} from "../../utils/datetime";
+import {checkInsectProductExists} from "../../utils/shipping";
 
 const Container = styled.div`
     min-height: 100vh;
@@ -536,22 +537,14 @@ const moreDetailObj = {
     body: [
         "Die Lieferzeit beträgt 5 bis 12 Werktage.",
         "Der Preis beinhaltet die Mehrwertsteuer (MwSt.), jedoch fallen zusätzliche Versandkosten an.",
+        "Die obige Tabelle zeigt die Versandkosten für Sonnenschutzprodukte. Die Versandkosten für Insektenschutzprodukte betragen unabhängig von der Größe der Insektenschutzprodukte konstant 25€.",
+        "Eine zusätzliche Versandgebühr von 25€ wird beim Checkout für Insektenschutzprodukte berechnet.",
+        "Die Versandkosten werden im Warenkorb berechnet. Falls durch Sonnenschutzprodukte andere Versandkosten anfallen, wird nur eine Versandgebühr berechnet. Die Versandkosten können durch Gebühren für andere Produkte überschrieben werden. Bitte prüfen Sie Ihren Warenkorb für detaillierte Informationen.",
         "Sie können der obigen Tabelle die detaillierten Versandkosten entnehmen.",
         "Die Versandgebühr wird nur einmal pro Bestellung berechnet, auch wenn es mehr als ein Produkt sind. Die Berechnung erfolgt anhand des größten Produkts, und die Gebühr wird nur einmal erhoben."
     ]
 };
 
-/*
-const discount40percentList = [
-    "premium.insektenschutz@gmail.com",
-    "mkinsektenschutz@outlook.de",
-    "insektenschutz.k@gmail.com",
-    "Weher@laemmermann.de",
-    "inso.insektenschutz@gmail.com",
-    "info@sliakas-wohndesign.de",
-    //"ozan_cinci2001@hotmail.com",
-]
- */
 
 function Warenkorb() {
     const cart = useSelector(state=>state.cart);
@@ -713,6 +706,8 @@ function Warenkorb() {
         else if (maxWidth<=5000)
             shippingCost = 99.90;
 
+
+        shippingCost = checkInsectProductExists(cart.items, shippingCost);
 
         let payload = {
             shippingCost: shippingCost,

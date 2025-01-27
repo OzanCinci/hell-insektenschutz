@@ -99,6 +99,18 @@ const BottomButtonWrapper = styled.div`
     gap: 10px;
 `;
 
+const insectProductMoreDetailObj = {
+    title: "über den Versand",
+    img: ShippingPriceTable,
+    body: [
+        "Die obige Tabelle zeigt die Versandkosten für Sonnenschutzprodukte. Die Versandkosten für Insektenschutzprodukte betragen unabhängig von der Größe der Insektenschutzprodukte konstant 25€.",
+        "Eine zusätzliche Versandgebühr von 25€ wird beim Checkout für Insektenschutzprodukte berechnet.",
+        "Die Versandkosten werden im Warenkorb berechnet. Falls durch Sonnenschutzprodukte andere Versandkosten anfallen, wird nur eine Versandgebühr berechnet. Die Versandkosten können durch Gebühren für andere Produkte überschrieben werden. Bitte prüfen Sie Ihren Warenkorb für detaillierte Informationen.",
+        "Die Lieferzeit beträgt 5 bis 12 Werktage.",
+        "Der Preis beinhaltet die Mehrwertsteuer (MwSt.), jedoch fallen zusätzliche Versandkosten an.",
+    ]
+};
+
 const moreDetailObj = {
     title: "über den Versand",
     img: ShippingPriceTable,
@@ -110,7 +122,7 @@ const moreDetailObj = {
     ]
 };
 
-function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart, handleAddFreeSamplingIntoCard,validPrice}) {
+function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart, handleAddFreeSamplingIntoCard,validPrice, showGetSampleButton = true, isInsectProtectionProduct=false}) {
     const [quantity,setQuantity] = useState(1);
     const {discountOptionMap} = useSelector(state=>state.config);
     const enableDiscount = discountOptionMap["PUBLIC"] != null;
@@ -118,7 +130,11 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart,
 
     const handleSetMoreInfoClick = (e) => {
         e.preventDefault();
-        setMoreDetailInfo(moreDetailObj)
+        if (isInsectProtectionProduct) {
+            setMoreDetailInfo(insectProductMoreDetailObj);
+        } else {
+            setMoreDetailInfo(moreDetailObj);
+        }
 
         const button = document.getElementById("product-color-option-detail-btn");
         if (button) {
@@ -159,8 +175,8 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart,
                     </ButtonGroup>
                 </ButtonGroupWrapper>
                 <ExtraInfoWrapper onClick={(e)=>handleSetMoreInfoClick(e)}>
-                        Über die Versandgebühr
-                        <HelpOutlineOutlinedIcon style={{ color: "grey" }} />
+                    Über die Versandgebühr
+                    <HelpOutlineOutlinedIcon style={{ color: "grey" }} />
                 </ExtraInfoWrapper>
                 </QuantityWrapper>
                 <TotalPrice>
@@ -194,7 +210,7 @@ function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart,
                         <Button disabled={canAddCart===false} onClick={e=>handleAddIntoCard(e,quantity,(itemPrice-validPrice + validPrice))} style={{width: "100%"}} color='warning' variant="contained">In den Warenkorb</Button>
                     </>
                 }
-                <CustomButton onClick={(e)=>handleAddFreeSamplingIntoCard(e)} variant='outlined' color='warning'> <AddShoppingCartIcon className='mx-2'/> Gratis Muster  </CustomButton>
+                {showGetSampleButton===true && <CustomButton onClick={(e)=>handleAddFreeSamplingIntoCard(e)} variant='outlined' color='warning'> <AddShoppingCartIcon className='mx-2'/> Gratis Muster  </CustomButton>}
             </BottomButtonWrapper>
 
         </Container>

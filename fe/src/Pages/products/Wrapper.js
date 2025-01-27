@@ -1,9 +1,11 @@
 import React, {useMemo} from 'react';
-import { uniqueProductData } from './data';
-import {uniqueNDimProductsData} from "./nDimProductsData";
+import {uniqueProductData} from './data/data';
+import {uniqueNDimProductsData} from "./data/nDimProductsData";
+import {insekProductData} from "./data/insekProductData";
 import { useParams } from 'react-router-dom';
-import TwoDimProduct from './TwoDimProduct';
-import NDimProduct from "./NDimProduct";
+import TwoDimProduct from './productPages/TwoDimProduct';
+import NDimProduct from "./productPages/NDimProduct";
+import InsectProducts from "./productPages/InsectProducts";
 
 const twoDimensionalProducts = [
     "BasicPlissee",
@@ -33,6 +35,12 @@ const nDimensionalProducts = [
     "LamellenvorhangSchrag",
 ];
 
+const insekProducts = [
+    "InsektenschutzFensterSpannrahmen",
+    "InsektenschutzPlisseetür",
+    "InsektenschutzPendeltür",
+]
+
 const extraCartInfo = {
   "BasicJalousie25mm": ["Lamellenbreite: 25 mm"],
   "BasicJalousie16mm": ["Lamellenbreite: 16 mm"],
@@ -53,6 +61,10 @@ function ProductFactory(productName, id){
         const dataFromJSON = uniqueNDimProductsData[productName];
         const extraCartInfoArray = null;
         return <NDimProduct dataFromJSON={dataFromJSON} id={id} extraCartInfoArray={extraCartInfoArray}/>;
+    } else if (insekProducts.includes(productName)) {
+        const dataFromJSON = insekProductData[productName];
+        const extraCartInfoArray = null;
+        return <InsectProducts dataFromJSON={dataFromJSON} extraCartInfoArray={extraCartInfoArray}/>;
     } else {
         return <div>Something went wrong.</div>
     }
@@ -61,7 +73,6 @@ function ProductFactory(productName, id){
 function Wrapper() {
     const {produkt, id} = useParams();
     const Component = useMemo(() => ProductFactory(produkt, id), [produkt, id]);
-
   return (
     <div>
         {Component}

@@ -121,11 +121,11 @@ const TitleWrapper = styled.div`
 
 
 const ColorSelector = styled.div`
-    border-radius: 50%;
+    border-radius: 0%;
     background: ${props => props.bg};
     border: 1px solid grey;
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 80px;
     cursor: pointer;
     position: relative;
 
@@ -712,6 +712,22 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
         }
     }
 
+    const handleTitleMoreDetailSelection = (item) => {
+        const data = {
+            title: item.titleDescriptionData.title,
+            img: item.titleDescriptionData.explanationImg,
+            body: item.titleDescriptionData.text
+        };
+        setMoreDetailInfo(data);
+
+        const button = document.getElementById("product-color-option-detail-btn");
+        if (button) {
+            setTimeout(() => {
+                button.click();
+            }, 0);
+        }
+    }
+
     const handleCancel = (currentItem, index) => {
         if (!currentItem.cancallable) return;
 
@@ -768,7 +784,13 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
             [item.title]: selectedOption
         }));
 
-        if (active[index]) {
+        console.log("selectedOption: ", selectedOption);
+        console.log("active: ", active);
+        console.log("index: ", index);
+        console.log("active[index]: ", active[index]);
+
+        const shouldUpdateItemConfiguration = active[index] || item.overruleActiveSelectionCheck;
+        if (shouldUpdateItemConfiguration) {
             const configObj = {
                 [`${item.title} ${selectedOption}`]: item.price[selectedOption]
             };
@@ -781,12 +803,10 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 ]
             };
 
-            //console.log("setItemConfiguration:8 ", updatedItemConfiguration);
             setItemConfiguration(prev => ({
                 ...prev,
                 [optionList.title]: [...updatedItemConfiguration[optionList.title]]
             }));
-            //setItemConfiguration(updatedItemConfiguration);
         }
     }
 
@@ -812,43 +832,56 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
             :
                 (optionList.checkAllowList!==true || availableList.length!==0) &&
              (
-                (optionList.title !== "Schienenfarbe" && optionList.title !== "Oberkastenfarbe" && optionList.title !== "Träger-/Kassettenfarbe" && optionList.title !== "Farbe Ober- u. Unterschiene")?
+                (optionList.title !== "Profile Farbe" && optionList.title !== "Rahmenfarbe" && optionList.title !== "Schienenfarbe" && optionList.title !== "Oberkastenfarbe" && optionList.title !== "Träger-/Kassettenfarbe" && optionList.title !== "Farbe Ober- u. Unterschiene")?
                 <div>
                     {
                         (optionList.checkAllowList!==true || availableList.length!==0) &&
                         <Title>
-                            {optionList.title} 
+                            {optionList.title}
+                            {
+                                optionList?.titleDescription &&
+                                    <span style={{cursor: "pointer", marginLeft: "6px"}} onClick={() => handleTitleMoreDetailSelection(optionList)}>
+                                        <HelpOutlineOutlinedIcon style={{color: "grey"}}/>
+                                    </span>
+                            }
                         </Title>
                     }
-                    
+
                     <Body>
                         {
-                            optionList.checkAllowList!==true ?
-                            optionList.options.map((item, index) => {
+                            optionList.checkAllowList !== true ?
+                                optionList.options.map((item, index) => {
                                 const isActive = optionList.multichoice ? active && active[index] : active === index;
                                 return (
                                     <SingleOptionWrapper key={index}>
-                                        <CustomImgWrapper
+                                        {
+                                            !item?.noImage &&
+                                            <CustomImgWrapper
                                                 note={item.note}
                                                 isActive={isActive}
                                             >
-                                            <CustomImg
-                                                onClick={() => handleClick(item,index,isActive)}
-                                                isActive={isActive}
-                                                src={item.image}
-                                            />
-                                            {isActive && <SelectedIcon />}
-                                        </CustomImgWrapper>
-                                        <TitleWrapper>
-                                            <div>{item.title}</div>
-                                            {
-                                                item.explanation && 
-                                                <div style={{ cursor: "pointer" }} onClick={() => handleMoreDetailSelection(item)}>
-                                                    <HelpOutlineOutlinedIcon style={{ color: "grey" }} />
-                                                </div>
-                                            }
-                                            
-                                        </TitleWrapper>
+                                                <CustomImg
+                                                    onClick={() => handleClick(item,index,isActive)}
+                                                    isActive={isActive}
+                                                    src={item.image}
+                                                />
+                                                {isActive && <SelectedIcon />}
+                                            </CustomImgWrapper>
+                                        }
+                                        {
+                                            !item?.noImage &&
+                                            <TitleWrapper>
+                                                <div>{item.title}</div>
+                                                {
+                                                    item.explanation &&
+                                                    <div style={{ cursor: "pointer" }} onClick={() => handleMoreDetailSelection(item)}>
+                                                        <HelpOutlineOutlinedIcon style={{ color: "grey" }} />
+                                                    </div>
+                                                }
+
+                                            </TitleWrapper>
+                                        }
+
                                         {
                                             typeof item.price === 'object' ? (
                                             <DropDownWrapper hide={isActive !== true}>
@@ -863,7 +896,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                                     labelId="demo-simple-select-helper-label"
                                                     id="demo-simple-select-helper"
                                                     value={selectedPrice[item.title] || Object.keys(item.price)[0]}
-                                                    onChange={(e) => handleDropdownChange(item, index, e)}
+                                                    onChange={(e) => handleDropdownChange(item, index, e,)}
                                                     disabled={!isActive}
                                                     label={item.priceExplanation}
                                                     sx={{
@@ -884,7 +917,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                                 >
                                                     {Object.entries(item.price).map(([key, value]) => (
                                                     <MenuItem key={key} value={key} sx={{ '&.Mui-selected': { backgroundColor: '#f59f4c', color: 'white' }, '&.Mui-selected:hover': { backgroundColor: '#f59f4c' } }}>
-                                                        {key}  (+{value}€)
+                                                        {key} {item.priceRemoveCurrency ? "" : `(+${value}€)` }
                                                     </MenuItem>
                                                     ))}
                                                 </Select>
@@ -903,18 +936,21 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                 const isActive = active[index];
                                 return (
                                     <SingleOptionWrapper key={index}>
-                                        <CustomImgWrapper
+                                        {
+                                            item.noImage !== true &&
+                                            <CustomImgWrapper
                                                 note={item.note}
                                                 isActive={isActive}
                                             >
-                                            <CustomImg
-                                                id={`${optionList.title}-btn-${index}`}
-                                                onClick={() => handleClick(item,index,isActive,true)}
-                                                isActive={isActive}
-                                                src={item.image}
-                                            />
-                                            {isActive && <SelectedIcon />}
-                                        </CustomImgWrapper>
+                                                <CustomImg
+                                                    id={`${optionList.title}-btn-${index}`}
+                                                    onClick={() => handleClick(item,index,isActive,true)}
+                                                    isActive={isActive}
+                                                    src={item.image}
+                                                />
+                                                {isActive && <SelectedIcon />}
+                                            </CustomImgWrapper>
+                                        }
                                         <TitleWrapper>
                                             <div>{item.title}</div>
                                             {
@@ -959,7 +995,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                                                 >
                                                     {Object.entries(item.price).map(([key, value]) => (
                                                     <MenuItem key={key} value={key} sx={{ '&.Mui-selected': { backgroundColor: '#f59f4c', color: 'white' }, '&.Mui-selected:hover': { backgroundColor: '#f59f4c' } }}>
-                                                        {key}  (+{value}€)
+                                                        {key} {item.priceRemoveCurrency ? "" : `(+${value}€)` }
                                                     </MenuItem>
                                                     ))}
                                                 </Select>

@@ -1,27 +1,26 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-import useFetch from '../../hooks/useFetch';
+import useFetch from '../../../hooks/useFetch';
 import axios from 'axios';
-import { ADD_TO_CART } from '../../constants/user';
+import { ADD_TO_CART } from '../../../constants/user';
 import { useDispatch, useSelector } from 'react-redux';
 import { debounce, get } from 'lodash';
-import { extractProperties } from '../../CustomComponents/extractProperties';
+import { extractProperties } from '../../../CustomComponents/extractProperties';
 import Alert from '@mui/material/Alert';
 import CircularProgress from '@mui/material/CircularProgress';
-import Carousel from '../ProductComponents/Carousel';
-import ProductDetails from '../ProductComponents/ProductDetails';
-import Selection from '../ProductComponents/Selection';
-import Installation from '../ProductComponents/Installation';
-import Reviews from '../../LandingPageComponents/Reviews';
+import Carousel from '../../ProductComponents/Carousel';
+import ProductDetails from '../../ProductComponents/ProductDetails';
+import Selection from '../../ProductComponents/Selection';
+import Installation from '../../ProductComponents/Installation';
+import Reviews from '../../../LandingPageComponents/Reviews';
 import OutlinedInput from "@mui/material/OutlinedInput";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormControl from "@mui/material/FormControl";
-import AddToCart from '../SingleProductPage/components/AddToCart';
+import AddToCart from '../../SingleProductPage/components/AddToCart';
 import Button from '@mui/material/Button';
-import ReviewModal from '../../CustomComponents/ReviewModal';
-import HowToAssemble from '../ProductComponents/HowToAssemble';
-import CONFIGURATION from "../../config/config";
+import ReviewModal from '../../../CustomComponents/ReviewModal';
+import HowToAssemble from '../../ProductComponents/HowToAssemble';
 
 const CustomButton = styled(Button)`
     margin-top: 5px !important;
@@ -30,7 +29,7 @@ const CustomButton = styled(Button)`
 
     @media only screen and (max-width: 800px) {
         margin-top: 15px !important;
-    }    
+    }
 `;
 
 const CustomButtonWrapper = styled.div`
@@ -38,44 +37,44 @@ const CustomButtonWrapper = styled.div`
 `;
 
 const ModifiedAlert = styled(Alert)`
-  width: fit-content;
-  font-size: 18px !important;
-  text-align: left;
-  margin: 0 auto;
+    width: fit-content;
+    font-size: 18px !important;
+    text-align: left;
+    margin: 0 auto;
 `;
 
 const ColumnContainer = styled.div`
-  margin-top: 165px;
-  min-height: fit-content;
-  display: flex;
-  width: 100%;
-  flex-direction: row;
-  justify-content: center;
-  align-items: stretch;
+    margin-top: 150px;
+    min-height: fit-content;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
 
-  max-width: 1300px;
-  gap: 50px;
-  margin-left: auto;
-  margin-right: auto;
+    max-width: 1300px;
+    gap: 50px;
+    margin-left: auto;
+    margin-right: auto;
 
 
     @media only screen and (max-width: 1300px) {
         gap: 10px;
-    }    
+    }
 
     @media only screen and (max-width: 1000px) {
         flex-direction: column;
-    }    
+    }
 
     @media only screen and (max-width: 500px) {
         width: 100vw;
         margin-top: 115px;
-    }    
+    }
 `;
 
 const Column = styled.div`
-  flex: 1;
-  padding: 20px;
+    flex: 1;
+    padding: 20px;
 
     @media only screen and (max-width: 500px) {
         padding: 2vw;
@@ -83,11 +82,11 @@ const Column = styled.div`
 `;
 
 const LeftColumn = styled(Column)`
-  
+
 `;
 
 const RightColumn = styled(Column)`
-  height: fit-content;
+    height: fit-content;
 `;
 
 const MeasurementWrapper = styled.div`
@@ -97,12 +96,99 @@ const MeasurementWrapper = styled.div`
     margin-bottom: 50px;
 `;
 
-const SelectorComponent = styled(({ data }) => {
+
+const ShowPdfComponent = ({ pdfUrl }) => {
+    const iframeRef = useRef(null); // Reference to the iframe element
+
+    // Function to handle iframe load event
+    const handleIframeLoad = () => {
+        const iframeDocument = iframeRef.current?.contentWindow?.document;
+        if (iframeDocument) {
+            const hackElement = iframeDocument.getElementById("eIphoneHack");
+            if (hackElement) {
+                hackElement.style.display = "none"; // Temporarily hide
+                hackElement.style.display = "initial"; // Reset display
+            }
+        }
+    };
+
+    return (
+        <div>
+            <button
+                id="measurement-option-detail-btn"
+                style={{ display: "none" }}
+                type="button"
+                className="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#MeasurementPopupMoreDetail"
+            />
+            {pdfUrl ? (
+                <div>
+                    <div
+                        className="modal fade"
+                        id="MeasurementPopupMoreDetail"
+                        tabIndex="-1"
+                        aria-labelledby="measurementPopupMoreDetailLabel"
+                        aria-hidden="true"
+                    >
+                        <div className="modal-dialog modal-dialog-centered modal-xl">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5
+                                        style={{ textAlign: "left" }}
+                                        className="modal-title"
+                                        id="measurementPopupMoreDetailLabel"
+                                    >
+                                        Sieh dir dieses PDF unten an.
+                                    </h5>
+                                    <button
+                                        type="button"
+                                        className="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    ></button>
+                                </div>
+                                <div
+                                    style={{
+                                        height: "85vh",
+                                        overflowY: "scroll",
+                                        WebkitOverflowScrolling: "touch",
+                                    }}
+                                >
+                                    <iframe
+                                        ref={iframeRef} // Attach ref to the iframe
+                                        src={pdfUrl}
+                                        title="PDF Viewer"
+                                        width="100%"
+                                        height="100%"
+                                        style={{ border: "none" }}
+                                        onLoad={handleIframeLoad} // Handle the iframe load event
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div>No PDF URL available</div>
+            )}
+        </div>
+    );
+};
+
+const StyledModalBody = styled.div`
+  height: 85vh;
+  border: 3px solid red; /* This replaces your #iframe-wrapper styles */
+  -webkit-overflow-scrolling: touch; /* Add smooth scrolling for iOS Safari */
+  overflow-y: scroll; /* Ensure scrollability */
+`;
+
+const SelectorComponent = styled(({data}) => {
     return (
         <div>
             <button
                 id="product-color-option-detail-btn"
-                style={{ display: "none" }}
+                style={{display: "none"}}
                 type="button"
                 className="btn btn-primary"
                 data-bs-toggle="modal"
@@ -124,7 +210,7 @@ const SelectorComponent = styled(({ data }) => {
                                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div className="modal-body">
-                                    <img height="200px" width="auto" src={data.img} alt="Modal Content" />
+                                    {data.img && <img height="200px" width="auto" src={data.img} alt="Modal Content"/>}
                                     <div style={{ textAlign: "left" }} className="my-4">
                                         {data.body.map((item, index) => (
                                             <li className="my-2" key={index}>{item}</li>
@@ -156,21 +242,21 @@ const Title = styled.div`
 `;
 
 const HowtoMeasureWrapper = styled.div`
-  text-align: left;
-  margin-top: 10px;
-  margin-bottom: 30px;
-  padding-left: 10px;
+    text-align: left;
+    margin-top: 10px;
+    margin-bottom: 30px;
+    padding-left: 10px;
 `;
 
 const FormControlContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
 
     @media only screen and (max-width: 500px) {
-       align-items: center;
-    } 
+        align-items: center;
+    }
 `;
 
 function sumValues(obj) {
@@ -230,24 +316,23 @@ const config = {
     },
 };
 
-function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
+
+function InsectProducts({dataFromJSON, extraCartInfoArray}) {
     /////// PARSE DATA IMMEDIATELY ///////
     const defaultImages = dataFromJSON.defaultImages;
     const selectionData = dataFromJSON.selectionData;
-    const subcategoryTitle = dataFromJSON.subcategoryTitle;
-    const blendcolorTitle = dataFromJSON.blendcolorTitle;
-    const requestCategory = dataFromJSON.requestCategory;
-    const saleMultiplier = dataFromJSON.saleMultiplier;
     const measurementUrl = dataFromJSON.measurementUrl;
+    const measurementExplanation = dataFromJSON.measurementExplanation;
     const productDetailUrl = dataFromJSON.productDetailUrl;
-    const EXTERNAL_URL = dataFromJSON.EXTERNAL_URL;
+    //const EXTERNAL_URL = dataFromJSON.EXTERNAL_URL;
+    const widthText = dataFromJSON.widthText;
+    const heightText = dataFromJSON.heightText;
+    const priceType = dataFromJSON.priceType;
+    const defaultHeight = dataFromJSON.defaultHeight;
+    const defaultWidth = dataFromJSON.defaultWidth;
     let freeSamplingTitle = dataFromJSON.freeSamplingTitle;
     const assemblyInfo = dataFromJSON.assemblyInfo;
     const cartName = dataFromJSON.cartName;
-
-    const dimensionSelector = dataFromJSON.dimensionSelector;
-    const secondDimensionSelector = dataFromJSON.secondDimensionSelector;
-    const dimensionCalculators = dataFromJSON.dimensionCalculators;
     /////// PARSE DATA IMMEDIATELY ///////
 
 
@@ -255,46 +340,24 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     const nav = useNavigate();
     const [moreDetailInfo, setMoreDetailInfo] = useState(null);
     const {userInfo} = useSelector(state=>state.login);
-
     const {discountOptionMap} = useSelector(state=>state.config);
     const enableDiscount = discountOptionMap["PUBLIC"] != null;
     const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0.0;
 
-    /////////// QUERY PARAMS ///////////
-    const [queryParam, setQueryParam] = useState('');
 
-    useEffect(() => {
-        const currentUrl = window.location.href;
-        const url = new URL(currentUrl);
-        const queryParams = new URLSearchParams(url.search);
-        const qParamValue = queryParams.get('q');
-
-        if (qParamValue) {
-            setQueryParam(qParamValue);
-        }
-    }, []);
-    /////////// QUERY PARAMS ///////////
-
+    const [pdfUrl, setPdfUrl] = useState(null);
 
 
     /////// ITEM REQUEST AND RESPONSE DATA ///////
-    const url = `${EXTERNAL_URL}${id}`;
-    const { data, loading, error } = useFetch(url, config, 0);
+    const { data, loading, error } = useFetch(productDetailUrl, config, 0);
     const [itemData, setItemData] = useState(null);
     const [images, setImages] =  useState([])
 
     useEffect(() => {
         if (data !== null) {
+            // NO COLORED IMAGE OPTION -> ALL WE GOT IS DEFAULTS ONES
             setItemData(data);
-            const mainImage = data.color.previewImage;
-            const secondaryImage = data.color.tileImage;
-            let tmp;
-            if (secondaryImage)
-                tmp = [mainImage, secondaryImage, ...defaultImages];
-            else
-                tmp = [mainImage, ...defaultImages];
-
-            setImages(tmp);
+            setImages([...defaultImages]);
         }
     }, [data]);
     /////// ITEM REQUEST AND RESPONSE DATA ///////
@@ -305,7 +368,10 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     const [canAddCart,setCanAddCart] = useState(true);
     const [itemConfiguration,setItemConfiguration] = useState(null);
     const [configPrice,setConfigPrice] = useState(0);
-    const [dimensions, setDimensions] = useState(null);
+    const [dimensions,setDimensions] = useState({
+        height: defaultHeight,
+        width: defaultWidth,
+    });
 
     useEffect(()=>{
         if (itemConfiguration===null) {
@@ -334,40 +400,12 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
 
             setItemConfiguration(tempItemConfiguration);
         } else {
+            // calculate price logic
             const tempConfigPrice = sumValues(itemConfiguration);
             setConfigPrice(tempConfigPrice);
         }
     },[itemConfiguration])
     /////// CONFIGURATION DATA ///////
-
-
-    /////////// DYNAMIC CALCULATOR COMPONENT ///////////
-    const [calculatorComponent, setCalculatorComponent] = useState(null);
-    useEffect(() => {
-        const tmp = findDimensionSelection();
-        if (tmp)
-            setCalculatorComponent(() => tmp);
-    }, [itemConfiguration]);
-
-    const findDimensionSelection = () => {
-        if (!itemConfiguration || calculatorComponent===dimensionCalculators["default"]) return null;
-        if (dimensionCalculators["default"]) return dimensionCalculators["default"].component;
-
-        let selection = Object.keys(itemConfiguration?.[dimensionSelector]?.[0] || {})[0];
-        if (secondDimensionSelector)
-            selection = selection + " " + Object.keys(itemConfiguration?.[secondDimensionSelector]?.[0] || {})[0];
-
-        if (
-            selection
-            && dimensionCalculators[selection]?.component
-            && dimensionCalculators[selection]?.component!==calculatorComponent){
-            return dimensionCalculators[selection].component
-        }
-
-        return null;
-    }
-    /////////// DYNAMIC CALCULATOR COMPONENT ///////////
-
 
 
     /////// TOTAL PRICE DATA ///////
@@ -376,68 +414,22 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     useEffect(()=>{
         if (itemConfiguration!==null && itemData!==null) {
             let request = {};
-
-            const sampleColor = itemData.color.id;
-            const sampleSubCategories = itemData.subCategories;
-            const sampleBlendColors = itemData.blendColors;
-
-
-            let current, subCat;
-            if (subcategoryTitle==="check-basic-plissee") {
-                subCat = queryParam;
-            } else {
-                subCat = Object.keys(itemConfiguration[subcategoryTitle][0])[0];
-            }
-
-            for (let i=0;i<sampleSubCategories.length;i++) {
-                current = sampleSubCategories[i];
-                if (current.title===subCat) {
-                    request.subcategory = Number(current.id);
-                    break;
-                }
-            }
-
-            const blendCol = Object.keys(itemConfiguration[blendcolorTitle][0])[0];
-            for (let i=0;i<sampleBlendColors.length;i++) {
-                current = sampleBlendColors[i];
-                if (current.title===blendCol) {
-                    request.blendcolor = Number(current.id);
-                    break;
-                }
-            }
-
-            request.color = Number(sampleColor);
-
-            if (!dimensions) return;
-
-            request.width = Math.floor((dimensions.width ?? 0) / 10);
-            request.height = Math.floor((dimensions.height ?? 0 ) / 10);
-            request.width2 = Math.floor((dimensions.width2 ?? 0) / 10);
-            request.height2 = Math.floor((dimensions.height2 ?? 0 ) / 10);
-            request.depth = Math.floor((dimensions.depth ?? 0 ) / 10);
-            request.heightleft = Math.floor((dimensions.heightleft ?? 0 ) / 10);
-            request.heightright = Math.floor((dimensions.heightright ?? 0 ) / 10);
-            request.widthtop = Math.floor((dimensions.widthtop ?? 0 ) / 10);
-            request.widthbottom = Math.floor((dimensions.widthbottom ?? 0 ) / 10);
-            request.category = requestCategory;
-            request.kasondaExtendedPriceBuildType = dimensions.kasondaExtendedPriceBuildType;
-
+            request.width = dimensions.width;
+            request.height = dimensions.height;
+            request.type = priceType;
             debouncedGetPriceFromBackend(request);
         }
-    },[itemConfiguration, dimensions, itemData]);
+    },[itemConfiguration, dimensions,itemData]);
 
     const getPriceFromBackend = async (requestBody) => {
         const BASE_URL = process.env.REACT_APP_BE_API;
         try {
-            const response = await axios.post(`${BASE_URL}/api/external-products/price/extended`, requestBody, {
+            const response = await axios.post(`${BASE_URL}/api/sun-protection-product/price`, requestBody, {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             });
-            const salePriceStr = get(response.data, 'data.price.salePrice');
-            const parsedSalePrice = parseFloat(salePriceStr.replace(',', '.'));
-            const tmpValidPrice = parsedSalePrice * saleMultiplier;
-            setValidPrice(tmpValidPrice);
+            setValidPrice(get(response.data, 'price'));
             setCanAddCart(true);
         } catch (error) {
             setCanAddCart(false);
@@ -448,51 +440,8 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     const debouncedGetPriceFromBackend = useCallback(debounce(getPriceFromBackend, 1000), []);
     /////// TOTAL PRICE DATA ///////
 
-
     /////// ADD TO CART LOGIC ///////
     const generateUniqueCode = () => Date.now().toString(36) + Math.random().toString(36).substring(2);
-
-    const enrichAttributes = (attributes) => {
-        let result = [...attributes];
-        let tmp = []
-
-        if (dimensions.Fenstertyp) {
-            tmp.push(dimensions.Fenstertyp);
-            tmp.push(dimensions["B x H:"]);
-            return [...tmp, ...result];
-        }
-
-        if (dimensions.height && dimensions.height > 0) {
-            tmp.push(`Höhe: ${dimensions.height}mm`);
-        }
-        if (dimensions.width && dimensions.width > 0) {
-            tmp.push(`Breite: ${dimensions.width}mm`);
-        }
-        if (dimensions.height2 && dimensions.height2 > 0) {
-            tmp.push(`Höhe 2: ${dimensions.height2}mm`);
-        }
-        if (dimensions.width2 && dimensions.width2 > 0) {
-            tmp.push(`Breite 2: ${dimensions.width2}mm`);
-        }
-        if (dimensions.depth && dimensions.depth > 0) {
-            tmp.push(`Tiefe: ${dimensions.depth}mm`);
-        }
-        if (dimensions.heightleft && dimensions.heightleft > 0) {
-            tmp.push(`Höhe links: ${dimensions.heightleft}mm`);
-        }
-        if (dimensions.heightright && dimensions.heightright > 0) {
-            tmp.push(`Höhe rechts: ${dimensions.heightright}mm`);
-        }
-        if (dimensions.widthtop && dimensions.widthtop > 0) {
-            tmp.push(`Breite oben: ${dimensions.widthtop}mm`);
-        }
-        if (dimensions.widthbottom && dimensions.widthbottom > 0) {
-            tmp.push(`Breite unten: ${dimensions.widthbottom}mm`);
-        }
-
-        return [...tmp, ...result];
-    }
-
 
     const handleAddIntoCard = (e,quantity,itemPrice) => {
         e.preventDefault();
@@ -501,26 +450,8 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
         let itemName = cartName ? cartName:( itemData?.id || "").split(/(?=[A-Z])/).join(" ");
         const secondaryName = itemData?.color?.title;
         const temp = extractAttributes(itemConfiguration);
-        let attributes = enrichAttributes(temp);
+        let attributes = [`Höhe: ${dimensions.height}mm`, `Breite: ${dimensions.width}mm`, ...temp];
 
-
-        if (itemName.includes("Plissee")) {
-            const material = itemData?.color?.properties.MaterialType;
-            if (material && material==="Wabenplissee") {
-                itemName = itemName.replace("Plissee","Wabenplissee");
-            }
-        }
-
-        if (itemName.includes("Lamellenvorhang")) {
-            itemName = itemName + " "  + queryParam;
-        }
-
-        if (queryParam) {
-            if (["127 mm", "89 mm"].includes(queryParam)) {
-                const additionalData = "Lamellenbreite: " + queryParam;
-                attributes = [additionalData, ...attributes];
-            }
-        }
 
         if (extraCartInfoArray) {
             attributes = [...extraCartInfoArray, ...attributes];
@@ -542,7 +473,6 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
             discountPercentage: percentage,
         };
 
-
         dispatch({type:ADD_TO_CART,payload:item});
 
         const button = document.getElementById('open-notification-button');
@@ -559,12 +489,6 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
         const temp = extractProperties(itemData?.color?.properties);
         let attributes = [...temp];
 
-        if (queryParam) {
-            if (["127 mm", "89 mm"].includes(queryParam)) {
-                const additionalData = "Lamellenbreite: " + queryParam;
-                attributes = [additionalData, ...attributes];
-            }
-        }
 
         if (extraCartInfoArray) {
             attributes = [...extraCartInfoArray, ...attributes];
@@ -643,6 +567,9 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                                     {/* component below is a popup */}
                                     <SelectorComponent data={moreDetailInfo}/>
                                     {/* component above is a popup */}
+                                    {/* component below is a popup */}
+                                    <ShowPdfComponent pdfUrl={pdfUrl}/>
+                                    {/* component above is a popup */}
                                     <CustomButtonWrapper>
                                         {
                                             userInfo?.access_token && currentProduct &&
@@ -657,7 +584,7 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                                         }
                                         <CustomButton onClick={(e)=>handleClickReview(e)} variant='outlined' color='warning'>Bewertung abgeben</CustomButton>
                                     </CustomButtonWrapper>
-                                    <ProductDetails itemData={itemData} image={images[1]} queryParam={queryParam}/>
+                                    {/* <ProductDetails itemData={itemData} image={images[1]} queryParam={null}/> */}
                                     {
                                         selectionData.map((item,index)=>{
                                             return (
@@ -672,13 +599,99 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                                         })
                                     }
 
-                                    {/* BURAYA GELECEK DIMENSIONLAR AGA */}
-                                    {calculatorComponent !== null &&
-                                        React.createElement(calculatorComponent, { measurementUrl, dimensions, setDimensions })
-                                    }
 
+                                    <Title>Abmessungen</Title>
+                                    <HowtoMeasureWrapper>
+
+                                        {
+                                            measurementUrl !== null &&
+                                            <>
+                                                {measurementExplanation!==null ? measurementExplanation : "Anleitung zum"}
+                                                <span onClick={() => {
+                                                    // measurementUrl
+                                                    setPdfUrl(measurementUrl);
+                                                    const button = document.getElementById("measurement-option-detail-btn");
+                                                    if (button) {
+                                                        setTimeout(() => {
+                                                            button.click();
+                                                        }, 0);
+                                                    }
+                                                }} className='mx-1' style={{
+                                                    textDecoration: "underline",
+                                                    color: "#f59f4c",
+                                                    cursor: "pointer",
+                                                    fontWeight: "bold"
+                                                }}>
+                                                Richtig messen
+                                                </span>
+                                            </>
+                                        }
+                                    </HowtoMeasureWrapper>
+                                    <MeasurementWrapper>
+                                        <FormControlContainer>
+                                        <div>{`Breite (${dimensions.width/10}cm)`}</div>
+                                            <FormControl sx={{ width: "60%", marginTop: "5px" }} variant="outlined">
+                                                <OutlinedInput
+                                                    type="text"
+                                                    color="warning"
+                                                    placeholder="Breite (mm)"
+                                                    value={dimensions.width}
+                                                    onChange={(e)=>setDimensions((prev)=>({...prev, width: e.target.value}))}
+                                                    endAdornment={
+                                                        <InputAdornment position="end">
+                                                            mm
+                                                        </InputAdornment>
+                                                    }
+                                                />
+                                                {
+                                                    widthText!==null && <p
+                                                        style={{
+                                                            marginTop: "5px",
+                                                            marginLeft: "2px",
+                                                            textAlign: "left",
+                                                            color: "grey"
+                                                        }}
+                                                    >
+                                                        {widthText}
+                                                    </p>
+                                                }
+                                            </FormControl>
+                                        </FormControlContainer>
+                                        <FormControlContainer>
+                                            <div>{`Höhe (${dimensions.height/10}cm)`}</div>
+
+                                            <FormControl sx={{ width: "60%", marginTop: "5px" }} variant="outlined">
+                                                <OutlinedInput
+                                                    type="text"
+                                                    color="warning"
+                                                    placeholder="Höhe (mm)"
+                                                    value={dimensions.height}
+                                                    onChange={(e)=>setDimensions((prev)=>({...prev, height: e.target.value}))}
+                                                    endAdornment={
+                                                        <InputAdornment position="end">
+                                                            mm
+                                                        </InputAdornment>
+                                                    }
+                                                />
+                                                {
+                                                    heightText!==null && <p
+                                                        style={{
+                                                            marginTop: "5px",
+                                                            marginLeft: "2px",
+                                                            textAlign: "left",
+                                                            color: "grey"
+                                                        }}
+                                                    >
+                                                        {heightText}
+                                                    </p>
+                                                }
+                                            </FormControl>
+                                        </FormControlContainer>
+                                    </MeasurementWrapper>
                                     <div>
                                         <AddToCart
+                                            isInsectProtectionProduct={true}
+                                            showGetSampleButton={false}
                                             canAddCart={canAddCart}
                                             itemPrice={validPrice + configPrice}
                                             validPrice={validPrice}
@@ -705,4 +718,4 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     );
 }
 
-export default NDimProduct;
+export default InsectProducts;

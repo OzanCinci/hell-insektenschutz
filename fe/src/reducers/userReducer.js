@@ -18,6 +18,7 @@ import {
     CHANGE_ALL_WISHLIST,
 } from "../constants/user"
 import {convertDateForWishlist} from "../utils/datetime";
+import {checkInsectProductExists} from "../utils/shipping";
 // SAMPLE CART DATA EXAMPLE
 const emptyCart = {
     numberOfItems: 0,
@@ -59,6 +60,7 @@ function applyShippingPrice(arg) {
     else if (maxWidth<=5000)
         shippingCost = 99.90;
 
+    shippingCost = checkInsectProductExists(tmpCart.items, shippingCost);
     tmpCart.shippingPrice = shippingCost;
     return tmpCart;
 }

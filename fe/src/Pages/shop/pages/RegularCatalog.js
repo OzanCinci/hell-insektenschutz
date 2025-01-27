@@ -289,6 +289,16 @@ function RegularCatalog() {
                 <CustomButton onClick={(e)=>handleNavigate(e,assembly)} variant='outlined' color='warning'>Anleitung für die richtige Installation</CustomButton>
                 <CustomButton onClick={(e)=>handleFreeSampleClick(e)} variant='outlined' color='warning'>Gratis Muster</CustomButton>
         </ButtonWrapper>
+        <CardComponent data={data}/>
+    </>
+  )
+}
+
+
+export function CardComponent({data}) {
+    const nav = useNavigate();
+
+    return (
         <ProductsContainer>
             {
                 data.map((item,index)=>{
@@ -335,8 +345,8 @@ function RegularCatalog() {
                 })
             }
         </ProductsContainer>
-    </>
-  )
+    );
 }
+
 
 export default RegularCatalog;

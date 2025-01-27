@@ -5,6 +5,10 @@ import ArrowRightIcon from '@mui/icons-material/ArrowRight';
 import { useNavigate } from 'react-router-dom';
 import PersonalisierteImg from '../../../images/product/p5.jpg';
 import MaterialImg from '../../../images/product/p7.jpg';
+import {CardComponent} from "./RegularCatalog";
+import SpannrahmenImg from '../../../images/details/spannrahmen1.jpg';
+import PlisseeImg from '../../../images/dumps/turen4.jpg';
+import PendelturImg from '../../../images/details/pendaltür1.jpg';
 
 const ProductsContainer = styled.div`
     margin-bottom: 20px;
@@ -193,6 +197,62 @@ const aboutProductData = [
     }
 ]
 
+const productData = [
+    {
+        title: "Fliegengitter für Fenster - Spannrahmen",
+        image: SpannrahmenImg,
+        desc: [
+            "Hochwertige Fliegengitter mit Spannrahmen",
+            "bis 140 cm Breite",
+            "millimetergenau gefertigt",
+            "attraktives Preis-Leistungs-Verhältnis",
+            "passend für Standardgrößen und Maßanfertigungen",
+        ],
+        links: [
+            {
+                text: "Jetzt konfigurieren",
+                url: "/produkts/InsektenschutzFensterSpannrahmen/1",
+            }
+        ]
+    },
+    {
+        title: "Insektenschutz - Plisseetür",
+        image: PlisseeImg,
+        desc: [
+            "Hochwertige Fliegengitter in Form einer Plisseetür",
+            "bis 220 cm Breite",
+            "millimetergenau gefertigt",
+            "attraktives Preis-Leistungs-Verhältnis",
+            "passend für Standardgrößen und Maßanfertigungen",
+        ],
+        links: [
+            {
+                text: "Jetzt konfigurieren",
+                url: "/produkts/InsektenschutzPlisseetür/1",
+            }
+        ]
+    },
+    {
+        title: "Insektenschutz - Pendeltür",
+        image: PendelturImg,
+        desc: [
+            "Hochwertige Fliegengitter in Form einer Pendeltür",
+            "bis 130 cm Breite",
+            "millimetergenau gefertigt",
+            "attraktives Preis-Leistungs-Verhältnis",
+            "passend für Standardgrößen und Maßanfertigungen",
+        ],
+        links: [
+            {
+                text: "Jetzt konfigurieren",
+                url: "/produkts/InsektenschutzPendeltür/1",
+            }
+        ]
+    },
+
+];
+
+
 function Insek() {
     const nav = useNavigate();
 
@@ -205,6 +265,16 @@ function Insek() {
 
   return (
     <>
+        <div style={{margin: "auto", marginTop: "30px"}}>
+            <CardComponent data={productData}/>
+        </div>
+
+        <Splitter>
+            <Line></Line>
+            <LineText>Erfahren Sie mehr über unsere Produkte</LineText>
+            <Line></Line>
+        </Splitter>
+
         <ProductsContainer>
             {
                 data.map((item,index)=>{
@@ -240,10 +310,9 @@ function Insek() {
             }
         </ProductsContainer>
 
-
         <Splitter>
             <Line></Line>
-            <LineText>Über unsere Produkte</LineText>
+            <LineText>Über unsere material</LineText>
             <Line></Line>
         </Splitter>
 
