@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useFetch from '../../../hooks/useFetch';
@@ -97,21 +97,13 @@ const MeasurementWrapper = styled.div`
 `;
 
 
-const ShowPdfComponent = ({ pdfUrl }) => {
-    const iframeRef = useRef(null); // Reference to the iframe element
+const StyledModalBody = styled.div`
+  height: 85vh;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
+`;
 
-    // Function to handle iframe load event
-    const handleIframeLoad = () => {
-        const iframeDocument = iframeRef.current?.contentWindow?.document;
-        if (iframeDocument) {
-            const hackElement = iframeDocument.getElementById("eIphoneHack");
-            if (hackElement) {
-                hackElement.style.display = "none"; // Temporarily hide
-                hackElement.style.display = "initial"; // Reset display
-            }
-        }
-    };
-
+const ShowPdfComponent = styled(({ pdfUrl }) => {
     return (
         <div>
             <button
@@ -148,40 +140,33 @@ const ShowPdfComponent = ({ pdfUrl }) => {
                                         aria-label="Close"
                                     ></button>
                                 </div>
-                                <div
-                                    style={{
-                                        height: "85vh",
-                                        overflowY: "scroll",
-                                        WebkitOverflowScrolling: "touch",
-                                    }}
-                                >
-                                    <iframe
-                                        ref={iframeRef} // Attach ref to the iframe
-                                        src={pdfUrl}
-                                        title="PDF Viewer"
-                                        width="100%"
-                                        height="100%"
-                                        style={{ border: "none" }}
-                                        onLoad={handleIframeLoad} // Handle the iframe load event
-                                    />
-                                </div>
+                                <StyledModalBody>
+                                    {pdfUrl ? (
+                                        <embed
+                                            src={pdfUrl}
+                                            type="application/pdf"
+                                            width="100%"
+                                            height="100%"
+                                            style={{
+                                                border: "none",
+                                                minHeight: "100%",
+                                            }}
+                                        />
+                                    ) : (
+                                        <p>No PDF URL available</p>
+                                    )}
+                                </StyledModalBody>
                             </div>
                         </div>
                     </div>
                 </div>
             ) : (
-                <div>No PDF URL available</div>
+                <div></div>
             )}
         </div>
     );
-};
+})``;
 
-const StyledModalBody = styled.div`
-  height: 85vh;
-  border: 3px solid red; /* This replaces your #iframe-wrapper styles */
-  -webkit-overflow-scrolling: touch; /* Add smooth scrolling for iOS Safari */
-  overflow-y: scroll; /* Ensure scrollability */
-`;
 
 const SelectorComponent = styled(({data}) => {
     return (
@@ -322,6 +307,8 @@ function InsectProducts({dataFromJSON, extraCartInfoArray}) {
     const defaultImages = dataFromJSON.defaultImages;
     const selectionData = dataFromJSON.selectionData;
     const measurementUrl = dataFromJSON.measurementUrl;
+    const moreThanOnePdf = dataFromJSON.moreThanOnePdf;
+    const pdfArray = dataFromJSON.pdfArray;
     const measurementExplanation = dataFromJSON.measurementExplanation;
     const productDetailUrl = dataFromJSON.productDetailUrl;
     //const EXTERNAL_URL = dataFromJSON.EXTERNAL_URL;
@@ -602,11 +589,41 @@ function InsectProducts({dataFromJSON, extraCartInfoArray}) {
 
                                     <Title>Abmessungen</Title>
                                     <HowtoMeasureWrapper>
-
                                         {
-                                            measurementUrl !== null &&
+                                            moreThanOnePdf===true &&
                                             <>
-                                                {measurementExplanation!==null ? measurementExplanation : "Anleitung zum"}
+                                            {
+                                                pdfArray.map((item,index)=>{
+
+                                                    return (
+                                                        <li className="my-2" key={index}>
+                                                            {item.message !== null ? item.message : "Anleitung zum"}
+                                                            <span onClick={() => {
+                                                                    setPdfUrl(item.measurementUrl);
+                                                                    const button = document.getElementById("measurement-option-detail-btn");
+                                                                    if (button) {
+                                                                        setTimeout(() => {
+                                                                            button.click();
+                                                                        }, 0);
+                                                                    }
+                                                                }} className='mx-1' style={{
+                                                                    textDecoration: "underline",
+                                                                    color: "#f59f4c",
+                                                                    cursor: "pointer",
+                                                                    fontWeight: "bold"
+                                                                }}>
+                                                                Richtig messen
+                                                            </span>
+                                                        </li>
+                                                    );
+                                                })
+                                            }
+                                            </>
+                                        }
+                                        {
+                                            moreThanOnePdf !== true && measurementUrl !== null &&
+                                            <>
+                                                {measurementExplanation !== null ? measurementExplanation : "Anleitung zum"}
                                                 <span onClick={() => {
                                                     // measurementUrl
                                                     setPdfUrl(measurementUrl);

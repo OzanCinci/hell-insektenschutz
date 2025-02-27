@@ -405,7 +405,7 @@ const WrapperForFooter = styled.div`
 
 const MadeInGermanyLogo = styled.div`
   margin-left: 2vw;
-  margin-right: -3vw;
+  margin-right: -1.5vw;
   @media only screen and (max-width: 780px) {
     display: none;
   }
@@ -895,7 +895,7 @@ function Navbar(){
               <BurgerIcon toggle={toggle} setToggle={setToggle}/>
             </NavbarButtonWrapper>
             <MadeInGermanyLogo>
-              <img height={"55px"} src={MadeInGermanyIcon}></img>
+              <img height={"55px"} src={"https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/madein.png"}></img>
             </MadeInGermanyLogo>
           </LoginContainer>
         </LogoContainer>

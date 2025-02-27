@@ -245,6 +245,17 @@ export const insekProductData = {
         assemblyInfo: null,
         widthText: "(500-1400 mm)",
         heightText: "(400-1900 mm)",
+        moreThanOnePdf: true,
+        pdfArray: [
+            {
+                measurementUrl: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/SE14-31.pdf",
+                message: "Wenn Sie 'Fensterart' als 'Zurückgesetzte Flügel' auswählen, sehen Sie bitte SE/14-31."
+            },
+            {
+                measurementUrl: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/SE9.pdf",
+                message: "Wenn Sie 'Fensterart' als 'Flächenbündig' auswählen, sehen Sie bitte SE/9."
+            }
+        ],
     },
     "InsektenschutzPlisseetür": {
         defaultImages: [
@@ -343,9 +354,17 @@ export const insekProductData = {
         assemblyInfo: null,
         widthText: "(400-2200 mm)",
         heightText: "(700-2550 mm)",
-        measurementUrl: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/plisseetur.pdf",
-        isMesurementRedirect: true,
-        measurementExplanation: "Bitte überprüfen Sie PL22/3R0, wenn Sie 'Zusätzliche Bodenleiste' mit Nein ausgewählt haben. Wenn Ja, überprüfen Sie bitte PL22/3R.",
+        moreThanOnePdf: true,
+        pdfArray: [
+            {
+                measurementUrl: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/3r.pdf",
+                message: "Wenn Sie 'Zusätzliche Bodenleiste' als Ja auswählen, sehen Sie bitte PL22/3R."
+            },
+            {
+                measurementUrl: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/3ro.pdf",
+                message: "Wenn Sie 'Zusätzliche Bodenleiste' als Nein auswählen, sehen Sie bitte PL22/3R0."
+            }
+        ],
     },
     "InsektenschutzPendeltür": {
         defaultImages: [
