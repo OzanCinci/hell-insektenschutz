@@ -108,6 +108,7 @@ const Title = styled.div`
 `
 
 const ReviewDate = styled.div`
+  text-align: left;
   @media only screen and (max-width: 470px) {
     font-size: 14px;
   }
@@ -118,7 +119,7 @@ const SingleReview = styled(({name,date,rating,description})=>{
     <Container>
       <TopPart>
         <div>
-          <div style={{fontSize: "18px", borderBottom: "1px solid #f59f4c", textDecorationColor: "#f59f4c"}}>{name}</div>
+          <div style={{fontSize: "18px", borderBottom: "1px solid #f59f4c", textDecorationColor: "#f59f4c", textAlign: "left"}}>{name}</div>
           <ReviewDate>( {date} )</ReviewDate>
         </div>
         <div>
@@ -182,7 +183,7 @@ const settings = {
 const GoogleReviewContainer = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center:
+  justify-content: center;
   align-items: center;
   gap: 80px;
 
@@ -246,7 +247,7 @@ function Reviews({noAnimation}) {
             <div  className='d-flex flex-column justify-content-center'>
               <Font data-aos={noAnimation?"":"fade-up"}>Google Bewertungen</Font>
               <CommentCount data-aos={noAnimation?"":"fade-up"} className='d-flex flex-row justify-content-around'>
-                135+ Rezension
+                140+ Rezension
               </CommentCount>
               <div data-aos={noAnimation?"":"fade-up"} style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "2px"}}>
                 <img alt='star-img'  height='20px' src={StarImg}/>

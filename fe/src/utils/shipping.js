@@ -1,7 +1,6 @@
+import {insekProductData} from "../Pages/products/data/insekProductData";
 
-const insectProductNames = [
-    "Fliegengitter für Fenster (Spannrahmen)",
-];
+const insectProductNames = Object.values(insekProductData).map(val=>val.cartName);
 
 export function checkInsectProductExists(items, oldPrice) {
     const insectProductExists = items.filter(item => insectProductNames.includes(item.itemName)).length !== 0;

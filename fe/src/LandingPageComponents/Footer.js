@@ -5,6 +5,10 @@ import TelephoneIcon from '../images/footer/telephone-call.png'
 import InstagramIcon from '../images/footer/instagram.png'
 import FacebookIcon from '../images/footer/facebook.png'
 import TiktokIcon from '../images/footer/tiktok.png'
+import MasterCardIcon from '../images/footer/mastercard.svg';
+import VisaIcon from '../images/footer/visa.svg';
+import PaypalIcon from '../images/footer/paypal.svg';
+import BankTransferIcon from '../images/footer/bank-transfer.svg';
 import { useNavigate } from 'react-router-dom';
 
 const FooterContainer = styled.div`
@@ -64,10 +68,13 @@ const FooterWrapper = styled.div`
   max-width: 1250px;
 
   @media only screen and (max-width: 1000px) {
-    flex-direction: column;
-    gap: 20px;
+    flex-direction: column-reverse;
+    gap: 45px;
   }
-  
+
+  @media only screen and (max-width: 600px) {  
+    margin-top: -100px;
+  }
 `;
 
 const LogoImg = styled.img`
@@ -89,11 +96,29 @@ const LogoImg = styled.img`
 `;
 
 const Txt = styled.div`
-  &: hover {
+    transition: color 0.2s ease-in-out;
+    font-weight: 400;
+    
+    &:hover {
     cursor: pointer;
     color: black;
+    font-weight: 600;
   }
-  
+`;
+
+const FooterGeneralInfoWrapper = styled.div`
+    text-align: left;
+    font-size: 18px;
+    max-width: 1200px;
+    cursor: pointer;
+    display: flex;
+    gap: 100px;
+    width: fit-content;
+
+    @media only screen and (max-width: 576px) {
+        gap: 40px;
+    }
+    
 `;
 
 
@@ -142,25 +167,37 @@ function Footer() {
             </a>
           </div>
         </div>
-        <div style={{textAlign: "center", fontSize: "18px", maxWidth: "400px", cursor:"pointer"}}>
-            <br></br>
-            <div>
-              <Txt onClick={()=>nav("/kontakt")}>Kontakt</Txt>
-              <Txt onClick={()=>nav("/impressum")} className='my-1'>Impressum</Txt>
-              <Txt onClick={()=>nav("/datenschutz")}>Datenschutz</Txt>
-              <Txt onClick={()=>nav("/widerrufsbelehrung")} className='my-1'>Widerrufsbelehrung</Txt>
-            </div>
-            
-            <br></br>
-            <div style={{textAlign: "left"}}>
-              <Txt onClick={()=>nav("/pforzheim")}> Insektenschutz im Raum Pforzheim</Txt>
-              <Txt onClick={()=>nav("/karlsruhe")} className='my-2'>Insektenschutz im Raum Karlsruhe</Txt>
-              <Txt onClick={()=>nav("/baden-baden")}>Insektenschutz im Raum Baden-Baden</Txt>
-            </div>
-        </div>
+          <div>
+              <FooterGeneralInfoWrapper>
+              <div>
+                  <div style={{textDecoration: "underline", fontSize: "21px"}}>Über uns:</div>
+                  <Txt onClick={() => nav("/kontakt")}>Kontakt</Txt>
+                  <Txt onClick={() => nav("/impressum")} className='my-1'>Impressum</Txt>
+                  <Txt onClick={() => nav("/datenschutz")}>Datenschutz</Txt>
+                  <Txt onClick={() => nav("/widerrufsbelehrung")} className='my-1'>Widerrufsbelehrung</Txt>
+              </div>
+              <div style={{textAlign: "left"}}>
+                  <div style={{textDecoration: "underline", fontSize: "21px"}}>Dienstleistungen:</div>
+                  <Txt onClick={() => nav("/")}>Plissees</Txt>
+                  <Txt onClick={() => nav("/")}>Jalousien</Txt>
+                  <Txt onClick={() => nav("/")}>Rollos</Txt>
+                  <Txt onClick={() => nav("/")}>Lamellenvorhang</Txt>
+                  <Txt onClick={() => nav("/")}>Insektenschutz</Txt>
+              </div>
+          </FooterGeneralInfoWrapper>
+          <FooterGeneralInfoWrapper className="my-4">
+              <div>
+                  <div style={{textDecoration: "underline", fontSize: "21px"}}>Zahlungsarten:</div>
+                  <span><img src={MasterCardIcon} height="80px" width="auto"/></span>
+                  <span className="mx-2"><img src={VisaIcon} height="80px" width="auto"/></span>
+                  <span><img src={PaypalIcon} height="80px" width="auto"/></span>
+                  <span className="mx-2"><img src={BankTransferIcon} height="80px" width="auto"/></span>
+              </div>
+          </FooterGeneralInfoWrapper>
+          </div>
       </FooterWrapper>
     </FooterContainer>
   )
 }
 
-export default Footer
+export default Footer;

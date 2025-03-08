@@ -1,30 +1,31 @@
 import React from 'react'
-import styled from 'styled-components';
-import P1 from '../images/product/p1.jpg'
-import P2 from '../images/product/p2.jpg'
-import P3 from '../images/product/p3.jpg'
-import P4 from '../images/product/p4.jpg'
-import P5 from '../images/product/p5.jpg'
-import P6 from '../images/product/p6.jpg'
-import P7 from '../images/product/p7.jpg'
 import { useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
 
-export const Row = styled(({img, title, text, def, showNav , func})=>{ 
-  // TODO: commented out version for later decision:
-  // <Wrapper data-aos={def?"fade-right":"fade-left"} def={def}>
+import P1 from '../images/product/p1.jpg';
+
+import PlisseeImage from '../images/shopCategories/PlisseeFreihaengend.webp';
+import HolzjalousieImage from '../images/shopCategories/holzjalousie.webp';
+import DoppelRolloImg from '../images/shopCategories/doppelrollo.webp';
+import LamellanImg from '../images/shopCategories/lamellan.webp';
+import InsekImg from '../images/shopCategories/insek.webp';
+
+
+const defaultButtonMsg = "Mehr Info";
+export const Row = styled(({img, title, text, def, showNav , func, buttonMsg = defaultButtonMsg})=>{
+  const isMainPage = buttonMsg === defaultButtonMsg;
   return (
-    <Wrapper def={def}>
+    <Wrapper isMainPage={isMainPage} def={def}>
         <ServiceImg src={img}/>
         <div  style={{textAlign:"left"}}>
           {title && <RowTitle>{title}</RowTitle>}
           <ServiceText>
             {text}
           </ServiceText>
-          {showNav && <MoreInfo onClick={func}>Mehr Info</MoreInfo>}
+          {showNav && <MoreInfo scaleRatioDefault={isMainPage} onClick={func}>{buttonMsg}</MoreInfo>}
         </div>
     </Wrapper>
   )})``;
-
 
 const MoreInfo = styled.div`
   font-size: 18px;
@@ -45,11 +46,11 @@ const MoreInfo = styled.div`
     content: "";
     position: absolute;
     left: 0;
-    bottom: 2px;
+    bottom: 1px;
     width: 100%;
     height: 2px;;
     background-color: #f59f4c;
-    transform: scaleX(0.4);
+    transform: ${props=>props.scaleRatioDefault ? "scaleX(0.4)" : "scaleX(0.7)"};
     border: 1px solid #f59f4c;
 
     transition: transform 150ms ease-in;
@@ -58,11 +59,11 @@ const MoreInfo = styled.div`
 `
 
 export const RowTitle = styled.div`
-  font-size: 18px;
+  font-size: 21px;
   margin: 15px auto;
   font-weight: bold;
   margin-left: 15px;
-`
+`;
 
 export const ServiceImg = styled.img`
   height: 300px;
@@ -97,8 +98,8 @@ export const ServiceText = styled.div`
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: ${props => props.def ? "row" : "row-reverse"};
-  max-width: 1000px;
-  gap: 80px;
+  max-width: ${props => !props.isMainPage ? "1250px" : "1000px"};
+  gap: ${props => !props.isMainPage ? "60px" : "80px"}; 
   align-items: center;
   margin-bottom: 20px;
 
@@ -110,7 +111,7 @@ export const Wrapper = styled.div`
     -moz-box-shadow: 24px 16px 31px -24px rgba(245,159,76,1);
     box-shadow: 24px 16px 31px -24px rgba(245,159,76,1);
 
-    width: 60%;
+    width: ${props => !props.isMainPage ? "100%" : "60%"};
     min-width: 300px;
     gap: 10px;
   }
@@ -122,8 +123,6 @@ export const ServiceWrapper = styled.div`
     justify-content: center;
     align-items: center;
     gap: 20px;
-
-    
 `;
 
 export const Container = styled.div`
@@ -134,57 +133,48 @@ export const Container = styled.div`
   align-items: center;
   margin: 40px 0px;
   padding: 20px;
-`
+`;
 
 const data = [
   {
-    img: P1,
-    text: "Drehtüren sind die 1. Wahl, wenn Sie ein Fliegengitter zum Öffnen für Balkon oder Terrasse suchen. Durch die Vielzahl an Varianten bieten wir Ihnen die optimale Lösung für Ihren Anwendungsfall. Die Öffnung erfolgt im Regelfall nach außen.",
-    def: true,
-    title: "Insektenschutz für Türen",
-    url: "/turen"
-  },
-  {
-    img: P2,
-    text: "Unsere Spannrahmen sind die beliebte Lösung für Fenster, die nur zum Lüften geöffnet oder gekippt werden. Unser Einhängesystem ermöglicht eine Montage ohne zu Bohren. Auch bei besonders eng anliegenden Rolloführungsschienen haben wir die richtige Lösung parat.",
+    img: PlisseeImage,
+    text: "Plissees sind die perfekte Lösung für stilvollen Sicht- und Sonnenschutz in jedem Raum. Sie bieten eine moderne Alternative zu klassischen Rollos und Jalousien und sind in verschiedenen Varianten erhältlich, um individuellen Bedürfnissen gerecht zu werden. Ob für Standardfenster, Dachfenster oder spezielle Sonderformen – Plissees lassen sich millimetergenau anpassen und überzeugen durch einfache Montage, hochwertige Stoffe und eine breite Auswahl an Designs.",
     def: false,
-    title: "Insektenschutz für Fenster",
-    url: "/fenster"
+    title: "Plissees",
+    url: "/geschaft/plissees",
+    buttonMsg: "Entdecke alle Varianten"
   },
   {
-    img: P3,
-    text: "Unsere Rollo-Systeme bieten Insektenschutz für nahezu jedes Dachflächenfenster. Egal ob Sie unsere Rollos ausgezogen haben, oder ob es in der Kassette auf Benutzung wartet – sie werden in Sachen Durchblick fast keinen Unterschied merken. Versprochen.",
+    img: HolzjalousieImage,
+    text: "Jalousien sind eine stilvolle und funktionale Lösung für Sicht- und Sonnenschutz in jedem Raum. Sie bieten eine präzise Lichtregulierung und sind in verschiedenen Varianten erhältlich, um individuellen Bedürfnissen gerecht zu werden. Unser Sortiment umfasst Basic Jalousie, Premium Jalousie und Holzjalousie. Ob aus Aluminium oder Holz – unsere Jalousien überzeugen durch hochwertige Verarbeitung, vielfältige Farb- und Designoptionen sowie einfache Montage, auch ohne Bohren.",
     def: true,
-    title: "Insektenschutz für Dachfenster",
-    url: "/dachfenster"
+    title: "Jalousien",
+    url: "/geschaft/jalousien",
+    buttonMsg: "Entdecke alle Varianten"
   },
   {
-    img: P4,
-    text: "Viele Möglichkeiten ein Ziel: Sauberkeit in Ihren Lichtschächten. Ob als clevere Nachrüstlösung oder als tragfähiges Gesamtelement – wir bieten für Ihre Anforderung die richtige Lösung.",
+    img: DoppelRolloImg,
+    text: "Rollos bieten stilvollen Sonnen- und Sichtschutz mit einfacher Bedienung. Unser Sortiment umfasst Premium Rollo, Basic Rollo, Smart Akku Rollo und Doppelrollo. Dank verschiedener Stoffe, Breiten und Montagemöglichkeiten – auch ohne Bohren – passen sie sich jedem Raum an. Ob klassisch, smart steuerbar oder mit doppeltem Stoff für flexible Lichtregulierung – unsere Rollos bieten Funktionalität und Design in einem.",
     def: false,
-    title: "Für Lichtschächte",
-    url: "/lich"
+    title: "Rollos",
+    url: "/geschaft/rollos",
+    buttonMsg: "Entdecke alle Varianten"
   },
   {
-    img: P5,
-    text: "Mit Ecken und Kanten oder sanften Radien? Unsere Abteilung für Sonderformen realisiert mit Präzision außergewöhnliche Rahmenformen für Ihre Fenster.",
+    img: LamellanImg,
+    text: "Lamellenvorhänge sind eine stilvolle Lösung für Sonnen- und Sichtschutz. Sie ermöglichen eine präzise Lichtregulierung und eignen sich besonders für große Fenster. Unser Sortiment umfasst Premium, Basic und Schräge Lamellenvorhänge. Mit verschiedenen Stoffen, Lamellenbreiten und Montagemöglichkeiten passen sie sich flexibel an Wohn- und Arbeitsräume an. Sie bieten eine elegante Kombination aus Design und Funktionalität.",
     def: true,
-    title: "Sonderformen",
-    url: "/sonderformen"
+    title: "Lamellenvorhang",
+    url: "/geschaft/lamellenvorhang",
+    buttonMsg: "Entdecke alle Varianten"
   },
   {
-    img: P6,
-    text: "Die perfekte Ergänzung für den Eingangsbereich ist ein Lämmermann-Fußabstreifer nach Maß. Edle Optik und leichte Reinigung sprechen für sich.",
+    img: InsekImg,
+    text: "Insektenschutz sorgt für frische Luft ohne lästige Insekten und bietet gleichzeitig eine klare Sicht nach draußen. Unser Sortiment umfasst Spannrahmen, Plisseetüren und Pendeltüren, die sich flexibel an Fenster und Türen anpassen. Sie sind millimetergenau gefertigt, einfach zu bedienen und sowohl in Standardgrößen als auch als Maßanfertigung erhältlich. Dank hochwertiger Materialien und durchdachtem Design bieten sie optimalen Schutz zu einem fairen Preis.",
     def: false,
-    title: "Zusatzprodukte",
-    url: "/zusatzprodukte"
-  },
-  {
-    img: P7,
-    text: "proAIR bietet Ihnen das Optimum an Durchsicht, Luftdurchlass und Haltbarkeit. Mit seiner offenen Siebfläche von 80% und extrem dünnen Fäden entsteht ein nahezu unsichtbarer Insektenschutz. Fiberglas – ein langzeiterprobter Werkstoff - ist zudem extrem reißfest und beständig gegen Witterungseinflüsse.",
-    def: true,
-    title: "Gewebearten",
-    url: "/gewebearten"
+    title: "Insektenschutz",
+    url: "/geschaft/insektenschutz",
+    buttonMsg: "Entdecke alle Varianten"
   },
 ]
 
@@ -206,7 +196,7 @@ function Products() {
       <GeneralTitle> Unsere Produkte</GeneralTitle>
       <ServiceWrapper>
         {
-          data.map((item,index)=> <Row key={index} func={()=>nav(item.url)} showNav={true} img={item.img}  text={item.text} def={item.def} title={item.title}/>)
+          data.map((item,index)=> <Row key={index} func={()=>nav(item.url)} showNav={true} img={item.img}  text={item.text} def={item.def} title={item.title} buttonMsg={item.buttonMsg}/>)
         }
       </ServiceWrapper>
     </Container>
