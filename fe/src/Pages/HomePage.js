@@ -9,6 +9,7 @@ import ImageGalery from '../LandingPageComponents/ImageGalery';
 import ProduktCatalog from '../LandingPageComponents/ProduktCatalog';
 import MainPageBanner from '../LandingPageComponents/MainPageBanner';
 import LandingImage from "../LandingPageComponents/LandingImage";
+import LandingPageProductSwiper from "../LandingPageComponents/LandingPageProductSwiper";
 
 const DesktopOnly = styled.div`
   @media only screen and (max-width: 900px) {
@@ -43,10 +44,11 @@ function HomePage() {
             */
         }
       <LandingImage/>
-      <ProduktCatalog/>
-      <Services/>
-      <Reviews/>
+      <LandingPageProductSwiper/>
+      {/*<ProduktCatalog/>*/}
       <Products/>
+      {/*<Services/>*/}
+      <Reviews/>
       <Map/>
     </div>
   )

@@ -1,9 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
-
-import P1 from '../images/product/p1.jpg';
-
 import PlisseeImage from '../images/shopCategories/PlisseeFreihaengend.webp';
 import HolzjalousieImage from '../images/shopCategories/holzjalousie.webp';
 import DoppelRolloImg from '../images/shopCategories/doppelrollo.webp';
@@ -176,13 +173,44 @@ const data = [
     url: "/geschaft/insektenschutz",
     buttonMsg: "Entdecke alle Varianten"
   },
-]
+];
 
-const GeneralTitle = styled.div`
-  font-size: 35px;
-  margin: 35px auto;
-  font-weight: bold;
-`
+const Splitter = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 90%;
+    margin: auto;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+`;
+
+const Line = styled.div`
+    border-bottom: 1px solid #696984;
+    flex-grow: 1;
+`;
+
+const LineText = styled.div`
+    color: #696984;
+    font-size: 25px;
+    font-weight: 700;
+    width: fit-content;
+    
+    @media only screen and (max-width: 550px) {
+        font-size: 20px;
+    }   
+`;
+
+const LineSeperatorTitleComponent = ({msg}) => {
+  return (
+      <Splitter>
+        <Line></Line>
+        <LineText>{msg}</LineText>
+        <Line></Line>
+      </Splitter>
+  );
+};
 
 function Products() {
   const navigate = useNavigate()
@@ -190,10 +218,9 @@ function Products() {
     navigate(arg);
   }
 
-
   return (
     <Container>
-      <GeneralTitle> Unsere Produkte</GeneralTitle>
+      <LineSeperatorTitleComponent msg={"Unser Produktkatalog"}/>
       <ServiceWrapper>
         {
           data.map((item,index)=> <Row key={index} func={()=>nav(item.url)} showNav={true} img={item.img}  text={item.text} def={item.def} title={item.title} buttonMsg={item.buttonMsg}/>)
@@ -203,4 +230,4 @@ function Products() {
   )
 }
 
-export default Products
+export default Products;
