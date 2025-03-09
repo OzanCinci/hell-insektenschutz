@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import styled from 'styled-components';
 import { Navigation } from 'swiper/modules';
@@ -15,17 +15,28 @@ import HolzHalousie from '../images/shop/jalousie_holz.webp';
 import AkuRollo from '../images/shop/rollo_aku.webp';
 import SingleProduct from './SingleProduct';
 
+import DoppelRolloTestImg from '../images/test/doppelrollo.jpg';
+import JalousienTestImg from '../images/test/jalousien.jpg';
+import LamellanTestImg from '../images/test/lamellan.jpg';
+import PlisseeTestImg from '../images/test/plissee.jpg';
+import RolloTestImg from '../images/test/rollo.jpg';
+
 import PrevArrowImage from '../images/landingPage/prev-arrow.svg';
 import NextArrowImage from '../images/landingPage/next-arrow.svg';
 
 const data = [
-    {title: "Plissee", image: PlisseImg, link: "/geschaft/plissees"},
+    {title: "Premium Plissee", image: PlisseeTestImg, link: "/geschaft/plissees/premium-plissee-optionen"},
+    {title: "Premium Jalousie", image: JalousienTestImg, link: "/geschaft/jalousie/premium-jalousie-optionen"},
+    {title: "Premium Rollo", image: RolloTestImg, link: "/geschaft/rollo/premium-rollo-optionen"},
+    {title: "Doppelrollo", image: DoppelRolloTestImg, link: "/geschaft/rollo/doppel-rollo-optionen"},
     {title: "Akku Rollo", image: AkuRollo, link: "/geschaft/rollo/akku-rollo-optionen"},
+    {title: "Insektenschutz", image: InsekImg, link: "/geschaft/insektenschutz"},
+    {title: "Holzjalousie", image: HolzHalousie, link: "/geschaft/jalousie/holzjalousie-optionen"},
+    {title: "Premium Lamellenvorhang", image: LamellanTestImg, link: "/geschaft/lamellenvorhang/premium-lamellenvorhang-optionen"},
+    {title: "Plissee", image: PlisseImg, link: "/geschaft/plissees"},
     {title: "Lamellenvorhang", image: LamellenvorhangImg, link: "/geschaft/lamellenvorhang"},
     {title: "Jalousie", image: JalousienImg, link: "/geschaft/jalousien"},
     {title: "Rollo", image: RollosImg, link: "/geschaft/rollos"},
-    {title: "Holzjalousie", image: HolzHalousie, link: "/geschaft/jalousie/holzjalousie-optionen"},
-    {title: "Insektenschutz", image: InsekImg, link: "/geschaft/insektenschutz"},
     {title: "Doppelrollo", image: DoppelRoolo, link: "/geschaft/rollo/doppel-rollo-optionen"},
 ];
 
@@ -117,7 +128,7 @@ const LineSeperatorTitleComponent = ({msg}) => {
     );
 };
 
-const ResponsiveCarousel = () => {
+const ResponsiveCarousel = ({maxHeight}) => {
     return (
         <>
             <LineSeperatorTitleComponent msg={"Unsere Produkte"}/>
@@ -132,8 +143,8 @@ const ResponsiveCarousel = () => {
                 >
                     {data.map((item) => (
                         <SwiperSlide key={item.title}>
-                            <div style={{border: '1px solid #ddd', borderRadius: '8px'}}>
-                                {<SingleProduct item={item}/>}
+                            <div className={"all-products-with-base"} style={{border: '1px solid #ddd', borderRadius: '8px'}}>
+                                {<SingleProduct item={item} maxHeight={maxHeight}/>}
                             </div>
                         </SwiperSlide>
                     ))}
@@ -144,9 +155,16 @@ const ResponsiveCarousel = () => {
 };
 
 function LandingPageProductSwiper() {
+    const [maxHeight, setMaxHeight] = useState(0);
+    useEffect(() => {
+        var elementsByClassName = document.getElementsByClassName("all-products-with-base");
+        const calculatedMaxHeight = Math.max(...Array.from(elementsByClassName).map(item => item.clientHeight));
+        setMaxHeight(calculatedMaxHeight);
+    }, []);
+
     return (
         <div>
-            <ResponsiveCarousel/>
+            <ResponsiveCarousel maxHeight={maxHeight}/>
         </div>
     );
 }

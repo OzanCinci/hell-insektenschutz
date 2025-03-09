@@ -7,6 +7,9 @@ const Container = styled.div`
     width: 22vw;
     padding: 20px 5px;
     cursor: pointer;
+    min-height: ${props => (props.maxHeight !== 0 && props.maxHeight !== null)
+                    ? `${props.maxHeight}px`
+                    : "0px"};
 
     &:hover {
         box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
@@ -45,11 +48,11 @@ const Title = styled.div`
     }
 `;
 
-function SingleProduct({item}) {
+function SingleProduct({item, maxHeight}) {
     const nav = useNavigate();
 
   return (
-    <Container onClick={()=>nav(item.link)}>
+    <Container maxHeight={maxHeight} onClick={()=>nav(item.link)}>
         <Title>{item.title}</Title>
         <CustomImg alt={`image for products of ${item.title} category`} src={item.image}/>
     </Container>

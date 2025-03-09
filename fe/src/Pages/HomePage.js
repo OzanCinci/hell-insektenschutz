@@ -47,8 +47,8 @@ function HomePage() {
       <LandingPageProductSwiper/>
       {/*<ProduktCatalog/>*/}
       <Products/>
-      {/*<Services/>*/}
       <Reviews/>
+      <Services/>
       <Map/>
     </div>
   )

@@ -2,8 +2,8 @@ import React from 'react'
 import {SingleSection} from '../CustomComponents/Components'
 import styled from 'styled-components'
 import liPhoto from '../images/landingPage/li.png';
-import service1 from '../images/Services/service1.jpg';
-import service2 from '../images/Services/service2.jpg';
+import service1 from '../images/shopCategories/wintergardenplissee.webp';
+import service2 from '../images/shopCategories/insek.webp';
 
 const liMap = [
   {
@@ -107,19 +107,20 @@ const serviceMap = [
   {
     title: null,
     img: service1,
-    text: "Schnaken und andere Insekten in Ihren Wohnräumen gehören bald der Vergangenheit an. Lehnen Sie sich entspannt zurück, Ihr Auftrag geht bei uns in Arbeit und Sie erhalten in Kürze millimetergenau gefertigte und optimal montierte Fliegengitter. Hochwertige Materialien, ein umfassendes Produktportfolio und erstklassige Kundenbetreuung zeichnen.",
-    def: true
+    text: "Intensive Sonneneinstrahlung und lästige Insekten in Ihren Wohnräumen gehören bald der Vergangenheit an. Lehnen Sie sich entspannt zurück – Ihr Auftrag geht bei uns in Arbeit, und Sie erhalten in Kürze millimetergenau gefertigte und optimal montierte Fliegengitter und Sonnenschutzsysteme. Hochwertige Materialien, ein umfassendes Produktportfolio und erstklassige Kundenbetreuung zeichnen unser Angebot aus.",
+    def: true,
   },
   {
     title: null,
     img: service2,
-    text: "Der Wunsch nach hellen, lichtdurchfluteten Räumen und energieeffizienten Häusern beeinflusst den modernen Objektbau. Klar, dass es unser Anspruch ist Fliegengitter zu produzieren, die nahezu unsichtbar sind und eine extrem komfortable Bedienung aufweisen. Unsere Mission ist, die besten Insektenschutzlösungen auf dem Markt zu bieten.",
+    text: "Der Wunsch nach hellen, lichtdurchfluteten Räumen und energieeffizienten Häusern beeinflusst den modernen Objektbau. Klar, dass es unser Anspruch ist, Fliegengitter zu produzieren, die nahezu unsichtbar sind, sowie Sonnenschutzlösungen, die für optimalen Licht- und Wärmeschutz sorgen. Unsere Produkte verbinden Ästhetik mit Funktionalität und bieten eine extrem komfortable Bedienung. Unsere Mission ist es, die besten Insektenschutz- und Sonnenschutzlösungen auf dem Markt zu bieten.",
     def: false
   }
 ]
 
 const ServiceImg = styled.img`
   height: 300px;
+  border-radius: 8px;
 
   @media only screen and (max-width: 1370px) {
     height: 250px;
@@ -133,9 +134,10 @@ const ServiceImg = styled.img`
 const Wrapper = styled.div`
   display: flex;
   flex-direction: ${props => props.def ? "row" : "row-reverse"};
-  max-width: 1000px;
+  max-width: 1100px;
   gap: 80px;
   align-items: center;
+  margin-top: 15px;
 `;
 
 const ServiceText = styled.div`
@@ -259,14 +261,55 @@ const AccordionText = styled.div`
   font-size: 18px;
 
   @media only screen and (max-width: 560px) {
-    font-size: 15px;
+    font-size: 20px;
   }
 `;
 
 const UlMobile = styled.ul`
 
 `
+const Splitter = styled.div`
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 90%;
+    margin: auto;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    margin-top: 45px;
 
+  @media only screen and (max-width: 550px) {
+    margin-bottom: 5px;
+    margin-top: 0px;
+  }
+`;
+
+const Line = styled.div`
+    border-bottom: 1px solid #696984;
+    flex-grow: 1;
+`;
+
+const LineText = styled.div`
+    color: #696984;
+    font-size: 25px;
+    font-weight: 700;
+    width: fit-content;
+    
+    @media only screen and (max-width: 550px) {
+        font-size: 23px;
+    }   
+`;
+
+const LineSeperatorTitleComponent = ({msg}) => {
+  return (
+      <Splitter>
+        <Line></Line>
+        <LineText>{msg}</LineText>
+        <Line></Line>
+      </Splitter>
+  );
+};
 
 function Services({noAnimation}) {
   return (
@@ -276,7 +319,7 @@ function Services({noAnimation}) {
           liMap.map((item,index) => <LiElement key={index} noAnimation={noAnimation} anim={"fade-up"} text={item.text} title={item.title}/>)
         }
       </LiContainer>
-      <SubTitle data-aos={noAnimation?"":"fade-up"}>Mehr über uns </SubTitle>
+      <LineSeperatorTitleComponent msg={"Mehr über uns"}/>
       <ServiceWrapper>
         <ServiceElement img={service1} noAnimation={noAnimation} text={serviceMap[0].text} def={true}/>
         <ServiceElement img={service2} noAnimation={noAnimation} text={serviceMap[1].text} def={false}/>
@@ -285,36 +328,59 @@ function Services({noAnimation}) {
       <div style={{overflow:"hidden"}}>
         <AccordionImg data-aos={noAnimation?"":"fade-up"}  src={service1}/>
       </div>
-      <AccordionWrapper data-aos={noAnimation?"":"fade-up"}>
+      <AccordionWrapper data-aos={noAnimation ? "" : "fade-up"}>
         <div class="accordion" id="accordionExample">
-          
+
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingTwo">
-              <button style={{fontSize: "15px"}} class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                Unsere Mission. 100% Insektenschutz
+              <button
+                  style={{ fontSize: "21px" }}
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseTwo"
+                  aria-expanded="false"
+                  aria-controls="collapseTwo">
+                Unsere Mission: 100% Schutz vor Sonne & Insekten
               </button>
             </h2>
             <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
               <AccordionText class="accordion-body">
-                Schnaken und andere Insekten in Ihren Wohnräumen gehören bald der Vergangenheit an. Lehnen Sie sich entspannt zurück, Ihr Auftrag geht bei uns in Arbeit und Sie erhalten in Kürze millimetergenau gefertigte und optimal montierte Fliegengitter. Hochwertige Materialien, ein umfassendes Produktportfolio und erstklassige Kundenbetreuung zeichnen.
+                Intensive Sonneneinstrahlung und lästige Insekten in Ihren Wohnräumen gehören bald der Vergangenheit an. Lehnen Sie sich entspannt zurück – Ihr Auftrag geht bei uns in Arbeit, und Sie erhalten in Kürze millimetergenau gefertigte und optimal montierte Fliegengitter und Sonnenschutzlösungen. Hochwertige Materialien, ein umfassendes Produktportfolio und erstklassige Kundenbetreuung zeichnen unser Angebot aus.
               </AccordionText>
             </div>
           </div>
+
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingThree">
-              <button style={{fontSize: "15px"}} class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                Schutz, der Freiheit schafft 
+              <button
+                  style={{ fontSize: "21px" }}
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseThree"
+                  aria-expanded="false"
+                  aria-controls="collapseThree">
+                Schutz, der Freiheit schafft
               </button>
             </h2>
             <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
               <AccordionText class="accordion-body">
-                Der Wunsch nach hellen, lichtdurchfluteten Räumen und energieeffizienten Häusern beeinflusst den modernen Objektbau. Klar, dass es unser Anspruch ist Fliegengitter zu produzieren, die nahezu unsichtbar sind und eine extrem komfortable Bedienung aufweisen. Unsere Mission ist, die besten Insektenschutzlösungen auf dem Markt zu bieten.
+                Der Wunsch nach hellen, lichtdurchfluteten Räumen und energieeffizienten Häusern beeinflusst den modernen Objektbau. Unser Anspruch ist es, Fliegengitter zu produzieren, die nahezu unsichtbar sind, und Sonnenschutzsysteme, die für ein angenehmes Raumklima sorgen. Unsere Produkte bieten effektiven Schutz und gleichzeitig eine komfortable Bedienung. Unsere Mission ist es, die besten Insektenschutz- und Sonnenschutzlösungen auf dem Markt zu bieten.
               </AccordionText>
             </div>
           </div>
+
           <div class="accordion-item">
             <h2 class="accordion-header" id="headingOne">
-              <button style={{fontSize: "15px"}} class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <button
+                  style={{ fontSize: "21px" }}
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#collapseOne"
+                  aria-expanded="true"
+                  aria-controls="collapseOne">
                 Hochwertig & Passgenau
               </button>
             </h2>
@@ -328,8 +394,10 @@ function Services({noAnimation}) {
               </AccordionText>
             </div>
           </div>
+
         </div>
       </AccordionWrapper>
+
 
     </ServiceContainer>
   )
