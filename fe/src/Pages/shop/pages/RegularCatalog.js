@@ -6,6 +6,7 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import Button from '@mui/material/Button';
 import { useLocation, useNavigate } from 'react-router-dom';
 import GratisMutterImg from '../../../images/shop/gratis.webp';
+import {RegularProductCatalogProductLink, StyledButtonLink} from "../../../CustomComponents/Link";
 
 const CustomButton = styled(Button)`
     margin-top: 5px !important;
@@ -112,7 +113,7 @@ const CustomImg = styled.img`
     }
 `;
 
-const Title = styled.div`
+const Title = styled.h2`
     text-align: left;
     color: #696984;
     font-size: 21px;
@@ -260,15 +261,8 @@ const freeSamplingData = {
 
 
 function RegularCatalog() {
-    const nav = useNavigate();
     const location = useLocation()?.pathname.split("/").at(-1);
     const {data, measurement, assembly} = catalogData[location];
-    //console.log("location: ", data);
-
-    const handleNavigate = (e, path) => {
-        e.preventDefault();
-        nav(path);
-    }
 
     const handleFreeSampleClick = (e) => {
         e.preventDefault();
@@ -285,8 +279,8 @@ function RegularCatalog() {
     <>
         <SelectorComponent data={freeSamplingData}/>
         <ButtonWrapper>
-                <CustomButton onClick={(e)=>handleNavigate(e,measurement)} variant='outlined' color='warning'>Anleitung für die richtige Messung</CustomButton>
-                <CustomButton onClick={(e)=>handleNavigate(e,assembly)} variant='outlined' color='warning'>Anleitung für die richtige Installation</CustomButton>
+                <CustomButton variant='outlined' color='warning'><StyledButtonLink to={measurement}>Anleitung für die richtige Messung</StyledButtonLink></CustomButton>
+                <CustomButton variant='outlined' color='warning'><StyledButtonLink to={assembly}>Anleitung für die richtige Installation</StyledButtonLink></CustomButton>
                 <CustomButton onClick={(e)=>handleFreeSampleClick(e)} variant='outlined' color='warning'>Gratis Muster</CustomButton>
         </ButtonWrapper>
         <CardComponent data={data}/>
@@ -296,7 +290,6 @@ function RegularCatalog() {
 
 
 export function CardComponent({data}) {
-    const nav = useNavigate();
 
     return (
         <ProductsContainer>
@@ -324,14 +317,14 @@ export function CardComponent({data}) {
                                     </Desc>
                                     <ClickForRedirectionWrapper>
                                         {
-                                            item.links.map((link)=>{
+                                            item.links.map((link, index)=>{
                                                 return (
-                                                    <div onClick={()=>nav(link.url)} style={{textDecoration:"none"}}>
+                                                    <div key={index} style={{textDecoration:"none"}}>
                                                         <div style={{marginBottom: "1px"}} key={link.text}>
                                                             <DoubleArrowIcon style={{ color: "#f59f4c" }}/>
-                                                            <ProductLink>
+                                                            <RegularProductCatalogProductLink to={link.url}>
                                                                 {link.text}
-                                                            </ProductLink>
+                                                            </RegularProductCatalogProductLink>
                                                         </div>
                                                     </div>
                                                 )

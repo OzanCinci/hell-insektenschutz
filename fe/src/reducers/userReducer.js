@@ -83,7 +83,6 @@ function processBasket(basket){
 
 
 export const wishlistCartReducer = (state = [], action) => {
-    console.log("wishlistCartReducer triggered: ", action);
     let updatedState, payload, currentItem, wishlistItem, uniqueCode;
     switch(action.type) {
         case CREATE_NEW_WISHLIST:
@@ -197,7 +196,6 @@ export const createReviewDataReducer = (state=null,action) => {
 }
 
 export const cartReducer = (state=emptyCart,action) => {
-    console.log("cartReducer triggered: ", action);
     let updatedState,uniqueCode,removedItem,selectedItem;
     switch(action.type){
         case CHANGE_SHIPPING_COST:

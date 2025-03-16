@@ -30,6 +30,11 @@ import RolloImgMobile from '../images/navbar/rollo.webp';
 import LamellenImgMobile from '../images/navbar/lamellen.webp';
 import InsekmgMobile from '../images/navbar/insektenschutz.webp';
 import QuestionImg  from '../images/navbar/question.webp';
+import {
+  NavbarDesktopListStyledLink,
+  NavbarDesktopSubListStyledLink,
+  NavbarLegalTextStyledLink, NavbarMobileListStyledLink
+} from "../CustomComponents/Link";
 
 
 const NavbarWrapper = styled.div`
@@ -142,13 +147,6 @@ const Legal = styled.div`
   }
 `;
 
-const LegalText = styled.div`
-  &:hover {
-    cursor: pointer;
-    color: #f59f4c;
-  }
-`;
-
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -178,15 +176,12 @@ const LogoContainer = styled.div`
   margin: 0px auto;
 
   @media only screen and (min-width: 1200px) {
-    
   }
 
   @media only screen and (max-width: 780px) {
     z-index: 100;
     position: relative;
   }
-
-  
 `;
 
 const LogoText = styled.div`
@@ -315,19 +310,6 @@ const ColTitle = styled.div`
 
   @media only screen and (max-width: 1200px) {
     font-size: 16px;
-  }
-`;
-
-const ColEntry = styled.div`
-    margin-bottom: 5px;
-    font-size: 17px;
-  
-    &:hover {
-      text-decoration: underline;
-    }
-
-  @media only screen and (max-width: 1200px) {
-    font-size: 15px;
   }
 `;
 
@@ -780,7 +762,13 @@ function Navbar(){
 
   function toggleFunction(nav){
     setClosedForNavigation(true);
-    navigate(nav);
+    if (nav!==null)
+      navigate(nav);
+    setToggle(false);
+  }
+
+  function triggerNavbarDesktopReset() {
+    setClosedForNavigation(true);
     setToggle(false);
   }
 
@@ -846,10 +834,10 @@ function Navbar(){
   return (
     <NavbarContainer toggle={toggle} id={"navbar-container-container-component"} overflowHeight={calcHeightWrapper}>
       <Legal>
-          <LegalText onClick={ () => toggleFunction("/agb")} >AGB</LegalText>
-          <LegalText onClick={ () => toggleFunction("/impressum")} >Impressum</LegalText>
-          <LegalText onClick={ () => toggleFunction("/widerrufsbelehrung")}>Widerrufsbelehrung</LegalText>
-          <LegalText onClick={ () => toggleFunction("/datenschutz")}>Datenschutz</LegalText>
+          <NavbarLegalTextStyledLink to="/agb" >AGB</NavbarLegalTextStyledLink>
+          <NavbarLegalTextStyledLink to="/impressum" >Impressum</NavbarLegalTextStyledLink>
+          <NavbarLegalTextStyledLink to="/widerrufsbelehrung">Widerrufsbelehrung</NavbarLegalTextStyledLink>
+          <NavbarLegalTextStyledLink to="/datenschutz">Datenschutz</NavbarLegalTextStyledLink>
       </Legal>
 
       <NavbarWrapper id={"navbar-wrapper-component"} toggle={toggle}>
@@ -901,29 +889,29 @@ function Navbar(){
         </LogoContainer>
         <BottomPart>
           <SingleBottomDivWrapper>
-            <SingleBottomDiv onMouseEnter={() => setClosedForNavigation(false)}>Plissees</SingleBottomDiv>
+            <NavbarDesktopListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees" onMouseEnter={() => setClosedForNavigation(false)}>Plissees</NavbarDesktopListStyledLink>
             <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
               <DropdownMenuInside>
                 <SingleColumn>
                   <ColTitle>Plissee nach Maß</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees")} >Plissees</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/premium-plissee-optionen")} >Premium Plissee</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/basic-plissee-optionen")}>Basic Plissee</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/premium-plissee-optionen")}>Waben Plissee</ColEntry>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees">Plissees</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/premium-plissee-optionen">Premium Plissee</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/basic-plissee-optionen">Basic Plissee</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/premium-plissee-optionen">Waben Plissee</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <ColTitle>Plissee nach Maß</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/wintergarten-plissee-optionen")}>Wintergarten Plissee</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/dachfenster-plissee-optionen")}>Dachfenster Plissee</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/sonderformen-plissee-optionen")}>Sonderformen Plissee</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/akku-plissee-optionen")}>Akku Plissee</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees/freihaengend-plissee-optionen")}>Freihaengend Plissee</ColEntry>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/wintergarten-plissee-optionen">Wintergarten Plissee</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/dachfenster-plissee-optionen">Dachfenster Plissee</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/sonderformen-plissee-optionen">Sonderformen Plissee</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/akku-plissee-optionen">Akku Plissee</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/freihaengend-plissee-optionen">Freihaengend Plissee</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <ColTitle>Plissee-Ratgeber</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/plissees")}>Gratis Muster</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/messanleitung/plissee")}>Richtige Messung</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/montageanleitung/plissee")}>Richtige Installation</ColEntry>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees">Gratis Muster</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/messanleitung/plissee">Richtige Messung</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/montageanleitung/plissee">Richtige Installation</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <CustomDropdownImg src={PlisseeImg} alt="image of plissee representing whole category"/>
@@ -934,22 +922,22 @@ function Navbar(){
           </SingleBottomDivWrapper>
 
           <SingleBottomDivWrapper>
-            <SingleBottomDiv onMouseEnter={()=>setClosedForNavigation(false)}>Jalousien</SingleBottomDiv>
+            <NavbarDesktopListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/jalousien" onMouseEnter={()=>setClosedForNavigation(false)}>Jalousien</NavbarDesktopListStyledLink>
             <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
               <DropdownMenuInside>
                 <SingleColumn>
                   <ColTitle>Jalousie nach Maß</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousien")} >Jalousien</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousie/premium-jalousie-optionen")} >Premium Jalousie</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousie/basic-jalousie-optionen")} >Basic Jalousie</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousie/holzjalousie-optionen")} >Holzjalousie</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousie/premium-jalousie-optionen")} >Smart Akku Jalousie</ColEntry>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/jalousien">Jalousien</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/jalousie/premium-jalousie-optionen">Premium Jalousie</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/jalousie/basic-jalousie-optionen">Basic Jalousie</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/jalousie/holzjalousie-optionen">Holzjalousie</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/jalousie/premium-jalousie-optionen">Smart Akku Jalousie</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <ColTitle>Jalousien-Ratgeber</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/jalousien")}>Gratis Muster</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/messanleitung/jalousie")}>Richtige Messung</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/montageanleitung/jalousie")}>Richtige Installation</ColEntry>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/jalousien">Gratis Muster</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/messanleitung/jalousie">Richtige Messung</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/montageanleitung/jalousie">Richtige Installation</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <CustomDropdownImg src={JalousienImg} alt="image of plissee representing whole category"/>
@@ -962,22 +950,22 @@ function Navbar(){
           </SingleBottomDivWrapper>
 
           <SingleBottomDivWrapper>
-            <SingleBottomDiv onMouseEnter={()=>setClosedForNavigation(false)}>Rollos</SingleBottomDiv>
+            <NavbarDesktopListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/rollos" onMouseEnter={()=>setClosedForNavigation(false)}>Rollos</NavbarDesktopListStyledLink>
             <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
               <DropdownMenuInside>
                 <SingleColumn>
                   <ColTitle>Rollo nach Maß</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/rollos")} >Rollos</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/rollo/premium-rollo-optionen")}> Premium Rollo</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/rollo/basic-rollo-optionen")}> Basic Rollo</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/rollo/doppel-rollo-optionen")}> Doppelrollo</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/rollo/akku-rollo-optionen")}> Smart Aku Rollo</ColEntry>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/rollos">Rollos</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/rollo/premium-rollo-optionen"> Premium Rollo</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/rollo/basic-rollo-optionen"> Basic Rollo</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/rollo/doppel-rollo-optionen"> Doppelrollo</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/rollo/akku-rollo-optionen"> Smart Aku Rollo</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <ColTitle>Rollo-Ratgeber</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/rollos")}>Gratis Muster</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/messanleitung/rollo")}>Richtige Messung</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/montageanleitung/rollo")}>Richtige Installation</ColEntry>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/rollos">Gratis Muster</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/messanleitung/rollo">Richtige Messung</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/montageanleitung/rollo">Richtige Installation</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <CustomDropdownImg src={RolloImg} alt="image of plissee representing whole category"/>
@@ -990,21 +978,21 @@ function Navbar(){
           </SingleBottomDivWrapper>
 
           <SingleBottomDivWrapper>
-            <SingleBottomDiv onMouseEnter={()=>setClosedForNavigation(false)}>Lamellenvorhang</SingleBottomDiv>
+            <NavbarDesktopListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/lamellenvorhang" onMouseEnter={()=>setClosedForNavigation(false)}>Lamellenvorhang</NavbarDesktopListStyledLink>
             <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
               <DropdownMenuInside>
                 <SingleColumn>
                   <ColTitle>Lamellenvorhang nach Maß</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/lamellenvorhang")} >Lamellenvorhang</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/lamellenvorhang/premium-lamellenvorhang-optionen")}> Premium Lamellenvorhang</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/lamellenvorhang/basic-lamellenvorhang-optionen")}> Basic Lamellenvorhang</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/lamellenvorhang/schrag-lamellenvorhang-optionen")}> Lamellenvorhang schräg</ColEntry>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/lamellenvorhang">Lamellenvorhang</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/lamellenvorhang/premium-lamellenvorhang-optionen"> Premium Lamellenvorhang</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/lamellenvorhang/basic-lamellenvorhang-optionen"> Basic Lamellenvorhang</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/lamellenvorhang/schrag-lamellenvorhang-optionen"> Lamellenvorhang schräg</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <ColTitle>Lamellenvorhang-Ratgeber</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/lamellenvorhang")}>Gratis Muster</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/messanleitung/lamellenvorhang")}>Richtige Messung</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/montageanleitung/lamellenvorhang")}>Richtige Installation</ColEntry>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/lamellenvorhang">Gratis Muster</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/messanleitung/lamellenvorhang">Richtige Messung</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/montageanleitung/lamellenvorhang">Richtige Installation</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <CustomDropdownImg src={LamellenImg} alt="image of primary Lamellenvorhang representing whole category"/>
@@ -1014,22 +1002,22 @@ function Navbar(){
           </SingleBottomDivWrapper>
 
           <SingleBottomDivWrapper>
-            <SingleBottomDiv onClick={() => toggleFunction("/geschaft/insektenschutz")} onMouseEnter={()=>setClosedForNavigation(false)}>Insektenschutz</SingleBottomDiv>
+            <NavbarDesktopListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/insektenschutz" onMouseEnter={()=>setClosedForNavigation(false)}>Insektenschutz</NavbarDesktopListStyledLink>
             <DropdownMenu closedForNavigation={closedForNavigation} calcHeight={calcHeight}>
               <DropdownMenuInside>
                 <SingleColumn>
                   <ColTitle>Insektenschutz nach Maß</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/geschaft/insektenschutz")} >Insektenschutz</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/produkts/InsektenschutzFensterSpannrahmen/1")} >Insektenschutz für Fenster - Spannrahmen</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/produkts/InsektenschutzPlisseetür/1")} >Insektenschutz - Plisseetür</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/produkts/InsektenschutzPendeltür/1")} >Insektenschutz - Pendeltür</ColEntry>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/insektenschutz">Insektenschutz</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/produkts/InsektenschutzFensterSpannrahmen/1">Insektenschutz für Fenster - Spannrahmen</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/produkts/InsektenschutzPlisseetür/1">Insektenschutz - Plisseetür</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/produkts/InsektenschutzPendeltür/1">Insektenschutz - Pendeltür</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <ColTitle>Erfahren Sie mehr über unsere Produkte</ColTitle>
-                  <ColEntry onClick={() => toggleFunction("/turen")} >Für Türen</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/fenster")} >Für Fenster</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/dachfenster")} >Für Dachfenster</ColEntry>
-                  <ColEntry onClick={() => toggleFunction("/lich")} >Für Lichtschächte</ColEntry>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/turen">Für Türen</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/fenster">Für Fenster</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/dachfenster">Für Dachfenster</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/lich">Für Lichtschächte</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <CustomDropdownImg src={InsekImg} alt="image of plissee representing whole category"/>
@@ -1040,7 +1028,7 @@ function Navbar(){
           </SingleBottomDivWrapper>
 
           <ExtendedSingleBottomDivWrapper>
-            <SingleBottomDiv onClick={()=>toggleFunction("/bestellung")} onMouseEnter={()=>setClosedForNavigation(false)}>Bestellung Suchen</SingleBottomDiv>
+            <NavbarDesktopListStyledLink onClick={triggerNavbarDesktopReset} to="/bestellung" onMouseEnter={()=>setClosedForNavigation(false)}>Bestellung Suchen</NavbarDesktopListStyledLink>
           </ExtendedSingleBottomDivWrapper>
         </BottomPart>
       </NavbarWrapper>
@@ -1100,17 +1088,16 @@ function Navbar(){
                           {
                             item?.data.map(singleData => {
                                 return (
-                                  <div
-                                    className="d-flex flex-row justify-content-between align-items-center"
-                                    style={{width: "85%", margin: "10px auto", fontSize: "18px"}}
+                                  <NavbarMobileListStyledLink
+                                    to={singleData.value}
                                     onClick={()=>{
-                                      toggleFunction(singleData.value);
+                                      triggerNavbarDesktopReset();
                                       setMove("75%");
                                     }}
                                   >
                                       <div style={{textAlign: "left"}}>{singleData.key}</div>
                                       <ArrowForwardIosIcon/>
-                                  </div>
+                                  </NavbarMobileListStyledLink>
                                 );
                             })
                           }

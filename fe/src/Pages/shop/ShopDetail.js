@@ -35,13 +35,13 @@ const InfoContainer = styled.div`
     }
 `;
 
-const InfoTitle = styled.div`
+const InfoTitle = styled.h1`
     color: rgb(82, 82, 102);
     font-weight: bold;
     font-size: 24px;
 
     @media only screen and (max-width: 470px) {
-        font-size: 19px;
+        font-size: 21px;
     }
 `;
 

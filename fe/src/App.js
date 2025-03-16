@@ -185,80 +185,80 @@ function App() {
 
         <ReviewModal/>
         <BrowserRouter>
-        <LoginPopUp/>
+          <LoginPopUp/>
           <Navbar/>
           <ScrollToTop/>
           <div style={{minHeight: "100vh"}}>
-            <Suspense fallback={<div><CircularProgress color='warning'/></div>}>
-              <Routes>
-                <Route exact path='/' element={<HomePage/>}/>
+              <Suspense fallback={<div><CircularProgress color='warning'/></div>}>
+                <Routes>
+                  <Route exact path='/' element={<HomePage/>}/>
 
-                <Route exact path='/turen' element={<Türen/>}/>
-                <Route exact path='/fenster' element={<Fenster/>}/>
-                <Route exact path='/dachfenster' element={<Dachfenster/>}/>
-                <Route exact path='/lich' element={<Lichtschachte/>}/>
-                <Route exact path='/sonderformen' element={<Sonderformen/>}/>
-                <Route exact path='/zusatzprodukte' element={<Zusatsprodukte/>}/>
-                <Route exact path='/gewebearten' element={<Gewebearten/>}/>
+                  <Route exact path='/turen' element={<Türen/>}/>
+                  <Route exact path='/fenster' element={<Fenster/>}/>
+                  <Route exact path='/dachfenster' element={<Dachfenster/>}/>
+                  <Route exact path='/lich' element={<Lichtschachte/>}/>
+                  <Route exact path='/sonderformen' element={<Sonderformen/>}/>
+                  <Route exact path='/zusatzprodukte' element={<Zusatsprodukte/>}/>
+                  <Route exact path='/gewebearten' element={<Gewebearten/>}/>
 
-                <Route exact path='/impressum' element={<Impressum/>}/>
-                <Route exact path='/agb' element={<Agb/>}/>
-                <Route exact path='/widerrufsbelehrung' element={<Widerrufsbelehrung/>}/>
-                <Route exact path='/datenschutz' element={<Datenschutz/>}/>
-                <Route exact path='/kontakt' element={<Kontakt/>}/>
+                  <Route exact path='/impressum' element={<Impressum/>}/>
+                  <Route exact path='/agb' element={<Agb/>}/>
+                  <Route exact path='/widerrufsbelehrung' element={<Widerrufsbelehrung/>}/>
+                  <Route exact path='/datenschutz' element={<Datenschutz/>}/>
+                  <Route exact path='/kontakt' element={<Kontakt/>}/>
 
-                <Route exact path='/pforzheim' element={<RaumPforzheim/>}/>
-                <Route exact path='/karlsruhe' element={<RaumKarlsruhe/>}/>
-                <Route exact path='/baden-baden' element={<RaumBaden/>}/>
+                  <Route exact path='/pforzheim' element={<RaumPforzheim/>}/>
+                  <Route exact path='/karlsruhe' element={<RaumKarlsruhe/>}/>
+                  <Route exact path='/baden-baden' element={<RaumBaden/>}/>
 
-                <Route exact path='/einzelheiten/:category/:detailName' element={<Detail/>}/>
+                  <Route exact path='/einzelheiten/:category/:detailName' element={<Detail/>}/>
 
-                <Route exact path='/profile' element={<Profile/>}/>
-                <Route exact path='/test' element={<PayPalTest/>}/>
+                  <Route exact path='/profile' element={<Profile/>}/>
+                  <Route exact path='/test' element={<PayPalTest/>}/>
 
-                <Route path='admin-panel' element={<AdminPanel/>}>
-                  <Route path='pending-reviews' element={<PendingReviews/>}/>
-                  <Route path='approved-reviews' element={<ApprovedReviews/>}/>
-                  <Route path='orders/:status' element={<ActiveOrderTable/>}/>
-                  <Route path='bestellnummber' element={<OrderSearch/>}/>
-                  <Route path='change-role' element={<ChangeRole/>}/>
-                  <Route path='transactions' element={<AllTransactions/>}/>
-                  <Route path='number-of-visits' element={<NumberOfVisitors/>}/>
-                  <Route path='discount-management' element={<DiscountManagement/>}/>
+                  <Route path='admin-panel' element={<AdminPanel/>}>
+                    <Route path='pending-reviews' element={<PendingReviews/>}/>
+                    <Route path='approved-reviews' element={<ApprovedReviews/>}/>
+                    <Route path='orders/:status' element={<ActiveOrderTable/>}/>
+                    <Route path='bestellnummber' element={<OrderSearch/>}/>
+                    <Route path='change-role' element={<ChangeRole/>}/>
+                    <Route path='transactions' element={<AllTransactions/>}/>
+                    <Route path='number-of-visits' element={<NumberOfVisitors/>}/>
+                    <Route path='discount-management' element={<DiscountManagement/>}/>
 
-                  <Route path='all-users' element={<AllUsers/>}/>
-                </Route>
+                    <Route path='all-users' element={<AllUsers/>}/>
+                  </Route>
 
 
-                <Route path='order-create' element={<CreateOrder/>}/>
-                <Route path='order-success' element={<OrderSuccess/>}/>
+                  <Route path='order-create' element={<CreateOrder/>}/>
+                  <Route path='order-success' element={<OrderSuccess/>}/>
 
-                <Route path='bestellung' element={<SearchOrder/>}/>
+                  <Route path='bestellung' element={<SearchOrder/>}/>
 
-                <Route path='warenkorb' element={<Warenkorb/>}/>
+                  <Route path='warenkorb' element={<Warenkorb/>}/>
 
-                <Route path='geschaft' element={<ShopLanding/>}/>
+                  <Route path='geschaft' element={<ShopLanding/>}/>
 
-                <Route path='geschaft' element={<ShopDetail/>}>
-                  <Route path='plissees' element={<RegularCatalog/>}/>
-                  <Route path='jalousien' element={<RegularCatalog/>}/>
-                  <Route path='rollos' element={<RegularCatalog/>}/>
-                  <Route path='lamellenvorhang' element={<RegularCatalog/>}/>
-                  <Route path='insektenschutz' element={<Insek/>}/>
-                </Route>
+                  <Route path='geschaft' element={<ShopDetail/>}>
+                    <Route path='plissees' element={<RegularCatalog/>}/>
+                    <Route path='jalousien' element={<RegularCatalog/>}/>
+                    <Route path='rollos' element={<RegularCatalog/>}/>
+                    <Route path='lamellenvorhang' element={<RegularCatalog/>}/>
+                    <Route path='insektenschutz' element={<Insek/>}/>
+                  </Route>
 
-                <Route path='/geschaft/:category/:model' element={<OptionsPage/>}/>
-                <Route path='/produkts/:produkt/:id' element={<Wrapper/>}/>
-                <Route path='/messanleitung/:category' element={<Measurement/>}/>
-                <Route path='/montageanleitung/:category' element={<HowToInstall/>}/>
+                  <Route path='/geschaft/:category/:model' element={<OptionsPage/>}/>
+                  <Route path='/produkts/:produkt/:id' element={<Wrapper/>}/>
+                  <Route path='/messanleitung/:category' element={<Measurement/>}/>
+                  <Route path='/montageanleitung/:category' element={<HowToInstall/>}/>
 
-                <Route path='/passwort-vergessen' element={<PasswordResetMailSender/>}/>
-                <Route path='/passwort-reset' element={<CreateNewPassword/>}/>
+                  <Route path='/passwort-vergessen' element={<PasswordResetMailSender/>}/>
+                  <Route path='/passwort-reset' element={<CreateNewPassword/>}/>
 
-                <Route default path='/*' element={<PageNotFound/>}/>
-              </Routes>
-            </Suspense>
-          </div>
+                  <Route default path='/*' element={<PageNotFound/>}/>
+                </Routes>
+              </Suspense>
+            </div>
           <Footer/>
         </BrowserRouter>
 

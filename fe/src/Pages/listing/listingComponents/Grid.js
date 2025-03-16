@@ -292,7 +292,7 @@ const LeftCol = styled.div`
     }
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
     font-size: 24px;
     font-weight: bold;
     color: rgb(82, 82, 102);
