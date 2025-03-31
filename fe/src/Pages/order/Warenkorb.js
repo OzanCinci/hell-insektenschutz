@@ -33,6 +33,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Checkbox from "@mui/material/Checkbox";
 import {convertDateForWishlist} from "../../utils/datetime";
 import {checkInsectProductExists} from "../../utils/shipping";
+import {insekProductData} from "../products/data/insekProductData";
 
 const Container = styled.div`
     min-height: 100vh;
@@ -530,7 +531,6 @@ const CustomExpandMoreIcon = styled(ExpandMoreIcon)`
     color: orange;
 `;
 
-
 const moreDetailObj = {
     title: "über den Versand",
     img: ShippingPriceTable,
@@ -546,6 +546,9 @@ const moreDetailObj = {
 };
 
 
+
+const insectProductNames = Object.values(insekProductData).map(val=>val.cartName);
+
 function Warenkorb() {
     const cart = useSelector(state=>state.cart);
     const {userInfo} = useSelector(state=>state.login);
@@ -556,6 +559,8 @@ function Warenkorb() {
     const {discountOptionMap} = useSelector(state=>state.config);
     const enableDiscount = discountOptionMap["PUBLIC"] != null;
     const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0.0;
+    const enableDiscountInsektenschutz = discountOptionMap["INSEKTENSCHUTZ"] != null;
+    const percentageInsektenschutz = discountOptionMap["INSEKTENSCHUTZ"]?.percentage ?? 0.0;
     const dealerArray = Object.keys(discountOptionMap);
 
     const [totalDiscount, setTotalDiscount] = useState({
@@ -564,10 +569,10 @@ function Warenkorb() {
         discountAmount: 0,
     });
 
-
     useEffect(() => {
         const totals = cart.items.reduce(
             (accumulator, item) => {
+                console.log("item name :", item.itemName);
                 if (item.enableDiscount) {
                     accumulator.amount += item.price * item.quantity;
                     accumulator.discountAmount += item.price * item.quantity * item.discountPercentage;
@@ -594,6 +599,7 @@ function Warenkorb() {
         // validate discounts
         let tmpCart = {...cart};
         tmpCart.items = tmpCart.items.map(item => {
+            console.log("item name 2 :", item.itemName);
             // partner discount
             if (userInfo && userInfo.email && dealerArray.includes(userInfo.email)) {
                 item.enableDiscount = true;
@@ -601,8 +607,10 @@ function Warenkorb() {
                 return item;
             }
 
-            // apply new discounts
-            if (!enableDiscount) {
+            if (insectProductNames.includes(item.itemName) && enableDiscountInsektenschutz) {
+                item.enableDiscount = true;
+                item.discountPercentage = percentageInsektenschutz;
+            } else if (!enableDiscount) {
                 item.enableDiscount = false;
                 item.discountPercentage = 0;
             } else {
@@ -625,8 +633,10 @@ function Warenkorb() {
                     return singleItem;
                 }
 
-                // apply new discounts
-                if (!enableDiscount) {
+                if (insectProductNames.includes(singleItem.itemName) && enableDiscountInsektenschutz) {
+                    singleItem.enableDiscount = true;
+                    singleItem.discountPercentage = percentageInsektenschutz;
+                } else if (!enableDiscount) {
                     singleItem.enableDiscount = false;
                     singleItem.discountPercentage = 0;
                 } else {

@@ -96,7 +96,6 @@ const MeasurementWrapper = styled.div`
     margin-bottom: 50px;
 `;
 
-
 const StyledModalBody = styled.div`
   height: 85vh;
   -webkit-overflow-scrolling: touch;
@@ -166,7 +165,6 @@ const ShowPdfComponent = styled(({ pdfUrl }) => {
         </div>
     );
 })``;
-
 
 const SelectorComponent = styled(({data}) => {
     return (
@@ -311,7 +309,6 @@ function InsectProducts({dataFromJSON, extraCartInfoArray}) {
     const pdfArray = dataFromJSON.pdfArray;
     const measurementExplanation = dataFromJSON.measurementExplanation;
     const productDetailUrl = dataFromJSON.productDetailUrl;
-    //const EXTERNAL_URL = dataFromJSON.EXTERNAL_URL;
     const widthText = dataFromJSON.widthText;
     const heightText = dataFromJSON.heightText;
     const priceType = dataFromJSON.priceType;
@@ -322,18 +319,15 @@ function InsectProducts({dataFromJSON, extraCartInfoArray}) {
     const cartName = dataFromJSON.cartName;
     /////// PARSE DATA IMMEDIATELY ///////
 
-
     const dispatch = useDispatch();
     const nav = useNavigate();
     const [moreDetailInfo, setMoreDetailInfo] = useState(null);
     const {userInfo} = useSelector(state=>state.login);
     const {discountOptionMap} = useSelector(state=>state.config);
-    const enableDiscount = discountOptionMap["PUBLIC"] != null;
-    const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0.0;
-
+    const enableDiscount = discountOptionMap["INSEKTENSCHUTZ"] != null;
+    const percentage = discountOptionMap["INSEKTENSCHUTZ"]?.percentage ?? 0.0;
 
     const [pdfUrl, setPdfUrl] = useState(null);
-
 
     /////// ITEM REQUEST AND RESPONSE DATA ///////
     const { data, loading, error } = useFetch(productDetailUrl, config, 0);
@@ -348,8 +342,6 @@ function InsectProducts({dataFromJSON, extraCartInfoArray}) {
         }
     }, [data]);
     /////// ITEM REQUEST AND RESPONSE DATA ///////
-
-
 
     /////// CONFIGURATION DATA ///////
     const [canAddCart,setCanAddCart] = useState(true);
@@ -423,7 +415,6 @@ function InsectProducts({dataFromJSON, extraCartInfoArray}) {
         }
     }
 
-    // Wrap the getPriceFromBackend function with debounce
     const debouncedGetPriceFromBackend = useCallback(debounce(getPriceFromBackend, 1000), []);
     /////// TOTAL PRICE DATA ///////
 
@@ -715,6 +706,7 @@ function InsectProducts({dataFromJSON, extraCartInfoArray}) {
                                             setMoreDetailInfo={setMoreDetailInfo}
                                             handleAddIntoCard={handleAddIntoCard}
                                             handleAddFreeSamplingIntoCard={handleAddFreeSamplingIntoCard}
+                                            defaultCategoryForDiscount={"INSEKTENSCHUTZ"}
                                         />
                                     </div>
                                 </RightColumn>

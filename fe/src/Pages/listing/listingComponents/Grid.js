@@ -359,8 +359,6 @@ const Grid = ({ loading, data, link, productInfoUrl }) => {
           });
     },[]);
 
-
-
     useEffect(() => {
         const startIndex = (currentPage - 1) * itemsPerPage;
         const endIndex = startIndex + itemsPerPage;
@@ -378,7 +376,6 @@ const Grid = ({ loading, data, link, productInfoUrl }) => {
     useEffect(()=>{
         setCurrentPage(1);
     },[data]);
-
 
     const toggleDetail = (index) => {
         setDetailVisible(prevState => {

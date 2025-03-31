@@ -122,11 +122,11 @@ const moreDetailObj = {
     ]
 };
 
-function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart, handleAddFreeSamplingIntoCard,validPrice, showGetSampleButton = true, isInsectProtectionProduct=false}) {
+function AddToCart({itemPrice, setMoreDetailInfo, handleAddIntoCard, canAddCart, handleAddFreeSamplingIntoCard,validPrice, showGetSampleButton = true, isInsectProtectionProduct=false, defaultCategoryForDiscount = "PUBLIC"}) {
     const [quantity,setQuantity] = useState(1);
     const {discountOptionMap} = useSelector(state=>state.config);
-    const enableDiscount = discountOptionMap["PUBLIC"] != null;
-    const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0.0;
+    const enableDiscount = discountOptionMap[defaultCategoryForDiscount] != null;
+    const percentage = discountOptionMap[defaultCategoryForDiscount]?.percentage ?? 0.0;
 
     const handleSetMoreInfoClick = (e) => {
         e.preventDefault();
