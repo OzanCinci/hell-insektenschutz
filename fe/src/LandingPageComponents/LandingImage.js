@@ -136,6 +136,8 @@ const Subtitle = styled.p`
     }
 `;
 
+// <Title>20% Rabatt auf Premium Coulisse Akku Rollos</Title>
+// <Title>Premium Coulisse Akku Rollos</Title>
 
 function LandingImage() {
     const nav = useNavigate();
@@ -145,7 +147,7 @@ function LandingImage() {
             <Wrapper>
                 <CustomIFrame src="https://player.vimeo.com/video/756709552?app_id=122963&background=1" title="HTML Viewer" />
                 <AbsoluteText>
-                    <Title>Premium Coulisse Akku Rollos</Title>
+                    <Title>20% Rabatt auf Akku Rollos</Title>
                     <Subtitle>
                         Die Rollo-Generation der Zukunft bei Hell Insekten&Sonnenschutz
                     </Subtitle>

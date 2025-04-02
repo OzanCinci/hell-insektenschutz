@@ -25,19 +25,19 @@ import PrevArrowImage from '../images/landingPage/prev-arrow.svg';
 import NextArrowImage from '../images/landingPage/next-arrow.svg';
 
 const data = [
-    {title: "Premium Plissee", image: PlisseeTestImg, link: "/geschaft/plissees/premium-plissee-optionen"},
-    {title: "Premium Jalousie", image: JalousienTestImg, link: "/geschaft/jalousie/premium-jalousie-optionen"},
-    {title: "Premium Rollo", image: RolloTestImg, link: "/geschaft/rollo/premium-rollo-optionen"},
-    {title: "Doppelrollo", image: DoppelRolloTestImg, link: "/geschaft/rollo/doppel-rollo-optionen"},
-    {title: "Akku Rollo", image: AkuRollo, link: "/geschaft/rollo/akku-rollo-optionen"},
-    {title: "Insektenschutz", image: InsekImg, link: "/geschaft/insektenschutz"},
-    {title: "Holzjalousie", image: HolzHalousie, link: "/geschaft/jalousie/holzjalousie-optionen"},
-    {title: "Premium Lamellenvorhang", image: LamellanTestImg, link: "/geschaft/lamellenvorhang/premium-lamellenvorhang-optionen"},
-    {title: "Plissee", image: PlisseImg, link: "/geschaft/plissees"},
-    {title: "Lamellenvorhang", image: LamellenvorhangImg, link: "/geschaft/lamellenvorhang"},
-    {title: "Jalousie", image: JalousienImg, link: "/geschaft/jalousien"},
-    {title: "Rollo", image: RollosImg, link: "/geschaft/rollos"},
-    {title: "Doppelrollo", image: DoppelRoolo, link: "/geschaft/rollo/doppel-rollo-optionen"},
+    {title: "Premium Plissee", image: PlisseeTestImg, link: "/geschaft/plissees/premium-plissee-optionen", discountAmount: 20},
+    {title: "Premium Jalousie", image: JalousienTestImg, link: "/geschaft/jalousie/premium-jalousie-optionen", discountAmount: 20},
+    {title: "Premium Rollo", image: RolloTestImg, link: "/geschaft/rollo/premium-rollo-optionen", discountAmount: 20},
+    {title: "Doppelrollo", image: DoppelRolloTestImg, link: "/geschaft/rollo/doppel-rollo-optionen", discountAmount: 20},
+    {title: "Akku Rollo", image: AkuRollo, link: "/geschaft/rollo/akku-rollo-optionen", discountAmount: 20},
+    {title: "Insektenschutz", image: InsekImg, link: "/geschaft/insektenschutz", discountAmount: 10},
+    {title: "Holzjalousie", image: HolzHalousie, link: "/geschaft/jalousie/holzjalousie-optionen", discountAmount: 20},
+    {title: "Premium Lamellenvorhang", image: LamellanTestImg, link: "/geschaft/lamellenvorhang/premium-lamellenvorhang-optionen", discountAmount: 20},
+    {title: "Plissee", image: PlisseImg, link: "/geschaft/plissees", discountAmount: 20},
+    {title: "Lamellenvorhang", image: LamellenvorhangImg, link: "/geschaft/lamellenvorhang", discountAmount: 20},
+    {title: "Jalousie", image: JalousienImg, link: "/geschaft/jalousien", discountAmount: 20},
+    {title: "Rollo", image: RollosImg, link: "/geschaft/rollos", discountAmount: 20},
+    {title: "Doppelrollo", image: DoppelRoolo, link: "/geschaft/rollo/doppel-rollo-optionen", discountAmount: 20},
 ];
 
 const CustomSwiperContainer = styled.div`
