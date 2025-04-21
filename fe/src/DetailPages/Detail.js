@@ -56,10 +56,11 @@ const WelcomingTextWrapper = styled.div`
   max-width: 1000px;
 `;
 
-const WelcomeTitle = styled.div`
+const WelcomeTitle = styled.h1`
   margin-top: 20px;
   font-size: 35px;
   font-weight: 600;
+  color: #696984;
 
   @media only screen and (max-width: 1000px) {
     font-size: 30px;

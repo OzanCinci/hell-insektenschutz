@@ -21,6 +21,7 @@ import DiscountManagement from "./Pages/admin/adminPanelComponents/discount/Disc
 import {handleLoadDiscountConfig} from "./config/configRequests";
 import {useDispatch} from "react-redux";
 import {SET_CONFIG} from "./constants/config";
+import SEOManager from "./SeoManager";
 
 // Lazy load the components
 const HomePage = lazy(() => import('./Pages/HomePage'));
@@ -188,6 +189,7 @@ function App() {
           <LoginPopUp/>
           <Navbar/>
           <ScrollToTop/>
+          <SEOManager/>
           <div style={{minHeight: "100vh"}}>
               <Suspense fallback={<div><CircularProgress color='warning'/></div>}>
                 <Routes>

@@ -61,10 +61,11 @@ const Wrapper = styled.div`
     }
 `;
 
-const Title = styled.div`
+const Title = styled.h1`
     font-weight: bold;
     font-size: 26px;
     margin-bottom: 10px;
+    text-align: left !important;
 
     @media only screen and (max-width: 700px) {
         font-size: 24px;
@@ -94,7 +95,7 @@ const Text = styled.div`
 `
 
 
-function Header() {
+function Header({h1}) {
   return (
     <Container>
         <div class="custom-shape-divider-bottom-1692191223">
@@ -103,7 +104,7 @@ function Header() {
             </svg>
         </div>
         <Wrapper>
-            <Title>Ihr Weg zum maßgefertigten Insektenschutz</Title>
+            <Title>{h1}</Title>
             <Text>
                 Weiterdenken heißt für uns konkret: Ein gutes Produkt wird erst perfekt durch seine Details, deshalb optimieren wir unsere Varianten stets weiter. Eine rationelle Produktion mit höchster Wiederholgenauigkeit, sowie optimale Montagevoraussetzungen legen den Grundstein für das Endkundenerlebnis "Premium-Insektenschutz“.
             </Text>

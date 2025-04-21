@@ -121,6 +121,12 @@ export const RegularProductCatalogProductLink = styled(BaseLink)`
     }
 `;
 
+export const RegularProductCatalogProductLinkWithoutHover = styled(RegularProductCatalogProductLink)`
+    &:hover {
+        text-decoration: none;
+    }
+`;
+
 export const ProductCartLink = styled(BaseLink)`
     display: block; /* Ensures it behaves like a div */
     max-width: 330px;

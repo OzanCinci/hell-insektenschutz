@@ -158,7 +158,7 @@ const config = {
 };
 
 
-function Carousel({images, itemData,productDetailUrl,setCurrentProduct,itemName2}) {
+function Carousel({images, itemData, productDetailUrl, setCurrentProduct, itemName2}) {
     const [i,setI] = useState(0);
     const [slide,setSlide] = useState(0);
     const [itemName, setItemName] = useState(null);
@@ -227,7 +227,7 @@ function Carousel({images, itemData,productDetailUrl,setCurrentProduct,itemName2
                     style={{ textAlign: "left", paddingLeft: "10px", color: "rgb(82, 82, 102)"}}>
                     <KeyboardDoubleArrowLeftIcon fontSize='medium' color='warning'/>     
                     <span style={{cursor: "pointer", fontSize: "16px"}} onClick={()=>window.history.back()}>Zurück</span>
-                    <div style={{fontSize: "21px", marginTop: "3px"}}>{itemName}</div>
+                    <h1 style={{fontSize: "21px", marginTop: "3px"}}>{itemName}</h1>
                 </div>
                 <div style={{textAlign: "right"}}>
                     <RatingContainer>
@@ -280,7 +280,7 @@ function Carousel({images, itemData,productDetailUrl,setCurrentProduct,itemName2
                         <KeyboardDoubleArrowLeftIcon fontSize='medium' color='warning'/>
                         Zurück
                     </span>
-                    <div style={{fontSize: "21px"}}>{itemName}</div>
+                    <h1 style={{fontSize: "21px"}}>{itemName}</h1>
                 </div>
                 <div style={{textAlign: "right"}}>
                     <RatingContainer>

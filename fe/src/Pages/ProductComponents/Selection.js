@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -173,7 +173,7 @@ function arraysEqual(arr1, arr2) {
     return true;
 }
 
-function Selection({ optionList, itemConfiguration, setItemConfiguration, setMoreDetailInfo,index }) {
+function Selection({ optionList, itemConfiguration, setItemConfiguration, setMoreDetailInfo, index }) {
     const [active, setActive] = useState(null);
     const [internalChoice, setInternalChoice] = useState(false);
     const [availableList, setAvailableList] = useState([]);
@@ -181,10 +181,8 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
     const [selectedPrice, setSelectedPrice] = useState({});
 
 
-    // experimental //
     useEffect(()=>{
         if (Array.isArray(active)) {
-            //console.log("CHECKPOINT: 1 -> ", optionList.title);
             // detect if anything in is active
             // but not in the itemConfiguration list
             const currentSelectionArray = itemConfiguration[optionList.title];
@@ -207,13 +205,11 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
             }
 
             const allFalse = finalActiveList.every(value => value === false);
-            //console.log("GGGGGGGGG: ", optionList.title, finalActiveList);
             setActive([...finalActiveList]);
             if (finalActiveList.length!==0 && allFalse) {
                 const shouldSelect = availableList[0].defaultSelected;
                 if (shouldSelect) {
                     finalActiveList[0] = true;
-                    // get the button and click it
                     const btnId = `${optionList.title}-btn-0`;
                     const button = document.getElementById(btnId);
                     if (button) {
@@ -224,9 +220,7 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 }
             } 
 
-            //setActive([...finalActiveList]);
-        } else if (optionList.multichoice===false && optionList.doNoDefaultSelection===false){ 
-            //console.log("CHECKPOINT: 2 -> ", optionList.title);
+        } else if (optionList.multichoice===false && optionList.doNoDefaultSelection===false){
             let i = 0;
             let shouldClick = false;
             for (; i<availableList.length; i++) {
@@ -245,14 +239,12 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                         button.click();
                     }, 100);
                 }
-                //console.log("CLICKED: ", optionList.title);
             }
         } else {
-            //console.log("CHECKPOINT: 3 -> ", optionList.title);
+            // do basically nothing
         }
 
     },[availableList]);
-    // experimental //
 
     useEffect(() => {
         if (!optionList.checkAllowList) {
@@ -332,8 +324,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                         const currentObj = currentSelectedDependency[j];
                         const currentObjKey = Object.keys(currentObj)[0];
 
-                        //console.log("currentObjKey: ",currentObjKey);
-                        //console.log("value: ",value);
                         if (currentObjKey===value || currentObjKey.includes(value + " ")) {
                             counter +=1;
                         }
@@ -391,7 +381,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
         let freeSelectionDone = false;
         let selectedItem = null;
         let selectedItemIndex = null;
-        //console.log("AAAAAAAAAAAAAAAAAAAAAAA")
         const itemConfDictionary = itemConfiguration[optionList.title];
         const itemKeys = itemConfDictionary.map(item => Object.keys(item)[0]);
         for(let k=0;k<tempAvailableList.length;k++) {
@@ -401,7 +390,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 availableListActive.push(false);
             else {
                 if (itemKeys.includes(currentElement.title) || currentElement.conditionalSelected || !optionList.doNoDefaultSelection || currentElement.price===0) {
-                    //console.log("currentElement: ",currentElement);
                     availableListActive.push(true);
                     freeSelectionDone = true;
                     
@@ -417,7 +405,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
 
         setActive([...availableListActive]);
 
-        //console.log("IF ONCESSIIIIII!!!!!, tempAvailableList: ",optionList.title, tempAvailableList);
         if (tempAvailableList.length===0) {
             // if nothing to be shown then just delete everything!
             let localItemConfiguration = {...itemConfiguration};
@@ -432,21 +419,16 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                     ...prev,
                     [optionList.title]: []
                 }));
-                //console.log("localItemConfiguration: ",optionList.title,localItemConfiguration);
-            },100*index)
-            //setItemConfiguration({...localItemConfiguration});
-            //console.log("localItemConfiguration: ",optionList.title,localItemConfiguration);
+            },100*index);
 
         } else if (selectedItem!==null && selectedItemIndex!==null) {
             handleSelectionAllowed(selectedItem,selectedItemIndex, false, true, tempAvailableList);
-            //console.log("IF ICINE GIRDIIIII!!!!!");
         } else {
             // eğer zoraki işaretlemem gereken bir şey yok ise:
             // ve hatta tam tersine silmem gereken bir şey var ise
             const conf = itemConfiguration[optionList.title];
 
             const newConf = conf.filter(obj=>{
-                
                 const currentKey = Object.keys(obj)[0];
 
                 for (let x=0; x<tempAvailableList.length; x++) {
@@ -467,8 +449,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
             // set active list //
             let newActiveList = [];
             const keyArray = newConf.map(item => Object.keys(item)[0]);
-            //console.log("keyArray: ",keyArray);
-            
 
             for(let x=0; x<tempAvailableList.length; x++) {
                 let terminate = false;
@@ -488,18 +468,15 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                     newActiveList.push(false);
                 }
             }
-            //console.log("newActiveList:",newActiveList)
             setActive([...newActiveList]);
             // set active list //
 
             setInternalChoice(false);
 
-            //console.log("setItemConfiguration:1 ", updatedItemConfiguration);
             setItemConfiguration(prev => ({
                 ...prev,
                 [optionList.title]: [...updatedItemConfiguration[optionList.title]]
             }));
-            //setItemConfiguration(updatedItemConfiguration);
             return;
         }
 
@@ -528,12 +505,11 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 [optionList.title]: [configObj]
             };
 
-            //console.log("setItemConfiguration:2 ", updatedItemConfiguration);
             setItemConfiguration(prev => ({
                 ...prev,
                 [optionList.title]: [...updatedItemConfiguration[optionList.title]]
             }));
-            //setItemConfiguration(updatedItemConfiguration);
+
             return;
         } else {
             let arr = [...active];
@@ -561,19 +537,17 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                     : itemConfiguration[optionList.title].filter(i => !Object.keys(i)[0].startsWith(item.title))
             };
 
-            //console.log("setItemConfiguration:3 ", updatedItemConfiguration)
             setItemConfiguration(prev => ({
                 ...prev,
                 [optionList.title]: [...updatedItemConfiguration[optionList.title]]
             }));
-            //setItemConfiguration(updatedItemConfiguration);
+
             return;
         }
     }
 
     const handleSelectionAllowed = (item,index, updateArr = true, activeNotNull = false, tempAvailableList=null) => {
         let localItemConfiguration = {...itemConfiguration};
-        //console.log("handleSelectionAllowed içine girdi: ", optionList.title);
         if (tempAvailableList!==null) {
             let tmp = [...itemConfiguration[optionList.title]];
             let finalTmp = [];
@@ -592,20 +566,18 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
 
             })
 
-            //console.log("finalTmp: ", optionList.title ,finalTmp)
             localItemConfiguration = {
                 ...localItemConfiguration,
                 [optionList.title]: [...finalTmp]
             }
         } else {
-            //console.log("çalışmadı: ", tempAvailableList);
+            // do nothing
         }
 
 
         if (activeNotNull===false && active===null) return;
 
         if (!optionList.multichoice) {
-            //console.log("GIRDI ICERI: ", item.title)
             if (updateArr) {
                 const arr = active.map((item,i)=> i===index);
                 setActive([...arr]);
@@ -629,16 +601,13 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 [optionList.title]: [configObj]
             };
 
-            //console.log("AGA BU: ",item.title,updatedItemConfiguration)
             setInternalChoice(true);
 
-            //console.log("setItemConfiguration:4 ", updatedItemConfiguration);
             setItemConfiguration(prev => ({
                 ...prev,
                 [optionList.title]: [...updatedItemConfiguration[optionList.title]]
             }));
-            
-            //setItemConfiguration(updatedItemConfiguration);
+
             return;
         } else {
             let arr; 
@@ -669,13 +638,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 };
             }
 
-            /*
-            const updatedItemConfiguration = {
-                ...itemConfiguration,
-                [optionList.title]: [configObj]
-            };
-            */
-
             const updatedItemConfiguration = {
                 ...localItemConfiguration,
                 [optionList.title]: arr[index] 
@@ -685,12 +647,11 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
 
             setInternalChoice(true);
 
-            //console.log("setItemConfiguration:5 ", updatedItemConfiguration)
             setItemConfiguration(prev => ({
                 ...prev,
                 [optionList.title]: [...updatedItemConfiguration[optionList.title]]
             }));
-            //setItemConfiguration(updatedItemConfiguration);
+
             return;
         }
         
@@ -744,12 +705,11 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 [optionList.title]: [...tmp]
             };
 
-            //console.log("setItemConfiguration:6 ", updatedItemConfiguration)
             setItemConfiguration(prev => ({
                 ...prev,
                 [optionList.title]: [...updatedItemConfiguration[optionList.title]]
             }));
-            //setItemConfiguration(updatedItemConfiguration);
+
             return;
         } else {
             const title = currentItem.title;
@@ -767,12 +727,12 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
                 ...itemConfiguration,
                 [optionList.title]: [...tmp]
             };
-            //console.log("setItemConfiguration:7 ", updatedItemConfiguration)
+
             setItemConfiguration(prev => ({
                 ...prev,
                 [optionList.title]: [...updatedItemConfiguration[optionList.title]]
             }));
-            //setItemConfiguration(updatedItemConfiguration);
+
             return;
         }
     }
@@ -811,7 +771,6 @@ function Selection({ optionList, itemConfiguration, setItemConfiguration, setMor
     }
 
     const handleClick = (item, index, isActive, isAllowedSelection = false) => {
-        //console.log("HANDLE CLICK: ", item, index, isActive, isAllowedSelection);
         if (isActive) {
             handleCancel(item,index);
         } else {

@@ -200,7 +200,7 @@ const Description = styled.div`
     text-align: left;
     padding-left: 50px;
     margin-top: 10px;
-        @media only screen and (max-width: 800px) {
+    @media only screen and (max-width: 800px) {
         padding-left: 0px;
     }
 `;
@@ -220,17 +220,31 @@ const TitleList = styled.div`
     align-items: center;
 `;
 
-const LeftColumnTitle = styled.div`
+const LeftColumnTitle = styled.h1`
     font-size: 21px;
     font-weight: bold;
-    margin-top: 10px;
+    margin-top: 35px;
     color: #696984;
+    text-align: left;
+
+  @media only screen and (max-width: 800px) {
+    margin-top: 0px;
+  }
 `;
+
+const seoMap = {
+  "plissee": "Plissees für Ihre Fenster ausmessen - Messanleitung",
+  "jalousie": "Jalousien für Ihre Fenster richtig ausmessn - Messanleitung",
+  "rollo": "Rollos für Ihre Fenster richtig ausmessen - Anleitung ",
+  "lamellenvorhang": "Lamellenvorhang für Ihre Fenster richtig ausmessen - Anleitung"
+};
 
 function Measurement() {
   const { category } = useParams();
   const json = data[category];
   const titles = json.map(item => item.id);
+  console.log("category: ", category);
+  const h1 = seoMap[category];
 
   const [activeSection, setActiveSection] = useState(titles[0]);
   const sectionRefs = useRef([]);
@@ -267,7 +281,7 @@ function Measurement() {
         {showMenu ? <CloseIcon /> : <MenuIcon />}
       </ToggleButton>
       <MobileColumn show={showMenu}>
-        <LeftColumnTitle>ÜBERSICHT</LeftColumnTitle>
+        <LeftColumnTitle>{h1}</LeftColumnTitle>
         
         {titles !== null &&
           titles.map((title, index) => (
@@ -284,7 +298,7 @@ function Measurement() {
       </MobileColumn>
       <Wrapper>
         <LeftColumn>
-          <LeftColumnTitle>ÜBERSICHT</LeftColumnTitle>
+          <LeftColumnTitle>{h1}</LeftColumnTitle>
 
           {titles !== null &&
             titles.map((title, index) => (

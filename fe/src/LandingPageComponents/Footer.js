@@ -153,31 +153,34 @@ function Footer() {
         </div>
           <div>
               <FooterGeneralInfoWrapper>
-              <div>
-                  <div style={{textDecoration: "underline", fontSize: "21px"}}>Über uns:</div>
-                  <FooterStyledLink to="/kontakt">Kontakt</FooterStyledLink>
-                  <FooterStyledLink to="/impressum" className='my-1'>Impressum</FooterStyledLink>
-                  <FooterStyledLink to="/datenschutz">Datenschutz</FooterStyledLink>
-                  <FooterStyledLink to="/widerrufsbelehrung" className='my-1'>Widerrufsbelehrung</FooterStyledLink>
-              </div>
-              <div style={{textAlign: "left"}}>
-                  <div style={{textDecoration: "underline", fontSize: "21px"}}>Dienstleistungen:</div>
-                  <FooterStyledLink to="/geschaft/plissees">Plissees</FooterStyledLink>
-                  <FooterStyledLink to="/geschaft/jalousien">Jalousien</FooterStyledLink>
-                  <FooterStyledLink to="/geschaft/rollos">Rollos</FooterStyledLink>
-                  <FooterStyledLink to="/geschaft/lamellenvorhang">Lamellenvorhang</FooterStyledLink>
-                  <FooterStyledLink to="/geschaft/insektenschutz">Insektenschutz</FooterStyledLink>
-              </div>
-          </FooterGeneralInfoWrapper>
-          <FooterGeneralInfoWrapper className="my-4">
-              <div>
-                  <div style={{textDecoration: "underline", fontSize: "21px"}}>Zahlungsarten:</div>
-                  <span><img src={MasterCardIcon} height="80px" width="auto"/></span>
-                  <span className="mx-2"><img src={VisaIcon} height="80px" width="auto"/></span>
-                  <span><img src={PaypalIcon} height="80px" width="auto"/></span>
-                  <span className="mx-2"><img src={BankTransferIcon} height="80px" width="auto"/></span>
-              </div>
-          </FooterGeneralInfoWrapper>
+                  <div>
+                      <div style={{textDecoration: "underline", fontSize: "21px"}}>Über uns:</div>
+                      <FooterStyledLink to="/kontakt">Kontakt</FooterStyledLink>
+                      {/*<FooterStyledLink to="/impressum" className='my-1'>Impressum</FooterStyledLink>*/}
+                      {/*<FooterStyledLink to="/datenschutz">Datenschutz</FooterStyledLink>*/}
+                      <FooterStyledLink to="/widerrufsbelehrung" className='my-1'>Widerrufsbelehrung</FooterStyledLink>
+                      <FooterStyledLink to="/baden-baden" className='my-1'> Baden-Baden</FooterStyledLink>
+                      <FooterStyledLink to="/pforzheim" className='my-1'>Pforzheim</FooterStyledLink>
+                      <FooterStyledLink to="/karlsruhe" className='my-1'>Karlsruhe</FooterStyledLink>
+                  </div>
+                  <div style={{textAlign: "left"}}>
+                      <div style={{textDecoration: "underline", fontSize: "21px"}}>Dienstleistungen:</div>
+                      <FooterStyledLink to="/geschaft/plissees">Plissees</FooterStyledLink>
+                      <FooterStyledLink to="/geschaft/jalousien">Jalousien</FooterStyledLink>
+                      <FooterStyledLink to="/geschaft/rollos">Rollos</FooterStyledLink>
+                      <FooterStyledLink to="/geschaft/lamellenvorhang">Lamellenvorhang</FooterStyledLink>
+                      <FooterStyledLink to="/geschaft/insektenschutz">Insektenschutz</FooterStyledLink>
+                  </div>
+              </FooterGeneralInfoWrapper>
+              <FooterGeneralInfoWrapper className="my-4">
+                  <div>
+                      <div style={{textDecoration: "underline", fontSize: "21px"}}>Zahlungsarten:</div>
+                      <span><img src={MasterCardIcon} height="80px" width="auto"/></span>
+                      <span className="mx-2"><img src={VisaIcon} height="80px" width="auto"/></span>
+                      <span><img src={PaypalIcon} height="80px" width="auto"/></span>
+                      <span className="mx-2"><img src={BankTransferIcon} height="80px" width="auto"/></span>
+                  </div>
+              </FooterGeneralInfoWrapper>
           </div>
       </FooterWrapper>
     </FooterContainer>

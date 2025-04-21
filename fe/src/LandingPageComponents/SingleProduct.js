@@ -8,7 +8,7 @@ const CustomImg = styled.img`
     position: relative; /* Make the image a positioning context */
 `;
 
-const Title = styled.div`
+const Title = styled.h2`
     font-size: 18px;
     text-align: left;
     padding-left: 20%;

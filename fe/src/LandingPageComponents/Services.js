@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useMemo} from 'react'
 import {SingleSection} from '../CustomComponents/Components'
 import styled from 'styled-components'
 import liPhoto from '../images/landingPage/li.png';
@@ -23,10 +23,71 @@ const liMap = [
   }
 ]
 
+const serviceMap = [
+  {
+    title: null,
+    img: service1,
+    text: "Intensive Sonneneinstrahlung und lästige Insekten in Ihren Wohnräumen gehören bald der Vergangenheit an. Lehnen Sie sich entspannt zurück – Ihr Auftrag geht bei uns in Arbeit, und Sie erhalten in Kürze millimetergenau gefertigte und optimal montierte Fliegengitter und Sonnenschutzsysteme. Hochwertige Materialien, ein umfassendes Produktportfolio und erstklassige Kundenbetreuung zeichnen unser Angebot aus.",
+    def: true,
+  },
+  {
+    title: null,
+    img: service2,
+    text: "Der Wunsch nach hellen, lichtdurchfluteten Räumen und energieeffizienten Häusern beeinflusst den modernen Objektbau. Klar, dass es unser Anspruch ist, Fliegengitter zu produzieren, die nahezu unsichtbar sind, sowie Sonnenschutzlösungen, die für optimalen Licht- und Wärmeschutz sorgen. Unsere Produkte verbinden Ästhetik mit Funktionalität und bieten eine extrem komfortable Bedienung. Unsere Mission ist es, die besten Insektenschutz- und Sonnenschutzlösungen auf dem Markt zu bieten.",
+    def: false
+  }
+]
+
+const badenBadenserviceMap = [
+  {
+    title: null,
+    img: service1,
+    text: "Genießen Sie ungestörte Stunden in Ihrem Zuhause in Baden-Baden, geschützt vor Insekten und starker Sonneneinstrahlung. Unsere maßgeschneiderten Insektenschutz & Sonnenschutzlösungen in Baden-Baden bieten Ihnen effektiven Schutz bei gleichzeitig hohem Komfort. Unsere Produkte passen sich perfekt Ihrer Architektur an und zeichnen sich durch hochwertige Materialien und exzellente Verarbeitung aus.",
+    def: true,
+  },
+  {
+    title: null,
+    img: service2,
+    text: "Moderne Gebäude erfordern durchdachte Klimakonzepte. Unsere Fliegengitter bieten Ihnen zuverlässigen Insektenschutz, ohne das Tageslicht zu beeinträchtigen. Gleichzeitig regulieren unsere Sonnenschutzsysteme die Raumtemperatur effizient und tragen so zur Verbesserung Ihrer Energieeffizienz bei. Diese Kombination aus Funktion und Design sorgt für optimalen Komfort und schützt Ihr Zuhause vor Sonne und Insekten – ganz ohne Kompromisse.",
+    def: false
+  }
+]
+
+const pforzheimserviceMap = [
+  {
+    title: null,
+    img: service1,
+    text: "Genießen Sie künftig ungestörte Stunden in Ihren vier Wänden – ob bei strahlendem Sonnenschein oder lauen Sommerabenden. Als Spezialist für Insektenschutz in Pforzheim und Umgebung fertigen wir individuelle Lösungen, die sich nahtlos in Ihre Architektur einfügen. Unsere Systeme kombinieren präzise Verarbeitung mit innovativen Materialien, um maximalen Komfort bei minimaler Sichtbeeinträchtigung zu garantieren. Von der Beratung bis zur Montage begleiten wir Sie mit regionalem Know-how.",
+    def: true,
+  },
+  {
+    title: null,
+    img: service2,
+    text: "Moderne Gebäude verlangen nach intelligenten Klimakonzepten: Unsere nahezu unsichtbaren Fliegengitter schützen vor Insekten, ohne Tageslicht zu mindern. Parallel regulieren unsere Sonnenschutzsysteme Ihre Raumtemperatur energieeffizient. Dieses Zusammenspiel aus Ästhetik & Technologie und macht uns zum Vorreiter für zukunftsorientierten Wohnkomfort nähe Pforzheim.",
+    def: false
+  }
+]
+
+const karlsruheserviceMap = [
+  {
+    title: null,
+    img: service1,
+    text: "Erleben Sie mehr Komfort und Ruhe in Ihren eigenen vier Wänden, ganz gleich, ob an sonnigen Tagen oder bei angenehmen Sommerabenden. Als Experten für Insektenschutz & Sonnenschutz in Karlsruhe bieten wir maßgeschneiderte Lösungen, die perfekt zu Ihrem Zuhause passen. Unsere Produkte zeichnen sich durch exzellente Verarbeitung und den Einsatz fortschrittlicher Materialien aus, um Ihnen optimalen Schutz zu bieten, ohne die Sicht oder den Lichteinfall zu beeinträchtigen.",
+    def: true,
+  },
+  {
+    title: null,
+    img: service2,
+    text: "Moderne Architektur erfordert durchdachte Lösungen für das Raumklima. Unsere fast unsichtbaren Fliegengitter für Insektenschutz in Karlsruhe bieten zuverlässigen Schutz vor Insekten, ohne das natürliche Licht zu beeinträchtigen. Gleichzeitig optimieren unsere Sonnenschutzsysteme die Raumtemperatur und tragen zur Energieeffizienz bei. Diese perfekte Kombination aus Funktionalität und Design stellt sicher, dass Ihr Zuhause sowohl komfortabel als auch umweltfreundlich bleibt.",
+    def: false
+  }
+]
+
 const Icon = styled.img`
   height: 60px;
   margin-top: 20px;
-`
+`;
+
 const Title = styled.div`
   font-size: 23px;
   text-align: left;
@@ -42,7 +103,8 @@ const Title = styled.div`
   @media only screen and (max-width: 780px) {
     display: none;
   }
-`
+`;
+
 const Text = styled.div`
   font-size: 18px;
   text-align: left;
@@ -54,7 +116,7 @@ const Text = styled.div`
   @media only screen and (max-width: 90px) {
     font-size: 11px;
   }
-`
+`;
 
 const TextWrapper = styled.div`
   display: flex;
@@ -71,7 +133,6 @@ const LiWrapper = styled.div`
   align-items: space-around;
   gap: 0px;
 `;
-
 
 const LiElement = styled(({title, text, anim,noAnimation})=>{ 
   return (
@@ -90,7 +151,6 @@ const LiElement = styled(({title, text, anim,noAnimation})=>{
     </LiWrapper>
   )})``;
 
-
 const LiContainer = styled.div`
     display: flex;
     flex-direction: row;
@@ -102,22 +162,6 @@ const LiContainer = styled.div`
     }
 `;
 
-
-const serviceMap = [
-  {
-    title: null,
-    img: service1,
-    text: "Intensive Sonneneinstrahlung und lästige Insekten in Ihren Wohnräumen gehören bald der Vergangenheit an. Lehnen Sie sich entspannt zurück – Ihr Auftrag geht bei uns in Arbeit, und Sie erhalten in Kürze millimetergenau gefertigte und optimal montierte Fliegengitter und Sonnenschutzsysteme. Hochwertige Materialien, ein umfassendes Produktportfolio und erstklassige Kundenbetreuung zeichnen unser Angebot aus.",
-    def: true,
-  },
-  {
-    title: null,
-    img: service2,
-    text: "Der Wunsch nach hellen, lichtdurchfluteten Räumen und energieeffizienten Häusern beeinflusst den modernen Objektbau. Klar, dass es unser Anspruch ist, Fliegengitter zu produzieren, die nahezu unsichtbar sind, sowie Sonnenschutzlösungen, die für optimalen Licht- und Wärmeschutz sorgen. Unsere Produkte verbinden Ästhetik mit Funktionalität und bieten eine extrem komfortable Bedienung. Unsere Mission ist es, die besten Insektenschutz- und Sonnenschutzlösungen auf dem Markt zu bieten.",
-    def: false
-  }
-]
-
 const ServiceImg = styled.img`
   height: 300px;
   border-radius: 8px;
@@ -128,8 +172,7 @@ const ServiceImg = styled.img`
   @media only screen and (max-width: 900px) {
     height: 230px;
   }
-`
-
+`;
 
 const Wrapper = styled.div`
   display: flex;
@@ -202,22 +245,6 @@ const ServiceContainer = styled(SingleSection)`
     
 `;
 
-
-const SubTitle = styled.div`
-  font-size: 24px;
-  text-align: left;
-  font-weight: bold;
-  margin-top: 50px;
-  margin-bottom: 20px;
-
-  @media only screen and (max-width: 900px) {
-    font-size: 28px;
-  }
-  @media only screen and (max-width: 560px) {
-    font-size: 20px;
-  }
-`
-
 const AccordionWrapper = styled.div`
   width: 90vw;
   z-index: 95;
@@ -247,7 +274,6 @@ const AccordionWrapper = styled.div`
   }
 `;
 
-
 const AccordionImg = styled.img`
   width: 90vw;
   @media only screen and (min-width: 756px) {
@@ -266,8 +292,8 @@ const AccordionText = styled.div`
 `;
 
 const UlMobile = styled.ul`
+`;
 
-`
 const Splitter = styled.div`
     display: flex;
     flex-direction: row;
@@ -311,7 +337,21 @@ const LineSeperatorTitleComponent = ({msg}) => {
   );
 };
 
-function Services({noAnimation}) {
+function selectByDataType(dataType) {
+  if (dataType==="GENERAL")
+    return serviceMap;
+  if (dataType==="BADEN-BADEN")
+    return badenBadenserviceMap;
+  if (dataType==="PFORZHEIM")
+    return pforzheimserviceMap;
+  if (dataType==="KARLSRUHE")
+    return karlsruheserviceMap;
+  return [];
+}
+
+function Services({noAnimation, dataType = "GENERAL"}) {
+  const serviceMapData = useMemo(() => selectByDataType(dataType), [dataType]);
+
   return (
     <ServiceContainer>
       <LiContainer>
@@ -321,8 +361,8 @@ function Services({noAnimation}) {
       </LiContainer>
       <LineSeperatorTitleComponent msg={"Mehr über uns"}/>
       <ServiceWrapper>
-        <ServiceElement img={service1} noAnimation={noAnimation} text={serviceMap[0].text} def={true}/>
-        <ServiceElement img={service2} noAnimation={noAnimation} text={serviceMap[1].text} def={false}/>
+        <ServiceElement img={service1} noAnimation={noAnimation} text={serviceMapData[0].text} def={true}/>
+        <ServiceElement img={service2} noAnimation={noAnimation} text={serviceMapData[1].text} def={false}/>
       </ServiceWrapper>
 
       <div style={{overflow:"hidden"}}>

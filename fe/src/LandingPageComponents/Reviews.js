@@ -96,7 +96,7 @@ const Dot = styled.div`
   box-shadow: 11px 19px 24px -18px rgba(0,0,0,1);
 `
 
-const Title = styled.div`
+const Title = styled.h2`
   font-size: 34px;
   font-weight: bold;
   color: rgb(82, 82, 102);

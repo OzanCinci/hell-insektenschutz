@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useFetch from '../../../hooks/useFetch';
@@ -347,6 +347,43 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
   },[itemConfiguration])
   /////// CONFIGURATION DATA ///////
 
+    /////// CHECK LATEST CONFIG AND APPLY MEASUREMENT VIDEO LOGIC ///////
+    // TODO: apply measurement logic later!
+    /*
+    const getMeasurementVideoDetailByOrder = (obj) => {
+      if (!obj)
+          return null;
+
+      if (obj["Montageposition"]) {
+          return obj["Montageposition"];
+      }
+
+      return null;
+    }
+
+    const checkLatestConfig = useMemo(
+        () =>
+            debounce((itemConfiguration) => {
+                const detail = getMeasurementVideoDetailByOrder(itemConfiguration)[0];
+                var selectedOption = Object.keys(detail)[0];
+                console.log("selectedOption", selectedOption);
+            }, 500),
+        []
+    );
+
+    useEffect(() => {
+        if (itemConfiguration) {
+            checkLatestConfig(itemConfiguration);
+        }
+
+        return () => {
+            checkLatestConfig.cancel();
+        };
+    }, [itemConfiguration]);
+
+     */
+    /////// CHECK LATEST CONFIG AND APPLY MEASUREMENT VIDEO LOGIC ///////
+
 
   /////// TOTAL PRICE DATA ///////
   const [validPrice,setValidPrice] = useState(0);
@@ -406,7 +443,7 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
 
         debouncedGetPriceFromBackend(request);
     }
-  },[itemConfiguration, dimensions,itemData]);
+  },[itemConfiguration, dimensions, itemData]);
 
   const getPriceFromBackend = async (requestBody) => {
     const BASE_URL = process.env.REACT_APP_BE_API;

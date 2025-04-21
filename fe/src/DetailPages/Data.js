@@ -114,7 +114,7 @@ export const data = {
         image: FensterImage,
         spannrahmen : {
             welcoming : {
-                title: "Spannrahmen - hochwertig & passgenau",
+                title: "Insektenschutz Spannrahmen - hochwertig & passgenau",
                 desc: "Spannrahmen sind die erste Wahl für Fenster und Türen, die rein zum Lüften geöffnet werden. Der große Vorteil: unsere Montage erfolgt in der Regel ohne Bohren."
             },
             data_array: [
@@ -175,7 +175,7 @@ export const data = {
         },
         drehfenster : {
             welcoming : {
-                title: "Drehfenster – die praktische und solide Lösung zum Öffnen",
+                title: "Fliegengitter Drehfenster - die praktische und solide Lösung zum Öffnen",
                 desc: "Schön und gleichzeitig praktisch stellt keinen Widerspruch dar. Unsere Drehrahmen kommen bei Fenstern zum Einsatz, die eine Öffnungs- bzw. Durchreichemöglichkeit bieten sollen."
             },
             data_array: [
@@ -422,7 +422,7 @@ export const data = {
         },
         pendeltür : {
             welcoming : {
-                title: "Pendeltür – maximaler Komfort",
+                title: "Insektenschutz Pendeltür – maximaler Komfort",
                 desc: "Insektenschutz-Pendeltüren von vereinen Funktion und Design in Perfektion. Pendeltüren öffnen in zwei Richtungen und schließen von selbst."
             },
             data_array: [
@@ -496,7 +496,7 @@ export const data = {
         },
         schiebetür : {
             welcoming : {
-                title: "Schiebetür – für große Öffnungsbereiche",
+                title: "Insektenschutz Schiebetür – für große Öffnungsbereiche",
                 desc: "Schiebetüren kommen zum Einsatz, wenn breite Fensterfronten, wie Hebe-Schiebetüren, mit Insektengittern versehen werden sollen. Das Element ist im geschlossenen Zustand nahezu unsichtbar."
             },
             data_array: [
@@ -557,7 +557,7 @@ export const data = {
         },
         plissee : {
             welcoming : {
-                title: "Plissee – die trendige & platzsparende Lösung",
+                title: "Insektenschutz Plissee für Türen – die trendige & platzsparende Lösung",
                 desc: "Plissees sind der Trendsetter im Sonnen- und Insektenschutz. Durch die spezielle Faltung des Gewebes entsteht eine moderne Optik. Zusammengefaltet zudem extrem platzsparend."
             },
             data_array: [
@@ -636,7 +636,7 @@ export const data = {
         },
         gitterSafe : {
             welcoming : {
-                title: "Drehtür – stabiler & eleganter Insektenschutz",
+                title: "GitterSafe für saubere & insektenfreie Kellerschächte",
                 desc: "Die GitterSafe-Reihe erfüllt höchste Ansprüche an Design und Komfort. Durch die flächenbündige Einbettung entstehen keine Stolperkanten."
             },
             data_array: [
@@ -661,7 +661,7 @@ export const data = {
         image: DachImage,
         rollo : {
             welcoming : {
-                title: "Rollo für Dachflächenfenster – die gefragte & praktische Lösung",
+                title: "Insektenschutz Rollo für Dachfenster – die gefragte & praktische Lösung",
                 desc: "Der flexible und bedarfsgerechter Insektenschutz. Hierbei praktisch: das Rollo kann einfach nachgerüstet werden. Auch mit elektrischem Antrieb verfügbar."
             },
             data_array: [

@@ -146,17 +146,30 @@ const TitleList = styled.div`
     margin-top: -3%;
 `;
 
-const LeftColumnTitle = styled.div`
-    font-size: 21px;
-    font-weight: bold;
-    margin-top: 10px;
-    color: #696984;
+const LeftColumnTitle = styled.h1`
+  font-size: 21px;
+  font-weight: bold;
+  margin-top: 35px;
+  color: #696984;
+  text-align: left;
+  
+  @media only screen and (max-width: 800px) {
+    margin-top: 0px;
+  }
 `;
+
+const seoMap = {
+  "plissee": "Die richtige Montage von Plissees - Anleitung",
+  "jalousie": "Die richtige Montage Ihrer Jalousie - Anleitung",
+  "rollo": "die richtige Rollo Montage - Anleitung",
+  "lamellenvorhang": "richtige Montage des Lamellenvorhangs"
+};
 
 function HowToInstall() {
   const { category } = useParams();
   const json = data[category];
   const titles = json.map(item => item.id);
+  const h1 = seoMap[category];
 
   const [activeSection, setActiveSection] = useState(titles[0]);
   const sectionRefs = useRef([]);
@@ -193,7 +206,7 @@ function HowToInstall() {
         {showMenu ? <CloseIcon /> : <MenuIcon />}
       </ToggleButton>
       <MobileColumn show={showMenu}>
-        <LeftColumnTitle>ÜBERSICHT</LeftColumnTitle>
+        <LeftColumnTitle>{h1}</LeftColumnTitle>
         
         {titles !== null &&
           titles.map((title, index) => (
@@ -210,7 +223,7 @@ function HowToInstall() {
       </MobileColumn>
       <Wrapper>
         <LeftColumn>
-          <LeftColumnTitle>ÜBERSICHT</LeftColumnTitle>
+          <LeftColumnTitle>{h1}</LeftColumnTitle>
 
           {titles !== null &&
             titles.map((title, index) => (

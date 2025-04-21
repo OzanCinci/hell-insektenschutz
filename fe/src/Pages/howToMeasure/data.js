@@ -629,6 +629,7 @@ export const data = {
     "rollo": [
         {
             id: "Wandmontage",
+            seoTitle: "",
             data: [
                {
                    title: "Z.B. vor der Fensternische",

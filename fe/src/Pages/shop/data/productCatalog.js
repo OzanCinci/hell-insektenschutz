@@ -21,6 +21,9 @@ import PremLamellenvorhangImg from '../../../images/shopCategories/premLamellenv
 
 
 export const catalogData = {
+    "insektenschutz": {
+        installation: "Insektenschutz & Fliegengitter",
+    },
     "plissees": {
         data: [
             {

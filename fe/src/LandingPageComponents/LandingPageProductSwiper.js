@@ -107,7 +107,7 @@ const Line = styled.div`
     flex-grow: 1;
 `;
 
-const LineText = styled.div`
+const LineText = styled.h2`
     color: #696984;
     font-size: 25px;
     font-weight: 700;
