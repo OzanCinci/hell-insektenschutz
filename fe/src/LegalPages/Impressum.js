@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from 'react'
+import React from 'react';
 import styled from 'styled-components';
 import PhotoComponent from './PhotoComponent';
 
@@ -37,34 +37,29 @@ const Container = styled.div`
     }
 `;
 
-
 const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
-`
+`;
 
 function Impressum() {
-
-    useLayoutEffect(()=>{
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      },[])
-
-      
-
   return (
     <Wrapper>
         <PhotoComponent/>
         <Container>
-            <h1 style={{textAlign:'center'}} className='header'>IMPRESSUM</h1>
+            <h1 style={{textAlign: 'center'}} className='header'>IMPRESSUM</h1>
             <br></br>
             <h3>
                 Hakan Aydin
             </h3>
-            <h3>Lochfeldstraße 30,</h3>
-            <h3>76437 Rastatt, Deutschland</h3>
-            <h3>Umsatzsteuer-Identi kationsnummer</h3>
-            <h3>gemäß §27 a Umsatzsteuergesetz:</h3>
-            <h3>Steur id Nr. 92415358078</h3>
+            <h3>Lochfeldstraße 30</h3>
+            <h3>76437 Rastatt</h3>
+            <h3>Deutschland</h3>
+            <br/>
+            <h3>Tel.: +49 176 62960342</h3>
+            <h3>E-Mail: info@hell-insektenschutz.de</h3>
+            <h3>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz:</h3>
+            <h3>DE 354 90 90 66</h3>
         </Container>
     </Wrapper>
   )
