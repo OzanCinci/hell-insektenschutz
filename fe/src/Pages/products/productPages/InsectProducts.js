@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useFetch from '../../../hooks/useFetch';
@@ -21,6 +21,8 @@ import AddToCart from '../../SingleProductPage/components/AddToCart';
 import Button from '@mui/material/Button';
 import ReviewModal from '../../../CustomComponents/ReviewModal';
 import HowToAssemble from '../../ProductComponents/HowToAssemble';
+import {SET_PRODUCT_BASED_MEASUREMENT} from "../../../constants/productBasedMeasurement";
+import ProductBasedMeasurement from "../../howToMeasure/ProductBasedMeasurement";
 
 const CustomButton = styled(Button)`
     margin-top: 5px !important;
@@ -518,6 +520,20 @@ function InsectProducts({dataFromJSON, extraCartInfoArray}) {
         }
     }
     /////// DO REVIEW LOGIC ///////
+    const checkLatestConfig = useMemo(
+        () =>
+            debounce(() => {
+                dispatch({type:SET_PRODUCT_BASED_MEASUREMENT, payload:cartName});
+            }, 500),
+        [cartName]
+    );
+
+    useEffect(() => {
+        checkLatestConfig(itemConfiguration);
+        return () => {
+            checkLatestConfig.cancel();
+        };
+    }, [itemConfiguration, cartName]);
 
     if (loading) {
         return <CircularProgress color="warning" />;
@@ -711,6 +727,7 @@ function InsectProducts({dataFromJSON, extraCartInfoArray}) {
                                     </div>
                                 </RightColumn>
                             </ColumnContainer>
+                            <ProductBasedMeasurement/>
                             <HowToAssemble assemblyInfo={assemblyInfo}/>
                             <Installation/>
                             <br/>

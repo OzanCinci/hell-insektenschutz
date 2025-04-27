@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useFetch from '../../../hooks/useFetch';
@@ -22,6 +22,8 @@ import Button from '@mui/material/Button';
 import ReviewModal from '../../../CustomComponents/ReviewModal';
 import HowToAssemble from '../../ProductComponents/HowToAssemble';
 import CONFIGURATION from "../../../config/config";
+import ProductBasedMeasurement from "../../howToMeasure/ProductBasedMeasurement";
+import {SET_PRODUCT_BASED_MEASUREMENT} from "../../../constants/productBasedMeasurement";
 
 const CustomButton = styled(Button)`
     margin-top: 5px !important;
@@ -617,6 +619,51 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     }
     /////// DO REVIEW LOGIC ///////
 
+    /////// CHECK LATEST CONFIG AND APPLY MEASUREMENT VIDEO LOGIC ///////
+    // TODO: apply measurement logic later!
+    const getMeasurementVideoDetailByOrder = (obj) => {
+        if (!obj)
+            return null;
+
+        if (obj["Montageposition"]) {
+            return obj["Montageposition"];
+        }
+
+        if (obj["Plisseemodell"]) {
+            return obj["Plisseemodell"];
+        }
+
+        return null;
+    }
+
+    const checkLatestConfig = useMemo(
+        () =>
+            debounce((itemConfiguration) => {
+                if (!itemConfiguration)
+                    return;
+
+                const detail = getMeasurementVideoDetailByOrder(itemConfiguration)[0];
+                if (!detail)
+                    return;
+
+                const selectedOption = Object.keys(detail)[0];
+                const measurementSpecificationsKey = cartName + " + " + selectedOption;
+                dispatch({type:SET_PRODUCT_BASED_MEASUREMENT, payload:measurementSpecificationsKey});
+            }, 500),
+        []
+    );
+
+    useEffect(() => {
+        if (itemConfiguration) {
+            checkLatestConfig(itemConfiguration);
+        }
+
+        return () => {
+            checkLatestConfig.cancel();
+        };
+    }, [itemConfiguration]);
+    /////// CHECK LATEST CONFIG AND APPLY MEASUREMENT VIDEO LOGIC ///////
+
     if (loading) {
         return <CircularProgress color="warning" />;
     }
@@ -689,6 +736,7 @@ function NDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                                     </div>
                                 </RightColumn>
                             </ColumnContainer>
+                            <ProductBasedMeasurement/>
                             <HowToAssemble assemblyInfo={assemblyInfo}/>
                             <Installation/>
                             <br/>

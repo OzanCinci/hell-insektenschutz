@@ -6,6 +6,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
 import DownloadButton from '../../CustomComponents/DownloadButton';
+import YouTubePlayer from "./YoutubePlayer";
 
 const Container = styled.div`
   max-width: 1200px;
@@ -110,7 +111,6 @@ const Title = styled.div`
   }
 `;
 
-// Define the styled component
 const HTMLContentWrapper = styled.div`
   text-align: left;
   margin-bottom: 10px;
@@ -120,6 +120,7 @@ const HTMLContentWrapper = styled.div`
 const HTMLContent = ({ value }) => (
   <HTMLContentWrapper dangerouslySetInnerHTML={{ __html: value }} />
 );
+
 const SingleContent = styled.div`
     margin-bottom: 40px;
 
@@ -243,7 +244,6 @@ function Measurement() {
   const { category } = useParams();
   const json = data[category];
   const titles = json.map(item => item.id);
-  console.log("category: ", category);
   const h1 = seoMap[category];
 
   const [activeSection, setActiveSection] = useState(titles[0]);
@@ -344,10 +344,16 @@ function Measurement() {
                           content.rightPart.map((strHtml,i)=> {
                             if (strHtml.type==="html-content")
                               return (<HTMLContent value={strHtml.value} key={i}/>);                            
-                            else 
+                            else  if (strHtml.type==="img")
                               return (<div key={i}>
                                 <RightPartImg src={strHtml.value} alt={`description-image-for${content.title}`}/>
                               </div>);
+                            else if (strHtml.type==="youtube-video")
+                              return (
+                                  <>
+                                    <YouTubePlayer url={strHtml.value}/>
+                                  </>
+                              );
                           })
                         }
                       </BodyWrapper>

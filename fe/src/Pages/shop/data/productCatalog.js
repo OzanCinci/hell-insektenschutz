@@ -7,6 +7,7 @@ import Akkuplissee from '../../../images/shopCategories/akkuplissee.webp';
 import PlisseeFreihaengend from '../../../images/shopCategories/PlisseeFreihaengend.webp';
 
 import BasicJalousieImg from '../../../images/shopCategories/basicjalousie.webp';
+import SmartAkkualousieImg from '../../../images/shopCategories/smartakkujalousie.webp';
 import PremJalousieImg from '../../../images/shopCategories/premjalousie.webp';
 import Holzjalousie from '../../../images/shopCategories/holzjalousie.webp';
 
@@ -198,6 +199,22 @@ export const catalogData = {
                     {
                         text: "Jetzt konfigurieren",
                         url: "/geschaft/jalousie/holzjalousie-optionen",
+                    }
+                ]
+            },
+            {
+                title: "Smark Akku Jalousie",
+                image: SmartAkkualousieImg,
+                desc: [
+                    "Motion-Motor von COULISSE®",
+                    "Bedienung per App oder Fernbedienung",
+                    "Individuell programmierbare Steuerung",
+                    "Optional in Smart-Home-System integrierbar",
+                ],
+                links: [
+                    {
+                        text: "Jetzt konfigurieren",
+                        url: "/geschaft/jalousie/premium-jalousie-optionen",
                     }
                 ]
             },

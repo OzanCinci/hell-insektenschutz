@@ -32,6 +32,10 @@ export const data = {
                         type: "html-content",
                         value: "<div>Bei Modellen F4 und FE: Mindest-Glasleistentiefe 25 mm</div>"
                     },
+                    {
+                        type: "youtube-video",
+                        value: "https://www.youtube.com/embed/DL7NzpqqrZg"
+                    },
                 ]
             },
             {
@@ -65,6 +69,10 @@ export const data = {
                         {
                             type: "html-content",
                             value: "<div>Achten Sie insb. bei Holzfenstern darauf, dass die Träger am Fensterflügel montiert werden können (umlaufende Dichtung). Beachten Sie bitte beim gewünschten Überstand auch auf vorstehende Beschläge.</div>"
+                        },
+                        {
+                            type: "youtube-video",
+                            value: "https://www.youtube.com/embed/LXytNtf9jg0"
                         },
                     ]
                 },
@@ -140,6 +148,10 @@ export const data = {
                             type: "html-content",
                             value: "<div>Bitte achten Sie bei der Höhe auf vorstehende Hindernisse (z. B. Fensterbänke, Heizkörper) und dass sich das Fenster nach der Montage noch öffnen (kippen) lässt (Pakethöhen!).</div>"
                         },
+                        {
+                            type: "youtube-video",
+                            value: "https://www.youtube.com/embed/xgH_fiCrLK4"
+                        },
                     ]
                 },
             ]
@@ -167,6 +179,10 @@ export const data = {
                         {
                             type: "html-content",
                             value: "<div>Die Breite wird wegen evtl. Toleranzen immer an mehreren Punkten gemessen.Bitte achten Sie darauf, dass sich das Fenster nach der Montage noch öffnen (kippen) lässt (Pakethöhen).</div>"
+                        },
+                        {
+                            type: "youtube-video",
+                            value: "https://www.youtube.com/embed/Upp2oRNmVbg"
                         },
                     ]
                 },
@@ -251,6 +267,10 @@ export const data = {
                         {
                             type: "html-content",
                             value: "<div><b>Höhe H2 </b> = Bestellmaß (ohne Abzug)</div>"
+                        },
+                        {
+                            type: "youtube-video",
+                            value: "https://www.youtube.com/embed/0TNGR5kJ0-0"
                         },
                     ]
                 },
@@ -520,6 +540,10 @@ export const data = {
                             type: "html-content",
                             value: "<div>(nicht bei Klebeleistenmontage)</div>"
                         },
+                       {
+                           type: "youtube-video",
+                           value: "https://www.youtube.com/embed/DL7NzpqqrZg"
+                       },
                    ]
                },
                {
@@ -554,6 +578,10 @@ export const data = {
                             type: "html-content",
                             value: "<div>Bitte achten Sie beim Aufmaß auf vorstehende Hindernisse (z. B. Fensterbänke, Heizkörper) und dass sich das Fenster nach der Montage noch öffnen (kippen) lässt (Pakethöhen!).</div>"
                         },
+                        {
+                            type: "youtube-video",
+                            value: "https://www.youtube.com/embed/xgH_fiCrLK4"
+                        },
                    ]
                },
             ]   
@@ -581,6 +609,10 @@ export const data = {
                         {
                             type: "html-content",
                             value: "<div>Bitte achten Sie bei der Höhe auf vorstehende Hindernisse (z. B. Fensterbänke, Heizkörper) und dass sich das Fenster nach der Montage noch öffnen (kippen) lässt (Pakethöhen!).</div>"
+                        },
+                        {
+                            type: "youtube-video",
+                            value: "https://www.youtube.com/embed/Upp2oRNmVbg"
                         },
                    ]
                },
@@ -610,6 +642,10 @@ export const data = {
                             type: "html-content",
                             value: "<div>Achten Sie bitte beim gewünschten Überstand auf vorstehende Beschläge.</div>"
                         },
+                       {
+                           type: "youtube-video",
+                           value: "https://www.youtube.com/embed/LXytNtf9jg0"
+                       },
                    ]
                },
             ]   
@@ -684,6 +720,10 @@ export const data = {
                             type: "html-content",
                             value: "<div>Es kann stoff- und modellbedingt zu Abweichungen kommen.</div>"
                         },
+                       {
+                           type: "youtube-video",
+                           value: "https://www.youtube.com/embed/xgH_fiCrLK4"
+                       },
                    ]
                },
             ]   
@@ -744,6 +784,10 @@ export const data = {
                             type: "html-content",
                             value: "<div>Es kann stoff- und modellbedingt zu Abweichungen kommen.</div>"
                         },
+                       {
+                           type: "youtube-video",
+                           value: "https://www.youtube.com/embed/Upp2oRNmVbg"
+                       },
                    ]
                },
             ]   
@@ -804,6 +848,10 @@ export const data = {
                             type: "html-content",
                             value: "<div>Es kann stoff- und modellbedingt zu Abweichungen kommen.</div>"
                         },
+                       {
+                           type: "youtube-video",
+                           value: "https://www.youtube.com/embed/LXytNtf9jg0"
+                       },
                    ]
                },
             ]   
@@ -814,7 +862,7 @@ export const data = {
                {
                    title: null,
                    description: null,
-                   image: "https://cdn.vendeco.com/unsafe/media/wysiwyg/messen/rollo/messanleitung-rollo-fensterfluegel-klemmtraeger_v1.jpg",
+                   image: "https://api.configurator.vendeco.com/data/configurations/300000/files/203_Image_de_43_1624866921_300x300.webp",
                    rightPart: [
                         {
                             type: "html-content",
@@ -864,6 +912,10 @@ export const data = {
                             type: "html-content",
                             value: "<div>Es kann stoff- und modellbedingt zu Abweichungen kommen.</div>"
                         },
+                       {
+                           type: "youtube-video",
+                           value: "https://www.youtube.com/embed/LXytNtf9jg0"
+                       },
                    ]
                },
             ]   
@@ -933,6 +985,10 @@ export const data = {
                          type: "html-content",
                          value: "<div>Lassen Sie einen Abstand von etwa 2 cm zum unteren Anschlag (Boden, Fensterbank, etc.).</div>"
                      },
+                    {
+                        type: "youtube-video",
+                        value: "https://www.youtube.com/embed/WR3Q4ThR2jI"
+                    },
                 ]
                 },
             ]   
@@ -999,6 +1055,10 @@ export const data = {
                          {
                              type: "html-content",
                              value: "<div>Lassen Sie einen Abstand von etwa 2 cm zum unteren Anschlag (Boden, Fensterbank, etc.).</div>"
+                         },
+                         {
+                             type: "youtube-video",
+                             value: "https://www.youtube.com/embed/-rM9-Fo0r8E"
                          },
                     ]
                 },

@@ -10,7 +10,7 @@ import { loginReducer, refreshReducer, registerReducer, userProfileDetailReducer
 import { activeOrdersReducer, adminLandingPageReducer, allUsersReducer, completedOrdersReducer, findUserReducer, pendingReviewsReducer, reviewsReducer, selectAdminDataReducer } from './reducers/adminReducer';
 import { cartReducer, createReviewDataReducer, wishlistCartReducer } from './reducers/userReducer';
 import {configReducer} from "./reducers/configReducer";
-
+import {productBasedMeasurementReducer} from "./reducers/productBasedMeasurementReducer";
 
 // COMBINE REDUCERS
 const reducer = combineReducers({
@@ -30,10 +30,9 @@ const reducer = combineReducers({
     cart: cartReducer,
     wishlistCart: wishlistCartReducer,
     config: configReducer,
+    productBasedMeasurement: productBasedMeasurementReducer,
 })
 
-
-// SAMPLE CART DATA EXAMPLE
 const emptyCart = {
     numberOfItems: 0,
     price : 0.0,
@@ -41,12 +40,6 @@ const emptyCart = {
     items : []
 };
 
-// GET LOCALY STORED DATA
-/* EXAMPLE CODE TO RETRIEVE DATA FROM LOCAL STORAGE
-const getCardItemIDs = localStorage.getItem("itemIDs")?JSON.parse(localStorage.getItem("itemIDs")):[]
-const getUserInfo = localStorage.getItem("userInfo")?JSON.parse(localStorage.getItem("userInfo")):null
-const getTotalCost = localStorage.getItem("TotalCost")?JSON.parse(localStorage.getItem("TotalCost")):0
-*/
 const userInfo = localStorage.getItem("userInfo")?JSON.parse(localStorage.getItem("userInfo")):null;
 const localCartInfo = localStorage.getItem("localCartInfo")?JSON.parse(localStorage.getItem("localCartInfo")):emptyCart;
 const localWishlistInfo = localStorage.getItem("localWishlistInfo")?JSON.parse(localStorage.getItem("localWishlistInfo")):[];
@@ -69,9 +62,10 @@ const initialState = {
     cart: localCartInfo,
     wishlistCart: localWishlistInfo,
     config: null,
-}
+    productBasedMeasurement: null,
+};
 
 // EXPORT STORE
-const middleware = [thunk]
-const store = createStore(reducer,initialState, composeWithDevTools(applyMiddleware(...middleware)))
-export default store
+const middleware = [thunk];
+const store = createStore(reducer,initialState, composeWithDevTools(applyMiddleware(...middleware)));
+export default store;

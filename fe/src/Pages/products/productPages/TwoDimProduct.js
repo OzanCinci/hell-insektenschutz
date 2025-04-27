@@ -21,6 +21,8 @@ import AddToCart from '../../SingleProductPage/components/AddToCart';
 import Button from '@mui/material/Button';
 import ReviewModal from '../../../CustomComponents/ReviewModal';
 import HowToAssemble from '../../ProductComponents/HowToAssemble';
+import ProductBasedMeasurement from "../../howToMeasure/ProductBasedMeasurement";
+import {SET_PRODUCT_BASED_MEASUREMENT} from "../../../constants/productBasedMeasurement";
 
 const CustomButton = styled(Button)`
     margin-top: 5px !important;
@@ -349,7 +351,6 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
 
     /////// CHECK LATEST CONFIG AND APPLY MEASUREMENT VIDEO LOGIC ///////
     // TODO: apply measurement logic later!
-    /*
     const getMeasurementVideoDetailByOrder = (obj) => {
       if (!obj)
           return null;
@@ -364,9 +365,16 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
     const checkLatestConfig = useMemo(
         () =>
             debounce((itemConfiguration) => {
+                if (!itemConfiguration)
+                    return;
+
                 const detail = getMeasurementVideoDetailByOrder(itemConfiguration)[0];
-                var selectedOption = Object.keys(detail)[0];
-                console.log("selectedOption", selectedOption);
+                if (!detail)
+                    return;
+
+                const selectedOption = Object.keys(detail)[0];
+                const measurementSpecificationsKey = cartName + " + " + selectedOption;
+                dispatch({type:SET_PRODUCT_BASED_MEASUREMENT, payload:measurementSpecificationsKey});
             }, 500),
         []
     );
@@ -380,8 +388,6 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
             checkLatestConfig.cancel();
         };
     }, [itemConfiguration]);
-
-     */
     /////// CHECK LATEST CONFIG AND APPLY MEASUREMENT VIDEO LOGIC ///////
 
 
@@ -705,6 +711,7 @@ function TwoDimProduct({dataFromJSON, id, extraCartInfoArray}) {
                         </div>
                     </RightColumn>
                 </ColumnContainer>
+                <ProductBasedMeasurement/>
                 <HowToAssemble assemblyInfo={assemblyInfo}/>
                 <Installation/>
                 <br/>

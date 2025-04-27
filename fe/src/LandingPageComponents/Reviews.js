@@ -232,8 +232,8 @@ function Reviews({noAnimation}) {
       setData(temp)
     }
 
-    if (data===null)
-      getData();
+    //if (data===null)
+      //getData();
   },[data]);
 
 
