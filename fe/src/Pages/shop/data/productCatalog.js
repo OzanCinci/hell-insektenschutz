@@ -20,10 +20,12 @@ import BasicLamellenvorhangImg from '../../../images/shopCategories/basiclamelle
 import PremLamellenvorhangImg from '../../../images/shopCategories/premLamellenvorhang.webp';
 
 
-
 export const catalogData = {
     "insektenschutz": {
         installation: "Insektenschutz & Fliegengitter",
+        data: [],
+        measurement: "/",
+        assembly: "/",
     },
     "plissees": {
         data: [

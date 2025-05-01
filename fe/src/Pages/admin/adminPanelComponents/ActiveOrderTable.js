@@ -20,7 +20,7 @@ import Button from '@mui/material/Button';
 import { useSelector } from 'react-redux';
 import Paginate from '../../../CustomComponents/Paginate';
 import useFetch from '../../../hooks/useFetch';
-import { useLocation, useParams } from 'react-router-dom';
+import {useParams } from 'react-router-dom';
 import {handleOrderInvoiceRequest, handleOrderUpdate} from '../adminRequests';
 import PositiveNotification from '../../../CustomComponents/Notifications/PositiveNotification';
 import NegativeNotification from '../../../CustomComponents/Notifications/NegativeNotification';

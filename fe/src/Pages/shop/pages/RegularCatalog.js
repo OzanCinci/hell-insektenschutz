@@ -4,7 +4,7 @@ import { catalogData } from '../data/productCatalog';
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow';
 import VerifiedIcon from '@mui/icons-material/Verified';
 import Button from '@mui/material/Button';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import GratisMutterImg from '../../../images/shop/gratis.webp';
 import {RegularProductCatalogProductLink, StyledButtonLink} from "../../../CustomComponents/Link";
 
@@ -259,9 +259,13 @@ const freeSamplingData = {
     ]
 }
 
+function extractLocationName(pathName) {
+    var elements = pathName.split("/");
+    return elements.at(-1)==="" ? elements.at(-2) : elements.at(-1);
+}
 
 function RegularCatalog() {
-    const location = useLocation()?.pathname.split("/").at(-1);
+    const location = extractLocationName(useLocation()?.pathname);
     const {data, measurement, assembly} = catalogData[location];
 
     const handleFreeSampleClick = (e) => {

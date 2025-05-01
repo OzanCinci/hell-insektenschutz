@@ -147,10 +147,86 @@ const LineText = styled.div`
     }   
 `;
 
+const StyledModalBody = styled.div`
+  height: 85vh;
+  -webkit-overflow-scrolling: touch;
+  overflow-y: scroll;
+`;
+
+const ShowPdfComponent = styled(({ pdfUrl }) => {
+    return (
+        <div>
+            <button
+                id="measurement-option-detail-btn-2"
+                style={{ display: "none" }}
+                type="button"
+                className="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#MeasurementPopupMoreDetail"
+            />
+            {pdfUrl ? (
+                <div>
+                    <div
+                        className="modal fade"
+                        id="MeasurementPopupMoreDetail"
+                        tabIndex="-1"
+                        aria-labelledby="measurementPopupMoreDetailLabel"
+                        aria-hidden="true"
+                    >
+                        <div className="modal-dialog modal-dialog-centered modal-xl">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5
+                                        style={{ textAlign: "left" }}
+                                        className="modal-title"
+                                        id="measurementPopupMoreDetailLabel"
+                                    >
+                                        Sieh dir dieses PDF unten an.
+                                    </h5>
+                                    <button
+                                        type="button"
+                                        className="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                    ></button>
+                                </div>
+                                <StyledModalBody>
+                                    {pdfUrl ? (
+                                        <embed
+                                            src={pdfUrl}
+                                            type="application/pdf"
+                                            width="100%"
+                                            height="100%"
+                                            style={{
+                                                border: "none",
+                                                minHeight: "100%",
+                                            }}
+                                        />
+                                    ) : (
+                                        <p>No PDF URL available</p>
+                                    )}
+                                </StyledModalBody>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            ) : (
+                <div></div>
+            )}
+        </div>
+    );
+})``;
+
+const allowedKeys = [
+    "Plisseetür Fliegengitter",
+    "Fliegengitter Spannrahmen "
+];
+
 function ProductBasedMeasurement({}) {
     const [localKey, setLocalKey] = useState(null);
     const [data, setData] = useState(null);
     const productBasedMeasurementKey = useSelector(state => state.productBasedMeasurement);
+    const [pdfUrl, setPdfUrl] = useState(null);
 
     useEffect(() => {
         if (localKey===productBasedMeasurementKey)
@@ -160,12 +236,27 @@ function ProductBasedMeasurement({}) {
         setData(prevState => productBasedMeasurementData[productBasedMeasurementKey]);
     }, [productBasedMeasurementKey]);
 
+    const handleClickHtmlContentWithInteraction = (e, pdfUrl) => {
+      e.preventDefault();
+      if (!allowedKeys.includes(productBasedMeasurementKey))
+          return;
+
+        setPdfUrl(pdfUrl);
+        const button = document.getElementById("measurement-option-detail-btn-2");
+        if (button) {
+            setTimeout(() => {
+                button.click();
+            }, 0);
+        }
+    };
+
     if (!data) {
         return (<div></div>);
     }
 
     return (
         <>
+            <ShowPdfComponent pdfUrl={pdfUrl}/>
             <br/>
             <br/>
             <Splitter>
@@ -186,7 +277,25 @@ function ProductBasedMeasurement({}) {
                                 {
                                     content.noRightPart !== true &&
                                     content.rightPart.map((strHtml, i) => {
-                                        if (strHtml.type === "html-content")
+                                        if (strHtml.type==="html-content-with-interaction") {
+                                            return (<div>
+                                                <li style={{textAlign: "left", marginBottom: "10px"}}>
+                                                    {strHtml.value}
+                                                    <span
+                                                        onClick={(e) => handleClickHtmlContentWithInteraction(e, strHtml.url)}
+                                                        className='mx-1'
+                                                        style={{
+                                                            textDecoration: "underline",
+                                                            color: "#f59f4c",
+                                                            cursor: "pointer",
+                                                            fontWeight: "bold"
+                                                        }}
+                                                    >Richtig Messen
+                                                    </span>
+                                                </li>
+                                            </div>);
+                                        }
+                                        else if (strHtml.type === "html-content")
                                             return (<HTMLContent value={strHtml.value} key={i}/>);
                                         else if (strHtml.type === "img")
                                             return (<div key={i}>

@@ -230,8 +230,13 @@ const LineText = styled.div`
     }   
 `;
 
+function extractLocationName(pathName) {
+    var elements = pathName.split("/");
+    return elements.at(-1)==="" ? elements.at(-2) : elements.at(-1);
+}
+
 function ShopDetail() {
-    const location = useLocation()?.pathname.split("/").at(-1);
+    const location = extractLocationName(useLocation()?.pathname);
     const installation = location ? catalogData[location]?.installation : null;
 
   return (

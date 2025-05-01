@@ -1077,6 +1077,16 @@ const PlisseeTür = [
                 value: "<b>Messen Sie das lichte Maß der Nische und ziehen Sie in der Breite und Höhe je 5mm ab.</b>"
             },
             {
+                type: "html-content-with-interaction",
+                value: "Wenn Sie 'Zusätzliche Bodenleiste' als Ja auswählen, sehen Sie bitte PL22/3R.",
+                url: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/3r.pdf",
+            },
+            {
+                type: "html-content-with-interaction",
+                value: "Wenn Sie 'Zusätzliche Bodenleiste' als Nein auswählen, sehen Sie bitte PL22/3R0.",
+                url: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/3ro.pdf",
+            },
+            {
                 type: "html-content",
                 value: "<b>Die Breite wird wegen evtl. Toleranzen immer an mehreren Punkten gemessen.</b>"
             },
@@ -1107,6 +1117,16 @@ const Spannrahmen = [
                 value: "<div>Gemessen wird das lichte Maß der Fensteröffnung. Die Breite wird wegen evtl. Fenstertoleranzen immer an mehreren Punkten gemessen.</div>"
             },
             {
+                type: "html-content-with-interaction",
+                value: "Wenn Sie 'Fensterart' als 'Zurückgesetzte Flügel' auswählen, sehen Sie bitte SE/14-31.",
+                url: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/SE14-31.pdf",
+            },
+            {
+                type: "html-content-with-interaction",
+                value:"Wenn Sie 'Fensterart' als 'Flächenbündig' auswählen, sehen Sie bitte SE/9.",
+                url: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/SE9.pdf",
+            },
+            {
                 type: "html-content",
                 value: "<div><b>Breite B</b>  = lichtes Maß ist Bestellmaß</div>"
             },
@@ -1128,7 +1148,7 @@ const Spannrahmen = [
             },
             {
                 type: "youtube-video",
-                value: "https://www.youtube.com/embed/gAMXfts1IuU"
+                value: "https://www.youtube.com/embed/gAMXfts1IuU",
             },
         ]
     },

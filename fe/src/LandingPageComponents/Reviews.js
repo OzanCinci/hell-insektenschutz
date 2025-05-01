@@ -237,7 +237,7 @@ function Reviews({noAnimation}) {
   },[data]);
 
 
-
+  return (<div></div>);
   return (
     <div id='google-comments-live'>
       {
@@ -268,10 +268,10 @@ function Reviews({noAnimation}) {
                 }
             </Slider>
           </ReviewsWrapper>
-        </ReviewContainer>) : <div><CircularProgress color='warning'/></div>
+        </ReviewContainer>) : <div>{/*<CircularProgress color='warning'/>*/}</div>
       }
     </div>
-  )
+    )
 }
 
-export default Reviews
+export default Reviews;
