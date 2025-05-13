@@ -64,6 +64,23 @@ export const catalogData = {
                 ]
             },
             {
+                title: "Wabenlissee",
+                image: "https://cdn.vendeco.com/P5QJ2ufa3r_Z1ubEfuvBUTmUPyE=/540x292/media/wysiwyg/produkte/plissee/540x292/wabenplissee-braun-540x292.jpg",
+                desc: [
+                    "Made in Germany",
+                    "über 190 Stoffe",
+                    "Trendige Designs",
+                    "Gemustert, crush, uvm.",
+                    "Montage ohne bohren"
+                ],
+                links: [
+                    {
+                        text: "Jetzt konfigurieren",
+                        url: "/geschaft/plissees/waben-plissee-optionen",
+                    }
+                ]
+            },
+            {
                 title: "Wintergarten Plissee",
                 image: Wintergardenplissee,
                 desc: [

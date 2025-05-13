@@ -1184,6 +1184,11 @@ export const productBasedMeasurementData = {
     "Premium Plissee + Wand": PlisseeWand,
     "Premium Plissee + Decke/Nische": PlisseeDeckeNische,
 
+    "Premium Wabenplissee + Glasfalz": PlisseeGlasfalz,
+    "Premium Wabenplissee + Fensterflügel": PlisseeFensterflügel,
+    "Premium Wabenplissee + Wand": PlisseeWand,
+    "Premium Wabenplissee + Decke/Nische": PlisseeDeckeNische,
+
     "Basic Plissee + Glasfalz": PlisseeGlasfalz,
     "Basic Plissee + Fensterflügel": PlisseeFensterflügel,
     "Basic Plissee + Wand": PlisseeWand,

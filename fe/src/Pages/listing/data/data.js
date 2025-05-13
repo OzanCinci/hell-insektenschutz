@@ -146,6 +146,55 @@ export const optionsData = {
             },
             link: "PremiumPlissee"
         },
+        "waben-plissee-optionen": {
+            filterValues: {
+                Farbton: {
+                    singleChoice: true,
+                    data: [
+                        { name: 'Weiß', image: 'rgb(250, 250, 250)', extraInfo: null }, // Soft White
+                        { name: 'Grau', image: 'grey', extraInfo: null }, // Light Gray
+                        { name: 'Grün', image: 'rgb(144, 238, 144)', extraInfo: null }, // Light Green
+                        { name: 'Beige', image: 'rgb(245, 245, 220)', extraInfo: null }, // Beige (unchanged, already soft)
+                        { name: 'Schwarz', image: 'rgb(50, 50, 50)', extraInfo: null }, // Soft Black
+                        { name: 'Braun', image: 'rgb(205, 133, 63)', extraInfo: null }, // Light Brown
+                        { name: 'Orange', image: 'rgb(255, 200, 124)', extraInfo: null }, // Light Orange
+                        { name: 'Violett', image: 'rgb(221, 160, 221)', extraInfo: null }, // Light Violet
+                        { name: 'Blau', image: 'rgb(173, 216, 230)', extraInfo: null }, // Light Blue
+                        { name: 'Gelb', image: 'rgb(255, 255, 180)', extraInfo: null }, // Light Yellow
+                        { name: 'Rot', image: 'rgb(255, 100, 100)', extraInfo: null } // Light Red (Pinkish)
+                    ]
+                },
+                Stoffart: {
+                    singleChoice: true,
+                    data: [
+                        { name: 'Wabenplissee', image: WabenPlisseImg, extraInfo: null }
+                    ]
+                },
+                Lichtdurchlässigkeit: {
+                    singleChoice: true,
+                    data: [
+                        { name: 'halbtransparent', image: Halbtransparent, extraInfo: 'Halbtransparente Stoffe eignen sich perfekt als Sichtschutz und Sonnenschutz.' },
+                        { name: 'verdunkelnd', image: Verdunkelnd, extraInfo: 'Verdunkelnde Stoffe, auch "Blackout-Stoffe" genannt, lassen überhaupt kein Licht durch und eignen sich perfekt für Schlafräume.' }
+                    ]
+                },
+                Funktion: {
+                    singleChoice: false,
+                    data: [
+                        { name: 'Feuchtraum', image: Feuchtraum, extraInfo: "Diese Stoffe eignen sich zusätzlich für Feuchträume, wie Küche und Badezimmer." },
+                        { name: 'Feucht abwischbar', image: Feucht, extraInfo: null },
+                        { name: 'Handwaschbar bis 30°', image: Hand, extraInfo: null },
+                        { name: 'Schadstoffgeprüft', image: Schad, extraInfo: 'Produkt auf schädliche Substanzen getestet wurde.' },
+                        { name: 'Bildschirmarbeitsplatz', image: Bildschirmarbeitsplatz, extraInfo: "Diese Stoffe eignen sich bestens für Räumlichkeiten in denen mit Bildschrimen gearbeitet wird. Sie lassen nur mäßig Licht durch." },
+                        { name: 'Hitzeschutz', image: Hitzes, extraInfo: 'Die Stoffe sind mit einer Perlmuttbeschichtung ausgerüstet und reflektieren dadurch die Hitze sehr gut. Optimal für südlich ausgerichtete Räume.' },
+                        { name: 'Schwer entflammbar', image: Schwer, extraInfo: null }
+                    ]
+                }
+            },
+            productDetailUrl : "/api/product/Plissee/Wabenplissee",
+            url: "/api/external-products/colors/Plissee",
+            ternaryImageFunction: (item) => WabenPlisseImg,
+            link: "WabenPlissee"
+        },
         "wintergarten-plissee-optionen": {
             filterValues: {
                 Farbton: {

@@ -30,6 +30,10 @@ const seoContentMap = {
         title: 'Plissees » Premium Plissee | HELL',
         description: 'Premium Plisees von Hell ➔ ganz einfach ohne Bohren ✔ über 400 Stoffe ✔ trendige Designs  ➤ Jetzt entdecken!'
     },
+    "/geschaft/plissees/waben-plissee-optionen": {
+        title: 'Wabenplissee » Wabenplissee nach Maß - ohne Bohren | HELL',
+        description: 'Perfekte Wabenplissee maßgeschneidert für Ihr Zuhause entdecken– stilvoll und praktisch ohne Bohren! ➤ mehr erfahren!'
+    },
     '/impressum': {
         title: 'Impressum | HELL',
         description: ''

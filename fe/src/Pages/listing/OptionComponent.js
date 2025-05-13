@@ -141,6 +141,17 @@ function OptionComponent({category, model}) {
                     // BUSINESS LOGIC DECIDED BY OWNER OF COMPANY! DO NOT DELETE
                     return {mainImage, secondaryImage, ternaryImage, ...item};
                 });
+            } else if (["waben-plissee-optionen"].includes(model)) {
+                // WE CANNOT FILTER ONLY WABENPLISSEE PRODUCT SINCE WE DEPEND ON THIRD PARTY API
+                // MANUAL FILTER ON FE, NOT A BEST PRACTICE BUT THIS IS WHAT WE CAN DO
+                upgradedColors = data.colors
+                    .filter(item => item.properties.MaterialType === "Wabenplissee")
+                    .map(item=> {
+                        const mainImage = item.previewImage;
+                        const secondaryImage = item.tileImage;
+                        const ternaryImage = ternaryImageFunction(item);
+                        return {mainImage, secondaryImage, ternaryImage, ...item};
+                    });
             } else {
                 upgradedColors = data.colors.map(item=> {
                     const mainImage = item.previewImage;

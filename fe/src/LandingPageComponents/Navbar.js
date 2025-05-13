@@ -460,8 +460,8 @@ const optionsForLeftColumn = [
             value: "/geschaft/plissees/basic-plissee-optionen"
           },
           {
-            key: "Waben Plissee",
-            value: "/geschaft/plissees/premium-plissee-optionen"
+            key: "Wabenplissee",
+            value: "/geschaft/plissees/waben-plissee-optionen"
           },
           {
             key: "Wintergarten Plissee",
@@ -903,7 +903,7 @@ function Navbar(){
                   <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees">Plissees</NavbarDesktopSubListStyledLink>
                   <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/premium-plissee-optionen">Premium Plissee</NavbarDesktopSubListStyledLink>
                   <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/basic-plissee-optionen">Basic Plissee</NavbarDesktopSubListStyledLink>
-                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/premium-plissee-optionen">Waben Plissee</NavbarDesktopSubListStyledLink>
+                  <NavbarDesktopSubListStyledLink onClick={triggerNavbarDesktopReset} to="/geschaft/plissees/waben-plissee-optionen">Wabenplissee</NavbarDesktopSubListStyledLink>
                 </SingleColumn>
                 <SingleColumn>
                   <ColTitle>Plissee nach Maß</ColTitle>

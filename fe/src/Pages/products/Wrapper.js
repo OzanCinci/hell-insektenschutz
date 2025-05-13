@@ -10,6 +10,7 @@ import InsectProducts from "./productPages/InsectProducts";
 const twoDimensionalProducts = [
     "BasicPlissee",
     "PremiumPlissee",
+    "WabenPlissee",
     "WintergartenPlissee",
     "BasicJalousie25mm",
     "BasicJalousie16mm",

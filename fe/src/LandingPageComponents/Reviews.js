@@ -232,12 +232,12 @@ function Reviews({noAnimation}) {
       setData(temp)
     }
 
-    //if (data===null)
-      //getData();
+    if (data===null)
+      getData();
   },[data]);
 
 
-  return (<div></div>);
+  //return (<div></div>);
   return (
     <div id='google-comments-live'>
       {
@@ -247,7 +247,7 @@ function Reviews({noAnimation}) {
             <div  className='d-flex flex-column justify-content-center'>
               <Font data-aos={noAnimation?"":"fade-up"}>Google Bewertungen</Font>
               <CommentCount data-aos={noAnimation?"":"fade-up"} className='d-flex flex-row justify-content-around'>
-                140+ Rezension
+                145+ Rezension
               </CommentCount>
               <div data-aos={noAnimation?"":"fade-up"} style={{display: "flex", alignItems: "center", justifyContent: "center", gap: "2px"}}>
                 <img alt='star-img'  height='20px' src={StarImg}/>
