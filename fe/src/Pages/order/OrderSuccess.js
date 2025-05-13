@@ -6,6 +6,7 @@ import useFetch from '../../hooks/useFetch';
 import CircularProgress from '@mui/material/CircularProgress';
 import { convertDate } from '../../utils/datetime';
 import Alert from '@mui/material/Alert';
+import TrustedShopsReviewBuilder from "./TrustedShopsReviewBuilder";
 
 const Container = styled.div`
     min-height: 400px;
@@ -39,7 +40,7 @@ const Explanation = styled.div`
     max-width: 800px;
     min-width: 300px;
     margin: auto;
-    margin-top: 0px;
+    margin-top: 20px;
     text-align: left;
     color: #696984;
 
@@ -193,27 +194,31 @@ function OrderSuccess() {
     },[traceCode,init]);
 
     useEffect(()=>{
-        //console.log("data: ", data);
+        console.log("data: ", data);
     },[data]);
 
   return (
     <>
-    {
-        data && loading!==true && !error && 
-        
+        {
+            data && loading !== true && !error &&
             <Container>
                 {
-                    init==="true" &&
+                    init === "true" &&
                     <>
                         <CustomImg src={SuccessIcon}/>
                         <Explanation>
-                            Vielen Dank für Ihre Bestellung. Eine Kopie der Bestellübersicht wurde an Ihre E-Mail gesendet. Bitte prüfen Sie auch den Spam-Ordner. Wir informieren Sie per E-Mail über den Bestellstatus. Die Details Ihrer Bestellung finden Sie in Ihrem Profil. Wenn Sie kein registrierter Benutzer sind, nutzen Sie die Seite Bestellung. Notieren Sie Ihre <b>Bestellnummer</b> zur Abfrage. Mit dem Sendungscode können Sie Ihre Bestellung auf der Website des Lieferunternehmens nachverfolgen.
+                            Vielen Dank für Ihre Bestellung. Eine Kopie der Bestellübersicht wurde an Ihre E-Mail
+                            gesendet. Bitte prüfen Sie auch den Spam-Ordner. Wir informieren Sie per E-Mail über den
+                            Bestellstatus. Die Details Ihrer Bestellung finden Sie in Ihrem Profil. Wenn Sie kein
+                            registrierter Benutzer sind, nutzen Sie die Seite Bestellung. Notieren Sie
+                            Ihre <b>Bestellnummer</b> zur Abfrage. Mit dem Sendungscode können Sie Ihre Bestellung auf
+                            der Website des Lieferunternehmens nachverfolgen.
                         </Explanation>
                     </>
                 }
                 {
-                    pending==="true" &&
-                    <div style={{marginTop: "80px" , padding: "10px 20px"}}>
+                    pending === "true" &&
+                    <div style={{marginTop: "80px", padding: "10px 20px"}}>
                         <Explanation>
                             Warnung: Wenn Sie per Banküberweisung bezahlen, wird die Bestellung ohne sofortige Zahlung erstellt. Überweisen Sie den Gesamtbetrag an das angegebene Bankkonto und fügen Sie die <b>Bestellnummer</b> in den <b>Verwendungszweck</b> ein. Eine Bestellbestätigung wurde an Ihre E-Mail gesendet. Prüfen Sie bitte auch den Spam-Ordner. Wir informieren Sie per E-Mail über den Bestellstatus. Bestelldetails finden Sie in Ihrem Profil oder auf der Bestellseite. Notieren Sie Ihre Bestellnummer und den Sendungscode zur Nachverfolgung.
                         </Explanation>
@@ -227,6 +232,7 @@ function OrderSuccess() {
                     </div>
                 }
 
+                <TrustedShopsReviewBuilder data={data}/>
                 <Wrapper>
                     <Desc>
                     <h3>Bestelldetails</h3>

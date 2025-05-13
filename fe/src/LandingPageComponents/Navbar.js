@@ -21,6 +21,7 @@ import RolloImg from '../images/shop/smartrollo.webp';
 import DopelRolloImg from '../images/shop/doppelrollo.webp';
 import LamellenImg from '../images/shop/lamellenvorhang.webp';
 import InsekImg from '../images/shop/insek.webp';
+import TrustedShopsLogo from '../images/landingPage/trusted_shops_siegel.svg';
 import MadeInGermanyIcon from '../images/navbar/made-in-germany-icon.png';
 
 // images for mobile menu
@@ -882,6 +883,11 @@ function Navbar(){
             <NavbarButtonWrapper onClick={() => setMove(toggle ? "75%" : "25%")}>
               <BurgerIcon toggle={toggle} setToggle={setToggle}/>
             </NavbarButtonWrapper>
+            <MadeInGermanyLogo>
+              <a target={"_blank"} href={"https://www.trustedshops.de/bewertung/info_X10E4EB6089F717631CFF670A061115E4.html"}>
+                <img height="55px" src={TrustedShopsLogo}></img>
+              </a>
+            </MadeInGermanyLogo>
             <MadeInGermanyLogo>
               <img height={"55px"} src={"https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/madein.png"}></img>
             </MadeInGermanyLogo>

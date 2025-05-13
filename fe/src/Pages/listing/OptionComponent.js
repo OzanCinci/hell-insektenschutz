@@ -141,7 +141,6 @@ function OptionComponent({category, model}) {
                     // BUSINESS LOGIC DECIDED BY OWNER OF COMPANY! DO NOT DELETE
                     return {mainImage, secondaryImage, ternaryImage, ...item};
                 });
-                console.log("upgradedColors: ", upgradedColors);
             } else {
                 upgradedColors = data.colors.map(item=> {
                     const mainImage = item.previewImage;

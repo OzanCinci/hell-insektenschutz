@@ -256,6 +256,7 @@ export const insekProductData = {
                 message: "Wenn Sie 'Fensterart' als 'Flächenbündig' auswählen, sehen Sie bitte SE/9."
             }
         ],
+        cartImage: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/spannrahmen5.png",
     },
     "InsektenschutzPlisseetür": {
         defaultImages: [
@@ -365,6 +366,7 @@ export const insekProductData = {
                 message: "Wenn Sie 'Zusätzliche Bodenleiste' als Nein auswählen, sehen Sie bitte PL22/3R0."
             }
         ],
+        cartImage: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/plisseetu%CC%88r0.png",
     },
     "InsektenschutzPendeltür": {
         defaultImages: [
@@ -659,5 +661,6 @@ export const insekProductData = {
         heightText: "(1500-2250 mm)",
         measurementUrl: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/pendeltur.pdf",
         isMesurementRedirect: true,
+        cartImage: "https://hell-insekten-sonnenschutz-cdn.s3.eu-central-1.amazonaws.com/pendaltur1.png",
     }
 };

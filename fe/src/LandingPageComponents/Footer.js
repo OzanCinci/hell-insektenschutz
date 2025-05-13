@@ -9,6 +9,8 @@ import MasterCardIcon from '../images/footer/mastercard.svg';
 import VisaIcon from '../images/footer/visa.svg';
 import PaypalIcon from '../images/footer/paypal.svg';
 import BankTransferIcon from '../images/footer/bank-transfer.svg';
+import Lastschrift from '../images/footer/icons8-lastschrift.svg';
+
 import {FooterStyledLink} from "../CustomComponents/Link";
 
 const FooterContainer = styled.div`
@@ -175,10 +177,11 @@ function Footer() {
               <FooterGeneralInfoWrapper className="my-4">
                   <div>
                       <div style={{textDecoration: "underline", fontSize: "21px"}}>Zahlungsarten:</div>
-                      <span><img src={MasterCardIcon} height="80px" width="auto"/></span>
-                      <span className="mx-2"><img src={VisaIcon} height="80px" width="auto"/></span>
-                      <span><img src={PaypalIcon} height="80px" width="auto"/></span>
-                      <span className="mx-2"><img src={BankTransferIcon} height="80px" width="auto"/></span>
+                      <span><img src={MasterCardIcon} height="65px" width="auto"/></span>
+                      <span className="mx-2"><img src={VisaIcon} height="65px" width="auto"/></span>
+                      <span><img src={PaypalIcon} height="65px" width="auto"/></span>
+                      <span className="mx-2"><img src={BankTransferIcon} height="65px" width="auto"/></span>
+                      <span><img src={Lastschrift} height="65px" width="auto"/></span>
                   </div>
               </FooterGeneralInfoWrapper>
           </div>

@@ -22,6 +22,7 @@ import {handleLoadDiscountConfig} from "./config/configRequests";
 import {useDispatch} from "react-redux";
 import {SET_CONFIG} from "./constants/config";
 import SEOManager from "./SeoManager";
+import TrustedShopsLogo from "./images/landingPage/trusted_shops_siegel.svg";
 
 // Lazy load the components
 const HomePage = lazy(() => import('./Pages/HomePage'));
@@ -73,7 +74,7 @@ const CreateNewPassword = lazy(() => import('./Pages/passwordReset/CreateNewPass
 const ScrollTopButton = styled.button`
   position: fixed;
   bottom: 30px;
-  right: 30px;
+  right: 18px;
   z-index: 98;
   background-color: #ff7d0e; /* Button color */
   color: white;
@@ -93,8 +94,12 @@ const ScrollTopButton = styled.button`
     background-color: #ffab64; /* Button hover color */
     transform: translateY(-5px); /* Slight lift on hover */
   }
-`;
 
+  @media only screen and (min-width: 780px) {
+    right: 30px;
+    left: auto
+  }
+`;
 
 function App() {
   const [loadingApp, setLoadingApp] = useState(true);
@@ -274,4 +279,4 @@ function App() {
       );
       }
 
-      export default App;
+export default App;

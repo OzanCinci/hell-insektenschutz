@@ -428,7 +428,7 @@ function InsectProducts({dataFromJSON, extraCartInfoArray}) {
 
         const uniqueCode = generateUniqueCode();
         let itemName = cartName ? cartName:( itemData?.id || "").split(/(?=[A-Z])/).join(" ");
-        const secondaryName = itemData?.color?.title;
+        const secondaryName = itemData?.color?.title || " >> Insektenschutz";
         const temp = extractAttributes(itemConfiguration);
         let attributes = [`Höhe: ${dimensions.height}mm`, `Breite: ${dimensions.width}mm`, ...temp];
 
@@ -465,7 +465,7 @@ function InsectProducts({dataFromJSON, extraCartInfoArray}) {
         e.preventDefault();
 
         const uniqueCode = generateUniqueCode();
-        const secondaryName = itemData?.color?.title;
+        const secondaryName = itemData?.color?.title || " >> Insektenschutz";
         const temp = extractProperties(itemData?.color?.properties);
         let attributes = [...temp];
 
