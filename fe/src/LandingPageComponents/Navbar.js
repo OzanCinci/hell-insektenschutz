@@ -861,7 +861,7 @@ function Navbar(){
                 !navbarName &&
                 <>
                   <DesktopSingleLoginComponent onClick={() => handleAccountClick()}>
-                    <LogoText>{navbarName || "Einlogen"}</LogoText>
+                    <LogoText>{navbarName || "Einloggen"}</LogoText>
                   </DesktopSingleLoginComponent>
                   <DesktopSingleLoginComponent>
                     <LogoText>/</LogoText>

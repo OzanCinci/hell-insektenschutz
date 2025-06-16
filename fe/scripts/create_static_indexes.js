@@ -242,12 +242,18 @@ const seoContentMap = {
         title: 'Insekten & Sonnenschutz Karlsruhe | HELL',
         description: 'Zuhause vor Insekten schützen und optimale Sonnenschutz genießen☀️ im Raum Pforzheim, Baden-Baden & Karlsruhe. ➤ Erfahren Sie mehr!'
     },
+    '/404': {
+        title: 'Seite nicht gefunden | HELL Insekten & Sonnenschutz',
+        description: 'Qualitätsprodukte für Insektenschutz und Sonnenschutz von HELL. Maßgefertigte Lösungen für Ihr Zuhause.'
+    },
 };
 
 const defaultSeo = {
     title: 'HELL Insekten & Sonnenschutz',
     description: 'Qualitätsprodukte für Insektenschutz und Sonnenschutz von HELL. Maßgefertigte Lösungen für Ihr Zuhause.'
 };
+
+const baseUrl = 'https://www.hell-insekten-sonnenschutz.com';
 
 // Read the original index.html
 const templatePath = path.join(__dirname, '../build/index.html');
@@ -286,6 +292,19 @@ function generatePage(urlPath, { title, description }) {
         /<meta name="description" content=".*?"\/>/,
         `<meta name="description" content="${description}"/>`
     );
+
+    const canonicalUrl = baseUrl + (urlPath === '/' ? '' : urlPath);
+
+    // 1) Strip any old canonical tag the template might contain
+    modifiedHtml = modifiedHtml.replace(/<link[^>]+rel=["']canonical["'][^>]*>/i, '');
+
+    // 2) Insert the new tag
+    if (modifiedHtml.includes('<!-- CANONICAL_PLACEHOLDER -->')) {
+        modifiedHtml = modifiedHtml.replace('<!-- CANONICAL_PLACEHOLDER -->', `<link rel="canonical" href="${canonicalUrl}" />`);
+    } else {
+        // fallback: push it right before </head>
+        modifiedHtml = modifiedHtml.replace('</head>', `  <link rel="canonical" href="${canonicalUrl}" />\n</head>`);
+    }
 
     const sanitizedPath = sanitizePath(urlPath);
     const outputPath = path.join(outputBaseDir, sanitizedPath, 'index.html');

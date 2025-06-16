@@ -6,7 +6,7 @@ import Logo from './images/landingPage/logo.png';
 // ROUTER
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 // PAGES
-import React, {useEffect, Suspense, lazy, useState, useRef} from 'react';
+import React, {useEffect, Suspense, lazy, useState} from 'react';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import Navbar from './LandingPageComponents/Navbar';
