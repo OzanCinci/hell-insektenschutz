@@ -316,7 +316,9 @@ const SEOManager = () => {
                 <meta property="og:title" content={seoData.title}/>
                 <meta property="og:description" content={seoData.description}/>
                 <meta name="twitter:card" content="summary_large_image"/>
-                <link rel="canonical" href={`https://www.hell-insekten-sonnenschutz.com${location.pathname}`}/>
+                {/*
+                    <link rel="canonical" href={`https://www.hell-insekten-sonnenschutz.com${location.pathname}`}/>
+                */}
                 <script type="application/ld+json">
                     {JSON.stringify(schemaData)}
                 </script>
