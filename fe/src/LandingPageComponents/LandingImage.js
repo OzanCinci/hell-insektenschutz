@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import styled from 'styled-components';
 import Button from '@mui/material/Button';
 import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
 
 const Container = styled.div`
     width: 100vw;
@@ -136,18 +137,24 @@ const Subtitle = styled.p`
     }
 `;
 
-// <Title>20% Rabatt auf Akku Rollos</Title>
-// <Title>Premium Coulisse Akku Rollos</Title>
-
 function LandingImage() {
     const nav = useNavigate();
+    const {discountOptionMap} = useSelector(state => state.config);
+    const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0;
+    const amount = percentage * 100;
 
     return (
         <Container>
             <Wrapper>
                 <CustomIFrame src="https://player.vimeo.com/video/756709552?app_id=122963&background=1" title="HTML Viewer" />
                 <AbsoluteText>
-                    <Title>Premium Coulisse Akku Rollos</Title>
+                    <Title>
+                        {
+                            amount > 0
+                            ? `${amount}% Rabatt auf Akku Rollos`
+                            : "Premium Coulisse Akku Rollos"
+                        }
+                    </Title>
                     <Subtitle>
                         Die Rollo-Generation der Zukunft bei Hell Insekten&Sonnenschutz
                     </Subtitle>

@@ -556,7 +556,7 @@ function Warenkorb() {
     const nav = useNavigate();
     const dispatch = useDispatch();
     const [selectedItem, setSelectedItem] = useState(null);
-    const {discountOptionMap} = useSelector(state=>state.config);
+    const {discountOptionMap} = useSelector(state => state.config);
     const enableDiscount = discountOptionMap["PUBLIC"] != null;
     const percentage = discountOptionMap["PUBLIC"]?.percentage ?? 0.0;
     const enableDiscountInsektenschutz = discountOptionMap["INSEKTENSCHUTZ"] != null;
